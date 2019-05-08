@@ -46,6 +46,8 @@
 	</div>
 	<!-- .sidebar-menu -->
 
+	
+
 	<!-- main에 있는 header 영역임 main 페이지 말고는 사용을 안하지만, 그냥 주석함. 지워도 됨-->
 	<!-- <div class="banner-bg" id="top"> -->
 	<!-- 	<div class="banner-overlay"></div> -->
@@ -58,5 +60,10 @@
 	
 	<!-- 여기에 div 잡아서 작업하면 됨 -->
 	<!-- templatemo-style.css에 보면 이안에 들어가는 div 클래스가 있음. 아니면 css를 temp -->
+	<div class="main-content">			
+			 <a href="./loadMap.do">아아아</a>	
+	</div>
+	
+	
 	</body>
 </html>
