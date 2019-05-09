@@ -58,5 +58,7 @@
 	
 	<!-- 여기에 div 잡아서 작업하면 됨 -->
 	<!-- templatemo-style.css에 보면 이안에 들어가는 div 클래스가 있음. 아니면 css를 temp -->
+	
+	<a href="./jqgrid.do">회원 목록 조회</a><br>
 	</body>
 </html>
