@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+
 import happy.land.people.dto.JsonUtil;
+import happy.land.people.dto.LPSketchbookDto;
 import happy.land.people.dto.LPUserDto;
 import happy.land.people.model.jang.IManagerService;
 import happy.land.people.ctrl.JangController;
@@ -42,12 +44,12 @@ public class JangController {
 	@RequestMapping(value="/jqgrid2.do", method=RequestMethod.GET)
 	public String jqgrid2() {
 		logger.info("Controller jqgrid2");
-		return "Project_JqGrid";
+		return "manager/managerSketchList";
 	}
 	
 	// 회원 목록 조회
-	@RequestMapping(value="/searchJqgrid.do")
-	public void searchJqgrid(HttpServletRequest request, HttpServletResponse response, String title,
+	@RequestMapping(value="/searchMemberList.do")
+	public void searchMemberList(HttpServletRequest request, HttpServletResponse response, String title,
 			@ModelAttribute LPUserDto lDto, ModelMap model) {
 		PrintWriter out = null;
 
@@ -96,5 +98,57 @@ public class JangController {
 		logger.info("Controller modifyIswrite {}", email);
 		
 		boolean isc = iManagerService.modifyIswrite(email);
+	}
+	
+	// 스케치북 조회
+	@RequestMapping(value="/searchSketchList.do")
+	public void searchSketchList(HttpServletRequest request, HttpServletResponse response, String title,
+			@ModelAttribute LPSketchbookDto lsDto, ModelMap model) {
+		PrintWriter out = null;
+
+		response.setCharacterEncoding("UTF-8");
+		System.out.println(title);
+		
+		String serviceImplYn = request.getParameter("param");
+        System.out.println(serviceImplYn);
+        String input = request.getParameter("param2");
+        System.out.println(input);
+		
+        Map<String, Object> castMap = new HashMap<String, Object>();
+        Map<String, Object> castMap2 = new HashMap<String, Object>();
+        
+        castMap = JsonUtil.JsonToMap(serviceImplYn); // quotZero json을 맵으로 변환시킨다.
+        castMap2 = JsonUtil.JsonToMap(input); // quotZero json을 맵으로 변환시킨다.
+
+        lsDto.setServiceImplYn((String) castMap.get("serviceImplYn"));
+        lsDto.setInput((String) castMap2.get("input"));
+                
+        List<Map<String, String>> jqGridList = iManagerService.selectSketchList(lsDto);
+        Map<String, Integer> jqGridListCnt = iManagerService.selectSketchListCnt(lsDto);
+	        HashMap<String, Object> resMap = new HashMap<String, Object>();
+	        
+	        // 페이징
+	        resMap.put("records", jqGridListCnt.get("TOTALTOTCNT"));
+	        resMap.put("rows", jqGridList);
+	        resMap.put("page", request.getParameter("page"));
+	        System.out.println("page from request "+request.getParameter("page"));
+	        resMap.put("total", jqGridListCnt.get("TOTALPAGE"));
+	        
+	        System.out.println("resMap 입니다! : "+resMap);
+	                
+	        try {
+				out = response.getWriter();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	                
+	        out.write(JsonUtil.HashMapToJson(resMap).toString());
+	}
+	
+	// 스케치북 공개/비공개 여부 수정
+	@RequestMapping(value="/modifyBlock.do")
+	public void saveDataSk2(HttpServletRequest request, HttpServletResponse response, String id) {
+		logger.info("Controller modifyBlock {}", id);
+		boolean isc = iManagerService.modifyBlock(id);
 	}
 }

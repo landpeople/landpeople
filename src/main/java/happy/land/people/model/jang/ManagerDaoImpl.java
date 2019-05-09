@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import happy.land.people.dto.LPSketchbookDto;
 import happy.land.people.dto.LPUserDto;
 
 @Repository
@@ -34,22 +35,20 @@ public class ManagerDaoImpl implements IManagerDao {
 	}
 
 	@Override
-	public List<Map<String, String>> selectSketchList(LPUserDto dto) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Map<String, String>> selectSketchList(LPSketchbookDto lsDto) {
+		return sqlSession.selectList(NS+"selectSketchList", lsDto);
 	}
 
 	@Override
-	public Map<String, Integer> selectSketchListCnt(LPUserDto dto) {
-		// TODO Auto-generated method stub
-		return null;
+	public Map<String, Integer> selectSketchListCnt(LPSketchbookDto lsDto) {
+		return sqlSession.selectOne(NS+"selectSketchListCnt", lsDto);
 	}
 
 	// 회원 작성권한 수정
 	@Override
 	public boolean modifyIswrite(String email) {
 		String str = sqlSession.selectOne(NS+"selectIswrite", email);
-		
+		logger.info("회원 작성권한 수정 50%! modifyIswrite {}", str);
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("Iswrite", str);
 		map.put("email", email);
@@ -59,10 +58,18 @@ public class ManagerDaoImpl implements IManagerDao {
 		return n>0 ? true:false;
 	}
 
+	// 스케치북 공개/비공개 수정
 	@Override
-	public boolean modifyBlock(String id2) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean modifyBlock(String id) {
+		String str = sqlSession.selectOne(NS+"selectBlock", id);
+		logger.info("스케치북 공개/비공개 수정 50%! modifyIswrite {}", str);
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("block", str);
+		map.put("id", id);
+		
+		int n = sqlSession.update(NS+"modifyBlock", map);
+		logger.info("스케치북 공개/비공개 수정 완료! modifyIswrite {}", n);
+		return n>0 ? true:false;
 	}
 
 }

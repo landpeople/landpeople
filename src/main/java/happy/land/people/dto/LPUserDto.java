@@ -7,7 +7,9 @@ public class LPUserDto {
 	private String user_nickname;
 	private String user_auth;
 	private String user_delflag;
-	private String user_wauth;
+	private String user_emailchk;
+	private String user_emailkey;
+	private String user_iswrite;
 	
 	private String serviceImplYn;
 	private String input;
@@ -16,16 +18,19 @@ public class LPUserDto {
 	
 	public LPUserDto() {
 	}
-
+	
 	public LPUserDto(String user_email, String user_password, String user_nickname, String user_auth,
-			String user_delflag, String user_wauth, String serviceImplYn, String input, String rows, String page) {
+			String user_delflag, String user_emailchk, String user_emailkey, String user_iswrite, String serviceImplYn,
+			String input, String rows, String page) {
 		super();
 		this.user_email = user_email;
 		this.user_password = user_password;
 		this.user_nickname = user_nickname;
 		this.user_auth = user_auth;
 		this.user_delflag = user_delflag;
-		this.user_wauth = user_wauth;
+		this.user_emailchk = user_emailchk;
+		this.user_emailkey = user_emailkey;
+		this.user_iswrite = user_iswrite;
 		this.serviceImplYn = serviceImplYn;
 		this.input = input;
 		this.rows = rows;
@@ -72,12 +77,12 @@ public class LPUserDto {
 		this.user_delflag = user_delflag;
 	}
 
-	public String getUser_wauth() {
-		return user_wauth;
+	public String getUser_iswrite() {
+		return user_iswrite;
 	}
 
-	public void setUser_wauth(String user_wauth) {
-		this.user_wauth = user_wauth;
+	public void setUser_iswrite(String user_iswrite) {
+		this.user_iswrite = user_iswrite;
 	}
 
 	public String getServiceImplYn() {
@@ -110,6 +115,22 @@ public class LPUserDto {
 
 	public void setPage(String page) {
 		this.page = page;
+	}
+
+	public String getUser_emailchk() {
+		return user_emailchk;
+	}
+
+	public void setUser_emailchk(String user_emailchk) {
+		this.user_emailchk = user_emailchk;
+	}
+
+	public String getUser_emailkey() {
+		return user_emailkey;
+	}
+
+	public void setUser_emailkey(String user_emailkey) {
+		this.user_emailkey = user_emailkey;
 	}
 	
 	
