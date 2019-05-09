@@ -47,50 +47,50 @@
      		 ORDER BY USER_NICKNAME
     </select>
     
-    <select id="selectJqgridListSk" parameterType="AnswerboardDto" resultType="java.util.Map">
-        SELECT  a.*
-          FROM  (
-	            SELECT  a.*,
-	                    ROWNUM rnum,
-	                    FLOOR((ROWNUM - 1) /#{rows} + 1) pageNumber
-	              FROM  (
-		                    SELECT  SKETCH_ID
-		                         , USER_EMAIL
-		                         , SKETCH_TITLE
-		                         , SKETCH_THEME
-		                         , SKETCH_SHARE
-		                         , SKETCH_DELFLAG
-		                         , SKETCH_BLOCK
-		                      FROM LPSKETCHBOOK
-		                     WHERE 1=1
-		                      <if test='serviceImplYn != ""'>
-		                         <choose>
-		                             <when test='serviceImplYn == "user_email"'>
-		                                 AND USER_EMAIL LIKE '%'||#{input}||'%'
-		                             </when>
-		                               <when test='serviceImplYn == "sketch_title"'>
-		                                 AND SKETCH_TITLE LIKE '%'||#{input}||'%'
-		                             </when>
-		                             <otherwise>
-		                             </otherwise>
-		                         </choose>
-		                    </if>
-		                 ORDER BY SKETCH_ID
-	                    ) a
-                ) a
-           WHERE  a.pageNumber = #{page}
-        order by a.rnum
-    </select>
+<!--     <select id="selectJqgridListSk" parameterType="AnswerboardDto" resultType="java.util.Map"> -->
+<!--         SELECT  a.* -->
+<!--           FROM  ( -->
+<!-- 	            SELECT  a.*, -->
+<!-- 	                    ROWNUM rnum, -->
+<!-- 	                    FLOOR((ROWNUM - 1) /#{rows} + 1) pageNumber -->
+<!-- 	              FROM  ( -->
+<!-- 		                    SELECT  SKETCH_ID -->
+<!-- 		                         , USER_EMAIL -->
+<!-- 		                         , SKETCH_TITLE -->
+<!-- 		                         , SKETCH_THEME -->
+<!-- 		                         , SKETCH_SHARE -->
+<!-- 		                         , SKETCH_DELFLAG -->
+<!-- 		                         , SKETCH_BLOCK -->
+<!-- 		                      FROM LPSKETCHBOOK -->
+<!-- 		                     WHERE 1=1 -->
+<!-- 		                      <if test='serviceImplYn != ""'> -->
+<!-- 		                         <choose> -->
+<!-- 		                             <when test='serviceImplYn == "user_email"'> -->
+<!-- 		                                 AND USER_EMAIL LIKE '%'||#{input}||'%' -->
+<!-- 		                             </when> -->
+<!-- 		                               <when test='serviceImplYn == "sketch_title"'> -->
+<!-- 		                                 AND SKETCH_TITLE LIKE '%'||#{input}||'%' -->
+<!-- 		                             </when> -->
+<!-- 		                             <otherwise> -->
+<!-- 		                             </otherwise> -->
+<!-- 		                         </choose> -->
+<!-- 		                    </if> -->
+<!-- 		                 ORDER BY SKETCH_ID -->
+<!-- 	                    ) a -->
+<!--                 ) a -->
+<!--            WHERE  a.pageNumber = #{page} -->
+<!--         order by a.rnum -->
+<!--     </select> -->
     
-    <select id="selectJqgridListCntSk" parameterType="AnswerboardDto" resultType="java.util.Map">
-        SELECT count(*) totalTotCnt 
-        	,CEIL(count(*) / #{rows}) totalPage
-          FROM LPSKETCHBOOK
-             <if test='serviceImplYn != ""'>
-        	 WHERE USER_EMAIL LIKE '%'||#{input}||'%' OR SKETCH_TITLE LIKE '%'||#{input}||'%'
-        	 </if>
-     		 ORDER BY SKETCH_TITLE
-    </select>
+<!--     <select id="selectJqgridListCntSk" parameterType="AnswerboardDto" resultType="java.util.Map"> -->
+<!--         SELECT count(*) totalTotCnt  -->
+<!--         	,CEIL(count(*) / #{rows}) totalPage -->
+<!--           FROM LPSKETCHBOOK -->
+<!--              <if test='serviceImplYn != ""'> -->
+<!--         	 WHERE USER_EMAIL LIKE '%'||#{input}||'%' OR SKETCH_TITLE LIKE '%'||#{input}||'%' -->
+<!--         	 </if> -->
+<!--      		 ORDER BY SKETCH_TITLE -->
+<!--     </select> -->
     
     <select id="selectIswrite" parameterType="java.lang.String" resultType="java.lang.String">
     	SELECT USER_ISWRITE FROM LPUSER
@@ -113,23 +113,23 @@
     </update>
     
     
-    <select id="selectBlock" parameterType="java.lang.String" resultType="java.lang.String">
-    	SELECT SKETCH_BLOCK FROM LPSKETCHBOOK
-    		WHERE SKETCH_ID=#{id}
-    </select>
+<!--     <select id="selectBlock" parameterType="java.lang.String" resultType="java.lang.String"> -->
+<!--     	SELECT SKETCH_BLOCK FROM LPSKETCHBOOK -->
+<!--     		WHERE SKETCH_ID=#{id} -->
+<!--     </select> -->
     
-    <update id="modifyBlock" parameterType="java.util.Map">
-	    UPDATE LPSKETCHBOOK SET 
-	    <if test='block != null'>
-	    	<choose>
-	    		<when test='block == "T"'>
-	    			SKETCH_BLOCK='F'
-	    		</when>
-	    		<when test='block == "F"'>
-	    			SKETCH_BLOCK='T'
-	    		</when>
-	    	</choose>
-	    </if>
-		WHERE SKETCH_ID=#{id}
-    </update>
+<!--     <update id="modifyBlock" parameterType="java.util.Map"> -->
+<!-- 	    UPDATE LPSKETCHBOOK SET  -->
+<!-- 	    <if test='block != null'> -->
+<!-- 	    	<choose> -->
+<!-- 	    		<when test='block == "T"'> -->
+<!-- 	    			SKETCH_BLOCK='F' -->
+<!-- 	    		</when> -->
+<!-- 	    		<when test='block == "F"'> -->
+<!-- 	    			SKETCH_BLOCK='T' -->
+<!-- 	    		</when> -->
+<!-- 	    	</choose> -->
+<!-- 	    </if> -->
+<!-- 		WHERE SKETCH_ID=#{id} -->
+<!--     </update> -->
 </mapper>

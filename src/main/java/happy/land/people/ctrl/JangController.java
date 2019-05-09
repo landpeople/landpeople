@@ -89,4 +89,12 @@ public class JangController {
 	                
 	        out.write(JsonUtil.HashMapToJson(resMap).toString());
 	}
+	
+	// 회원 작성권한 수정
+	@RequestMapping(value="/modifyIswrite.do")
+	public void modifyIswrite(HttpServletRequest request, HttpServletResponse response, String email) {
+		logger.info("Controller modifyIswrite {}", email);
+		
+		boolean isc = iManagerService.modifyIswrite(email);
+	}
 }

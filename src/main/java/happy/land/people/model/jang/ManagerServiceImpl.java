@@ -6,10 +6,11 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import happy.land.people.dto.LPUserDto;
 
-
+@Service
 public class ManagerServiceImpl implements IManagerService {
 
 	private Logger logger = LoggerFactory.getLogger(ManagerServiceImpl.class);
@@ -43,8 +44,8 @@ public class ManagerServiceImpl implements IManagerService {
 
 	@Override
 	public boolean modifyIswrite(String email) {
-		// TODO Auto-generated method stub
-		return false;
+		logger.info("회원 작성권한 수정  modifyIswrite {}", email);
+		return iManagerDao.modifyIswrite(email);
 	}
 
 	@Override

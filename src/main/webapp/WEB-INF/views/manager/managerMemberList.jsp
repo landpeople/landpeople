@@ -61,16 +61,10 @@ $(document).ready(function () {
                   dataEvents : [{type: 'change',
                       fn : function(e) {  
                     	  
-// 							alert("완료");
 							var input = $("#jqGrid").getGridParam("selrow");
-// 							alert(input);
-							
-// 							var input2 = $("#jqGrid").jqGrid("getRowData", input);
-// 							var input2 = $("#jqGrid").getCell(input, 'USER_WAUTH');
-// 							alert(input2);
 
 						 	$.ajax({
-							    url: "save.do", // 클라이언트가 요청을 보낼 서버의 URL 주소
+							    url: "modifyIswrite.do", // 클라이언트가 요청을 보낼 서버의 URL 주소
 							    data: { email: input },                // HTTP 요청과 함께 서버로 보낼 데이터
 							    type: "POST",                             
 							    dataType: "json",                         // 서버에서 보내줄 데이터의 타입
@@ -104,9 +98,6 @@ $(document).ready(function () {
 });
 
 $(document).ready(function() {
-// 	var selectId = document.getElementById("selectId").value;
-// 	var inputVal = document.getElementById("input").value;
-// 	location.href="./searchJqgrid.do?title="+inputVal+"&page=5";
 
  var jsonObj = {};
  var jsonObj2 = {};
@@ -114,7 +105,6 @@ $(document).ready(function() {
 	jsonObj.serviceImplYn = $("#selectId").val();
 	jsonObj2.input = $("#input").val();
     
-//     alert(JSON.stringify(jsonObj));
     
     $("#jqGrid").setGridParam({
         datatype : "json",
@@ -133,6 +123,7 @@ $(document).ready(function() {
 </script>
 </head>
 <div>
+ <a href="./jang.do">뒤로가기</a><br>
  <select id="selectId">
   <option value="" selected="selected">전체</option>
   <option value="user_email">이메일</option>
