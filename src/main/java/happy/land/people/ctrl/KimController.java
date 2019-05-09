@@ -2,16 +2,29 @@ package happy.land.people.ctrl;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import happy.land.people.dto.kim.LPMapdataDto;
+import happy.land.people.model.kim.ILPMapdataService;
 
 @Controller
 public class KimController {
+	
+	@Autowired
+	private ILPMapdataService mapService;
 	
 	
     @RequestMapping(value="loadMap.do")
@@ -50,10 +63,45 @@ public class KimController {
         	System.out.println(value);
         	result[i] = new String(value);
         }       
-       
-        String[] value = result[1].split("/");
-        System.out.println(value[1]);
+               
+        for(int i = 1; i < result.length; i++) {
+        	String[] value = result[i].split("/");
+        	
+        	LPMapdataDto mapDto = new LPMapdataDto(value[0], value[1], value[2], value[3], value[4]," ");        
+            mapService.mapInsert(mapDto);
+        }
+        
         return "1";
+    }
+    
+    @ResponseBody
+    @RequestMapping(value="showFood.do",method=RequestMethod.POST)
+    public Map<String,List<LPMapdataDto>> showFood(String type){    	
+    	List<LPMapdataDto> mapList = mapService.mapSelectType(type);    
+    	System.out.println(mapList.get(0));
+    	Map<String,List<LPMapdataDto>> result = new HashMap<String,List<LPMapdataDto>>();
+    	result.put("result", mapList);    	
+    	return result;
+    }
+    
+    @ResponseBody
+    @RequestMapping(value="showTrip.do",method=RequestMethod.POST)
+    public Map<String,List<LPMapdataDto>> showTrip(String type){    	
+    	List<LPMapdataDto> mapList = mapService.mapSelectType(type);    
+    	System.out.println(mapList.get(0));
+    	Map<String,List<LPMapdataDto>> result = new HashMap<String,List<LPMapdataDto>>();
+    	result.put("result", mapList);    	
+    	return result;
+    }
+    
+    @ResponseBody
+    @RequestMapping(value="showRest.do",method=RequestMethod.POST)
+    public Map<String,List<LPMapdataDto>> showRest(String type){    	
+    	List<LPMapdataDto> mapList = mapService.mapSelectType(type);    
+    	System.out.println(mapList.get(0));
+    	Map<String,List<LPMapdataDto>> result = new HashMap<String,List<LPMapdataDto>>();
+    	result.put("result", mapList);    	
+    	return result;
     }
 
 }
