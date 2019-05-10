@@ -11,13 +11,13 @@ DROP SEQUENCE LPCHATROOM_SEQ;
 DROP SEQUENCE LPCHATIMAGE_SEQ;
 
 -- 테이블 생성
-CREATE TABLE LPCHATLIST(CHL_ID VARCHAR2(20), CHL_SENDER VARCHAR2(50), CHL_RECEIVER VARCHAR2(50), CHL_SDEL CHAR(1), CHL_RDEL CHAR(1));
-CREATE TABLE LPCHATROOM(CHR_ID VARCHAR2(20), CHL_ID VARCHAR2(20), USER_EMAIL VARCHAR2(50), CHR_CONTENT VARCHAR2(200), CHT_TIME DATE);
+CREATE TABLE LPCHATROOM(CHL_ID VARCHAR2(20), CHL_SENDER VARCHAR2(50), CHL_RECEIVER VARCHAR2(50), CHL_SDEL CHAR(1), CHL_RDEL CHAR(1));
+CREATE TABLE LPCHATLIST(CHR_ID VARCHAR2(20), CHL_ID VARCHAR2(20), USER_EMAIL VARCHAR2(50), CHR_CONTENT VARCHAR2(200), CHT_TIME DATE);
 CREATE TABLE LPCHATIMAGE(CHI_ID VARCHAR2(20), CHL_ID VARCHAR2(20), USER_EMAIL VARCHAR2(50), CHI_RPATH VARCHAR2(200), CHI_SPATH VARCHAR2(200), FILE_SIZE NUMBER, CHT_TIME DATE);
 
 -- 제약조건 추가
-ALTER TABLE LPCHATLIST ADD PRIMARY KEY(CHL_ID);
-ALTER TABLE LPCHATROOM ADD FOREIGN KEY(CHL_ID) REFERENCES LPCHATLIST(CHL_ID);
+ALTER TABLE LPCHATROOM ADD PRIMARY KEY(CHL_ID);
+ALTER TABLE LPCHATLIST ADD FOREIGN KEY(CHL_ID) REFERENCES LPCHATLIST(CHL_ID);
 ALTER TABLE LPCHATIMAGE ADD FOREIGN KEY(CHL_ID) REFERENCES LPCHATLIST(CHL_ID);
 
 -- 테이블 시퀀스 생성
@@ -26,33 +26,24 @@ CREATE SEQUENCE LPCHATROOM_SEQ START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE LPCHATIMAGE_SEQ START WITH 1 INCREMENT BY 1;
 
 -- 채팅방 테스트 하기 위해서 defalut로 채팅방 몇 개 넣어줌
-INSERT INTO LPCHATLIST VALUES(LPCHATLIST_SEQ.NEXTVAL, 'a1@naver.com', 'b1@naver.com', 'F', 'F');
-INSERT INTO LPCHATLIST VALUES(LPCHATLIST_SEQ.NEXTVAL, 'a1@naver.com', 'b2@naver.com', 'F', 'F');
-INSERT INTO LPCHATLIST VALUES(LPCHATLIST_SEQ.NEXTVAL, 'a2@naver.com', 'b2@naver.com', 'F', 'F');
-INSERT INTO LPCHATLIST VALUES(LPCHATLIST_SEQ.NEXTVAL, 'b2@naver.com', 'a3@naver.com', 'F', 'F');
+INSERT INTO LPCHATROOM VALUES(LPCHATLIST_SEQ.NEXTVAL, 'a1@naver.com', 'b1@naver.com', 'F', 'F');
+INSERT INTO LPCHATROOM VALUES(LPCHATLIST_SEQ.NEXTVAL, 'a1@naver.com', 'b2@naver.com', 'F', 'F');
+INSERT INTO LPCHATROOM VALUES(LPCHATLIST_SEQ.NEXTVAL, 'a2@naver.com', 'b2@naver.com', 'F', 'F');
+INSERT INTO LPCHATROOM VALUES(LPCHATLIST_SEQ.NEXTVAL, 'b2@naver.com', 'a3@naver.com', 'F', 'F');
 
 -- 채팅방 목록 확인
-SELECT * FROM LPCHATLIST;
+SELECT * FROM LPCHATROOM;
 
 -- 1. 채팅방 생성 ==========================================================================================================================================			
 
--- 1) 기본에 상대방과 채팅방이 있는지 확인
+--1. 기존에 상대방과 채팅방이 있는지 확인
+SELECT CHR_ID, CHR_SENDER, CHR_RECEIVER FROM LPCHATROOM WHERE (CHR_SENDER, CHR_RECEIVER) IN (('a1@naver.com', 'b1@naver.com'),('b1@naver.com','a1@naver.com'));
 
--- 내가 삭제한 경우는  이전 데이터 안 보인채로 나한테 채팅 리스트가 생성됨.
-SELECT CHL_ID FROM LPCHATLIST WHERE (CHL_SENDER, CHL_RECEIVER) IN (('a1@naver.com', 'b1@naver.com'),('b1@naver.com','a1@naver.com'));
+--2.1 만약에 기존에 만들었던 채팅방이 있다면 나의 채팅 목록에서 보이게 만들어줌
+UPDATE LPCHATROOM SET CHR_SOUT='F', CHL_ROUT = 'F' WHERE CHR_ID = '1';
 
--- 위와 같은 쿼리
-SELECT COUNT(*) FROM LPCHATLIST WHERE CHL_SENDER= 'a1@naver.com' AND  CHL_RECEIVER = 'b1@naver.com' OR CHL_SENDER = 'b1@naver.com' AND CHL_RECEIVER = 'a1@naver.com';
-
--- 만약에 기존에 만들었던 채팅방이 있다면 나의 채팅 목록에서 보이게 됨 -> 채팅방 상세를 가져옴
-UPDATE LPCHATLIST SET CHL_SDEL='F', CHL_RDEL = 'F' WHERE CHL_ID = '1';
-
--- 기존에 채팅방이 없다면 -> 채팅 리스트에 추가
-INSERT INTO LPCHATLIST VALUES(LPCHATLIST_SEQ.NEXTVAL, 'a3@naver.com', 'b4@naver.com', 'F', 'F');
-
--- 추가한 채팅 리스트 확인
-SELECT * FROM LPCHATLIST;
-
+--2.2 기존에 채팅방이 없다면 -> 채팅 리스트에 추가
+INSERT INTO LPCHATROOM VALUES(LPCHATROOM_SEQ.NEXTVAL, 'a3@naver.com', 'b4@naver.com', 'F', 'F');
 -- ==========================================================================================================================================						
 
 -- 2. 채팅방 삭제(TT이면 다 삭제)

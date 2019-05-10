@@ -60,7 +60,6 @@ $(document).ready(function () {
 									alert("ajax 성공");
 								}
 							});
-							
                       					}
                   				}]
                 			}
@@ -93,19 +92,15 @@ $(document).ready(function() {
 	jsonObj.serviceImplYn = $("#selectId").val();
 	jsonObj2.input = $("#input").val();
     
-    
     $("#jqGrid").setGridParam({
         datatype : "json",
         postData : {"param" : JSON.stringify(jsonObj), "param2" : JSON.stringify(jsonObj2)},
         loadComplete : function(data) {
-            
         },
         
         gridComplete : function() {
-            
         }
     }).trigger("reloadGrid"); // jqgrid가 데이터를 가져온 후 리로드를 해줘야 그리드에 적용이 되기 때문에 작업이 완료된 후 reload를 해줌
-
 });
 
 </script>
