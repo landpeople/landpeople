@@ -80,7 +80,7 @@ UPDATE LPUSER SET USER_DELFLAG = 'T' WHERE USER_EMAIL = #{user_email}
 
 
 
-<!--/////////////////////////////////// 이메일인증 -->
+<!--/////////////////////////////////// 이메일인증/////////////////////// -->
 
 <!-- 이메일 키저장  ok-->
 <update id="authkeyUpdate" parameterType="ChoDto">

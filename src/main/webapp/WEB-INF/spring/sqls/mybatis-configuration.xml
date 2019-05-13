@@ -4,7 +4,7 @@
    <!-- 있어도 되고 없어도 되는 DTO를 선언하여 Alias를 통해 쉽게 사용! -->
    <typeAliases>
       <typeAlias type="happy.land.people.dto.TestDto" alias="testDto"/>
-      <typeAlias type="happy.land.people.mapper.ChoMapper" alias="ChoDto"/>
+      <typeAlias type="happy.land.people.dto.cho.ChoDto" alias="ChoDto"/>
    </typeAliases>
    
    
