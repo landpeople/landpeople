@@ -7,21 +7,27 @@
 <title>김태우 화면 테스트</title>
 
 <script src="./js/jquery-3.3.1.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<!-- 카카오 지도를 위한 js파일 -->
-<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=2a8ce23f7f516bf0c39441ce65105c56&libraries=services"></script>
+<!-- 책모양  -->
+<link href="./css/jquery.booklet.latest.css" type="text/css" rel="stylesheet" media="screen, projection, tv" />
+<script src="./js/jquery-ui.js"></script>
+<script src="./js/jquery.easing.1.3.js"></script>
+<script src="./js/jquery.booklet.latest.min.js"></script> 
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
-<link rel="stylesheet" href="./css/normalize.css">
-<link rel="stylesheet" href="./css/font-awesome.css">
 <link rel="stylesheet" href="./css/bootstrap.min.css">
 <link rel="stylesheet" href="./css/templatemo-style.css">
+<link rel="stylesheet" href="./css/normalize.css">
+<link rel="stylesheet" href="./css/font-awesome.css">
 
 <script src="./js/vendor/modernizr-2.6.2.min.js"></script>
 <script src="./js/min/plugins.min.js"></script>
 <script src="./js/min/main.min.js"></script>
+
+<!-- 카카오 지도를 위한 js파일 -->
+<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=2a8ce23f7f516bf0c39441ce65105c56&libraries=services"></script>
+
+
 
 </head>
 	<body>
@@ -64,124 +70,185 @@
 	
 	<!-- 여기에 div 잡아서 작업하면 됨 -->
 	<!-- templatemo-style.css에 보면 이안에 들어가는 div 클래스가 있음. 아니면 css를 temp -->
-	<div class="main-content">			
-			 <a href="./loadMap.do">아아아</a>	
-			 <button onclick="showFood()">음식점</button>
-			 <button onclick="showTrip()">관광지</button>
-			 <button onclick="showRest()">숙소</button>
-			 <div id="map" style="width:450px;height:450px;">			 	
-			 </div>			
-			 <p id="result"></p>
-			 <a href="#" id="kakaomap">최단경로보기</a>
-	</div>
-	
-	<script>
-  		var chk = 1;   
+	<div class="main-content">				 
+			 <div id="mybook" style="border: 1px solid black;">
+			    <div>
+			        Yay, Page 1!
+			    </div>
+			    <div>
+			        Yay, Page 2!
+			    </div>
+			    <div id="page3" style="width:470px; height:630px; overflow:auto; background-color: lime;">
+			        Yay, Page 3!
+			    </div>
+			    <div>
+			         <a href="./loadMap.do">아아아</a>	
+					 <button onclick="showFood()">음식점</button>
+					 <button onclick="showTrip()">관광지</button>
+					 <button onclick="showRest()">숙소</button>
+					 <div id="map" style="width:440px;height:560px;">			 	
+					 </div>								 
+			    </div>
+			</div>
+	</div>	
+	<script>  			
+		var daysNum = 1;
+		
 		var container = document.getElementById('map');
 		var options = {
 			center: new daum.maps.LatLng(33.450701, 126.570667),
-			level: 3
+			level: 3,
+			disableDoubleClickZoom : true
 		};
 		var map = new daum.maps.Map(container, options);
-		// 마커들
-		var markers = [];		
-		var startMarker;
-		var endMarker;
-	
+		// 관광지/음식점/숙소 마커들
+		var markers = [];			
+		// 일정 마커들
+		var daysMarker = [];	
+		// 일정 마커들의 인포윈도우
+		var daysInfo = [];		
+		
+		//클릭시 나오는 임시 마커
+		var marker;
+		//입력 윈도우
+		var insertWindow;
+		var isInsertOpen = false;
+		//상세 윈도우
+		var detailWindow;
+		var isdetailOpen = false;
 		/* var icon = new daum.maps.MarkerImage(
 		        './food.png',
-		        new daum.maps.Size(32, 32));
-		
-		var icon2 = new daum.maps.MarkerImage(
-		        './tree.png',
-		        new daum.maps.Size(32, 32)); */
-	
+		        new daum.maps.Size(32, 32)); */			
 		daum.maps.event.addListener(map, 'click',function(mouseEvent){
-			// 클릭한 위도, 경도 정보를 가져옵니다 
-		    var latlng = mouseEvent.latLng;
-		    
-		    var message = '클릭한 위치의 위도는 ' + latlng.getLat() + ' 이고, ';
-		    message += '경도는 ' + latlng.getLng() + ' 입니다';
-		    
-		    var resultDiv = document.getElementById('result'); 
-		    resultDiv.innerHTML = message;
-		    if(chk == 1){
-			    startMarker = new daum.maps.Marker({ 			    
-				    position: new daum.maps.LatLng(latlng.getLat(), latlng.getLng()),
-				    clickable: true				   
-			    }); 
-				// 지도에 마커를 표시합니다
-				startMarker.setMap(map);
-				startMarker.setDraggable(true);
-				chk++;
-			}
-		    
-		    else if(chk == 2){
-		    	endMarker = new daum.maps.Marker({ 			    
-				    position: new daum.maps.LatLng(latlng.getLat(), latlng.getLng()),
-				    clickable: true 				   
-			    }); 
-				// 지도에 마커를 표시합니다
-				endMarker.setMap(map);
-				endMarker.setDraggable(true);
-				chk++;
-				change(startMarker,endMarker);
+			if(isInsertOpen != true && isdetailOpen != true){
+			
+				// 클릭한 위도, 경도 정보를 가져옵니다 
+				var latlng = mouseEvent.latLng;	
 				
-				var linePath = [
-				    new daum.maps.LatLng(startMarker.getPosition().getLat(), startMarker.getPosition().getLng()),
-				    new daum.maps.LatLng(endMarker.getPosition().getLat(), endMarker.getPosition().getLng())		   
-				];
+				 // 마커 생성			
+			    marker = new daum.maps.Marker({ 			    
+					position: new daum.maps.LatLng(latlng.getLat(), latlng.getLng()),
+					clickable: true				   
+				}); 		
+				
+			 	// 입력 윈도우를 생성합니다
+				insertWindow = new daum.maps.InfoWindow({
+				    content : '<div style="padding:5px; width=200px; height=120px;">일정제목:<input type="text" id="daysTitle"></input><br><button style="width:100px; height=30px;" onclick="daysMake()">일정등록</button><button style="width:100px; height=30px;" onclick="closeInfo()">취소</button></div>',
+				});			 	
+				insertWindow.open(map, marker); 		
+				isInsertOpen = true;
+				map.setDraggable(false);
+				map.setZoomable(false);					
+			}			
+			test123();
+		});		  		
+		       
+		function test123() {
+					    
+		for (var i = 0; i < daysMarker.length; i ++) {
+		            // 마커를 생성합니다
+		    var marker = daysMarker[i];
 
-				// 지도에 표시할 선을 생성합니다
-				var polyline = new daum.maps.Polyline({
-				    path: linePath, // 선을 구성하는 좌표배열 입니다
-				    strokeWeight: 5, // 선의 두께 입니다
-				    strokeColor: '#FF0000', // 선의 색깔입니다
-				    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-				    strokeStyle: 'solid' // 선의 스타일입니다
-				});
+		            // 마커에 표시할 인포윈도우를 생성합니다 
+		    var infowindow = new daum.maps.InfoWindow({
+		               content: '<div>살려줘!!!!</div>',// 인포윈도우에 표시할 내용
+		               removable: true
+		    });
 
-				// 지도에 선을 표시합니다 
-				polyline.setMap(map);  
+		            // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+		            // 이벤트 리스너로는 클로저를 만들어 등록합니다 
+		            // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+		        daum.maps.event.addListener(marker, 'click', makeOverListener(map, marker, infowindow));
+		        daum.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+		    }
+		}
+
+		        // 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+	  function makeOverListener(map, marker, infowindow) {
+		            return function() {
+		                infowindow.open(map, marker);
+		            };
+		        }
+
+		        // 인포윈도우를 닫는 클로저를 만드는 함수입니다 
+		        function makeOutListener(infowindow) {
+		            return function() {
+		                infowindow.close();
+		            };
+		        }				
+		        
+		// 일정 만들기
+		function daysMake() {		
+			// 마커에 넣기
+			daysMarker.push(marker);	
+			var title = document.getElementById('daysTitle').value;			
+			// 내용에 넣기
+			daysInfo.push(detailWindow);				
+			// 선 그리기
+			render();			
+							
+			// 일정 페이지 정보 가져오기
+			var daysPage = document.getElementById("page3");
+			var div = document.createElement('div');			
+			
+			if(daysNum >= 2){
+				//시작 지점 과 끝지점 가져와서 최단거리 설정
+				div.innerHTML += "↓";
+				var startCoord = new daum.maps.LatLng(daysMarker[daysNum-2].getPosition().getLat(), daysMarker[daysNum-2].getPosition().getLng());
+				var endCoord =  new daum.maps.LatLng(daysMarker[daysNum-1].getPosition().getLat(), daysMarker[daysNum-1].getPosition().getLng());
+				div.innerHTML += "<a href='https://map.kakao.com/?sX="+startCoord.toCoords().getX()+"&sY="+startCoord.toCoords().getY()+"&sName=출발점&eX="+endCoord.toCoords().getX()+"&eY="+endCoord.toCoords().getY()+"&eName=도착점'"
+						+ " onclick='window.open(this.href, \"_경로보기\", \"width=1000px,height=800px;\"); return false;'"
+						+ ">최단경로보기</a><br>";
 			}
-		    
-			// 인포윈도우를 생성합니다
-			var infowindow = new daum.maps.InfoWindow({
-			    content : '<div style="padding:5px;">출발점</div>',
-			    removable : true
-			});
+			div.innerHTML += "<span>"+daysNum+"번째 일정:"+title+"</span>";
+			daysPage.appendChild(div);
+			closeInfo();
+			daysNum++;			
+			//renderInfo();
+		}         
+		
+		function makeDetailWindow(i,detailWindow,map) {
+			detailWindow.open(map, daysMarker[i]);
+		}
+		
+		
+		// 그려주기
+		function render() {
+		    var linePath = [];
+			// 지도에 마커를 표시합니다
+			for(var i = 0 ; i < daysMarker.length ; i++)
+			{
+				daysMarker[i].setMap(map);
+				daysMarker[i].setDraggable(true);	
+				var path =  new daum.maps.LatLng(daysMarker[i].getPosition().getLat(), daysMarker[i].getPosition().getLng());
+				linePath.push(path);
+			}
 			
-			daum.maps.event.addListener(startMarker, 'click', function() {
-			     // 마커 위에 인포윈도우를 표시합니다
-			      infowindow.open(map, startMarker); 
-			      //navi(marker);
-			     // change(startMarker);
-			});			
-			
-			/* if(endMarker != null){
-			daum.maps.event.addListener(endMarker, 'dragend', function() {
-				alert("이동완료");
-			     // 도착 마커의 드래그가 종료될 때 마커 이미지를 원래 이미지로 변경합니다
-			    //arriveMarker.setImage(arriveImage);  
-				var linePath = [
-				    new daum.maps.LatLng(startMarker.getPosition().getLat(), startMarker.getPosition().getLng()),
-				    new daum.maps.LatLng(endMarker.getPosition().getLat(), endMarker.getPosition().getLng())		   
-				];
-	
+			if(daysMarker.length >= 2){		
 				// 지도에 표시할 선을 생성합니다
 				var polyline = new daum.maps.Polyline({
-				    path: linePath, // 선을 구성하는 좌표배열 입니다
-				    strokeWeight: 5, // 선의 두께 입니다
-				    strokeColor: '#FF0000', // 선의 색깔입니다
-				    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-				    strokeStyle: 'solid' // 선의 스타일입니다
+					    path: linePath, // 선을 구성하는 좌표배열 입니다
+					    strokeWeight: 5, // 선의 두께 입니다
+					    strokeColor: '#FF0000', // 선의 색깔입니다
+					    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+					    strokeStyle: 'solid' // 선의 스타일입니다
 				});
-	
 				// 지도에 선을 표시합니다 
 				polyline.setMap(map);  
-				});
-			} */
-		});
+			}        
+		}
+		// 일정 등록시 info메세지 닫기
+		function closeInfo() {
+			insertWindow.close();
+			isInsertOpen = false;
+			map.setDraggable(true);
+			map.setZoomable(true);
+		}
+		//일정 조회시 info메세지 닫기
+		function closeDetail(){
+			detailWindow.close();
+		}
+		
 		
 		function change(startMarker , endMarker) {
 			//var geocoder = new daum.maps.services.Geocoder(); // 좌표계 변환 객체를 생성합니다
@@ -190,11 +257,8 @@
 			$("#kakaomap").attr("href" , "https://map.kakao.com/?sX="+startCoord.toCoords().getX()+"&sY="+startCoord.toCoords().getY()+"&sName=출발점&eX="+endCoord.toCoords().getX()+"&eY="+endCoord.toCoords().getY()+"&eName=도착점");
 			
 			//location.href="https://map.kakao.com/?sX="+startCoord.toCoords().getX()+"&sY="+startCoord.toCoords().getY()+"&sName=출발점&eX="+endCoord.toCoords().getX()+"&eY="+endCoord.toCoords().getY()+"&eName=도착점";			
-		}		
+		}				
 		
-		if(endMarker != null){
-			
-		}
 	
 		//https://map.kakao.com/?sX=400437.5000000028&sY=-11539.999999998836&sName=%EC%9A%B0%EB%A6%AC%EC%A7%91&eX=400437.5000000028&eY=-11538.999999998836&eName=%EC%97%AD%EC%82%BC%EC%97%AD
 			//alert(coord.toCoords().getX());
@@ -257,7 +321,7 @@
 						foodMarker.setMap(map);	
 						markers.push(foodMarker);
 						var foodMarkerInfo = new daum.maps.InfoWindow({
-						    content : '<div style="padding:5px;">'+msg.result[i].map_title+'</div><button>일정등록</button><button>닫기</button>',
+						    content : '<div style="width:200px; height:90px; padding:5px;">'+msg.result[i].map_title+'</div><button style="width:99px; height:30px">일정등록</button><button style="width:99px; height:30px">닫기</button>',
 						    removable : true
 						});						
 						
@@ -359,8 +423,20 @@
 			}
 		});
 	 }
+	 
+	
+	 
+ 	
 	</script>
-	
-	
+	<script type="text/javascript">
+	$(function() {
+ 	    //single book
+ 	    $('#mybook').booklet({
+ 	    		width:  960,
+ 	            height: 650,
+ 	            shadow: false
+ 	    });
+ 	});
+ 	</script>
 	</body>
 </html>
