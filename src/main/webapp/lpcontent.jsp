@@ -55,8 +55,9 @@
 						
 						
 				<div>
-			 		<a href="#" onclick="likeCancel()"><img id="likeAfter" alt="likeHeart" src="./img/LikeAfter.png"></a>
-			 		<a href="#" onclick="like()"><img id="likeBefore" alt="likeEmpty" src="./img/LikeBefore.png"></a>
+			 		<a href="#" onclick="likeCancel()"><!-- <img id="likeAfter" alt="likeHeart" src="./img/LikeAfter.png"> --></a>
+			 		<a href="#" onclick="like()"><!-- <img id="likeBefore" alt="likeEmpty" src="./img/LikeBefore.png"> --></a>
+			 	
  				</div>		
 						
 						
@@ -84,16 +85,25 @@ var LpCancel = function(){
 		data: {"user_email" : user_email, "sketch_id" : sketch_id },
 		dataType: "Json",
 		success: function(result){
-			alert("좋아요 취소");
-			$("#likeAfter").attr("src","./img/LikeBefore.png");
-			
-			
+			//alert("실행되라");
+			alert(result.result);	
+			if(result.result == "F")
+				$("#likeAfter").attr("src","./img/LikeBefore.png");	
+			else
+				$("#likeAfter").attr("src","./img/LikeAfter.png");	
 		}, error : function() {
 			alert("실패");
 		}
 		
 	});
 }
+
+
+
+
+
+
+
 </script>
 
 

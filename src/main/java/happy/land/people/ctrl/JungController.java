@@ -22,9 +22,7 @@ public class JungController {
 	
 	@Autowired
 	private ISketchBookService iSketchBookService;
-	
-	
-	
+
 	
 	@ResponseBody
 	@RequestMapping(value="/CancelLike.do",method=RequestMethod.GET)
@@ -33,12 +31,23 @@ public class JungController {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("user_email", "128@happy.com");
 		map.put("sketch_id", "0004");
-		boolean isc = iSketchBookService.likeCancel(map);
-		System.out.println(isc+"!!!!!!!!!!!~~!@!@!@!@!@");
-		logger.info("Controller CancelLike {}", isc);
-		
+		String like = iSketchBookService.selLike(map);		
 		Map<String,String> result = new HashMap<String,String>();
-		result.put("result", "lpcontent");
+	
+		boolean isc = false;
+		if(like.equalsIgnoreCase("F")) {
+			map.put("like", "T");
+			isc = iSketchBookService.likeCancel(map);
+			result.put("result", "T");
+		}else {
+			map.put("like", "F");
+			isc = iSketchBookService.likeCancel(map);
+			result.put("result", "F");
+		}		
+				
+		System.out.println(isc+"!!!!!!!!!!!~~!@!@!@!@!@");
+		//logger.info("Controller CancelLike {}", isc);	
+				
 		return result;
 	}
 	
