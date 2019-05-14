@@ -4,14 +4,30 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+
+import happy.land.people.dto.cho.ChoDto;
+import happy.land.people.model.cho.IChoService;
 
 @Controller
 public class ChoController {
 
 	private Logger logger = LoggerFactory.getLogger(ChoController.class);
+	
+	@Autowired
+	private IChoService iChoService;
+	
+	
+	// 메인페이지로가는 컨트롤러
+	@RequestMapping(value="/mainPage.do" , method=RequestMethod.GET)
+	public String mainPage() {
+		return "redirect:./index.jsp";
+	}
+	
+	
 	
 	@RequestMapping(value="/loginPage.do", method=RequestMethod.GET)
 	public String loginPage() {
@@ -34,7 +50,9 @@ public class ChoController {
 		System.out.println("비밀번호:"+pw);
 		
 		
-		return "redirect:./index.jsp";
+		
+		
+		return  "redirect:./index.jsp";
 	}
 	
 	
@@ -47,13 +65,21 @@ public class ChoController {
 		return "users/sign/regiForm";
 	}
 	
-	//회원가입
+	//회원가입(db에저장하기 헤헤)
 	@RequestMapping(value="/signUp.do" , method=RequestMethod.POST)
-	public String signUp() {
+	public String signUp(HttpServletRequest req, ChoDto dto) {
 		
-		return null;
+		boolean isc = iChoService.signUp(dto);
+		
+		return isc?"users/sign/auth":"404";
 	}
 	
-	
+	// 이메일 링크 클릭으로 들어옴
+	@RequestMapping(value="/mailConfirm.do", method=RequestMethod.GET)
+	public String mailConfirm(ChoDto dto) {
+//		System.out.println(dto); //==	logger.info(dto.toString());
+		boolean isc = iChoService.authStatusUpdate(dto.getUser_email());
+		return isc? "users/sign/auth" : "error";
+	}
 	
 }

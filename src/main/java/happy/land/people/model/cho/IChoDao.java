@@ -21,8 +21,8 @@ public interface IChoDao {
 	//닉네임중복체크
 	public int nicknameDupChk(String user_nickname);
 	//이메일 인증키 저장
-	public boolean authkeyUpdate(ChoDto user_emailkey);
+	public boolean authkeyUpdate(ChoDto dto);
 	//이메일 인증 상태 변경
-	public boolean authStatusUpdate(ChoDto user_emailchk);
+	public boolean authStatusUpdate(String user_email);
 	
 }
