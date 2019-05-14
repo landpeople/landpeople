@@ -145,8 +145,8 @@
 </style>
 
    <% 
-   	String grId = (String)session.getAttribute("gr_id"); 
-    String mem_id = (String)session.getAttribute("mem_id"); 
+   	String grId = (String)session.getAttribute("chr_id"); 
+    String mem_id = (String)session.getAttribute("user"); 
    %>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
@@ -228,7 +228,7 @@
     		 success: function(result){
     			 for(var k in result.list){
  					if(result.list[k]==grId){
-						$(".memList").prepend("<img class = 'mem_icon' src = 'images/chat_member.png' alt = '접속자아이콘'><p style = 'font-size : 13px;padding : 5px;border-bottom: 0.5px solid #B4B4B4;'>"+k+"</p>"); 
+						$(".memList").prepend("<img class = 'mem_icon' src = 'img/smile.png' alt = '접속자 아이콘'><p style = 'font-size : 13px;padding : 5px;border-bottom: 0.5px solid #B4B4B4;'>"+k+"</p>"); 
 					}
     			 }
     		 }
@@ -257,6 +257,7 @@
 	          onKeypress="if(event.keyCode==13) $('.chat_btn').click();" ></textarea>
 	   <div class="chat_btn"></div>          
    </div>
-      <%=grId%><%=mem_id%>
+     그룹아이디 : <%=grId%>
+  나의 아이디 : <%=mem_id%>
 </body>
 </html>

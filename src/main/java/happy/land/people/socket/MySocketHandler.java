@@ -31,23 +31,23 @@ public class MySocketHandler extends TextWebSocketHandler{
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		logger.info("afterConnectionEstablished()실행");
+		logger.info("● MySocketHandler afterConnectionEstablished()실행");
 		super.afterConnectionEstablished(session);
 
 		list.add(session);	//전체 접속자 리스트에 새로운 접속자 추가
-		System.out.println("client session cnt : "+list.size()); 
-		System.out.println("session connected : "+session.getId());
+		System.out.println("● MySocketHandler client session cnt : "+list.size()); 
+		System.out.println("● MySocketHandler session connected : "+session.getId());
 	}
 
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		logger.info("handleTextMessage()실행");
+		logger.info("● MySocketHandler handleTextMessage()실행");
 		String msg = message.getPayload();
 		String txt = "";
 
 		Map<String, Object> mySession = session.getHandshakeAttributes();	//WebsocketSession의 session값을 httpSesssion값으로 변경
 		String myGrSession = (String)mySession.get("gr_id");	//접속자의 그룹 아이디
-		String myMemSession = (String)mySession.get("mem_id");	//접속자 아이디
+		String myMemSession = (String)mySession.get("user");	//접속자 아이디
 		System.err.println(myGrSession+":"+myMemSession+"----------------");
 
 		if( msg != null && !msg.equals("") ) {
@@ -56,11 +56,11 @@ public class MySocketHandler extends TextWebSocketHandler{
 				for(WebSocketSession s : list) {	
 					Map<String, Object> sessionMap = s.getHandshakeAttributes();
 					String otherGrSession = (String)sessionMap.get("gr_id");
-					String otherMemSession = (String)sessionMap.get("mem_id");
+					String otherMemSession = (String)sessionMap.get("user");
 
 					ArrayList<String> grMemList = new ArrayList<String>();
-					System.out.println("그룹아이디: "+myGrSession);
-					System.out.println("멤버아이디2: "+otherMemSession);
+					System.out.println("● MySocketHandler 그룹 아이디: " + myGrSession);
+					System.out.println("● MySocketHandler 멤버 아이디: "+otherMemSession);
 
 					if(myGrSession.equals(otherGrSession)) {	//같은 그룹 소속일 때
 						s.sendMessage(

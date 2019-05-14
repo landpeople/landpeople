@@ -47,7 +47,7 @@
          <!-- 메인 컨텐츠   -->
          <div class="lpcontents">
             <div class="content">
-               <a href="./socketOpen.do?mem=AAA&gr=New01">체팅으로 가자mem=AAA&gr=New01</a>
+               <a href="#" id="test">체팅으로 가자mem=접속자1&gr=New01</a>
                <br>
                <a href="./socketOpen.do?mem=BBB&gr=New01">체팅으로 가자mem=BBB&gr=New01</a>
                <br>
@@ -61,6 +61,16 @@
 
 
          <div class="footer">landpeople</div>
+undefined
+
+         <script type="text/javascript">
+         
+         	var test = document.getElementById("test");
+         	alert(test);
+         	test.addEventListener('click',function(){
+         	   open("./socketOpen.do?mem=AAA&gr=New01");
+         	})
+		</script>
       </div>
    </div>
 </body>

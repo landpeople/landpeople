@@ -45,24 +45,55 @@ public class LeeController implements ServletConfigAware {
 
 	// WebSocket 채팅 접속했을 때
 	@RequestMapping(value = "/socketOpen.do", method = RequestMethod.GET)
-	public String socketOpen(HttpSession session, Model model, String mem, String gr) {
+	public String socketOpen(HttpSession session, Model model, String mem, String user) {
 
-		session.setAttribute("mem_id", mem);
-		session.setAttribute("gr_id", gr);
+		System.out.println("● LeeController String 현 세션의 사용자 닉네임 user: " + user);
+		
+		// 여기서 테이블의 다오를 통해서 나랑 상대방의 채팅방이 기존에 있는지 확인해줌
+		logger.info("socketOpen 소켓 화면 이동 1) 리스트에 접속자 값 넣기");
+		
+//		session.setAttribute("mem_id", mem);
+//		session.setAttribute("gr_id", gr);
+		
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("user", user);
+		map.put("mem_id", mem);
+		
+		String chr_id = service.chatRoom_Select(map);
 
-		logger.info("socketOpen 소켓 화면 이동 1)리스트에 접속자 값 넣기");
-		String mem_id = (String) session.getAttribute("mem_id");
-		String gr_id = (String) session.getAttribute("gr_id");
-		logger.info(mem_id + "::" + gr_id);
-		HashMap<String, String> chatList = (HashMap<String, String>) servletContext.getAttribute("chatList");
-		if (chatList == null) {
+		System.out.println("채팅방이 존재하나요? " + chr_id);
+		
+		HashMap<String, String> chatList = (HashMap<String, String>) servletContext.getAttribute("chatList");// 전해준 attrbute가 없어. 그냥  null임
+		System.out.println(chatList);
+		if(chr_id == null) {
+			int n = service.chatRoom_Insert(map);
+			System.out.println("채팅방을 만들었다!" + n);
+			chr_id = service.chatRoom_Select(map);
 			chatList = new HashMap<String, String>();
-			chatList.put(mem_id, gr_id);
+			chatList.put(user, chr_id);	
 			servletContext.setAttribute("chatList", chatList);
-		} else {
-			chatList.put(mem_id, gr_id);
+		}else {
+			int n = service.chatRoom_UpdateOut(chr_id);
+			System.out.println("채팅방을 보이게 했다!" + n);
+			chatList = new HashMap<String, String>();
+			chatList.put(user, chr_id);
 			servletContext.setAttribute("chatList", chatList);
 		}
+		
+
+//		String mem_id = (String) session.getAttribute("mem_id");
+//		String gr_id = (String) session.getAttribute("gr_id");
+//		logger.info(mem_id + "::" + gr_id);
+//		HashMap<String, String> chatList = (HashMap<String, String>) servletContext.getAttribute("chatList");// 전해준 attrbute가 없어. 그냥  null임
+//		System.out.println("chatList가 널인지 아닌지 확인하자" + chatList); // 그냥 때려박은건지 확인
+//		if (chatList == null) {
+//			chatList = new HashMap<String, String>();
+//			chatList.put(mem_id, gr_id);
+//			servletContext.setAttribute("chatList", chatList);
+//		} else {
+//			chatList.put(mem_id, gr_id);
+//			servletContext.setAttribute("chatList", chatList);
+//		}
 		logger.info("socketOpen 소켓 화면 이동 2)리스트 값 전달");
 
 		return "/chat/groupChat";

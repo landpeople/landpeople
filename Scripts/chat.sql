@@ -10,16 +10,10 @@ DROP SEQUENCE LPCHATIMAGE_SEQ;
 
 -- 테이블 생성
 CREATE TABLE LPCHATLIST(USER_NICKNAME VARCHAR2(20));
-CREATE TABLE LPCHATROOM(CHR_ID VARCHAR2(20), CHL_ID VARCHAR2(20), USER_EMAIL VARCHAR2(50), CHR_CONTENT VARCHAR2(200), CHT_READFLAG CHAR(1), CHT_TIME DATE);
-CREATE TABLE LPCHATIMAGE(CHI_ID VARCHAR2(20), CHL_ID VARCHAR2(20), USER_EMAIL VARCHAR2(50), CHI_RPATH VARCHAR2(200), CHI_SPATH VARCHAR2(200), FILE_SIZE NUMBER, CHT_READFLAG CHAR(1), CHT_TIME DATE);
-
--- 제약조건 추가
-ALTER TABLE LPCHATLIST ADD PRIMARY KEY(USER_NICKNAME);
-ALTER TABLE LPCHATROOM ADD FOREIGN KEY(CHL_ID) REFERENCES LPCHATLIST(CHL_ID) ON DELETE CASCADE; -- FK가 삭제되면 해당 컬럼도 함께 삭제함
-ALTER TABLE LPCHATIMAGE ADD FOREIGN KEY(CHL_ID) REFERENCES LPCHATLIST(CHL_ID) ON DELETE CASCADE;
+CREATE TABLE LPCHATROOM(CHR_ID VARCHAR2(20), CHR_SENDER VARCHAR2(20), CHR_RECEIVER VARCHAR2(50), CHR_SOUT CHAR(1), CHR_ROUT CHAR(1), CHR_CONTENT VARCHAR2(2000), CHR_REGDATE DATE);
+CREATE TABLE LPCHATIMAGE(CHI_ID VARCHAR2(20), CHI_RPATH VARCHAR2(200), CHI_SPATH VARCHAR2(200), FILE_SIZE NUMBER);
 
 -- 테이블 시퀀스 생성
-CREATE SEQUENCE LPCHATLIST_SEQ START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE LPCHATROOM_SEQ START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE LPCHATIMAGE_SEQ START WITH 1 INCREMENT BY 1;
 
@@ -31,6 +25,12 @@ INSERT INTO LPCHATLIST VALUES('접속자4');
 INSERT INTO LPCHATLIST VALUES('접속자5');
 INSERT INTO LPCHATLIST VALUES('접속자6');
 
+
+-- default로 하나의 채팅방을 생성해줌
+INSERT INTO LPCHATROOM (CHR_ID, CHR_SENDER, CHR_RECEIVER, CHR_SOUT, CHR_ROUT, CHR_CONTENT, CHR_REGDATE)
+VALUES(LPCHATROOM_SEQ.NEXTVAL, '접속자1', '접속자2', 'F', 'F', '<p id="접속자 1">접속자 1님의 시간</p><p id="접속자1">안녕하세요!!!</p><p id="접속자 2">접속자2님의 시간</p><p id="접속자2">오냐</p>', SYSDATE);
+
+
 -- 1. 세션에 접속한 사용자 리스트 출력 =================================================================================================
 SELECT * FROM LPCHATLIST;
 
@@ -38,18 +38,17 @@ SELECT * FROM LPCHATLIST;
 
 
 
+
+
 -- 1. 채팅방 생성 ==========================================================================================================================================			
--- 1) 기존에 상대방과 채팅방이 있는지 확인
-SELECT CHL_ID, CHL_SENDER, CHL_RECEIVER FROM LPCHATLIST WHERE (CHL_SENDER, CHL_RECEIVER) IN (('a1@naver.com', 'b1@naver.com'),('b1@naver.com','a1@naver.com'));
--- 위와 같은 쿼리
---SELECT CHL_ID FROM LPCHATLIST WHERE CHL_SENDER= 'a1@naver.com' AND  CHL_RECEIVER = 'b1@naver.com' OR CHL_SENDER = 'b1@naver.com' AND CHL_RECEIVER = 'a1@naver.com';
+-- 1. 기존에 상대방과 채팅방이 있는지 확인
+SELECT CHR_ID FROM LPCHATROOM WHERE (CHR_SENDER, CHR_RECEIVER) IN (('접속자1', '접속자2'),('접속자2','접속자1'));
 
--- 만약에 기존에 만들었던 채팅방이 있다면(CHL_ID) 그 채팅방을 가져와서 나의 채팅 목록에서 보이게 함(원래 F로 설정되어 있을 수도 있지만 그냥 업데이트 함)
-UPDATE LPCHATLIST SET CHL_SDEL='F', CHL_RDEL = 'F' WHERE CHL_ID = '1';
+-- 2.1 만약에 기존에 만들었던 채팅방이 있다면 나의 채팅 목록에서 보이게 만들어줌
+UPDATE LPCHATROOM SET CHR_SOUT='F', CHL_ROUT = 'F' WHERE CHR_ID = '1';
 
--- 기존에 채팅방이 없다면(NULL) -> 채팅 리스트에 추가
-INSERT INTO LPCHATLIST VALUES(LPCHATLIST_SEQ.NEXTVAL, 'a1@naver.com', 'b4@naver.com', 'F', 'F');
-
+-- 2.2 기존에 채팅방이 없다면 -> 채팅 리스트에 추가
+INSERT INTO LPCHATROOM VALUES(LPCHATROOM_SEQ.NEXTVAL, '접속자1', '접속자2', 'F', 'F', '', SYSDATE);
 -- 추가한 채팅 리스트 확인
 SELECT * FROM LPCHATLIST;
 -- ==========================================================================================================================================
