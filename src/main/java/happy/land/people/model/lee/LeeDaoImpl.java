@@ -20,6 +20,12 @@ public class LeeDaoImpl implements ILeeDao {
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
+	public int chatList_Insert(String user_nickname) {
+		logger.info("● Repository chatList_Insert 실행");
+		return sqlSession.insert("lee_test.chatList_Insert", user_nickname);
+	}
+	
+	@Override
 	public List<String> chatList_SelectAll() {
 		logger.info("● Repository chatList_SelectAll 실행");
 		return sqlSession.selectList("lee_test.chatList_SelectAll");
@@ -42,4 +48,5 @@ public class LeeDaoImpl implements ILeeDao {
 		logger.info("● Repository chatRoom_Insert 실행");
 		return sqlSession.insert("lee_test.chatRoom_Insert", map);
 	}
+
 }

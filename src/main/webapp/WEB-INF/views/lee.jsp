@@ -13,6 +13,8 @@
 
 </head>
 <body>
+
+<%=session.getId() %>
    <!--젤로 레이아웃- 전체 영역 감싸는 div-->
    <div class="main-wrapper">
 
@@ -58,19 +60,7 @@
             </div>
          </div>
          <!-- </div> 여기까지 메인 컨텐츠  -->
-
-
          <div class="footer">landpeople</div>
-undefined
-
-         <script type="text/javascript">
-         
-         	var test = document.getElementById("test");
-         	alert(test);
-         	test.addEventListener('click',function(){
-         	   open("./socketOpen.do?mem=AAA&gr=New01");
-         	})
-		</script>
       </div>
    </div>
 </body>

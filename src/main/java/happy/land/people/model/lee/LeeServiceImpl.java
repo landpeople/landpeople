@@ -16,6 +16,13 @@ public class LeeServiceImpl implements ILeeService {
 	@Autowired
 	private ILeeDao dao;
 	
+
+	@Override
+	public int chatList_Insert(String user_nickname) {
+		logger.info("● Service chatList_Insert 실행");
+		return dao.chatList_Insert(user_nickname);
+	}
+	
 	@Override
 	public List<String> chatList_SelectAll() {
 		logger.info("● Service chatList_SelectAll 실행");

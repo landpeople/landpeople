@@ -31,6 +31,7 @@ public class LeeController implements ServletConfigAware {
 	 * 채팅에 관련된 정보를 담기 위해 Application 객체 생성
 	 */
 	private ServletContext servletContext;
+	
 	// 8. log처리를 위한 logger객체 생성
 	Logger logger = LoggerFactory.getLogger(LeeController.class);
 
@@ -45,57 +46,30 @@ public class LeeController implements ServletConfigAware {
 
 	// WebSocket 채팅 접속했을 때
 	@RequestMapping(value = "/socketOpen.do", method = RequestMethod.GET)
-	public String socketOpen(HttpSession session, Model model, String mem, String user) {
+	public String socketOpen(HttpSession session, Model model, String sender, String receiver) {
 
-		System.out.println("● LeeController String 현 세션의 사용자 닉네임 user: " + user);
-		
-		// 여기서 테이블의 다오를 통해서 나랑 상대방의 채팅방이 기존에 있는지 확인해줌
-		logger.info("socketOpen 소켓 화면 이동 1) 리스트에 접속자 값 넣기");
-		
-//		session.setAttribute("mem_id", mem);
-//		session.setAttribute("gr_id", gr);
+		System.out.println("● LeeController socketOpen.do / 현 세션의 사용자 닉네임 user: " + sender);
 		
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("user", user);
-		map.put("mem_id", mem);
-		
+		map.put("sender", sender);
+		map.put("receiver", receiver);
+		// 여기서 테이블의 다오를 통해서 나랑 상대방의 채팅방이 기존에 있는지 확인해줌
 		String chr_id = service.chatRoom_Select(map);
 
-		System.out.println("채팅방이 존재하나요? " + chr_id);
+		System.out.println("● LeeController socketOpen.do / 채팅방이 존재여부(채팅방 아이디): " + chr_id);
 		
-		HashMap<String, String> chatList = (HashMap<String, String>) servletContext.getAttribute("chatList");// 전해준 attrbute가 없어. 그냥  null임
-		System.out.println(chatList);
+		session.setAttribute("user", sender);
+	
 		if(chr_id == null) {
-			int n = service.chatRoom_Insert(map);
-			System.out.println("채팅방을 만들었다!" + n);
+			int n = service.chatRoom_Insert(map); // 채팅방 생성
+			System.out.println("● LeeController socketOpen.do / 채팅방 생성(1은 성공) : " + n);
 			chr_id = service.chatRoom_Select(map);
-			chatList = new HashMap<String, String>();
-			chatList.put(user, chr_id);	
-			servletContext.setAttribute("chatList", chatList);
+			session.setAttribute("chr_id", chr_id); // setAttribute 하면 handler에서 이 내용을 가지고 철 가능
 		}else {
 			int n = service.chatRoom_UpdateOut(chr_id);
-			System.out.println("채팅방을 보이게 했다!" + n);
-			chatList = new HashMap<String, String>();
-			chatList.put(user, chr_id);
-			servletContext.setAttribute("chatList", chatList);
+			System.out.println("● LeeController socketOpen.do / 채팅방 보이기(1은 성공) : " + n);
+			session.setAttribute("chr_id", chr_id);
 		}
-		
-
-//		String mem_id = (String) session.getAttribute("mem_id");
-//		String gr_id = (String) session.getAttribute("gr_id");
-//		logger.info(mem_id + "::" + gr_id);
-//		HashMap<String, String> chatList = (HashMap<String, String>) servletContext.getAttribute("chatList");// 전해준 attrbute가 없어. 그냥  null임
-//		System.out.println("chatList가 널인지 아닌지 확인하자" + chatList); // 그냥 때려박은건지 확인
-//		if (chatList == null) {
-//			chatList = new HashMap<String, String>();
-//			chatList.put(mem_id, gr_id);
-//			servletContext.setAttribute("chatList", chatList);
-//		} else {
-//			chatList.put(mem_id, gr_id);
-//			servletContext.setAttribute("chatList", chatList);
-//		}
-		logger.info("socketOpen 소켓 화면 이동 2)리스트 값 전달");
-
 		return "/chat/groupChat";
 	}
 
@@ -128,9 +102,11 @@ public class LeeController implements ServletConfigAware {
 	// 채팅 접속자 리스트 출력
 	@RequestMapping(value = "/chatList.do", method = RequestMethod.GET)
 	public String chatList(Model model) {
-		List<String> nicknames = service.chatList_SelectAll();
-		System.out.println("● 접속 회원 리스트 : " + nicknames);
-		model.addAttribute("nicknames", nicknames);
+		
+		
+		List<String> users = service.chatList_SelectAll();
+		System.out.println("● LeeController chatList.do / 접속 회원 리스트 : " + users);
+		model.addAttribute("users", users);
 		return "/chat/chatList";
 	}
 }

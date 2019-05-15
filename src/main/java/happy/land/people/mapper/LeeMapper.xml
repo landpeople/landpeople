@@ -10,7 +10,7 @@
    <!-- 채팅방 생성 -->
    <!-- 1. 기존에 상대방과 채팅방이 있는지 확인 -->
    <select id="chatRoom_Select" parameterType="java.util.Map" resultType="java.lang.String">
-      SELECT CHR_ID FROM LPCHATROOM WHERE (CHR_SENDER, CHR_RECEIVER) IN ((#{user}, #{mem_id}),(#{mem_id},#{user}))
+      SELECT CHR_ID FROM LPCHATROOM WHERE (CHR_SENDER, CHR_RECEIVER) IN ((#{sender}, #{receiver}),(#{receiver},#{sender}))
    </select>
 
    <!--  2.1 만약에 기존에 만들었던 채팅방이 있다면 나의 채팅 목록에서 보이게 만들어줌 -->
@@ -20,6 +20,6 @@
    
    <!--  2.2 기존에 채팅방이 없다면 -> 채팅 리스트에 추가 -->
    <insert id="chatRoom_Insert" parameterType="java.util.Map">
-      INSERT INTO LPCHATROOM VALUES(LPCHATROOM_SEQ.NEXTVAL, #{user}, #{mem_id}, 'F', 'F', '', SYSDATE)
+      INSERT INTO LPCHATROOM VALUES(LPCHATROOM_SEQ.NEXTVAL, #{sender}, #{receiver}, 'F', 'F', '', SYSDATE)
    </insert>
 </mapper>
