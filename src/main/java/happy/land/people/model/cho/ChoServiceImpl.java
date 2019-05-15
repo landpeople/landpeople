@@ -26,7 +26,7 @@ public class ChoServiceImpl implements IChoService {
 	public boolean signUp(ChoDto dto) {
 		System.out.println("signUp 서비스 임플");
 		boolean isc = iChoDao.signUp(dto);
-		
+		System.out.println("==============================================================="+isc);
 		//authkey 임시 생성 후 dto 같이 담아줌
 		String user_emailkey = new TempKey().getKey(50, false);
 		dto.setUser_emailkey(user_emailkey);
@@ -38,7 +38,7 @@ public class ChoServiceImpl implements IChoService {
 		// 메일 내용 담을 변수(email, authkey만 보낼예정)
 		String mailContent = new StringBuffer().append("<h1>[이메일 인증]</h1>")
 				.append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
-				.append("<a href='http://localhost:8091/landpeopl/mailConfirm.do?user_email=")
+				.append("<a href='http://192.168.10.186:8091/LandPeople/mailConfirm.do?user_email=")
 				.append(dto.getUser_email())
 				.append("&authkey=").append(dto.getUser_emailkey())
 				.append("' target='_blank' >이메일 인증 확인</a>").toString();
@@ -68,7 +68,6 @@ public class ChoServiceImpl implements IChoService {
 
 	@Override
 	public ChoDto login(ChoDto dto) {
-		// TODO Auto-generated method stub
 		return iChoDao.login(dto);
 	}
 

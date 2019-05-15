@@ -6,16 +6,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>이메일 인증 완료</title>
+<title>로그아웃 임시</title>
 </head>
 <body>
 
-인증이 완료되었습니다
+로그아웃 확인할라고 임시로 만든 페이지임
 
-로그인하러 ㄱㄱ
+<form action="./logout.do" method="get">
 
-<form action="./loginPage.do" method="get">
-	<input type="submit" value="로그인">
+<input type="submit" value="로그아웃">
 </form>
+
 </body>
 </html>

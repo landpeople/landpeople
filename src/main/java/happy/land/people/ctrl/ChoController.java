@@ -1,10 +1,14 @@
 package happy.land.people.ctrl;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,6 +24,9 @@ public class ChoController {
 	@Autowired
 	private IChoService iChoService;
 	
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	// 메인페이지로가는 컨트롤러
 	@RequestMapping(value="/mainPage.do" , method=RequestMethod.GET)
@@ -38,19 +45,13 @@ public class ChoController {
 	
 	
 	
-	// 여기는 나중에 한다 ^^
+	// 여기는 나중에 한다 ^^ 로그인기능
 	@RequestMapping(value="/login.do" ,method=RequestMethod.POST)
-	public String login(HttpServletRequest req) {
-		logger.info("login 컨트롤러");
+	public String login(ChoDto dto , HttpSession session) {
 		
-		String email = req.getParameter("user_email");
-		String pw = req.getParameter("user_password");
+		ChoDto ldto = iChoService.login(dto);
 		
-		System.out.println("아이디:"+email);
-		System.out.println("비밀번호:"+pw);
-		
-		
-		
+		session.setAttribute("login", ldto);
 		
 		return  "redirect:./index.jsp";
 	}
@@ -73,6 +74,9 @@ public class ChoController {
 		
 		return isc?"users/sign/auth":"404";
 	}
+	
+	
+	
 	
 	// 이메일 링크 클릭으로 들어옴
 	@RequestMapping(value="/mailConfirm.do", method=RequestMethod.GET)
