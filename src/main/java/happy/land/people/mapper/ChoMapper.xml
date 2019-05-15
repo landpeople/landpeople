@@ -47,7 +47,7 @@
 
 <!-- 로그인 -->
 <select id="login" parameterType="ChoDto" resultType="ChoDto">
-	SELECT  USER_PASSWORD, USER_AUTH,   USER_EMAILCHK
+	SELECT USER_EMAIL, USER_PASSWORD, USER_NICKNAME, USER_AUTH, USER_EMAILCHK
 	FROM LPUSER
 	WHERE LOWER(USER_EMAIL) = LOWER(#{user_email})  AND USER_DELFLAG ='F'
 </select>

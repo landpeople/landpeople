@@ -1,3 +1,18 @@
+-- 세션이 필요해서 테스트용으로 만들어 쓰는 테이블
+CREATE TABLE LPUSER(
+	USER_EMAIL VARCHAR2(50) NOT NULL,
+	USER_PASSWORD VARCHAR2(100) NOT NULL,
+	USER_NICKNAME VARCHAR2(20) NOT NULL,
+	USER_AUTH CHAR(1),
+	USER_DELFLAG CHAR(1) DEFALUT 'F',
+	USER_EMAILCHK CHAR(1),
+	USER_EMAILKEY VARCHAR2(300)
+);
+
+-- 회원가입 (이메일) OK
+INSERT INTO LPUSER (USER_EMAIL, USER_PASSWORD, USER_NICKNAME, USER_AUTH, USER_EMAILCHK, USER_EMAILKEY) VALUES('lee', 123, 'lee', 'Y', 'U', '');
+INSERT INTO LPUSER (USER_EMAIL, USER_PASSWORD, USER_NICKNAME, USER_AUTH, USER_EMAILCHK, USER_EMAILKEY) VALUES('cho', 123, 'cho', 'Y', 'U', '');
+
 -- 채팅 ==========================================================================================================================================			
 -- 테이블 재생성을 위해 테이블을 DROP하는 쿼리
 DROP TABLE LPCHATLIST;

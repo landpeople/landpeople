@@ -14,16 +14,12 @@
 </head>
 <body id="body">
 
-   <%
-      session.setAttribute("sender", session.getId().substring(0, 6)); // 내 닉네임과 같은 리스트는 화면에 뿌려지지 않도록 하기 위해서 임의로 정해둠
-      String sender = (String) session.getAttribute("sender");
-   %>
-   
-   <%=session.getId() %>
+ 채팅 리스트 페이지 : ${ldto.user_email }
+
    <div style="width: 100%; height: 45px; background-color: black; color: white;">접속한 사용자 정보</div>
    <div style="width: 100%; height: 100%; overflow: auto;">
       <c:forEach items="${users}" var="user">
-         <c:if test="${sender ne user}">
+         <c:if test="${ldto.user_email ne user}">
             <a href="#">${user}</a>
          </c:if>
       </c:forEach>
@@ -40,8 +36,8 @@
 
       function click() { // 내부함수로 사용되며, thisHTML은 채팅을 하고 싶은 상대방의 닉네임을 가져옴
           alert("● chatList.jsp / 상대 : " + this.innerHTML);
-          alert("● chatList.jsp / 나 : " + '<%=(String)session.getAttribute("sender")%>');
-          window.open("./socketOpen.do?sender=${sender}&receiver="+this.innerHTML,'resizable=yes,width=600px,height=600px');
+          alert("● chatList.jsp / 나 : ${ldto.user_email}");
+          window.open("./socketOpen.do?sender=${ldto.user_email}&receiver="+this.innerHTML,'resizable=yes,width=600px,height=600px');
       }
 
       var as = document.getElementsByTagName("a");
@@ -49,7 +45,7 @@
 
       [].forEach.call(as, function(e) {
           e.addEventListener("click", click); // 접속한 회원마다 이벤트를 붙여줌
-      })
+      });
        </script>
 </body>
 </html>
