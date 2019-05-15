@@ -1,23 +1,43 @@
 package happy.land.people.ctrl;
 
 import java.io.FileInputStream;
+
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.json.simple.JSONObject;
+import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import happy.land.people.dto.kim.LPCanvasDto;
+import happy.land.people.dto.kim.LPDaysDto;
 import happy.land.people.dto.kim.LPMapdataDto;
+import happy.land.people.model.kim.ILPCanvasService;
+import happy.land.people.model.kim.ILPDaysService;
 import happy.land.people.model.kim.ILPMapdataService;
 
 @Controller
@@ -26,6 +46,11 @@ public class KimController {
 	@Autowired
 	private ILPMapdataService mapService;
 	
+	@Autowired
+	private ILPDaysService daysService;
+	
+	@Autowired
+	private ILPCanvasService canvasService;
 	
     @RequestMapping(value="loadMap.do")
     public String loadMap() throws IOException {
@@ -103,5 +128,140 @@ public class KimController {
     	result.put("result", mapList);    	
     	return result;
     }
+    
+    @ResponseBody
+    @RequestMapping(value="insertDaysCanvas.do",method=RequestMethod.POST)
+    public Map<String, String> insertDaysCanvas(HttpSession session,@RequestBody Map<String, Object> val) throws ParseException{
+    	// 캔버스 생성 부분 
+    	LPCanvasDto canvasDto =  (LPCanvasDto)session.getAttribute("canvas");
+    	int chk = canvasService.canvasInsert(canvasDto);
+    	String canvasID = canvasService.canvasSelectID(canvasDto);
+    	canvasDto.setCan_id(canvasID);
+    	// 캔버스 생성 완료
+    	if(canvasDto!= null) {    		
+    	}
+    	
+    	for(int i = 0; i < val.size() ; i++) {
+    	Map<String,String> map = (Map<String,String>)val.get("days"+i);
+    	//System.out.println(map);   
+    	SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    		LPDaysDto dto = new LPDaysDto(canvasDto.getCan_id(), map.get("title"), map.get("content"), formatDate.parse(map.get("startDate")), formatDate.parse(map.get("endDate")), map.get("x") , map.get("y"), map.get("address"));
+    		daysService.daysInsert(dto);
+    	}        		 	
+    	Map<String,String> result = new HashMap<String,String>();
+    	result.put("result", "성공");
+    	return result;
+    }
+    
+    @RequestMapping(value="detailCanvas.do",method=RequestMethod.GET)
+    public String detailDaysCanvas(HttpServletRequest request){
+    	// 스케치북 id에 따른 캔버스의 개수
+    	int canvasCnt = canvasService.canvasCnt("1");
+    	System.out.println("해당 스케치북의 캔버스 개수:"+canvasCnt);
+    	
+    	List<LPCanvasDto> canvasList = canvasService.canvasSelectType("1");
+    	Map<Integer,List<LPDaysDto>> map = new HashMap<Integer,List<LPDaysDto>>();
+    	System.out.println(canvasList);
+    	// 캔버스 개수에 맞게 map에 canvas를 입력
+    	for(int i=0; i < canvasCnt ; i++) {    		
+    		if(canvasList.get(i).getCan_type().equalsIgnoreCase("1")) {    		
+    			List<LPDaysDto> daysList =  daysService.daysSelectAll(canvasList.get(i).getCan_id());
+    			map.put(i, daysList);
+    		}
+    		else {
+    			// 자유 캔버스는 여기에 
+    		}    		
+    	}
+    	System.out.println(map);
+    	// 캔버스들 화면으로 보내기
+    	request.setAttribute("daysList", map);
+    	// 캔버스들 타입을 화면으로 보내기
+    	request.setAttribute("daysType", canvasList);
+    	
+    	//List<LPDaysDto> daysList1 =  daysService.daysSelectAll("0002");
+    	//request.setAttribute("daysList1", daysList1);
+    	//System.out.println(daysList1.get(0));
+    	//model.addAttribute(attributeValue);
+    	return "kim_detailCanvas";
+    }
+    
+    @RequestMapping(value="insertDaysForm.do",method=RequestMethod.POST)
+    public String insertDaysFrom(HttpSession session,String nowPageNo){
+     // 페이지 번호 , 캔버스 id     	
+    	LPCanvasDto dto = new LPCanvasDto("0001", "1", "제목은 대충", "내용도 아무거나", "1", nowPageNo);
+    	//int chk = canvasService.canvasInsert(dto);
+    	//String canvasID = canvasService.canvasSelectID(dto);
+    	//dto.setCan_id(canvasID);
+    	session.setAttribute("canvas", dto);
+    	return "kim_insertDaysCanvas";
+    }
+    @RequestMapping(value="canvasDownloadExcel.do",method=RequestMethod.GET)
+    public void canvasDownloadExcel(HttpServletResponse response) throws IOException {
+    	List<LPDaysDto> canvasList = canvasService.canvasDownloadExcel("1");
+    	
+    	XSSFWorkbook workbook = new XSSFWorkbook();
+    	XSSFSheet sheet = null; 
+    	XSSFRow row= null;
+    	XSSFCell cell = null;
+    	
+        // 테이블 헤더용 스타일
+        XSSFCellStyle headStyle = workbook.createCellStyle();
 
+        // 가는 경계선을 가집니다.
+        headStyle.setBorderTop(BorderStyle.THIN);
+        headStyle.setBorderBottom(BorderStyle.THIN);
+        headStyle.setBorderLeft(BorderStyle.THIN);
+        headStyle.setBorderRight(BorderStyle.THIN);
+    	 
+    	// 데이터 부분 생성	   
+	    int rowNo = 1;
+	    int days = 1;
+	    // 이전 아이디 체크
+	    String beforeId = "0";	    
+	    System.out.println(canvasList.size());
+    	for(int i= 0; i < canvasList.size() ; i++) {
+    		// 아이디가 같으면 같은 일자이므로
+    		if(!(canvasList.get(i).getCan_id().equalsIgnoreCase(beforeId))) {    			
+    			sheet = workbook.createSheet(days+"일차");
+    			row = sheet.createRow(0);
+          	 	cell = row.createCell(0);
+    	       	cell.setCellStyle(headStyle);
+    	       	cell.setCellValue("일정제목");
+    	       	cell = row.createCell(1);
+    	      	cell.setCellStyle(headStyle);
+    	      	cell.setCellValue("출발시간");
+    	      	cell = row.createCell(2);
+    	       	cell.setCellStyle(headStyle);
+    	       	cell.setCellValue("도착시간");
+    	       	cell = row.createCell(3);
+    	       	cell.setCellStyle(headStyle);
+    	       	cell.setCellValue("주소");
+    	       	days++;
+    			rowNo = 1;   			
+    		} 
+		    row = sheet.createRow(rowNo);
+   	        cell = row.createCell(0);   	        
+    	    cell.setCellValue(canvasList.get(i).getDays_title());
+   	        cell = row.createCell(1);   	       
+   	        cell.setCellValue(canvasList.get(i).getDays_sdate());
+   	        cell = row.createCell(2);   	       
+   	        cell.setCellValue(canvasList.get(i).getDays_edate());
+   	        cell = row.createCell(3);   	       
+	        cell.setCellValue(canvasList.get(i).getDays_address());
+	        rowNo++;    
+	        beforeId = canvasList.get(i).getCan_id();
+    	}
+
+
+    		SimpleDateFormat simpleFormat = new SimpleDateFormat ( "yyyyMMdd");
+    		Date time = new Date();  
+        	String fileName = simpleFormat.format(time) + "_testdays.xls";
+        	
+    	    // 컨텐츠 타입과 파일명 지정
+    	    response.setContentType("ms-vnd/excel");
+    	    response.setHeader("Content-Disposition", "attachment;filename="+fileName);
+    	    // 엑셀 출력
+    	    workbook.write(response.getOutputStream());
+    	    workbook.close();       	
+    }   
 }
