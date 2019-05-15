@@ -1,0 +1,122 @@
+html, body {
+	width: 100%;
+	height: 100%;
+	margin: 0px;
+}
+
+/*가로 가운데 정렬 및 전체 레이아웃을 잡기 위한 div*/
+.main-wrapper {
+	width: 1276px;
+	height: 930px;
+	margin: auto;
+}
+
+.sidebar-menu { /*사이드바 레이아웃 div*/
+	position: absolute;
+	background-color: #5f6d7e;
+	color: white;
+	width: 276px;
+	height: 930px;
+	padding: 20px;
+	box-sizing: border-box;
+}
+
+.top-section {
+	margin-top: 100px;
+	height: 236px;
+	width: 236px;
+	padding: 28px;
+	box-sizing: border-box;
+}
+
+.profile-image {
+	height: 180px;
+	width: 180px;
+	background: url("../img/제주배경임.png");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	-webkit-border-radius: 125px;
+	border-radius: 125px;
+	background-position: center;
+	background-size: cover;
+}
+
+.menu-navigation {
+	padding-top: 20px;
+	padding-left: 28px;
+	padding-right: 28px;
+}
+
+.navigation>li {
+	margin-bottom: 20px;
+	list-style: none;
+}
+
+.main-navigation li a {
+	color: white;
+	text-decoration: none;
+}
+
+.chatting {
+	margin-top: 70px;
+	background-color: white;
+	width: 236px;
+	height: 131px;
+}
+
+/*header*/
+.content-wrapper {
+	position: relative;
+	left: 276px;
+	width: 1000px;
+}
+
+.banner-bg {
+	background: url("../img/제주도.png");
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	width: 1000px;
+	height: 230px;
+}
+
+.main-lpcontents {
+	background-color: white;
+	box-sizing: border-box;
+	padding: 20px;
+	width: 1000px;
+	height: 650px;
+}
+
+.lpcontents {
+	background-color: white;
+	box-sizing: border-box;
+	padding: 20px;
+	width: 1000px;
+	height: 880px;
+}
+
+.content {
+	background-color: pink;
+	height: 100%;
+}
+
+iframe {
+	frameborder: 0;
+	width: 100%;
+	height: 100%;
+	marginwidth: 0px;
+	marginheight: 0px;
+	scrolling: yes;
+}
+
+.footer {
+	box-sizing: border-box;
+	background-color: black;
+	width: 1000px;
+	height: 50px;
+	padding: 10px 20px;
+	text-align: center;
+	color:white;
+}
