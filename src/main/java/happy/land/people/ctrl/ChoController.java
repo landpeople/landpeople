@@ -25,13 +25,11 @@ public class ChoController {
 	private IChoService iChoService;
 	
 	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-	
+
 	// 메인페이지로가는 컨트롤러
 	@RequestMapping(value="/mainPage.do" , method=RequestMethod.GET)
 	public String mainPage() {
-		return "redirect:./index.jsp";
+		return "foward:./index.jsp";
 	}
 	
 	
@@ -45,7 +43,7 @@ public class ChoController {
 	
 	
 	
-	// 여기는 나중에 한다 ^^ 로그인기능
+	// 로그인기능
 	@RequestMapping(value="/login.do" ,method=RequestMethod.POST)
 	public String login(ChoDto dto , HttpSession session) {
 		
@@ -55,6 +53,24 @@ public class ChoController {
 		
 		return  "redirect:./index.jsp";
 	}
+	
+	// 로그아웃
+	@RequestMapping(value="",method=RequestMethod.GET)
+	public String logout() {
+		
+		return "redirect:./index.jsp";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	//회원가입 페이지로가기 ^^
