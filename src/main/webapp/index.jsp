@@ -56,7 +56,8 @@
 				<a href="./na.do">나원서 페이지로 이동</a><br>
 				<a href="./lee.do">이연지 페이지로 이동</a><br>
 				<a href="./jang.do">장석영 페이지로 이동</a><br>
-				<a href="./jung.do">정희태 페이지로 이동</a>
+				<a href="./jung.do">정희태 페이지로 이동</a><br>
+				<a href="./cho.do">조태규 페이지로 이동</a><br>
 		</div>
 		</div>
 	</body>
