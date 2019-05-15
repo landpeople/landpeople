@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import happy.land.people.dto.LpcollectDto;
+
 @Repository
 public class SketchBookDaoImpl implements ISketchBookDao {
 
@@ -17,11 +19,27 @@ public class SketchBookDaoImpl implements ISketchBookDao {
 	@Autowired
 	private SqlSessionTemplate sqlsession;
 	
+
 	@Override
-	public boolean scrapeCancel(Map<String, String> map) {
-		//logger.info("msg");
-		int n= sqlsession.update(NS+"scrape_Update", map);
+	public boolean collectInsert(LpcollectDto dto) {
+		int n = sqlsession.insert(NS+"collect_Insert", dto);
+		return n>0?true:false;
+	}
+
+	@Override
+	public String selScrape(Map<String, String> map) {
 		
+		System.out.println("스크랩 상태 보기"+map);
+		return sqlsession.selectOne(NS+"scrape_Select", map);
+	}
+	
+	
+	@Override
+	public boolean scrapeChange(Map<String, String> map) {
+		//logger.info("msg");
+		System.out.println("스크랩 값 확인"+map);
+		int n= sqlsession.update(NS+"scrape_Update", map);
+		System.out.println(n);
 		return n>0?true:false;
 	}
 
@@ -41,6 +59,10 @@ public class SketchBookDaoImpl implements ISketchBookDao {
 		System.out.println("좋아요 상태 가져와~~"+map);
 		return sqlsession.selectOne(NS+"like_Select", map);
 	}
+
+
+	
+
 
 	
 	

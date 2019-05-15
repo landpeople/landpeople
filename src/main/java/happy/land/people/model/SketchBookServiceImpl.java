@@ -7,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import happy.land.people.dto.LpcollectDto;
+
 @Service
 public class SketchBookServiceImpl implements ISketchBookService {
 
@@ -17,10 +19,23 @@ public class SketchBookServiceImpl implements ISketchBookService {
 	
 	
 	@Override
-	public boolean scrapeCancel(Map<String, String> map) {
+	public boolean collectInsert(LpcollectDto dto) {
+		logger.info("service collectInsert 좋아요 최초등록 실행");
+		return iSketchBookDao.collectInsert(dto);
+	}
+	
+	@Override
+	public String selScrape(Map<String, String> map) {
+		logger.info("service selScrape 좋아요 현재상태 가져오기");
+		return iSketchBookDao.selScrape(map);
+		
+	}
+	
+	@Override
+	public boolean scrapeChange(Map<String, String> map) {
 		// TODO Auto-generated method stub
-		logger.info("service scrapeCancel 실행");
-		return iSketchBookDao.scrapeCancel(map);
+		logger.info("service scrapeChange 실행");
+		return iSketchBookDao.scrapeChange(map);
 	}
 
 	@Override
@@ -36,5 +51,9 @@ public class SketchBookServiceImpl implements ISketchBookService {
 		logger.info("service likeCancel 실행");
 		return iSketchBookDao.selLike(map);
 	}
+
+
+
+	
 
 }

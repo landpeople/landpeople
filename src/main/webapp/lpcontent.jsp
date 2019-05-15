@@ -55,9 +55,9 @@
 						
 						
 				<div>
-			 		<a href="#" onclick="likeCancel()"><!-- <img id="likeAfter" alt="likeHeart" src="./img/LikeAfter.png"> --></a>
-			 		<a href="#" onclick="like()"><!-- <img id="likeBefore" alt="likeEmpty" src="./img/LikeBefore.png"> --></a>
-			 	
+			 		<a href="#" onclick="like()"><img id="likeAfter" alt="likeHeart" src="./img/LikeAfter.png"></a>
+			 		<a href="#"><!-- <img id="likeBefore" alt="likeEmpty" src="./img/LikeBefore.png"> --></a>
+			 		<a href="#" onclick="scrape()"> <img alt="scrape" src="./img/scrape.png"> </a>
  				</div>		
 						
 						
@@ -71,12 +71,12 @@
 	</div>
 </body>
 <script type="text/javascript">
-function likeCancel(){
+function like(){
 //	alert("좋아요 취소");
-	LpCancel();
+	LpLike();
 }
 
-var LpCancel = function(){
+var LpLike = function(){
     var user_email = "";
     var sketch_id = "";
 	$.ajax({
@@ -99,6 +99,27 @@ var LpCancel = function(){
 }
 
 
+function scrape() {
+	//alert("스크랩");
+	LpScrape();
+}
+
+var LpScrape = function(){
+	var user_email = "130@happy.com";
+	var sketch_id = "0007";
+//	alert("스크랩 등록");	
+	$.ajax({
+		url : "Scrape.do",
+		type : "get",
+		data :  "user_email="+user_email+"&sketch_id="+sketch_id,
+		success : function(sresult){
+			alert(sresult.sresult);
+		}, error : function() {
+			alert("실패");
+		}
+	});
+	   
+}
 
 
 
