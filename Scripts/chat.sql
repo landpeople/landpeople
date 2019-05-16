@@ -12,6 +12,7 @@ CREATE TABLE LPUSER(
 -- 회원가입 (이메일) OK
 INSERT INTO LPUSER (USER_EMAIL, USER_PASSWORD, USER_NICKNAME, USER_AUTH, USER_EMAILCHK, USER_EMAILKEY) VALUES('lee', 123, 'lee', 'Y', 'U', '');
 INSERT INTO LPUSER (USER_EMAIL, USER_PASSWORD, USER_NICKNAME, USER_AUTH, USER_EMAILCHK, USER_EMAILKEY) VALUES('cho', 123, 'cho', 'Y', 'U', '');
+INSERT INTO LPUSER (USER_EMAIL, USER_PASSWORD, USER_NICKNAME, USER_AUTH, USER_EMAILCHK, USER_EMAILKEY) VALUES('kim', 123, 'kim', 'Y', 'U', '');
 
 -- 채팅 ==========================================================================================================================================			
 -- 테이블 재생성을 위해 테이블을 DROP하는 쿼리
