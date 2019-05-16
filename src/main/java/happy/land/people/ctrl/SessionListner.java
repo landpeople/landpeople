@@ -22,9 +22,13 @@ public class SessionListner implements HttpSessionListener {
 		// 세션 생성시 호출
 
 		HttpSession session = arg0.getSession();
+		
+		String str = (String)session.getAttribute("user"); // 만료되지 않은 세션
+		
+		System.out.println("기존 세션: " + str);
 		String time = formatter.format(session.getCreationTime());
 		String id = session.getId();
-		System.out.println(time + "에 생성된 세션" + id);
+		System.out.println(time + " 에 생성된 세션 : " + id);
 	}
 
 	@Override
@@ -35,10 +39,10 @@ public class SessionListner implements HttpSessionListener {
 		
 		String str = (String)session.getAttribute("user"); // 만료되지 않은 세션
 		
-		System.out.println("만료되지 않은 세션 : " +str);
+		System.out.println("만료되지 않은 세션 : " + str);
 		long last_time = session.getLastAccessedTime();
 		long now_time = System.currentTimeMillis();
 		String id = session.getId();
-		System.out.println(formatter.format(now_time - last_time) + "ms 만에 세션이 죽음" + id);
+		System.out.println(formatter.format(now_time - last_time) + " ms 만에 세션이 죽음 : " + id);
 	}
 }

@@ -15,6 +15,7 @@
 <body id="body">
 
  채팅 리스트 페이지 : ${ldto.user_email }
+<% response.setHeader("P3P","CP='CAO PSA CONi OTR OUR DEM ONL'");  %>
 
    <div style="width: 100%; height: 45px; background-color: black; color: white;">접속한 사용자 정보</div>
    <div style="width: 100%; height: 100%; overflow: auto;">

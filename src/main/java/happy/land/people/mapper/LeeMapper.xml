@@ -9,7 +9,7 @@
 	<!-- 세션 만료시 세션에 없는 사용자의 닉네임을 리스트에서 제거함 -->
 	<delete id="chatList_Delete" parameterType="java.util.List">
 		DELETE FROM LPCHATLIST WHERE USER_NICKNAME NOT IN
-		<foreach item="item" collection ="list" open="(" seperator="," close=")">
+		<foreach item="item" collection ="list" open="(" separator="," close=")">
 			#{item}
 		</foreach>
 	</delete>

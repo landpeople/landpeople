@@ -48,6 +48,7 @@ public class LeeController implements ServletConfigAware {
 	@RequestMapping(value = "/socketOpen.do", method = RequestMethod.GET)
 	public String socketOpen(HttpSession session, Model model, String sender, String receiver) {
 
+		
 		System.out.println("● LeeController socketOpen.do / 현 세션의 사용자 닉네임 user: " + sender);
 		
 		Map<String, String> map = new HashMap<String, String>();
@@ -56,24 +57,6 @@ public class LeeController implements ServletConfigAware {
 		// 여기서 테이블의 다오를 통해서 나랑 상대방의 채팅방이 기존에 있는지 확인해줌
 		String chr_id = service.chatRoom_Select(map);
 		
-		/* 채팅 리스트 띄워주기*/
-		String gr_id = (String)session.getAttribute("chr_id");
-		String mem_id = (String)session.getAttribute("user");
-		logger.info(mem_id +"::"+gr_id);
-		HashMap<String, String> chatList = (HashMap<String, String>)servletContext.getAttribute("chatList");
-		if(chatList == null){
-			chatList = new HashMap<String, String>();
-			chatList.put(mem_id, gr_id);
-			servletContext.setAttribute("chatList", chatList);
-		}else{
-			chatList.put(mem_id, gr_id);
-			servletContext.setAttribute("chatList", chatList);
-		}
-		logger.info("socketOpen 소켓 화면 이동 2)리스트 값 전달");
-		
-		System.out.println("● LeeController socketOpen.do / 채팅방이 존재여부(채팅방 아이디): " + chr_id);
-		session.setAttribute("user", sender);
-	
 		if(chr_id == null) {
 			int n = service.chatRoom_Insert(map); // 채팅방 생성
 			System.out.println("● LeeController socketOpen.do / 채팅방 생성(1은 성공) : " + n);
@@ -84,6 +67,26 @@ public class LeeController implements ServletConfigAware {
 			System.out.println("● LeeController socketOpen.do / 채팅방 보이기(1은 성공) : " + n);
 			session.setAttribute("chr_id", chr_id);
 		}
+		
+		/* 채팅 리스트 띄워주기*/
+		String mem_id = (String)session.getAttribute("user");
+		logger.info("● LeeController socketOpen.do / 유저 닉네임 : " + mem_id);
+		logger.info("● LeeController socketOpen.do / 채팅방 아이디 : " + chr_id);
+		HashMap<String, String> chatList = (HashMap<String, String>)servletContext.getAttribute("chatList");
+		if(chatList == null){
+			chatList = new HashMap<String, String>();
+			chatList.put(mem_id, chr_id);
+			servletContext.setAttribute("chatList", chatList);
+		}else{
+			chatList.put(mem_id, chr_id);
+			servletContext.setAttribute("chatList", chatList);
+		}
+		logger.info("socketOpen 소켓 화면 이동 2)리스트 값 전달");
+		
+		System.out.println("● LeeController socketOpen.do / 채팅방이 존재여부(채팅방 아이디): " + chr_id);
+		session.setAttribute("user", sender);
+	
+		
 		return "/chat/groupChat";
 	}
 
