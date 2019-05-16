@@ -162,7 +162,7 @@
           $(".chat_div").show();
           $(".chat").focus();
           
-          ws = new WebSocket("ws://192.168.4.31:8091/LandPeople/wsChat.do");
+          ws = new WebSocket("ws://192.168.4.36:8091/LandPeople/wsChat.do");
           
           ws.onopen = function() {
              alert("● groupChat.jsp ws.onopen");
@@ -175,8 +175,8 @@
             if(msg.startsWith("<font color=")){ // 입장,퇴장
                $(".receive_msg").append($("<div class = 'noticeTxt'>").append(msg+"<br/>"));
             viewList(id);
-            }else if(msg.startsWith("[나]")){ //대화내용
-               msg = msg.substring(3);
+            }else if(msg.startsWith("[${user}]")){ //대화내용
+//                msg = msg.substring(3);// [나] 라는거 자르는 거 였음
                $(".receive_msg").append($("<div class = 'sendTxt'>").append($("<span class ='sender_img'>").text(msg))).append("<br><br>");
             }else{
                $(".receive_msg").append($("<div class = 'receiveTxt'>").append($("<span class = 'receiver_img'>").text(msg))).append("<br><br>");
@@ -207,7 +207,7 @@
               type: "GET",
               url: "./socketOut.do", // 소켓 닫기
               async: false
-           }); 
+           });
       }
       
       function disconnect() {
@@ -230,7 +230,9 @@
              }
           }
         });
-      }      
+      }
+      
+  
 </script>
 </head>
 <body onbeforeunload="roomClose()">
@@ -252,7 +254,8 @@
    <div class="chat_div" style="display:none; margin-top: 10px;">
       <textarea class="chat"
              onKeypress="if(event.keyCode==13) $('.chat_btn').click();" ></textarea>
-      <div class="chat_btn"></div>          
+      <div class="chat_btn"></div>
+      <div class="exit">exit</div>        
    </div>
      그룹아이디 : <%=chr_id%>
 나의아이디 :   <%=user %>

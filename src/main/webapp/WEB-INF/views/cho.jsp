@@ -22,7 +22,7 @@
 </head>
 	<body>
 	<!-- SIDEBAR -->
-	<div class="sidebar-menu hidden-xs hidden-sm">
+	<div class="sidebar-menu">
 		<div class="top-section" style="padding-bottom: 0;">
 			<div class="profile-image">
 				<img src="img/제주배경임.png" alt="Volton">
@@ -38,8 +38,6 @@
 				<li><a href="./regiForm.do"><i class="fa fa-globe"></i>회원가입 </a></li>
 				
 				<li><a href="./loginPage.do"><i class="fa fa-globe"></i>로그인 </a></li>
-				
-				
 				
 				<li><a href="#"><i class="fa fa-pencil"></i>About Me</a></li>
 				<li><a href="#"><i class="fa fa-paperclip"></i>My Gallery</a></li>
