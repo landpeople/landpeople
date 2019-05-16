@@ -1,62 +1,67 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>이연지 화면 테스트</title>
+
+<title>Insert title here</title>
 
 <script src="./js/jquery-3.3.1.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-
-<link rel="stylesheet" href="./css/normalize.css">
-<link rel="stylesheet" href="./css/font-awesome.css">
-<link rel="stylesheet" href="./css/bootstrap.min.css">
-<link rel="stylesheet" href="./css/templatemo-style.css">
-
-<script src="./js/vendor/modernizr-2.6.2.min.js"></script>
-<script src="./js/min/plugins.min.js"></script>
-<script src="./js/min/main.min.js"></script>
+<script src="./js/chat/chat.js"></script>
+<link rel="stylesheet" href="./css/lp-style.css">
+<!--   <link rel="stylesheet" href="./css/bootstrap.min.css"> -->
 
 </head>
-	<body>
-	<!-- SIDEBAR -->
-	<div class="sidebar-menu hidden-xs hidden-sm">
-		<div class="top-section" style="padding-bottom: 0;">
-			<div class="profile-image">
-				<img src="img/제주배경임.png" alt="Volton">
-			</div>
-			<!--  <h3 class="profile-title">Volton</h3>
-                <p class="profile-description">Digital Photography</p> -->
-		</div>
-		<!-- .top-section -->
-		<div class="main-navigation">
-			<ul class="navigation">
-				<li><a href="#"><i class="fa fa-globe"></i>Welcome</a></li>
-				<li><a href="#"><i class="fa fa-pencil"></i>About Me</a></li>
-				<li><a href="#"><i class="fa fa-paperclip"></i>My Gallery</a></li>
-				<li><a href="#"><i class="fa fa-link"></i>Contact Me</a></li>
-			</ul>
-		</div>
-		<!-- .main-navigation -->
+<body>
 
-		<!-- 채팅 -->
-		<div class="chatting"></div>
-	</div>
-	<!-- .sidebar-menu -->
+<%=session.getId() %>
+   <!--젤로 레이아웃- 전체 영역 감싸는 div-->
+   <div class="main-wrapper">
 
-	<!-- main에 있는 header 영역임 main 페이지 말고는 사용을 안하지만, 그냥 주석함. 지워도 됨-->
-	<!-- <div class="banner-bg" id="top"> -->
-	<!-- 	<div class="banner-overlay"></div> -->
-	<!-- 		<div class="welcome-text"> -->
-	<!-- 			<h2>LandPeople</h2> -->
-	<!--            <h5>This is a mobile friendly layout with Bootstrap v3.3.1 framework. Maecenas eu ante at nunc posuere fringilla sit amet non dolor. Proin condimentum fermentum nunc.</h5> -->
-	<!--        </div> -->
-	<!--    </div> -->
-	<!-- </div> -->
-	
-	<!-- 여기에 div 잡아서 작업하면 됨 -->
-	<!-- templatemo-style.css에 보면 이안에 들어가는 div 클래스가 있음. 아니면 css를 temp -->
-	</body>
+      <!-- SIDEBAR -->
+      <div class="sidebar-menu">
+         <div class="top-section">
+            <!-- 프로필 사진 영역 전체 감싸는  div -->
+            <div class="profile-image"></div>
+         </div>
+         <!-- 여기까지 프로필 사진 영역 전체 감싸는 div -->
+
+         <!-- 네비게이션 메뉴 -->
+         <div class="main-navigation">
+            <ul class="navigation">
+               <li><a href="#">로그인/로그아웃</a></li>
+               <li><a href="#">여행일정 작성</a></li>
+               <li><a href="#">마이페이지/관리자 페이지</a></li>
+            </ul>
+         </div>
+         <!-- .main-navigation 여기까지 네비게이션 메뉴 -->
+
+         <!-- 채팅 -->
+         <div class="chatting">
+            <iframe class="panel" id="lot" frameborder="0"></iframe>
+         </div>
+         <!-- 채팅 -->
+      </div>
+      <!-- .sidebar-menu 여기까지 사이드 바 -->
+
+      <div class="content-wrapper">
+
+         <!-- 메인 컨텐츠   -->
+         <div class="lpcontents">
+            <div class="content">
+               <a href="#" id="test">체팅으로 가자mem=접속자1&gr=New01</a>
+               <br>
+               <a href="./socketOpen.do?mem=BBB&gr=New01">체팅으로 가자mem=BBB&gr=New01</a>
+               <br>
+               <a href="./socketOpen.do?mem=AAA&gr=New02">체팅으로 가자mem=AAA&gr=New02</a>
+               <br>
+               <a href="./socketOpen.do?mem=DDD&gr=New02">체팅으로 가자mem=DDD&gr=New02</a>
+               <br>
+            </div>
+         </div>
+         <!-- </div> 여기까지 메인 컨텐츠  -->
+         <div class="footer">landpeople</div>
+      </div>
+   </div>
+</body>
 </html>
