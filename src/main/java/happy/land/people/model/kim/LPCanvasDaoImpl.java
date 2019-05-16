@@ -53,5 +53,31 @@ public class LPCanvasDaoImpl implements ILPCanvasDao{
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("kim_test.canvas_DownloadExcel", id);
 	}
+
+	@Override
+	public LPCanvasDto canvasSelectOne(String id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("kim_test.canvas_SelectOne", id);
+	}
+
+	@Override
+	public int canvasDelete(Map<String,String> map) {
+		// TODO Auto-generated method stub
+		// 트랜젝션 걸어야 함
+		// 가져와야 할 Map의 데이터 can_id,can_type,sketch_id,pageNo
+		int delChk = 0;
+		if(map.get("can_type").equalsIgnoreCase("1"))
+			sqlSession.delete("kim_test.days_Delete", map.get("can_id"));
+		else {
+			// 자유 캔버스 삭제
+		}
+		delChk = sqlSession.delete("kim_test.canvas_Delete", map.get("can_id"));
+		Map<String,String> delMap = new HashMap<String,String>();
+		delMap.put("pageNo",map.get("pageNo"));
+		delMap.put("sketch_id", map.get("sketch_id"));
+		sqlSession.update("kim_test.canvas_DecreasePage", delMap);
+		
+		return delChk;
+	}
 	
 }

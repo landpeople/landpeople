@@ -189,12 +189,52 @@ public class KimController {
     public String insertDaysFrom(HttpSession session,String nowPageNo){
      // 페이지 번호 , 캔버스 id     	
     	LPCanvasDto dto = new LPCanvasDto("0001", "1", "제목은 대충", "내용도 아무거나", "1", nowPageNo);
-    	//int chk = canvasService.canvasInsert(dto);
-    	//String canvasID = canvasService.canvasSelectID(dto);
-    	//dto.setCan_id(canvasID);
     	session.setAttribute("canvas", dto);
     	return "kim_insertDaysCanvas";
     }
+    // 수정폼으로 이동
+    @RequestMapping(value="updateDaysForm.do",method=RequestMethod.POST)
+    public String updateDaysFrom(HttpSession session,String nowPageNo){
+        //캔버스 세팅	
+    	LPCanvasDto canvasDto = new LPCanvasDto();
+    	canvasDto.setCan_pageno(nowPageNo);
+    	// 스케치북 세팅
+    	canvasDto.setSketch_id("1");
+    	// 보고 있는 페이지의 캔버스 id값을 가져옴
+    	String id = canvasService.canvasSelectID(canvasDto);
+    	// 캔버스 dto 세팅
+    	canvasDto = canvasService.canvasSelectOne(id);
+    	session.setAttribute("canvas", canvasDto);
+    	// 일정 캔버스 세팅
+    	List<LPDaysDto> daysDto = daysService.daysSelectAll(id);
+    	session.setAttribute("days", daysDto);
+    	return "kim_updateDaysCanvas";
+    }
+    
+    @RequestMapping(value="deleteDaysForm.do",method=RequestMethod.POST)
+    public String deleteDaysFrom(HttpSession session,String nowPageNo){
+     // 페이지 번호 , 캔버스 id     	
+    	System.out.println("페이지번호:"+nowPageNo);
+    	LPCanvasDto canvasDto = new LPCanvasDto();
+    	canvasDto.setCan_pageno(nowPageNo);
+    	// 스케치북 세팅
+    	canvasDto.setSketch_id("1");
+    	// 보고 있는 페이지의 캔버스 id값을 가져옴
+    	String id = canvasService.canvasSelectID(canvasDto);
+    	// 캔버스 dto 세팅
+    	canvasDto = canvasService.canvasSelectOne(id);
+    	
+    	// 삭제를 위해 Map에 담음 (담을값들 can_id,can_type,sketch_id,pageNo)
+    	Map<String,String> delMap = new HashMap<String,String>();
+    	delMap.put("can_id", id);
+    	delMap.put("can_type", canvasDto.getCan_type());
+    	delMap.put("sketch_id", canvasDto.getSketch_id());
+    	delMap.put("pageNo", canvasDto.getCan_pageno());
+    	// 삭제
+    	canvasService.canvasDelete(delMap);
+    	return "kim";
+    }
+    
     @RequestMapping(value="canvasDownloadExcel.do",method=RequestMethod.GET)
     public void canvasDownloadExcel(HttpServletResponse response) throws IOException {
     	List<LPDaysDto> canvasList = canvasService.canvasDownloadExcel("1");
@@ -263,5 +303,35 @@ public class KimController {
     	    // 엑셀 출력
     	    workbook.write(response.getOutputStream());
     	    workbook.close();       	
-    }   
+    }      
+    
+    
+    
+    @ResponseBody
+    @RequestMapping(value="updateDaysCanvas.do",method=RequestMethod.POST)
+    public Map<String, String> updateDaysCanvas(HttpSession session,@RequestBody Map<String, Object> val) throws ParseException{
+    	// 캔버스 가져 오기
+    	LPCanvasDto canvasDto =  (LPCanvasDto)session.getAttribute("canvas");
+    	    	
+    	if(canvasDto!= null) {    		
+    	}
+    	// 해당 캔버스의 일정내용 싹 지우기
+    	daysService.daysDelete(canvasDto.getCan_id());	
+    	
+    	for(int i = 0; i < val.size() ; i++) {
+    	Map<String,String> map = (Map<String,String>)val.get("days"+i);
+    	//System.out.println(map);   
+    	SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    		LPDaysDto dto = new LPDaysDto(canvasDto.getCan_id(), map.get("title"), map.get("content"), formatDate.parse(map.get("startDate")), formatDate.parse(map.get("endDate")), map.get("x") , map.get("y"), map.get("address"));
+    		daysService.daysInsert(dto);
+    	}        		 	
+    	Map<String,String> result = new HashMap<String,String>();
+    	result.put("result", "성공");
+    	return result;
+    }
+    
+    @RequestMapping(value="canvasDownloadImage.do",method=RequestMethod.GET)
+    public void canvasDownloadImage(HttpServletResponse response) {
+    	
+    }
 }

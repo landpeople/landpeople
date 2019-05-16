@@ -71,7 +71,8 @@
 	<!-- templatemo-style.css에 보면 이안에 들어가는 div 클래스가 있음. 아니면 css를 temp -->
 	<div class="main-content">			
 			 <input type="button" id="downloadExcel">	
-			 <a href="./canvasDownloadExcel.do">테스트용 다운로드</a> 
+			 <a href="./canvasDownloadExcel.do">테스트용 엑셀 다운로드</a> 
+			 <a href="./canvasDownloadImage.do">테스트용 이미지 다운로드</a>
 			 <div id="mybook" style="border: 1px solid black;">
 			    <div>
 			        	입력된 캔버스가 없습니다.
@@ -81,11 +82,21 @@
 			    </div>			    
 			</div>
   			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">캔버스 입력</button>
-			<input type="button" id="pageInsert" value="페이지 추가"></input>
+			<input type="button" id="pageUpdate" value="페이지 수정"></input>
+			<input type="button" id="pageDelete" value="페이지 삭제"></input>
 			<input type="hidden" value="0" id="selectType">
+			
 			<form action="./insertDaysForm.do" onsubmit="return false" method="post">
 				<input type="hidden" value=1 id="nowPageNo" name="nowPageNo">			
 			</form>
+			
+			<!-- <form action="./updateDaysForm.do" onsubmit="return false" method="post">
+				<input type="hidden" value=1 id="nowPageNo" name="nowPageNo">			
+			</form>
+			
+			<form action="./deleteDaysForm.do" onsubmit="return false" method="post">
+				<input type="hidden" value=1 id="nowPageNo" name="nowPageNo">			
+			</form> -->
   
  
 
@@ -132,14 +143,8 @@
  	           change: function(event, data) { 
  	  			  $('#nowPageNo').val(data.index/2+1);
  	  		   }
- 	    });
-		// 임시
-		$("#pageInsert").click(function() {
-			alert("실행되냐?");
-	    	$('#mybook').booklet("add", $('#nowPageNo').html()-1,"<div>haha</div>");
-	    	$('#mybook').booklet("add",$('#nowPageNo').html(),"<div>haha2</div>");
-	    });
-		// 임시2
+ 	    });				 
+		// 일정 캔버스 클릭시(임시)
 		$("#insertDaysForm").click(function(){
 			$('#selectType').val("1");
 			alert($('#selectType').val());
@@ -148,19 +153,43 @@
 		$("#downloadExcel").click(function() {
 			alert("엑셀다운~");
 		});
+		// 수정 버튼 클릭시
+		$("#pageUpdate").click(function() {
+			alert("수정");			
+			//location.href="./updateDaysForm.do?pageNo="+pageNo;			
+			var updateForm = $('<form></form>');
+			updateForm.attr('action', './updateDaysForm.do');
+		    updateForm.attr('method', 'post');		    
+		    updateForm.appendTo('body');		 
+		    // 페이지 번호 받아옴
+		    var pageNo = $('<input type="hidden" name="nowPageNo">');
+		    pageNo.val($('#nowPageNo').val());
+		    // 세션에 등록된 스케치북 받아오기		 
+		    updateForm.append(pageNo);
+		    updateForm.submit();	
+		});
+		//삭제 버튼 클릭시
+		$("#pageDelete").click(function() {
+			alert("삭제");
+			
+			var deleteForm = $('<form></form>');
+			deleteForm.attr('action', './deleteDaysForm.do');
+			deleteForm.attr('method', 'post');		    
+			deleteForm.appendTo('body');		 
+		    // 페이지 번호 받아옴
+		    var pageNo = $('<input type="hidden" name="nowPageNo">');
+		    pageNo.val($('#nowPageNo').val());
+		    // 세션에 등록된 스케치북 받아오기		 
+		    deleteForm.append(pageNo);
+		    deleteForm.submit();	
+		});
 		
 		// 등록 버튼 클릭시
 		$("#canvasInsertFrom").click(function() {
 			if($('#selectType').val() == "1"){
 				alert("돌아가냐");
 				 var pageNo = $('#nowPageNo').val();
-				 document.forms[0].submit();
-				// $.ajax({
-				//		url: "insertDaysForm.do", //요청 url
-				//		type: "post", // 전송 처리방식
-				//		asyn: false, // true 비동기 false 동기
-				//		data: { 'pageNo' : pageNo }, // 서버 전송 파라메터
-				// });
+				 document.forms[0].submit();				
 			}
 		});
 		
@@ -188,9 +217,9 @@
 			%>
 				var container = document.getElementById("map"+<%=i+1%>);
 	    		var options = {
-	    			center: new daum.maps.LatLng(33.450701, 126.570667),
-	    			level: 3,
-	    			disableDoubleClickZoom : true			
+	    			center: new daum.maps.LatLng(<%=daysList.get(i).get(0).getDays_x()%>, <%=daysList.get(i).get(0).getDays_y()%>),
+	    			level: 5,
+	    			disableDoubleClickZoom : true
 	    		};
 	    		
 	    		var map = new daum.maps.Map(container, options);

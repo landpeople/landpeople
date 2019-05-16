@@ -56,4 +56,24 @@
 						LPDAYS1,LPCANVAS LPCANVAS1
 			WHERE LPDAYS1.CAN_ID = LPCANVAS1.CAN_ID ORDER BY LPCANVAS1.CAN_PAGENO , LPDAYS1.DAYS_SDATE
 	</select>
+	<!-- 캔버스 한개 선택 -->
+	<select id="canvas_SelectOne" parameterType="java.lang.String" resultType="happy.land.people.dto.kim.LPCanvasDto">
+		SELECT * FROM LPCANVAS WHERE CAN_ID=#{id}
+	</select>	
+	<!-- 일정 캔버스 삭제 -->
+	<delete id="days_Delete" parameterType="java.lang.String">
+		DELETE FROM LPDAYS WHERE CAN_ID=#{id} 
+	</delete>
+	<!-- 캔버스 삭제 -->
+	<delete id="canvas_Delete" parameterType="java.lang.String">
+		DELETE FROM LPCANVAS WHERE CAN_ID=#{id}
+	</delete>
+	<!-- 캔버스 페이지 번호 감소 -->
+	<update id="canvas_DecreasePage" parameterType="java.util.Map">
+		UPDATE LPCANVAS SET CAN_PAGENO=CAN_PAGENO-1 WHERE CAN_ID IN (SELECT CAN_ID FROM LPCANVAS WHERE <![CDATA[ CAN_PAGENO > #{pageNo}]]> AND SKETCH_ID=#{sketch_id})
+	</update>	
+	<!-- 일정 캔버스 한개 조회 -->
+	<select id="days_SelectOne" parameterType="java.lang.String" resultType="happy.land.people.dto.kim.LPDaysDto">
+		SELECT * FROM LPDAYS WHERE CAN_ID=#{id}
+	</select>
 </mapper>

@@ -26,4 +26,16 @@ public class LPDaysServiceImpl implements ILPDaysService{
 		return daysDao.daysSelectAll(cal_id);
 	}
 
+	@Override
+	public LPDaysDto daysSelectOne(String days_id) {
+		// TODO Auto-generated method stub
+		return daysDao.daysSelectOne(days_id);
+	}
+
+	@Override
+	public int daysDelete(String cal_id) {
+		// TODO Auto-generated method stub
+		return daysDao.daysDelete(cal_id);
+	}
+
 }

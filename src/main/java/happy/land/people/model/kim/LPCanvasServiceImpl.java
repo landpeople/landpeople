@@ -1,6 +1,7 @@
 package happy.land.people.model.kim;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,6 +43,18 @@ public class LPCanvasServiceImpl implements ILPCanvasService{
 	public List<LPDaysDto> canvasDownloadExcel(String id) {
 		// TODO Auto-generated method stub
 		return canvasDao.canvasDownloadExcel(id);
+	}
+
+	@Override
+	public LPCanvasDto canvasSelectOne(String id) {
+		// TODO Auto-generated method stub
+		return canvasDao.canvasSelectOne(id);
+	}
+
+	@Override
+	public int canvasDelete(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return canvasDao.canvasDelete(map);
 	}
 
 }

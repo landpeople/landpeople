@@ -27,4 +27,16 @@ public class LPDaysDaoImpl implements ILPDaysDao{
 		return sqlSession.selectList("kim_test.days_SelectAll", cal_id);
 	}
 
+	@Override
+	public LPDaysDto daysSelectOne(String days_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("kim_test.days_SelectOne",days_id);
+	}
+
+	@Override
+	public int daysDelete(String cal_id) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("kim_test.days_Delete", cal_id);
+	}
+
 }

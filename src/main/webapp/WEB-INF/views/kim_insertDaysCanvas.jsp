@@ -88,10 +88,9 @@
 			
 	</div>	
 	<script>  		
-	
-	
+		//첫번째 일정 표시
 		var daysNum = 1;
-		
+		//다음 맵 세팅
 		var container = document.getElementById('map');
 		var options = {
 			center: new daum.maps.LatLng(33.450701, 126.570667),
@@ -113,22 +112,25 @@
 		var marker;
 		//입력 윈도우
 		var infoWindow;
+		// 윈도우 창이 열려있는지 확인
 		var isInsertOpen = false;		
+		// 선 그려주는 변수
+		var polyline=null;
 		/* var icon = new daum.maps.MarkerImage(
 		        './food.png',
 		        new daum.maps.Size(32, 32)); */			
 		daum.maps.event.addListener(map, 'click',function(mouseEvent){
-			if(isInsertOpen != true){
-			
+			if(isInsertOpen != true){			
 				// 클릭한 위도, 경도 정보를 가져옵니다 
-				var latlng = mouseEvent.latLng;	
-				
+				var latlng = mouseEvent.latLng;					
 				 // 마커 생성			
 			    marker = new daum.maps.Marker({ 			    
 					position: new daum.maps.LatLng(latlng.getLat(), latlng.getLng()),
 					clickable: true				   
-				}); 		
-				
+				}); 						
+			 	//마커에 넣기
+			 	marker.setMap(map);
+				marker.setDraggable(true);						
 			 	// 입력 윈도우를 생성합니다
 				infoWindow = new daum.maps.InfoWindow({					
 				    content : '<div style="width:200px; height:140px;">일정제목 &nbsp;<input style="width:100px; height=30px;" type="text" id="daysTitle">'
@@ -141,10 +143,11 @@
 				map.setDraggable(false);
 				map.setZoomable(false);					
 			}	
-		});		  			
-		        
+		});
+		
 		// 일정 만들기
 		function daysMake() {
+			
 			var title = document.getElementById('daysTitle').value;	
 			var startDays = $('#startDays').val();
 			var endDays = $('#endDays').val();
@@ -157,16 +160,24 @@
 			else if(endDays == "" || endDays == null){
 				alert("종료 시간을 입력해주세요.");
 			}
-			else{			
-				// 마커에 넣기
-				daysMarker.push(marker);							
+			else{				
+				// 완성이 되면 넣고 아니면 넣지 않는다.
+				daysMarker.push(marker);					
 				// 내용에 넣기
 				daysInfo.push(title);
 				daysStart.push($('#startDays').val());
-				daysEnd.push($('#endDays').val());
+				daysEnd.push($('#endDays').val());	
+				
+				// 클릭 이벤트 설정
+				var addwindow = new daum.maps.InfoWindow({
+       			 content: '<div>'+title+'</div>', // 인포윈도우에 표시할 내용
+        		 removable : true
+				});		
+    			// 마커에  이벤트 등록	
+    			daum.maps.event.addListener(daysMarker[daysMarker.length-1], 'click', makeOverListener(map,daysMarker[daysMarker.length-1],addwindow));
+    			daum.maps.event.addListener(daysMarker[daysMarker.length-1], 'dragend', initRender);
 				// 선 그리기
-				render();			
-								
+				createRender();											
 				// 일정 페이지 정보 가져오기
 				var daysPage = document.getElementById("page3");
 				var div = document.createElement('div');			
@@ -180,37 +191,49 @@
 							+ " onclick='window.open(this.href, \"_경로보기\", \"width=1000px,height=800px;\"); return false;'"
 							+ ">최단경로보기</a><br>";
 				}
-				div.innerHTML += "<span>"+daysNum+"번째 일정:"+title+"</span>";
+				div.innerHTML += "<span>"+daysNum+"번째 일정:"+title+"</span>"
+						       +"<input type='button' class='deleteDays' title='"+(daysNum-1)+"' value='일정삭제'>";
 				daysPage.appendChild(div);
-				closeInfo();
+				infoWindow.close();
+				isInsertOpen = false;
+				map.setDraggable(true);
+				map.setZoomable(true);
 				daysNum++;		
-			}
-			//renderInfo();
+			}			
 		}         		
+		// 초기화 후 그려주기
+		function initRender(){
+			if(polyline != null){
+				polyline.setMap(null);
+				render();
+			}
+		}
+		// 생성시 그려주기
+		function createRender(){
+			render();
+		}
 		// 그려주기
 		function render() {
-		    var linePath = [];
-			// 지도에 마커를 표시합니다
-			for(var i = 0 ; i < daysMarker.length ; i++)
-			{
-				daysMarker[i].setMap(map);
-				daysMarker[i].setDraggable(true);	
-				var path =  new daum.maps.LatLng(daysMarker[i].getPosition().getLat(), daysMarker[i].getPosition().getLng());
-				linePath.push(path);
-			}
-			
-			if(daysMarker.length >= 2){		
-				// 지도에 표시할 선을 생성합니다
-				var polyline = new daum.maps.Polyline({
-					    path: linePath, // 선을 구성하는 좌표배열 입니다
-					    strokeWeight: 5, // 선의 두께 입니다
-					    strokeColor: '#FF0000', // 선의 색깔입니다
-					    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-					    strokeStyle: 'solid' // 선의 스타일입니다
-				});
-				// 지도에 선을 표시합니다 
-				polyline.setMap(map);  
-			}        
+		    var linePath = [];	 		    	
+			// 지도에 라인을 표시합니다.
+				for(var i = 0 ; i < daysMarker.length ; i++)
+				{
+					var path =  new daum.maps.LatLng(daysMarker[i].getPosition().getLat(), daysMarker[i].getPosition().getLng());
+					linePath.push(path);
+				}
+				
+				if(daysMarker.length >= 2){		
+					// 지도에 표시할 선을 생성합니다
+					polyline = new daum.maps.Polyline({
+						    path: linePath, // 선을 구성하는 좌표배열 입니다
+						    strokeWeight: 5, // 선의 두께 입니다
+						    strokeColor: '#FF0000', // 선의 색깔입니다
+						    strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+						    strokeStyle: 'solid' // 선의 스타일입니다
+					});
+					// 지도에 선을 표시합니다 
+					polyline.setMap(map);  
+				}    		    
 		}
 		// 일정 등록시 info메세지 닫기
 		function closeInfo() {
@@ -218,11 +241,8 @@
 			isInsertOpen = false;
 			map.setDraggable(true);
 			map.setZoomable(true);
-		}
-		//일정 조회시 info메세지 닫기
-		function closeDetail(){
-			detailWindow.close();
-		}
+			marker.setMap(null);
+		}		
 		// db에 저장
 		$("#insertCanvas").click(function() {
 			
@@ -251,6 +271,13 @@
 			}); 
 		});
 		
+		
+		// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+		function makeOverListener(map, marker, infowindow) {
+		    return function() {
+		        infowindow.open(map, marker);
+		    };
+		}
 		
 		
 		//https://map.kakao.com/?sX=400437.5000000028&sY=-11539.999999998836&sName=%EC%9A%B0%EB%A6%AC%EC%A7%91&eX=400437.5000000028&eY=-11538.999999998836&eName=%EC%97%AD%EC%82%BC%EC%97%AD
@@ -416,6 +443,43 @@
 			}
 		});
 	 }
+	
+	
+		$('.deleteDays').click(function() {
+	 		
+			// 지울려는 배열 번호
+			var number = $(this).attr("title");
+			if(daysMarker.length == 1){
+				alert("일정을 한개이상 입력하셔야 합니다.");
+			}else{
+			 				// 해당 일정의 데이터들 지우기
+			 daysMarker[number].setMap(null);
+			 daysMarker.splice(number,1);				 
+			 daysInfo.splice(number,1);	
+			 daysStart.splice(number,1);
+			 daysEnd.splice(number,1);	
+			 
+			 alert(daysMarker);
+			 // 선 다시 그려주기
+			 initRender();
+			 var diffDays = document.getElementsByClassName("deleteDays");
+			 var diffNum;				 
+			 for(var i = 0; i < diffDays.length ; i++){
+				diffNum = parseInt(diffDays[i].title);
+				if(diffNum > parseInt(number)){						
+					diffDays[i].title = --diffNum;
+				}
+			 }				 
+			 
+			$(this).closest('div').remove();
+				if(number =="0"){
+					// 0일경우 다음 일정에 있는 최단경로보기 찍어준 링크 찾아서 지워주기						
+					$('.deleteDays').parent().children('a').remove();
+				}
+			}
+		});
+	
+ 	
  	
 	</script>
 	<script type="text/javascript">
