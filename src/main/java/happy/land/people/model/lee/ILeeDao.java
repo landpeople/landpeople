@@ -12,4 +12,6 @@ public interface ILeeDao {
 	public String chatRoom_Select(Map<String,String> map);
 	public int chatRoom_UpdateOut(String chr_id);
 	public int chatRoom_Insert(Map<String,String> map);
+	
+	public String chkChatMember(String chr_id);
 }
