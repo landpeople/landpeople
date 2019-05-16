@@ -1,20 +1,33 @@
 package happy.land.people.ctrl;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.sound.midi.MidiDevice.Info;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+
+import com.github.scribejava.core.model.OAuth2AccessToken;
 
 import happy.land.people.dto.cho.ChoDto;
 import happy.land.people.model.cho.IChoService;
+import happy.land.people.naver.NaverLoginBO;
 
 @Controller
 public class ChoController {
@@ -23,9 +36,22 @@ public class ChoController {
 	
 	@Autowired
 	private IChoService iChoService;
-	
-	
 
+	
+	
+	
+	/* NaverLoginBO */
+    private NaverLoginBO naverLoginBO;
+    private String apiResult = null;
+    
+    @Autowired
+    private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
+        this.naverLoginBO = naverLoginBO;
+    }
+	
+	
+	
+	
 	// 메인페이지로가는 컨트롤러
 	@RequestMapping(value="/mainPage.do" , method=RequestMethod.GET)
 	public String mainPage() {
@@ -33,13 +59,57 @@ public class ChoController {
 	}
 	
 	
-	
-	@RequestMapping(value="/loginPage.do", method=RequestMethod.GET)
-	public String loginPage() {
+	// 로그인 페이지로 가는 컨트롤러 + 네이버 값받아오는거 추가함
+	@RequestMapping(value="/loginPage.do", method= {RequestMethod.GET, RequestMethod.POST})
+	public String loginPage(Model model, HttpSession session) {
 		logger.info("loginPage 컨트롤러");
 		
+	      
+        /* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
+        String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+        
+        //https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=sE***************&
+        //redirect_uri=http%3A%2F%2F211.63.89.90%3A8090%2Flogin_project%2Fcallback&state=e68c269c-5ba9-4c31-85da-54c16c658125
+        System.out.println("네이버:" + naverAuthUrl);
+        
+        //네이버 
+        model.addAttribute("url", naverAuthUrl);
+
+
 		return "users/loginPage";
 	}
+	
+	
+	 //네이버 로그인 성공시 callback호출 메소드
+    @RequestMapping(value = "/callback.do", method = { RequestMethod.GET, RequestMethod.POST })
+    public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session, ChoDto dto)
+            throws IOException, ParseException {
+        System.out.println("여기는 callback");
+        OAuth2AccessToken oauthToken;
+        oauthToken = naverLoginBO.getAccessToken(session, code, state);
+        //로그인 사용자 정보를 읽어온다.
+        apiResult = naverLoginBO.getUserProfile(oauthToken);
+        System.out.println(naverLoginBO.getUserProfile(oauthToken).toString());
+        model.addAttribute("result", apiResult);
+        
+        JSONParser jsonParser = new JSONParser();
+        JSONObject jsonArray = (JSONObject) jsonParser.parse(apiResult);
+        JSONObject resultObject = (JSONObject)jsonArray.get("response");
+        System.out.println(resultObject.get("email"));
+        //dto.setUser_email(jsonArray.get("email").);
+        
+        String user_email =(String)resultObject.get("email");
+       
+        
+        dto.setUser_email(user_email);
+        String[] user_name = user_email.split("@");
+        dto.setUser_nickname(user_name[0]);
+    	dto.setUser_auth("N");
+		boolean isc = iChoService.signUp(dto);
+		
+   
+        return isc?"foward:./index.jsp":"404";
+    }
 	
 	
 	
@@ -49,16 +119,24 @@ public class ChoController {
 		
 		ChoDto ldto = iChoService.login(dto);
 		
-		session.setAttribute("login", ldto);
+		session.setAttribute("ldto", ldto);
 		
-		return  "redirect:./index.jsp";
+		
+		return  "users/login/logout";
 	}
 	
 	// 로그아웃
-	@RequestMapping(value="",method=RequestMethod.GET)
-	public String logout() {
+	@RequestMapping(value="/logout.do",method=RequestMethod.GET)
+	public String logout(HttpSession session ,ChoDto dto) {
+		logger.info("logout");
 		
-		return "redirect:./index.jsp";
+		
+		System.out.println(session);
+		
+		
+		
+		session.invalidate();
+		return "users/sil";
 	}
 	
 	
@@ -82,10 +160,11 @@ public class ChoController {
 		return "users/sign/regiForm";
 	}
 	
-	//회원가입(db에저장하기 헤헤)
+	//회원가입(db에저장하기 헤헤) 일반유저
 	@RequestMapping(value="/signUp.do" , method=RequestMethod.POST)
 	public String signUp(HttpServletRequest req, ChoDto dto) {
 		
+		dto.setUser_auth("U");
 		boolean isc = iChoService.signUp(dto);
 		
 		return isc?"users/sign/auth":"404";
@@ -101,5 +180,21 @@ public class ChoController {
 		boolean isc = iChoService.authStatusUpdate(dto.getUser_email());
 		return isc? "users/sign/auth" : "error";
 	}
+	
+	
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+    
+	
 	
 }
