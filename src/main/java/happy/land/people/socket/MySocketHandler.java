@@ -7,11 +7,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.Model;
-import org.springframework.web.HttpRequestHandler;
-import org.springframework.web.context.ServletConfigAware;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -23,7 +19,7 @@ public class MySocketHandler extends TextWebSocketHandler{
 
 	Logger logger = LoggerFactory.getLogger(MySocketHandler.class);
 	
-	private ArrayList<WebSocketSession> list ; //webSocket session°ªÀ» ´ãÀº ¸®½ºÆ®
+	private ArrayList<WebSocketSession> list ; //webSocket sessionê°’ì„ ë‹´ì€ ë¦¬ìŠ¤íŠ¸
 
 	public MySocketHandler() {
 		list = new ArrayList<WebSocketSession>();
@@ -31,52 +27,52 @@ public class MySocketHandler extends TextWebSocketHandler{
 
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		logger.info("¡Ü MySocketHandler afterConnectionEstablished() ½ÇÇà");
+		logger.info("â— MySocketHandler afterConnectionEstablished() ì‹¤í–‰");
 		super.afterConnectionEstablished(session);
 
-		list.add(session);	//ÀüÃ¼ Á¢¼ÓÀÚ ¸®½ºÆ®¿¡ »õ·Î¿î Á¢¼ÓÀÚ Ãß°¡
-		System.out.println("¡Ü MySocketHandler afterConnectionEstablished / client session cnt : "+list.size());  // Çö ¼¼¼Ç¿¡ ¸î ¸íÀÌ µé¾î¿Ô´Â°¡?
-		System.out.println("¡Ü MySocketHandler afterConnectionEstablished / session connected : " + session.getId()); // Áö±İ µé¾î¿Â ¼¼¼ÇÀÇ °íÀ¯ ¾ÆÀÌµğ
+		list.add(session);	//ì „ì²´ ì ‘ì†ì ë¦¬ìŠ¤íŠ¸ì— ìƒˆë¡œìš´ ì ‘ì†ì ì¶”ê°€
+		System.out.println("â— MySocketHandler afterConnectionEstablished / client session cnt : "+list.size());  // í˜„ ì„¸ì…˜ì— ëª‡ ëª…ì´ ë“¤ì–´ì™”ëŠ”ê°€?
+		System.out.println("â— MySocketHandler afterConnectionEstablished / session connected : " + session.getId()); // ì§€ê¸ˆ ë“¤ì–´ì˜¨ ì„¸ì…˜ì˜ ê³ ìœ  ì•„ì´ë””
 	}
 
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
-		logger.info("¡Ü MySocketHandler handleTextMessage() ½ÇÇà");
+		logger.info("â— MySocketHandler handleTextMessage() ì‹¤í–‰");
 		String msg = message.getPayload();
 		String txt = "";
 
-		Map<String, Object> mySession = session.getHandshakeAttributes();	//WebsocketSessionÀÇ session°ªÀ» httpSesssion°ªÀ¸·Î º¯°æ
-		String myGrSession = (String)mySession.get("chr_id");	//Á¢¼ÓÀÚÀÇ Ã¤ÆÃ¹æ  ¾ÆÀÌµğ
-		String myMemSession = (String)mySession.get("user");	//Á¢¼ÓÀÚ ¾ÆÀÌµğ
-		System.err.println("¡Ü MySocketHandler Á¢¼ÓÀÚ chr_id : " + myGrSession);
-		System.err.println("¡Ü MySocketHandler Á¢¼ÓÀÚ user : " + myMemSession);
+		Map<String, Object> mySession = session.getHandshakeAttributes();	//WebsocketSessionì˜ sessionê°’ì„ httpSesssionê°’ìœ¼ë¡œ ë³€ê²½
+		String myGrSession = (String)mySession.get("chr_id");	//ì ‘ì†ìì˜ ì±„íŒ…ë°©  ì•„ì´ë””
+		String myMemSession = (String)mySession.get("user");	//ì ‘ì†ì ì•„ì´ë””
+		System.err.println("â— MySocketHandler ì ‘ì†ì chr_id : " + myGrSession);
+		System.err.println("â— MySocketHandler ì ‘ì†ì user : " + myMemSession);
 
-		if( msg != null && !msg.equals("") ) { // ¸Ş½ÃÁö°¡ nullÀÌ ¾Æ´Ò ¶§ Ã³¸®, 
+		if( msg != null && !msg.equals("") ) { // ë©”ì‹œì§€ê°€ nullì´ ì•„ë‹ ë•Œ ì²˜ë¦¬, 
 			if(msg.indexOf("#$nick_") > -1 ) {
 				for(WebSocketSession s : list) {	
 					Map<String, Object> sessionMap = s.getHandshakeAttributes();
-					String otherGrSession = (String)sessionMap.get("chr_id"); // °°Àº ±×·ì³¢¸® ¹­¾î ÁÖ´Â °Å °°Àºµ¥??
+					String otherGrSession = (String)sessionMap.get("chr_id"); // ê°™ì€ ê·¸ë£¹ë¼ë¦¬ ë¬¶ì–´ ì£¼ëŠ” ê±° ê°™ì€ë°??
 					String otherMemSession = (String)sessionMap.get("user");
 
 					ArrayList<String> grMemList = new ArrayList<String>();
-					System.out.println("¡Ü MySocketHandler Á¢¼ÓÀÚ chr_id : " + myGrSession);
-					System.out.println("¡Ü MySocketHandler Á¢¼ÓÀÚ nickname : "+ otherMemSession);
+					System.out.println("â— MySocketHandler ì ‘ì†ì chr_id : " + myGrSession);
+					System.out.println("â— MySocketHandler ì ‘ì†ì nickname : "+ otherMemSession);
 
-					if(myGrSession.equals(otherGrSession)) { //°°Àº ±×·ì ¼Ò¼ÓÀÏ ¶§ ´ëÈ­°¡ °¡´ÉÇÏµµ·Ï Ã³¸®
+					if(myGrSession.equals(otherGrSession)) { //ê°™ì€ ê·¸ë£¹ ì†Œì†ì¼ ë•Œ ëŒ€í™”ê°€ ê°€ëŠ¥í•˜ë„ë¡ ì²˜ë¦¬
 						s.sendMessage(
-								new TextMessage("<font color='red' size='1px'>"+myMemSession+" ´ÔÀÌ ÀÔÀåÇß½À´Ï´Ù.</font>")
+								new TextMessage("<font color='red' size='1px'>"+myMemSession+" ë‹˜ì´ ì…ì¥í–ˆìŠµë‹ˆë‹¤.</font>")
 								);
 					}
 				}
 			}else {
-				String msg2 = msg.substring(0, msg.indexOf(":")).trim(); // ¼ÒÄÏÀÌ ¿­¸° »óÅÂ¿¡¼­ ¸Ş½ÃÁö ÁÖ°í¹ŞÀ» ¼ö ÀÖµµ·Ï
+				String msg2 = msg.substring(0, msg.indexOf(":")).trim(); // ì†Œì¼“ì´ ì—´ë¦° ìƒíƒœì—ì„œ ë©”ì‹œì§€ ì£¼ê³ ë°›ì„ ìˆ˜ ìˆë„ë¡
 				for(WebSocketSession s : list) {
 					Map<String, Object> sessionMap = s.getHandshakeAttributes();
 					String otherGrSession = (String)sessionMap.get("chr_id");
 					String otherMemSession = (String)sessionMap.get("user");
 					if(myGrSession.equals(otherGrSession)){
 						if(msg2.equals(otherMemSession)){
-							String newMsg = "[³ª]"+msg.replace(msg.substring(0, msg.trim().indexOf(":")+1),"");
+							String newMsg = "[ë‚˜]"+msg.replace(msg.substring(0, msg.trim().indexOf(":")+1),"");
 							System.out.println("newMsg:"+newMsg);
 							txt = newMsg;
 						}else{
@@ -93,7 +89,7 @@ public class MySocketHandler extends TextWebSocketHandler{
 
 	@Override
 	public void afterConnectionClosed(WebSocketSession session,CloseStatus status) throws Exception {
-		logger.info("¡Ü MySocketHandler afterConnectionClosed() ½ÇÇà");
+		logger.info("â— MySocketHandler afterConnectionClosed() ì‹¤í–‰");
 		
 		super.afterConnectionClosed(session, status);
 		Map<String, Object> mySession = session.getHandshakeAttributes();
@@ -101,13 +97,13 @@ public class MySocketHandler extends TextWebSocketHandler{
 		String myMemSession = (String)mySession.get("mem_id");
 		list.remove(session);
 		
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy³â MM¿ù ddÀÏ HH½Ã mmºĞ");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyë…„ MMì›” ddì¼ HHì‹œ mmë¶„");
 		String now = sdf.format(new Date());
 		for(WebSocketSession a : list) {
 			Map<String, Object> sessionMap = a.getHandshakeAttributes();
 			String otherGrSession = (String)sessionMap.get("gr_id");
 			if(myGrSession.equals(otherGrSession)){
-				a.sendMessage(new TextMessage("<font color='blue' size='1px'>"+myMemSession+"´ÔÀÌ ÅğÀåÇß½À´Ï´Ù ("+now+")</font>"));
+				a.sendMessage(new TextMessage("<font color='blue' size='1px'>"+myMemSession+"ë‹˜ì´ í‡´ì¥í–ˆìŠµë‹ˆë‹¤ ("+now+")</font>"));
 			}
 		}
 	}
