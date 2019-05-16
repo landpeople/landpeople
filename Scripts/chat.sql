@@ -40,21 +40,13 @@ INSERT INTO LPCHATLIST VALUES('접속자4');
 INSERT INTO LPCHATLIST VALUES('접속자5');
 INSERT INTO LPCHATLIST VALUES('접속자6');
 
-
 -- default로 하나의 채팅방을 생성해줌
 INSERT INTO LPCHATROOM (CHR_ID, CHR_SENDER, CHR_RECEIVER, CHR_SOUT, CHR_ROUT, CHR_CONTENT, CHR_REGDATE)
 VALUES(LPCHATROOM_SEQ.NEXTVAL, '접속자1', '접속자2', 'F', 'F', '<p id="접속자 1">접속자 1님의 시간</p><p id="접속자1">안녕하세요!!!</p><p id="접속자 2">접속자2님의 시간</p><p id="접속자2">오냐</p>', SYSDATE);
 
-
 -- 1. 세션에 접속한 사용자 리스트 출력 =================================================================================================
 SELECT * FROM LPCHATLIST;
-
-
-
-
-
-
-
+                                               
 -- 1. 채팅방 생성 ==========================================================================================================================================			
 -- 1. 기존에 상대방과 채팅방이 있는지 확인
 SELECT CHR_ID FROM LPCHATROOM WHERE (CHR_SENDER, CHR_RECEIVER) IN (('접속자1', '접속자2'),('접속자2','접속자1'));
