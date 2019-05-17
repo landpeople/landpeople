@@ -2,8 +2,9 @@ package happy.land.people.model;
 
 import java.util.Map;
 
-import happy.land.people.dto.LpcollectDto;
-import happy.land.people.dto.LpsketchbookDto;
+import happy.land.people.dto.LPSketchbookDto;
+import happy.land.people.dto.LPCollectDto;
+
 
 public interface ISketchBookDao {
 	
@@ -11,10 +12,10 @@ public interface ISketchBookDao {
 	public String sketchSelectWrite(String user_email);
 	
 	// 스케치북 생성 
-	public boolean sketchInsert(LpsketchbookDto dto);
+	public boolean sketchInsert(LPSketchbookDto dto);
 	
 	// 스크랩 최초 등록
-	public boolean collectInsert(LpcollectDto dto);
+	public boolean collectInsert(LPCollectDto dto);
 	
 	// 스케치북 스크랩 상태 확인
 	public String scrapeSelect(Map<String, String> map);

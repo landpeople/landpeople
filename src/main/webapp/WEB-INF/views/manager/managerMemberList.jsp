@@ -133,7 +133,7 @@
    메인페이지 : ${ldto}
    <!--젤로 레이아웃- 전체 영역 감싸는 div-->
    <div class="main-wrapper">
-      <%@include file="./common/Sidebar.jsp"%>
+      <%@include file="../common/Sidebar.jsp"%>
       <div class="content-wrapper">
 
          <!-- 메인 컨텐츠   -->

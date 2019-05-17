@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import happy.land.people.dto.LpcollectDto;
-import happy.land.people.dto.LpsketchbookDto;
+import happy.land.people.dto.LPSketchbookDto;
+import happy.land.people.dto.LPCollectDto;
 
 @Service
 public class SketchBookServiceImpl implements ISketchBookService {
@@ -26,14 +26,14 @@ public class SketchBookServiceImpl implements ISketchBookService {
 	}
 	
 	@Override
-	public boolean sketchInsert(LpsketchbookDto dto) {
+	public boolean sketchInsert(LPSketchbookDto dto) {
 		logger.info("service sketchInsert 스케치북 생성 실행");
 		return iSketchBookDao.sketchInsert(dto);
 	}
 	
 	
 	@Override
-	public boolean collectInsert(LpcollectDto dto) {
+	public boolean collectInsert(LPCollectDto dto) {
 		logger.info("service collectInsert 좋아요 최초등록 실행");
 		return iSketchBookDao.collectInsert(dto);
 	}

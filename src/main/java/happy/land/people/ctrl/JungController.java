@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import happy.land.people.dto.LpcollectDto;
-import happy.land.people.dto.LpsketchbookDto;
+import happy.land.people.dto.LPCollectDto;
+import happy.land.people.dto.LPSketchbookDto;
 import happy.land.people.model.ISketchBookService;
 
 @Controller
@@ -41,7 +41,7 @@ public class JungController {
 	}
 	
 	@RequestMapping(value="/writeSketch.do",method=RequestMethod.POST)
-	public  String sketchMake(LpsketchbookDto dto) {
+	public  String sketchMake(LPSketchbookDto dto) {
 		logger.info("sketchBook 생성 {}", dto);
 		// 스케치북 생성 (제목, 여행테마, 공유 여부)
 		boolean isc = iSketchBookService.sketchInsert(dto);
@@ -84,7 +84,7 @@ public class JungController {
 	
 	@ResponseBody
 	@RequestMapping(value="Scrape.do", method=RequestMethod.GET)
-	public Map<String, String> scrapeState(String user_email, String sketch_id, LpcollectDto dto ) {
+	public Map<String, String> scrapeState(String user_email, String sketch_id, LPCollectDto dto ) {
 		// 스케치북 스크랩 최초 등록
 		boolean isc = iSketchBookService.collectInsert(dto);
 		System.out.println(isc+"스크랩 최초 등록~~~~~ 성공");

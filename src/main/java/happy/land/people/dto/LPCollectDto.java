@@ -2,7 +2,7 @@ package happy.land.people.dto;
 
 import java.io.Serializable;
 
-public class LpcollectDto implements Serializable {
+public class LPCollectDto implements Serializable {
 
 	private static final long serialVersionUID = -6468354052971510360L;
 	private String col_id;
@@ -11,10 +11,10 @@ public class LpcollectDto implements Serializable {
 	private String col_scrape;
 	private String col_like;
 	
-	public LpcollectDto() {
+	public LPCollectDto() {
 	}
 
-	public LpcollectDto(String col_id, String user_email, String sketch_id, String col_scrape, String col_like) {
+	public LPCollectDto(String col_id, String user_email, String sketch_id, String col_scrape, String col_like) {
 		super();
 	
 		this.user_email = user_email;

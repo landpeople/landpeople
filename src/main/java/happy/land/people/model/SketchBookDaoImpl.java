@@ -8,8 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import happy.land.people.dto.LpcollectDto;
-import happy.land.people.dto.LpsketchbookDto;
+import happy.land.people.dto.LPSketchbookDto;
+import happy.land.people.dto.LPCollectDto;
 
 @Repository
 public class SketchBookDaoImpl implements ISketchBookDao {
@@ -28,7 +28,7 @@ public class SketchBookDaoImpl implements ISketchBookDao {
 	}
 	
 	@Override
-	public boolean sketchInsert(LpsketchbookDto dto) {
+	public boolean sketchInsert(LPSketchbookDto dto) {
 		System.out.println("스케치북 작성 입력값!!!!"+dto);
 		int n = sqlsession.insert(NS+"sketch_Insert", dto);
 		System.out.println("스케치북 작성 성공!!!!"+n);
@@ -37,7 +37,7 @@ public class SketchBookDaoImpl implements ISketchBookDao {
 	
 
 	@Override
-	public boolean collectInsert(LpcollectDto dto) {
+	public boolean collectInsert(LPCollectDto dto) {
 		System.out.println("스케치북 스크랩 최초 등록!!!!"+dto);
 		int n = sqlsession.insert(NS+"collect_Insert", dto);
 		System.out.println("스케치북 스크랩 최초 등록!!!!"+n);
