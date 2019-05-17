@@ -25,18 +25,5 @@
          <aop:after method="afterThrowing" pointcut-ref="daoLogPoint"/>
       </aop:aspect>
    </aop:config>
-   <!-- aspect, pointCut -->
-   <aop:config>
-      <aop:pointcut expression="execution(* happy.land.people.model.*.*Dao*.*(..))" id="daoLogPoint"/>
-   <!-- 실행되는 Class의 Bean을 등록 -->
-      <aop:aspect id="logAop" ref="logAop">
-      <!-- DAO 실행 전에 -->
-      <!-- 메소드가 실행되어야 하는데 어느 상황일때 필요한지를 ref로 명시 -->
-         <aop:before method="before" pointcut-ref="daoLogPoint"/>
-      <!-- DAO 성공적으로 실행하고 반환이 이뤄졌을 때 -->
-         <aop:after-returning method="afterReturning" pointcut-ref="daoLogPoint"/>
-      <!-- DAO 실행하고 에러 발생했을 때 -->
-         <aop:after method="afterThrowing" pointcut-ref="daoLogPoint"/>
-      </aop:aspect>
-   </aop:config>
+
 </beans>

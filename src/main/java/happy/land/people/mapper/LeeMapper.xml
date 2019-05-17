@@ -27,5 +27,14 @@
    <insert id="chatRoom_Insert" parameterType="java.util.Map">
       INSERT INTO LPCHATROOM VALUES(LPCHATROOM_SEQ.NEXTVAL, #{sender}, #{receiver}, 'F', 'F', '', SYSDATE)
    </insert>
-   
+  
+   <select id="chkChatMember" parameterType="java.lang.String" resultType="java.util.Map">
+		SELECT CHR_SENDER, CHR_RECEIVER FROM LPCHATROOM
+			WHERE CHR_ID = #{chr_id}
+    </select>
+    
+    <select id="chkDelflag" parameterType="java.lang.String" resultType="java.lang.String">
+    	SELECT USER_DELFLAG FROM LPUSER
+    		WHERE USER_EMAIL = #{user_email}
+    </select>
 </mapper>

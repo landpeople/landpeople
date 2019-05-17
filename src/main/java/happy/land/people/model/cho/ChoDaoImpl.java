@@ -69,10 +69,7 @@ public class ChoDaoImpl implements IChoDao {
 			return DBPWDto;
 		}else {
 			logger.info("--------------패스워드 불일치----------");
-			
 		}
-		
-		
 		return session.selectOne(NS+"login", dto);
 	}
 

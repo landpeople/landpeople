@@ -22,7 +22,7 @@
 </head>
 	<body>
 	<!-- SIDEBAR -->
-	<div class="sidebar-menu hidden-xs hidden-sm">
+	<div class="sidebar-menu">
 		<div class="top-section" style="padding-bottom: 0;">
 			<div class="profile-image">
 				<img src="img/제주배경임.png" alt="Volton">

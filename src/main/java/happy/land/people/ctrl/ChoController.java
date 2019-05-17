@@ -95,8 +95,7 @@ public class ChoController {
 
 		model.addAttribute("google_url", url);
 
-
-		return "users/loginPage";
+ㄴ		return "users/loginPage";
 	}
 	
 	
@@ -159,11 +158,10 @@ public class ChoController {
 	public String logout(HttpSession session ,ChoDto dto) {
 		logger.info("logout");
 		
-		
-		System.out.println(session);
+		System.out.println("로그아웃.do 현재 세션 : " + session);
 
 		session.invalidate();
-		return "users/sil";
+		return "forward:./index.jsp";
 	}
 
 	//회원가입 페이지로가기 ^^

@@ -2,8 +2,7 @@
 <%@page import="java.util.Map"%>
 <%@page import="happy.land.people.dto.kim.LPDaysDto"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,19 +13,13 @@
 	List<LPCanvasDto>	 canvasList = 	(List<LPCanvasDto>)request.getAttribute("daysType");
 %>
 
-
 <script src="./js/jquery-3.3.1.js"></script>
+
 <!-- 책모양  -->
-<link href="./css/jquery.booklet.latest.css" type="text/css" rel="stylesheet" media="screen, projection, tv" />
 <script src="./js/jquery-ui.js"></script>
 <script src="./js/jquery.easing.1.3.js"></script>
-<script src="./js/jquery.booklet.latest.min.js"></script> 
-
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> -->
-<link rel="stylesheet" href="./css/Testbootstrap.css">
-<link rel="stylesheet" href="./css/templatemo-style.css">
-<link rel="stylesheet" href="./css/normalize.css">
-<link rel="stylesheet" href="./css/font-awesome.css">
+<script src="./js/jquery.booklet.latest.min.js"></script>
+<link href="./css/jquery.booklet.latest.css" type="text/css" rel="stylesheet" media="screen, projection, tv" />
 
 <script src="./js/vendor/modernizr-2.6.2.min.js"></script>
 <script src="./js/min/plugins.min.js"></script>
@@ -35,105 +28,72 @@
 
 <!-- 카카오 지도를 위한 js파일 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=2a8ce23f7f516bf0c39441ce65105c56&libraries=services"></script>
-
-
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=559fa9d8ea227159941f35acba720d2b&libraries=services"></script>
 
 </head>
-	<body>
-	<!-- SIDEBAR -->
-	<div class="sidebar-menu hidden-xs hidden-sm">
-		<div class="top-section" style="padding-bottom: 0;">
-			<div class="profile-image">
-				<img src="img/제주배경임.png" alt="Volton">
-			</div>
-			<!--  <h3 class="profile-title">Volton</h3>
-                <p class="profile-description">Digital Photography</p> -->
-		</div>
-		<!-- .top-section -->
-		<div class="main-navigation">
-			<ul class="navigation">
-				<li><a href="#"><i class="fa fa-globe"></i>Welcome</a></li>
-				<li><a href="#"><i class="fa fa-pencil"></i>About Me</a></li>
-				<li><a href="#"><i class="fa fa-paperclip"></i>My Gallery</a></li>
-				<li><a href="#"><i class="fa fa-link"></i>Contact Me</a></li>
-			</ul>
-		</div>
-		<!-- .main-navigation -->
+<body>
+   <div class="main-wrapper">
+      <%@include file="./common/Sidebar.jsp"%>
+      <div class="content-wrapper">
 
-		<!-- 채팅 -->
-		<div class="chatting"></div>
-	</div>
-	<!-- .sidebar-menu -->
+         <!-- 메인 컨텐츠   -->
+         <div class="lpcontents">
+            <div class="content">
+               <input type="button" id="downloadExcel">
+               <a href="./canvasDownloadExcel.do">테스트용 엑셀 다운로드</a>
+               <a href="./canvasDownloadImage.do">테스트용 이미지 다운로드</a>
+               <div id="mybook" style="border: 1px solid black;">
+                  <div>입력된 캔버스가 없습니다.</div>
+                  <div>입력된 캔버스가 없습니다.</div>
+               </div>
+               <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">캔버스 입력</button>
+               <input type="button" id="pageUpdate" value="페이지 수정"></input>
+               <input type="button" id="pageDelete" value="페이지 삭제"></input>
+               <input type="hidden" value="0" id="selectType">
 
-	
-	<!-- 여기에 div 잡아서 작업하면 됨 -->
-	<!-- templatemo-style.css에 보면 이안에 들어가는 div 클래스가 있음. 아니면 css를 temp -->
-	<div class="main-content">			
-			 <input type="button" id="downloadExcel">	
-			 <a href="./canvasDownloadExcel.do">테스트용 엑셀 다운로드</a> 
-			 <a href="./canvasDownloadImage.do">테스트용 이미지 다운로드</a>
-			 <div id="mybook" style="border: 1px solid black;">
-			    <div>
-			        	입력된 캔버스가 없습니다.
-			    </div>
-			    <div>
-			       		입력된 캔버스가 없습니다.
-			    </div>			    
-			</div>
-  			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">캔버스 입력</button>
-			<input type="button" id="pageUpdate" value="페이지 수정"></input>
-			<input type="button" id="pageDelete" value="페이지 삭제"></input>
-			<input type="hidden" value="0" id="selectType">
-			
-			<form action="./insertDaysForm.do" onsubmit="return false" method="post">
-				<input type="hidden" value=1 id="nowPageNo" name="nowPageNo">			
-			</form>
-			
-			<!-- <form action="./updateDaysForm.do" onsubmit="return false" method="post">
-				<input type="hidden" value=1 id="nowPageNo" name="nowPageNo">			
-			</form>
-			
-			<form action="./deleteDaysForm.do" onsubmit="return false" method="post">
-				<input type="hidden" value=1 id="nowPageNo" name="nowPageNo">			
-			</form> -->
-  
- 
+               <form action="./insertDaysForm.do" onsubmit="return false" method="post">
+                  <input type="hidden" value=1 id="nowPageNo" name="nowPageNo">
+               </form>
 
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content" style="width:1000px; height:800px;">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
-        </div>
-        <div class="modal-body">
-          <p><img src="./img/days.png" id="insertDaysForm"></img>
-          	 <img src="./img/free2.png"></img>
-          	 <img src="./img/free2.png"></img><br>
-          	 <img src="./img/free3.png"></img>
-          	 <img src="./img/free4.png"></img>
-          	 <img src="./img/free5.png"></img>
-          </p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-default" id="canvasInsertFrom">ok</button>
-        </div>
+               <!-- <form action="./updateDaysForm.do" onsubmit="return false" method="post">
+            <input type="hidden" value=1 id="nowPageNo" name="nowPageNo">        
+         </form>
+         
+         <form action="./deleteDaysForm.do" onsubmit="return false" method="post">
+            <input type="hidden" value=1 id="nowPageNo" name="nowPageNo">        
+         </form> -->
+
+               <!-- Modal -->
+               <div class="modal fade" id="myModal" role="dialog">
+                  <div class="modal-dialog">
+
+                     <!-- Modal content-->
+                     <div class="modal-content" style="width: 1000px; height: 800px;">
+                        <div class="modal-header">
+                           <button type="button" class="close" data-dismiss="modal">&times;</button>
+                           <h4 class="modal-title">Modal Header</h4>
+                        </div>
+                        <div class="modal-body">
+                           <p>
+                              <img src="./img/days.png" id="insertDaysForm"></img> <img src="./img/free2.png"></img> <img src="./img/free2.png"></img><br> <img src="./img/free3.png"></img> <img src="./img/free4.png"></img> <img src="./img/free5.png"></img>
+                           </p>
+                        </div>
+                        <div class="modal-footer">
+                           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                           <button type="button" class="btn btn-default" id="canvasInsertFrom">ok</button>
+                        </div>
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- </div> 여기까지 메인 컨텐츠  -->
+         <div class="footer">landpeople</div>
       </div>
-      
-    </div>
-  </div>
-  
-</div>
-	 
-  
+   </div>
 
-	
-	<script>  		
+ <script>  		
 	$("document").ready(function() {		
 		 //책 모양 가져오기
  	    $('#mybook').booklet({
@@ -244,7 +204,6 @@
     		        content: '<div><%=daysList.get(i).get(j).getDays_title()%></div>', // 인포윈도우에 표시할 내용
     		        removable : true
 	    		});
-
     		    // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
     		    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
     		    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
@@ -300,7 +259,6 @@
 			%>
 		}
 		
-		
 		// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
 		function makeOverListener(map, marker, infowindow) {
 		    return function() {
@@ -320,7 +278,6 @@
     var infowindow = new daum.maps.InfoWindow({
         content: positions[i].content // 인포윈도우에 표시할 내용
     });
-
     // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
     // 이벤트 리스너로는 클로저를 만들어 등록합니다 
     // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
@@ -328,8 +285,7 @@
     daum.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
 }
 */
-		
-	</script> 	
-	
-	</body>
+	</script> 
+
+</body>
 </html>
