@@ -147,7 +147,7 @@ public class ChoController {
 		System.out.println(ldto);
 		iLeeService.chatList_Insert(ldto.getUser_nickname());
 		session.setAttribute("ldto", ldto);
-
+		
 		return "forward:./index.jsp";
 	}
   
