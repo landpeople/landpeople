@@ -162,7 +162,7 @@
           $(".chat_div").show();
           $(".chat").focus();
           
-          ws = new WebSocket("ws://192.168.12.204:8091/LandPeople/wsChat.do");
+          ws = new WebSocket("ws://192.168.11.85:8091/LandPeople/wsChat.do");
           
           ws.onopen = function() {
              alert("● groupChat.jsp ws.onopen");
@@ -175,8 +175,8 @@
             if(msg.startsWith("<font color=")){ // 입장,퇴장
                $(".receive_msg").append($("<div class = 'noticeTxt'>").append(msg+"<br/>"));
             viewList(id);
-            }else if(msg.startsWith("[나]")){ //대화내용
-               msg = msg.substring(3);
+            }else if(msg.startsWith("[${user}]")){ //대화내용
+//                msg = msg.substring(3);// [나] 라는거 자르는 거 였음
                $(".receive_msg").append($("<div class = 'sendTxt'>").append($("<span class ='sender_img'>").text(msg))).append("<br><br>");
             }else{
                $(".receive_msg").append($("<div class = 'receiveTxt'>").append($("<span class = 'receiver_img'>").text(msg))).append("<br><br>");
