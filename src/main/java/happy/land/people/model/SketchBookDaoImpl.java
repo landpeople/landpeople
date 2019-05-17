@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import happy.land.people.dto.LpcollectDto;
+import happy.land.people.dto.LpsketchbookDto;
 
 @Repository
 public class SketchBookDaoImpl implements ISketchBookDao {
@@ -18,6 +19,19 @@ public class SketchBookDaoImpl implements ISketchBookDao {
 	
 	@Autowired
 	private SqlSessionTemplate sqlsession;
+	
+	
+	@Override
+	public String sketchSelectWrite(String user_email) {
+		System.out.println("스케치북 작성 권한 확인!!!!"+user_email);
+		return sqlsession.selectOne(NS+"sketch_WriteChk", user_email);
+	}
+	
+	@Override
+	public boolean sketchInsert(LpsketchbookDto dto) {
+		int n = sqlsession.insert(NS+"sketch_Insert", dto);
+		return n>0?true:false;
+	}
 	
 
 	@Override
@@ -59,6 +73,11 @@ public class SketchBookDaoImpl implements ISketchBookDao {
 		System.out.println("좋아요 상태 가져와~~"+map);
 		return sqlsession.selectOne(NS+"like_Select", map);
 	}
+
+
+	
+
+	
 
 
 	

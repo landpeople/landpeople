@@ -18,6 +18,18 @@ public class LpsketchbookDto implements Serializable{
 	public LpsketchbookDto() {
 	}
 
+	
+	
+	
+	public LpsketchbookDto(String user_email, String sketch_title, String sketch_theme) {
+		super();
+		this.user_email = user_email;
+		this.sketch_title = sketch_title;
+		this.sketch_theme = sketch_theme;
+	}
+
+
+
 
 	public LpsketchbookDto(String sketch_id, String user_email, String sketch_title, String sketch_theme,
 			String sketch_share, String sketch_delflag, String sketch_spath, String sketch_block) {

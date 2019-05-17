@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import happy.land.people.dto.LpcollectDto;
+import happy.land.people.dto.LpsketchbookDto;
 
 @Service
 public class SketchBookServiceImpl implements ISketchBookService {
@@ -16,6 +17,19 @@ public class SketchBookServiceImpl implements ISketchBookService {
 	
 	@Autowired
 	private ISketchBookDao iSketchBookDao;
+	
+	
+	@Override
+	public String sketchSelectWrite(String user_email) {
+		logger.info("service sketchSelectWrite 스케치북 작성 권한 확인");
+		return iSketchBookDao.sketchSelectWrite(user_email);
+	}
+	
+	@Override
+	public boolean sketchInsert(LpsketchbookDto dto) {
+		logger.info("service sketchInsert 스케치북 생성 실행");
+		return iSketchBookDao.sketchInsert(dto);
+	}
 	
 	
 	@Override
@@ -51,6 +65,11 @@ public class SketchBookServiceImpl implements ISketchBookService {
 		logger.info("service likeCancel 실행");
 		return iSketchBookDao.selLike(map);
 	}
+
+
+	
+
+	
 
 
 
