@@ -22,4 +22,5 @@
    <insert id="chatRoom_Insert" parameterType="java.util.Map">
       INSERT INTO LPCHATROOM VALUES(LPCHATROOM_SEQ.NEXTVAL, #{sender}, #{receiver}, 'F', 'F', '', SYSDATE)
    </insert>
+   
 </mapper>

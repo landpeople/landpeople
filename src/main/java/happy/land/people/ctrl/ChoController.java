@@ -16,6 +16,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.social.google.connect.GoogleConnectionFactory;
+import org.springframework.social.oauth2.GrantType;
+import org.springframework.social.oauth2.OAuth2Operations;
+import org.springframework.social.oauth2.OAuth2Parameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,6 +44,7 @@ public class ChoController {
 	
 	
 	
+	
 	/* NaverLoginBO */
     private NaverLoginBO naverLoginBO;
     private String apiResult = null;
@@ -50,6 +55,12 @@ public class ChoController {
     }
 	
 	
+    /* GoogleLogin */
+  	@Autowired
+  	private GoogleConnectionFactory googleConnectionFactory;
+  	@Autowired
+  	private OAuth2Parameters googleOAuth2Parameters;
+      
 	
 	
 	// 메인페이지로가는 컨트롤러
@@ -74,6 +85,18 @@ public class ChoController {
         
         //네이버 
         model.addAttribute("url", naverAuthUrl);
+
+        
+        
+        
+
+		/* 구글code 발행 */
+		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
+		String url = oauthOperations.buildAuthorizeUrl(GrantType.AUTHORIZATION_CODE, googleOAuth2Parameters);
+
+		System.out.println("구글:" + url);
+
+		model.addAttribute("google_url", url);
 
 
 		return "users/loginPage";
@@ -108,7 +131,19 @@ public class ChoController {
 		boolean isc = iChoService.signUp(dto);
 		
    
-        return isc?"foward:./index.jsp":"404";
+        return isc?"redirect:./index.jsp":"404";
+    }
+    
+    
+  
+	
+    //구글 로그인 성공시 콜백
+    @RequestMapping(value="/callbackgoogle.do" , method= {RequestMethod.POST,RequestMethod.GET})
+    public String callbackGoogle(Model model, @RequestParam String code, HttpSession session , ChoDto dto) {
+    	System.out.println("여기는 googleCallback");
+
+    	
+		return "redirect:./index.jsp";
     }
 	
 	

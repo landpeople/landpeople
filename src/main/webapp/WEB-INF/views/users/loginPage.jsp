@@ -35,6 +35,10 @@
 </form>
 </div>
 
+
+<form action="./regiForm.do" method="get">
+	<input type="submit" value="회원가입">
+</form>
 ${url}
 
 
@@ -46,5 +50,12 @@ ${url}
 </a>
 </div>
 <br>
+
+
+
+<!-- 구글 로그인 화면으로 이동 시키는 URL -->
+<!-- 구글 로그인 화면에서 ID, PW를 올바르게 입력하면 oauth2callback 메소드 실행 요청-->
+${google_url}
+<div id="google_id_login" style="text-align:center"><a href="${google_url}"><img width="230" src="${pageContext.request.contextPath}/img/googlelogin.png"/></a></div>
 </body>
 </html>
