@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop" xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
-      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-      http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
-      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
-      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:websocket="http://www.springframework.org/schema/websocket"
+   xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.0.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
    <!-- 3*번 -->
    <!-- 회사에가면, xml이 통째로 하나에 때려넣어진 경우도 있음 -->
@@ -96,4 +98,37 @@
    </aop:config>
 
    <tx:annotation-driven transaction-manager="transactionManager"/>
+   
+   <!-- webSocket handeler -->
+   <websocket:handlers>
+      <websocket:mapping handler="wsChat.do" path="/wsChat.do"/>
+      <websocket:handshake-interceptors>
+         <bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"></bean>
+      </websocket:handshake-interceptors>
+   </websocket:handlers>
+   
+   
+   
+   
+   
+   
+   <bean id="googleConnectionFactory" class="org.springframework.social.google.connect.GoogleConnectionFactory">
+   	<constructor-arg value="302749873898-fq7tebgkhe04612h4fm02n6c4hlonrno.apps.googleusercontent.com"/>
+   	<constructor-arg value="S9hUasoYIzVHxozaEYokHHVd"/>
+   </bean>
+   
+   <bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
+   	<property name="scope" value="https://www.googleapis.com/auth/plus.login"/>
+   	<property name="redirectUri" value="http://localhost:8091/LandPeople/callbackgoogle.do"/>
+   
+   </bean>
+
+   
+   
+   
+   
 </beans>
+
+
+
+   

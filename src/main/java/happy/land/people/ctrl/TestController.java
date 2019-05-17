@@ -52,6 +52,7 @@ public class TestController {
 	
 	@RequestMapping(value = "/lee.do", method = RequestMethod.GET)
 	public String Lee() {
+		
 		return "lee";
 	}
 	
