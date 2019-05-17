@@ -1,0 +1,81 @@
+@charset "UTF-8";
+*{
+ padding: 0px;
+ margin: 0px;
+}
+#Left-Side{
+/*  	border: 1px solid black;  */
+	float: left;
+	width: 50%;
+	height: 100vh;
+	text-align: center; /*참고 문구용 CSS*/
+}
+
+#Right-Side{
+/*  	border: 1px solid black;  */
+	float: right;
+	width: 49%;
+	height: 100vh;
+	text-align: center; /*참고 문구용 CSS*/
+}
+
+#LS_Container{
+/* 	border: 1px solid black;   */
+	width: 50%;
+	height: 98%;
+	float: left;
+}
+
+#LS_IMG_Container{
+/* 	border: 1px solid black;   */
+	width: 48%;
+	height: 98%;
+ 	float: right;
+}
+
+#LS_TXT_1{
+	border: 1px solid black;
+	width: 85%;
+	height: 90%;
+	margin: auto;
+	margin-top: 55px;
+	margin-left : 30px;
+}
+
+#LS_IMG_1{
+	border: 1px solid black;
+	float: none;
+	height: 26%;
+	width: 92%;
+	margin-top: 60px;
+}
+
+#LS_IMG_2{
+	border: 1px solid black;
+	float: none;
+	height: 26%;
+	width: 92%;
+	margin-top: 40px;
+}
+
+#LS_IMG_3{
+	border: 1px solid black;
+	float: none;
+	height: 26%;
+	width: 92%;
+	margin-top: 40px;
+}
+
+#RS_ING_1{
+	border: 1px solid black;
+	height: 45%;
+	width: 94%;
+	margin: 30px 0px 20px;
+}
+
+#RS_TXT_1{
+	border: 1px solid black;
+	height: 45%;
+	width: 94%;
+	margin: 5px 0px 20px;
+}
