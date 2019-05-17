@@ -46,24 +46,17 @@
 	</div>
 	<!-- .sidebar-menu -->
 
-	
-
-	<!-- main에 있는 header 영역임 main 페이지 말고는 사용을 안하지만, 그냥 주석함. 지워도 됨-->
-	<!-- <div class="banner-bg" id="top"> -->
-	<!-- 	<div class="banner-overlay"></div> -->
-	<!-- 		<div class="welcome-text"> -->
-	<!-- 			<h2>LandPeople</h2> -->
-	<!--            <h5>This is a mobile friendly layout with Bootstrap v3.3.1 framework. Maecenas eu ante at nunc posuere fringilla sit amet non dolor. Proin condimentum fermentum nunc.</h5> -->
-	<!--        </div> -->
-	<!--    </div> -->
-	<!-- </div> -->
+	<div class="main-content">
+		<input id="detailCanvas" type="button" value="저장된 내용 가져오기"></input>
+	</div>
 	
 	<!-- 여기에 div 잡아서 작업하면 됨 -->
 	<!-- templatemo-style.css에 보면 이안에 들어가는 div 클래스가 있음. 아니면 css를 temp -->
-	<div class="main-content">			
-			 <a href="./loadMap.do">아아아</a>	
-	</div>
-	
+	<script type="text/javascript">		
+	$("#detailCanvas").click(function() {
+		location.href = "./detailCanvas.do";			
+	});
+	</script>
 	
 	</body>
 </html>
