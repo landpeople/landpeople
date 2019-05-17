@@ -1,15 +1,13 @@
 package happy.land.people.ctrl;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import javax.sound.midi.MidiDevice.Info;
+import java.io.IOException;
 
-import org.json.simple.JSONArray;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +22,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
 import happy.land.people.dto.cho.ChoDto;
 import happy.land.people.model.cho.IChoService;
-
-import happy.land.people.naver.NaverLoginBO;
 import happy.land.people.model.lee.ILeeService;
+import happy.land.people.naver.NaverLoginBO;
 
 
 @Controller
@@ -92,8 +88,7 @@ public class ChoController {
 		System.out.println("구글:" + url);
 
 		model.addAttribute("google_url", url);
-
-ㄴ		return "users/loginPage";
+		return "users/loginPage";
 	}
 	
 	
