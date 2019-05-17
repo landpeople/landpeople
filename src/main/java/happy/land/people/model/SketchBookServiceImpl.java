@@ -39,31 +39,31 @@ public class SketchBookServiceImpl implements ISketchBookService {
 	}
 	
 	@Override
-	public String selScrape(Map<String, String> map) {
+	public String scrapeSelect(Map<String, String> map) {
 		logger.info("service selScrape 좋아요 현재상태 가져오기");
-		return iSketchBookDao.selScrape(map);
+		return iSketchBookDao.scrapeSelect(map);
 		
 	}
 	
 	@Override
-	public boolean scrapeChange(Map<String, String> map) {
+	public boolean scrapeUpdate(Map<String, String> map) {
 		// TODO Auto-generated method stub
-		logger.info("service scrapeChange 실행");
-		return iSketchBookDao.scrapeChange(map);
+		logger.info("service scrapeChange 스크랩 상태 변경 실행");
+		return iSketchBookDao.scrapeUpdate(map);
 	}
 
 	@Override
-	public boolean likeCancel(Map<String, String> map) {
+	public boolean likeUpdate(Map<String, String> map) {
 		// TODO Auto-generated method stub
-		logger.info("service likeCancel 실행");
-		return iSketchBookDao.likeCancel(map);
+		logger.info("service likeCancel 좋아요 상태 변경 실행");
+		return iSketchBookDao.likeUpdate(map);
 	}
 
 	@Override
-	public String selLike(Map<String, String> map) {
+	public String likeSelect(Map<String, String> map) {
 		
-		logger.info("service likeCancel 실행");
-		return iSketchBookDao.selLike(map);
+		logger.info("service selLike 좋아요 상태 변경 실행");
+		return iSketchBookDao.likeSelect(map);
 	}
 
 

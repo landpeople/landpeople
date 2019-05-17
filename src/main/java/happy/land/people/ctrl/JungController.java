@@ -28,10 +28,12 @@ public class JungController {
 	@ResponseBody
 	@RequestMapping(value="/sketchMakeForm.do", method=RequestMethod.GET)
 	public Map<String, String> sketchIsWrite(String user_email) {
+		
 		Map<String, String> map = new HashMap<String, String>();
-		String sketchBookAuth = iSketchBookService.sketchSelectWrite(user_email);
+		// 스케치북 작성권한 확인
+		String user_iswrite = iSketchBookService.sketchSelectWrite(user_email);
 		map.put("user_email", user_email);
-		map.put("sketchBookAuth", sketchBookAuth);
+		map.put("user_iswrite", user_iswrite);
 		System.out.println(map);
 		
 		
@@ -41,6 +43,7 @@ public class JungController {
 	@RequestMapping(value="/writeSketch.do",method=RequestMethod.POST)
 	public  String sketchMake(LpsketchbookDto dto) {
 		logger.info("sketchBook 생성 {}", dto);
+		// 스케치북 생성 (제목, 여행테마, 공유 여부)
 		boolean isc = iSketchBookService.sketchInsert(dto);
 		System.out.println(isc);		
 		return "kim";
@@ -57,7 +60,7 @@ public class JungController {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("user_email", "128@happy.com");
 		map.put("sketch_id", "0004");
-		String like = iSketchBookService.selLike(map);		
+		String like = iSketchBookService.scrapeSelect(map);		
 		
 		// 스케치북 좋아요 상태 변경(등록, 취소)
 		Map<String,String> result = new HashMap<String,String>();
@@ -65,11 +68,11 @@ public class JungController {
 		boolean isc = false;
 		if(like.equalsIgnoreCase("F")) {
 			map.put("like", "T");
-			isc = iSketchBookService.likeCancel(map);
+			isc = iSketchBookService.likeUpdate(map);
 			result.put("result", "T");
 		}else {
 			map.put("like", "F");
-			isc = iSketchBookService.likeCancel(map);
+			isc = iSketchBookService.likeUpdate(map);
 			result.put("result", "F");
 		}		
 				
@@ -91,19 +94,20 @@ public class JungController {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("user_email", "130@happy.com");
 		map.put("sketch_id", "0007");
-		String scrape = iSketchBookService.selScrape(map);
+		String scrape = iSketchBookService.scrapeSelect(map);
 	
 		// 스케치북 스크랩 상태 변경(등록, 취소)
 		Map<String, String> sresult =new HashMap<String, String>();
 	 	
+		
 		boolean sisc = false;
 		if(scrape.equalsIgnoreCase("F")) {
 			map.put("scrape", "T");
-			sisc = iSketchBookService.scrapeChange(map);
+			sisc = iSketchBookService.scrapeUpdate(map);
 			sresult.put("sresult", "T");
 		}else {
 			map.put("scrape", "F");
-			sisc = iSketchBookService.scrapeChange(map);
+			sisc = iSketchBookService.scrapeUpdate(map);
 			sresult.put("sresult", "F");
 		}
 		

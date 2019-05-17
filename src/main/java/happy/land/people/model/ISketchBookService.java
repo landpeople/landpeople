@@ -6,12 +6,25 @@ import happy.land.people.dto.LpcollectDto;
 import happy.land.people.dto.LpsketchbookDto;
 
 public interface ISketchBookService {
-
+	
+	// 스케치북 작성권한 확인
 	public String sketchSelectWrite(String user_email);
+	
+	// 스케치북 생성 
 	public boolean sketchInsert(LpsketchbookDto dto);
+	
+	// 스크랩 최초 등록
 	public boolean collectInsert(LpcollectDto dto);
-	public String selScrape(Map<String, String> map);
-	public boolean scrapeChange(Map<String, String> map);
-	public boolean likeCancel(Map<String, String> map);
-	public String selLike(Map<String, String> map);
+	
+	// 스케치북 스크랩 상태 확인
+	public String scrapeSelect(Map<String, String> map);
+	
+	// 스케치북 스크랩 상태 변경(등록, 취소)
+	public boolean scrapeUpdate(Map<String, String> map);
+
+	// 스케치북 상태 가져오기
+	public String likeSelect(Map<String, String> map);
+	
+	// 스케치북 좋아요 상태 변경(등록, 취소)
+	public boolean likeUpdate(Map<String, String> map);
 }

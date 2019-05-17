@@ -32,10 +32,10 @@ var ajaxSketchMake = function(user_email){
 		dataType : "json",
 		success : function(map){
 				
-			if(map.sketchBookAuth=="F" || map.sketchBookAuth== null)
+			if(map.user_iswrite=="F" || map.user_iswrite== null)
 				alert("작성권한이 없습니다.");
 			else{
-				//alert(map.sketchBookAuth);
+				//alert(map.user_iswrite);
 				//alert(map.user_email);
 				$("#sketchForm").modal();
 								var htmlModal = "<input type='hidden' name='user_email' value='"+map.user_email+"'>"+
