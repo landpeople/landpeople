@@ -1,0 +1,16 @@
+@charset "UTF-8";
+#gbox_jqGrid{
+	height: 642px;
+}
+
+#selectId{
+	width: 70px;
+}
+
+#input{
+	width: 150px;
+}
+
+#inputBtn{
+	width: 60px;
+}
