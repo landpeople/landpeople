@@ -31,20 +31,19 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
 
 import happy.land.people.dto.cho.ChoDto;
 import happy.land.people.model.cho.IChoService;
+
 import happy.land.people.naver.NaverLoginBO;
+import happy.land.people.model.lee.ILeeService;
+
 
 @Controller
 public class ChoController {
 
 	private Logger logger = LoggerFactory.getLogger(ChoController.class);
-	
+
 	@Autowired
 	private IChoService iChoService;
-
-	
-	
-	
-	
+  
 	/* NaverLoginBO */
     private NaverLoginBO naverLoginBO;
     private String apiResult = null;
@@ -54,22 +53,23 @@ public class ChoController {
         this.naverLoginBO = naverLoginBO;
     }
 	
-	
-    /* GoogleLogin */
-  	@Autowired
-  	private GoogleConnectionFactory googleConnectionFactory;
-  	@Autowired
-  	private OAuth2Parameters googleOAuth2Parameters;
-      
-	
-	
+  /* GoogleLogin */
+ @Autowired
+  private GoogleConnectionFactory googleConnectionFactory;
+  @Autowired
+  private OAuth2Parameters googleOAuth2Parameters;
+
+	@Autowired
+	ILeeService iLeeService;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
 	// 메인페이지로가는 컨트롤러
-	@RequestMapping(value="/mainPage.do" , method=RequestMethod.GET)
+	@RequestMapping(value = "/mainPage.do", method = RequestMethod.GET)
 	public String mainPage() {
 		return "foward:./index.jsp";
 	}
-	
-	
 	// 로그인 페이지로 가는 컨트롤러 + 네이버 값받아오는거 추가함
 	@RequestMapping(value="/loginPage.do", method= {RequestMethod.GET, RequestMethod.POST})
 	public String loginPage(Model model, HttpSession session) {
@@ -86,9 +86,6 @@ public class ChoController {
         //네이버 
         model.addAttribute("url", naverAuthUrl);
 
-        
-        
-        
 
 		/* 구글code 발행 */
 		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
@@ -133,10 +130,7 @@ public class ChoController {
    
         return isc?"redirect:./index.jsp":"404";
     }
-    
-    
-  
-	
+ 
     //구글 로그인 성공시 콜백
     @RequestMapping(value="/callbackgoogle.do" , method= {RequestMethod.POST,RequestMethod.GET})
     public String callbackGoogle(Model model, @RequestParam String code, HttpSession session , ChoDto dto) {
@@ -147,19 +141,19 @@ public class ChoController {
     }
 	
 	
-	
-	// 로그인기능
-	@RequestMapping(value="/login.do" ,method=RequestMethod.POST)
-	public String login(ChoDto dto , HttpSession session) {
-		
+	// 여기는 나중에 한다 ^^ 로그인기능 => 다 됐다 로그인 기능
+	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
+	public String login(ChoDto dto, HttpSession session) {
+
 		ChoDto ldto = iChoService.login(dto);
-		
+
+		System.out.println(ldto);
+		iLeeService.chatList_Insert(ldto.getUser_nickname());
 		session.setAttribute("ldto", ldto);
-		
-		
-		return  "users/login/logout";
+
+		return "forward:./index.jsp";
 	}
-	
+  
 	// 로그아웃
 	@RequestMapping(value="/logout.do",method=RequestMethod.GET)
 	public String logout(HttpSession session ,ChoDto dto) {
@@ -167,31 +161,16 @@ public class ChoController {
 		
 		
 		System.out.println(session);
-		
-		
-		
+
 		session.invalidate();
 		return "users/sil";
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	//회원가입 페이지로가기 ^^
 	@RequestMapping(value="/regiForm.do" , method=RequestMethod.GET)
 	public String regiForm() {
 		logger.info("regiForm 컨트롤러");
-		
-		
+
 		return "users/sign/regiForm";
 	}
 	
@@ -201,35 +180,15 @@ public class ChoController {
 		
 		dto.setUser_auth("U");
 		boolean isc = iChoService.signUp(dto);
-		
-		return isc?"users/sign/auth":"404";
+
+		return isc ? "users/sign/auth" : "404";
 	}
-	
-	
-	
-	
+
 	// 이메일 링크 클릭으로 들어옴
-	@RequestMapping(value="/mailConfirm.do", method=RequestMethod.GET)
+	@RequestMapping(value = "/mailConfirm.do", method = RequestMethod.GET)
 	public String mailConfirm(ChoDto dto) {
 //		System.out.println(dto); //==	logger.info(dto.toString());
 		boolean isc = iChoService.authStatusUpdate(dto.getUser_email());
-		return isc? "users/sign/auth" : "error";
+		return isc ? "users/sign/auth" : "error";
 	}
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-    
-	
-	
 }

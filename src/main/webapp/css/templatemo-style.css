@@ -47,11 +47,11 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 }
 
 main {
-  display: block;
+  /*display: block;*/
 }
 
 body {
-  line-height: 1;
+  /*line-height: 1;*/
 }
 
 ol,
@@ -178,7 +178,7 @@ textarea {
 -------------------------------------------------------- */
 body {
   font-size: 14px;
-  line-height: 24px;
+  /*line-height: 24px;*/
   color: #777777;
   font-family: 'robotoregular';
   overflow-x: hidden;
