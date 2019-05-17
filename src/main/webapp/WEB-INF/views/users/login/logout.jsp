@@ -11,7 +11,8 @@
 <body>
 
 로그아웃 확인할라고 임시로 만든 페이지임
-
+${session}
+${ldto}
 <form action="./logout.do" method="get">
 
 <input type="submit" value="로그아웃">

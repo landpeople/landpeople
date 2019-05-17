@@ -124,4 +124,14 @@ public class LeeController implements ServletConfigAware {
 		model.addAttribute("users", users);
 		return "/chat/chatList";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/chkChatMember.do", method=RequestMethod.POST)
+	public Map<String,String> chkChatMember(String chr_id) {
+		String str = service.chkChatMember(chr_id);
+//		System.out.println(str+"************************************==");
+		Map<String, String> map = new HashMap<String,String>();
+		map.put("result", str);
+		return map;
+	}
 }

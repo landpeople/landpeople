@@ -106,4 +106,29 @@
          <bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"></bean>
       </websocket:handshake-interceptors>
    </websocket:handlers>
+   
+   
+   
+   
+   
+   
+   <bean id="googleConnectionFactory" class="org.springframework.social.google.connect.GoogleConnectionFactory">
+   	<constructor-arg value="302749873898-fq7tebgkhe04612h4fm02n6c4hlonrno.apps.googleusercontent.com"/>
+   	<constructor-arg value="S9hUasoYIzVHxozaEYokHHVd"/>
+   </bean>
+   
+   <bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
+   	<property name="scope" value="https://www.googleapis.com/auth/plus.login"/>
+   	<property name="redirectUri" value="http://localhost:8091/LandPeople/callbackgoogle.do"/>
+   
+   </bean>
+
+   
+   
+   
+   
 </beans>
+
+
+
+   

@@ -39,6 +39,8 @@
 				
 				<li><a href="./loginPage.do"><i class="fa fa-globe"></i>로그인 </a></li>
 				
+				
+				
 				<li><a href="#"><i class="fa fa-pencil"></i>About Me</a></li>
 				<li><a href="#"><i class="fa fa-paperclip"></i>My Gallery</a></li>
 				<li><a href="#"><i class="fa fa-link"></i>Contact Me</a></li>

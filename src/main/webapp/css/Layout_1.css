@@ -1,0 +1,95 @@
+@charset "UTF-8";
+*{
+ padding: 0px;
+ margin: 0px;
+}
+#Left-Side{
+/*  	border: 1px solid black;  */
+	float: left;
+	width: 460px;
+	height: 650px;
+	text-align: center; /*참고 문구용 CSS*/
+}
+
+#Right-Side{
+/*  	border: 1px solid black;  */
+	float: right;
+	width: 460px;
+	height: 650px;
+	text-align: center; /*참고 문구용 CSS*/
+}
+
+#IMG1{
+	border: 1px solid black;
+	height: 460px;
+	width: 440px;
+	margin : 5px;
+	background-size: contain;
+ 	background-repeat: no-repeat;
+ 	background-position: center;
+}
+
+#LS_Container{
+/* 	border: 1px solid black; */
+	height: 35%;
+}
+
+#TXT1{
+	border: 1px solid black;
+	margin: auto;
+	margin-top: 20px;
+	height: 140px;
+	width: 460px;
+}
+
+#RS_Container_1{
+/* 	border: 1px solid black; */
+	height: 50%;
+}
+
+#RS_Container_2{
+/* 	border: 1px solid black; */
+	height: 50%;
+}
+
+#TXT2, #TXT3, #TXT4{
+	border: 1px solid black;
+	height: 247px;
+	width: 130px;
+}
+
+#TXT2{
+	float: left;
+	margin: 10px;
+}
+
+#TXT3{
+	float: left;
+	margin: 10px;
+}
+
+#TXT4{
+	float: left;
+	margin: 10px;
+}
+
+#IMG2{
+	border: 1px solid black;
+	height: 240px;
+	width: 60%;
+	float: left;
+	margin: 0px 20px 30px 20px;
+	background-size: contain;
+ 	background-repeat: no-repeat;
+ 	background-position: center;
+}
+
+#IMG3{
+	border: 1px solid black;
+	height: 240px;
+	width: 30%;
+	float: left;
+	background-size: contain;
+ 	background-repeat: no-repeat;
+ 	background-position: center;
+}

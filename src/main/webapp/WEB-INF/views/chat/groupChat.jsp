@@ -190,9 +190,29 @@
           }
       
          $(".chat_btn").bind("click",function() {
+        	 var canWrite;
+        	 var nullval;
+        	 $.ajax({
+                 type: "POST",
+                 url: "./chkChatMember.do",
+                 data: { chr_id: <%=chr_id%> },
+                 dataType: "json",
+                 async: false,
+                 success: function(result){
+                	 canWrite = result.result;
+                  },
+                  error : function() {
+					alert("실패");
+				}
+               });
+        	 
             if($(".chat").val() == '' ) {
                alert("● groupChat.jsp / 내용을 입력하세요. ");
-               return ;
+               $('#txtarea').val(nullval);
+               return;
+            }else if(canWrite=='cantChat'){
+            	alert("● 대화 상대가 없습니다. *채팅 불가*");
+            	return;
             }else {
                ws.send(nick+" : "+$(".chat").val());
                $(".chat").val('');
@@ -252,7 +272,7 @@
    </table>
    
    <div class="chat_div" style="display:none; margin-top: 10px;">
-      <textarea class="chat"
+      <textarea id="txtarea" class="chat"
              onKeypress="if(event.keyCode==13) $('.chat_btn').click();" ></textarea>
       <div class="chat_btn"></div>
       <div class="exit">exit</div>        
