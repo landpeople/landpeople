@@ -1,0 +1,79 @@
+@charset "UTF-8";
+*{
+ padding: 0px;
+ margin: 0px;
+}
+#Left-Side{
+/*  	border: 1px solid black;  */
+	float: left;
+	width: 50%;
+	height: 100vh;
+	text-align: center; /*참고 문구용 CSS*/
+}
+
+#Right-Side{
+/*  	border: 1px solid black;  */
+	float: right;
+	width: 49%;
+	height: 100vh;
+	text-align: center; /*참고 문구용 CSS*/
+}
+
+#LS_IMG_Container{
+/* 	border: 1px solid black; */
+	width: 97%;
+	height: 60%;
+	margin: auto;
+}
+
+#LS_IMG_1{
+	border: 1px solid black;
+	width: 100%;
+	height: 100%;
+	margin: auto;
+	margin-top: 10px;
+}
+
+#LS_Container{
+/* 	border: 1px solid black; */
+	width: 97%;
+	height: 35%;
+	margin: auto;
+	margin-top: 10px;
+}
+
+#LS_TXT_1{
+	border: 1px solid black;
+	width: 60%;
+	height: 80%;
+	margin-top: 20px;
+	margin-left: 10px;
+}
+
+#RS_Container_1{
+/* 	border: 1px solid black; */
+	width: 49%;
+	height: 100%;
+	float: left;
+}
+
+#RS_Container_2{
+/* 	border: 1px solid black; */
+	width: 49%;
+	height: 100%;
+	float: right;
+}
+
+#RS_IMG_1, #RS_TXT_1, #RS_IMG_2{
+	border: 1px solid black;
+	width: 90%;
+	height: 30%;
+	margin: 15px 0px 0px 30px;
+}
+
+#RS_TXT_2, #RS_IMG_3, #RS_TXT_3{
+	border: 1px solid black;
+	width: 90%;
+	height: 30%;
+	margin: 15px;
+}
