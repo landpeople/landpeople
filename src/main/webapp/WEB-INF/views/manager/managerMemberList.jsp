@@ -148,7 +148,10 @@ $(document).ready(function() {
 <div class="main-content">
 	<div class = "fluid-container">
 		<div>
-		 <a href="./jang.do">뒤로가기</a><br>
+		 <a href="./jang.do">뒤로가기</a>
+			 <button onclick="location.href='./jqgrid.do'" id="memBtn">전체 회원 보기</button>
+			 <button onclick="location.href='./jqgrid2.do'">전체 스케치북 보기</button>
+		 <br>
 		 <select id="selectId">
 		  <option value="" selected="selected">전체</option>
 		  <option value="user_email">이메일</option>
