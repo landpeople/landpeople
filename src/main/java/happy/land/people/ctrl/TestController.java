@@ -61,9 +61,9 @@ public class TestController {
 		return "jang";
 	}
 	
-	@RequestMapping(value = "/jung.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/jeong.do", method = RequestMethod.GET)
 	public String Jung() {
-		return "jung";
+		return "jeong";
 	}
 	
 	@RequestMapping(value = "/cho.do", method = RequestMethod.GET)
