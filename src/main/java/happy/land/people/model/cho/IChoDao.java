@@ -15,7 +15,7 @@ public interface IChoDao {
 	//회원탈퇴
 	public boolean deleteUser(String user_email);
 	//정보수정
-	public boolean userInfo(Map<String, String> map); 
+	public boolean userInfo(ChoDto dto); 
 	//이메일중복체크
 	public int emailDupChk(String user_email);
 	//닉네임중복체크

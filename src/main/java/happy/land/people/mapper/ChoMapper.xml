@@ -58,12 +58,12 @@
 <!-- ///////////////////////정보수정 //////////////////////////-->
 
 <!-- 일반회원 정보수정 (비밀번호)-->
-<update id="modifyPassword">
+<update id="modifyPassword" parameterType="ChoDto">
 UPDATE LPUSER SET USER_PASSWORD = #{user_password} WHERE USER_EMAIL = #{user_email} AND USER_AUTH = 'U'
 </update>
 
 <!-- 일반회원,API 정보수정 (닉네임) -->
-<update id="modifyNickname">
+<update id="modifyNickname" parameterType="ChoDto">
 UPDATE LPUSER SET USER_NICKNAME = #{user_nickname} WHERE USER_EMAIL = #{user_email}
 </update>
 

@@ -32,7 +32,7 @@
 					<li><a href="./loginPage.do">로그인 </a></li>
 					<li><a href="./logout.do">로그아웃</a></li>
 					<li><a href="#" onclick="sketchBookMake('${ldto.user_email}')">여행일정 작성</a></li>
-					<li><a href="#">마이페이지</a></li>
+					<li><a href="./mypage.do">마이페이지</a></li>
 					<li><a href="./jang.do">관리자 페이지</a></li>
 				</ul>
 			</div>
