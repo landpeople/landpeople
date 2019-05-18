@@ -79,9 +79,8 @@ public class ChoDaoImpl implements IChoDao {
 	}
 
 	@Override
-	public boolean userInfo(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean userInfo(ChoDto dto) {
+		return session.update(NS+"modifyNickname",dto)>0? true:false;
 	}
 
 	@Override

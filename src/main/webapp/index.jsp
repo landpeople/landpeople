@@ -33,10 +33,12 @@
                <li><a href="./loginPage.do">로그인 </a></li>
                <li><a href="./logout.do">로그아웃</a></li>
                <li><a href="#">여행일정 작성</a></li>
-               <li><a href="#">마이페이지</a></li>
+               <li><a href="./mypage.do">마이페이지</a></li>
                <li><a href="#">관리자 페이지</a></li>
             </ul>
          </div>
+         
+         <form action=""></form>
          <!-- .main-navigation 여기까지 네비게이션 메뉴 -->
 
          <!-- 채팅 -->

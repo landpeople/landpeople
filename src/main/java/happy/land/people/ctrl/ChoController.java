@@ -187,4 +187,31 @@ public class ChoController {
 		boolean isc = iChoService.authStatusUpdate(dto.getUser_email());
 		return isc ? "users/sign/auth" : "error";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//마이페이지
+	@RequestMapping(value="/mypage.do", method= {RequestMethod.GET ,RequestMethod.POST})
+	public String mypage(HttpSession session) {
+		
+		
+		return "users/mypage";
+	}
+	
+	
+	//마이페이지 수정 완료
+	@RequestMapping(value="/modifyMypage.do" , method=RequestMethod.POST)
+	public String modifyMypage(ChoDto dto) {
+		iChoService.userInfo(dto);
+		return "forward:./index.jsp";
+	}
+	
 }
