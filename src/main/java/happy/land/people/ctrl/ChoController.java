@@ -88,14 +88,14 @@ public class ChoController {
 		System.out.println("구글:" + url);
 
 		model.addAttribute("google_url", url);
+    
 		return "users/loginPage";
 	}
 	
 	
 	 //네이버 로그인 성공시 callback호출 메소드
     @RequestMapping(value = "/callback.do", method = { RequestMethod.GET, RequestMethod.POST })
-    public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session, ChoDto dto)
-            throws IOException, ParseException {
+    public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session, ChoDto dto) throws Exception {
         System.out.println("여기는 callback");
         OAuth2AccessToken oauthToken;
         oauthToken = naverLoginBO.getAccessToken(session, code, state);
@@ -119,7 +119,6 @@ public class ChoController {
     	dto.setUser_auth("N");
 		boolean isc = iChoService.signUp(dto);
 		
-   
         return isc?"redirect:./index.jsp":"404";
     }
  
@@ -142,7 +141,7 @@ public class ChoController {
 		System.out.println(ldto);
 		iLeeService.chatList_Insert(ldto.getUser_nickname());
 		session.setAttribute("ldto", ldto);
-
+		
 		return "forward:./index.jsp";
 	}
   
