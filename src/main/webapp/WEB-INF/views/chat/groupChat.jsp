@@ -162,7 +162,7 @@
           $(".chat_div").show();
           $(".chat").focus();
           
-          ws = new WebSocket("ws://192.168.11.85:8091/LandPeople/wsChat.do");
+          ws = new WebSocket("ws://192.168.12.204:8091/LandPeople/wsChat.do");
           
           ws.onopen = function() {
              alert("● groupChat.jsp ws.onopen");

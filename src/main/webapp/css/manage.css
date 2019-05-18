@@ -1,22 +1,25 @@
 @charset "UTF-8";
-#gbox_jqGrid{
+#jqGridDiv{
 	height: 642px;
-	margin: 0px 60px 30px 60px;
+	padding: 30px 60px 30px 60px;
 }
 
 #selectId{
+	border: 0px;
 	width: 70px;
 	height: 30px;
 	margin: 20px 10px 20px 0px;
 }
 
 #input{
+	border: 0px;
 	width: 150px;
 	height: 30px;
 	margin: 20px 10px 20px 10px;
 }
 
 #inputBtn{
+	border: 0px;
 	width: 60px;
 	height: 30px;
 	margin: 20px 10px 20px 10px;
@@ -25,4 +28,13 @@
 #memBtn, #sketBtn{
 	background-color: #079df8;
 	color: white;
+	padding: 0px;
+	margin: 0px;
+	width: 100px;
+	height: 60px;
+	font-size: 11px;
+}
+
+#memBtn{
+	margin-right: 20px;
 }
