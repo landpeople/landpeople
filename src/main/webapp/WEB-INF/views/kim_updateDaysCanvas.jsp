@@ -344,10 +344,7 @@
 				 daysInfo.splice(number,1);	
 				 daysStart.splice(number,1);
 				 daysEnd.splice(number,1);	
-				 
-				 for(var i = 0 ; i < daysMarker.length ; i++)
-					 alert(daysMarker[i]);
-				 alert(polyline);
+				 				 				
 				 // 선 다시 그려주기
 				 initRender();
 				 var diffDays = document.getElementsByClassName("deleteDays");

@@ -115,7 +115,8 @@
                                 <img src="img/1.jpg" alt="">
                                 <div class="project-hover">
                                     <div class="inside">
-                                        <h5><a href="#">Pellentesque porta ligula</a></h5>
+                                    	
+                                        <h5><a href="#"><img alt="" src="img/LikeAfter.png" style="width: 10px; height: 10px;">Pellentesque porta ligula</a></h5>
                                         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam cursus</p>
                                     </div>
                                 </div>
