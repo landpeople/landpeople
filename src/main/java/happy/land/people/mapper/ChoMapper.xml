@@ -69,7 +69,7 @@ UPDATE LPUSER SET USER_NICKNAME = #{user_nickname} WHERE USER_EMAIL = #{user_ema
 
 
 <!-- 회원탈퇴 -->
-<update id="delflag">
+<update id="delflag" parameterType="java.lang.String">
 UPDATE LPUSER SET USER_DELFLAG = 'T' WHERE USER_EMAIL = #{user_email}
 </update>
 

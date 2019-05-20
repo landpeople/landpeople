@@ -75,11 +75,19 @@ public class ChoDaoImpl implements IChoDao {
 
 	@Override
 	public boolean deleteUser(String user_email) {
-		return false;
+		return session.update(NS+"delflag", user_email)>0? true:false;
 	}
 
+	//회원정보 수정인데
 	@Override
 	public boolean userInfo(ChoDto dto) {
+		//여기에다가 비밀번호 닉네임 어케어케?
+		
+		
+		
+		
+		
+		
 		return session.update(NS+"modifyNickname",dto)>0? true:false;
 	}
 

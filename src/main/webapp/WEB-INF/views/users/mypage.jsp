@@ -26,5 +26,14 @@ ldto :${ldto}<br>
 </div>
 
 
+<form action="./delpage.do" method="get">
+<input type="submit" value="회원탈퇴">
+
+</form>
+
+
+
+
+
 </body>
 </html>

@@ -73,7 +73,6 @@ public class ChoServiceImpl implements IChoService {
 
 	@Override
 	public boolean deleteUser(String user_email) {
-		// TODO Auto-generated method stub
 		return iChoDao.deleteUser(user_email);
 	}
 

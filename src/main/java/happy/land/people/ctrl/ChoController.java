@@ -21,6 +21,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
@@ -183,6 +184,13 @@ public class ChoController {
 	}
 	
 	
+	//회원가입 이메일 체크
+	@RequestMapping(value="/emailchk.do" , method=RequestMethod.POST,produces="application/text; charset=utf-8")
+	@ResponseBody
+	public String emailChk(String user_email) {
+		int n = iChoService.emailDupChk(user_email);
+		return(n==0)?"사용가능한이메일입니다":"사용불가능한 이메일입니다";
+	}
 	
 	
 	
@@ -203,8 +211,27 @@ public class ChoController {
 	
 	//마이페이지 수정 완료
 	@RequestMapping(value="/modifyMypage.do" , method=RequestMethod.POST)
-	public String modifyMypage(ChoDto dto) {
+	public String modifyMypage(ChoDto dto, HttpSession session) {
+		
 		iChoService.userInfo(dto);
+		ChoDto ldto = (ChoDto)session.getAttribute("ldto");
+		ldto.setUser_nickname(dto.getUser_nickname());
+		session.setAttribute("ldto", ldto);
+		return "forward:./index.jsp";
+	}
+	
+	
+	//회원탈퇴페이지로가기
+	@RequestMapping(value="/delpage.do" , method=RequestMethod.GET)
+	public String delflagPage() {
+		
+		return "forward:./users/delpage.jsp";
+	}
+	
+	// 회원탈퇴
+	@RequestMapping(value="/delflag.do" , method=RequestMethod.GET)
+	public String delflag(ChoDto dto ,String user_email) {
+		iChoService.deleteUser(user_email);
 		return "forward:./index.jsp";
 	}
 	
