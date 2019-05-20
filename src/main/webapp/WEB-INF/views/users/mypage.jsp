@@ -26,10 +26,13 @@ ldto :${ldto}<br>
 </div>
 
 
-<form action="./delpage.do" method="get">
-<input type="submit" value="회원탈퇴">
 
+
+<form action="./delpage.do" method="get">
+	<input type="submit" value="회원탈퇴">
 </form>
+
+<input type="button" value="돌아가기" onclick="javascript:history.back(-1)">
 
 
 

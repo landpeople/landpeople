@@ -91,11 +91,18 @@ public class ChoDaoImpl implements IChoDao {
 		return session.update(NS+"modifyNickname",dto)>0? true:false;
 	}
 
+	
+	
+	//이메일 중복체크
 	@Override
 	public int emailDupChk(String user_email) {
+		
+		logger.info("이메일중복체크 다오임플");
+		
 		return session.update(NS+"emailDupChk",user_email);
 	}
 
+	//닉네임중복체크
 	@Override
 	public int nicknameDupChk(String user_nickname) {
 		return session.update(NS+"nicknameDupChk",user_nickname);

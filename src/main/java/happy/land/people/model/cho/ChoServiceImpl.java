@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.mail.MessagingException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,8 @@ public class ChoServiceImpl implements IChoService {
 	
 	@Autowired
 	private JavaMailSender mailSender;
+	
+	private Logger logger = LoggerFactory.getLogger(ChoServiceImpl.class);
 	
 	
 	@Override
@@ -83,7 +87,7 @@ public class ChoServiceImpl implements IChoService {
 
 	@Override
 	public int emailDupChk(String user_email) {
-		// TODO Auto-generated method stub
+		logger.info("이메일중복체크 서비스임플");
 		return iChoDao.emailDupChk(user_email);
 	}
 

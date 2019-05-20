@@ -184,10 +184,21 @@ public class ChoController {
 	}
 	
 	
-	//회원가입 이메일 체크
+	//비밀번호 찾기로 와서 비밀번호 수정
+	@RequestMapping(value="/pwforget.do",method=RequestMethod.POST)
+	public String pwforget(ChoDto dto) {
+		
+		
+		boolean isc = true;
+		return isc ? "pwforget/pwforget":"error";
+	}
+	
+	
+	//회원가입 이메일 중복 체크
 	@RequestMapping(value="/emailchk.do" , method=RequestMethod.POST,produces="application/text; charset=utf-8")
 	@ResponseBody
 	public String emailChk(String user_email) {
+		logger.info("이메일 중복체크 컨트롤러");
 		int n = iChoService.emailDupChk(user_email);
 		return(n==0)?"사용가능한이메일입니다":"사용불가능한 이메일입니다";
 	}
@@ -224,8 +235,8 @@ public class ChoController {
 	//회원탈퇴페이지로가기
 	@RequestMapping(value="/delpage.do" , method=RequestMethod.GET)
 	public String delflagPage() {
-		
-		return "forward:./users/delpage.jsp";
+		logger.info("회원탈테페이지로 ㄱㄱㄱ     ///오니?");
+		return "users/delpage";
 	}
 	
 	// 회원탈퇴

@@ -47,7 +47,7 @@ $(function() {
 	//이메일 유효성 검사
 	$("#email").keyup(function() {
 		var email = $(this).val();
-//		alert(email);
+		alert(email);
 
 
 	var regExp =  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
@@ -78,7 +78,8 @@ $(function() {
 				$("#emailchkVal").val("0");
 			}
 			} , error : function () {
-				alert("실패");
+				alert("실패"); 
+				alert(email);
 			}
 		});
 	}
@@ -141,7 +142,7 @@ $(function() {
 <form action="./signUp.do" method="post" onsubmit="return regicheck()">
 
 <input type="text" name="user_email" id="email" placeholder="이메일" required="required">
-<br>
+<br>&nbsp;&nbsp;<span id="emailresult"></span><br>
 
 <input type="text"  name="user_password" id="pw" placeholder="비밀번호" required="required" maxlength="12">
 <br>&nbsp;<span id="pwresult">4~10자리의 영문+숫자</span><br>
