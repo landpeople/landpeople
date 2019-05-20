@@ -57,5 +57,13 @@
 		<location>/WEB-INF/views/err/404Error.jsp</location>
 	</error-page>
 	
+	<!-- Session config -->
+	<listener>
+		<listener-class>happy.land.people.ctrl.SessionListner</listener-class>
+	</listener>
 
+	<!-- Sessiong Time Config -->
+	<session-config>
+		<session-timeout>-1</session-timeout>
+	</session-config>
 </web-app>

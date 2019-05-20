@@ -20,7 +20,7 @@ html, body {
 	padding: 20px;
 	box-sizing: border-box;
 }
-
+/* 사이드바 이미지 영역 div 스타일 */
 .top-section {
 	margin-top: 100px;
 	height: 236px;
@@ -28,7 +28,7 @@ html, body {
 	padding: 28px;
 	box-sizing: border-box;
 }
-
+/* 사이드바 이미지 스타일 */
 .profile-image {
 	height: 180px;
 	width: 180px;
@@ -71,7 +71,7 @@ html, body {
 	left: 276px;
 	width: 1000px;
 }
-
+/*헤더 그림 스타일  */
 .banner-bg {
 	background: url("../img/제주도.png");
 	background-repeat: no-repeat;
@@ -96,12 +96,12 @@ html, body {
 	width: 1000px;
 	height: 880px;
 }
-
+/* 콘텐츠 영역 스타일 */
 .content {
 	background-color: pink;
 	height: 100%;
 }
-
+/* iframe 스타일 */
 iframe {
 	frameborder: 0;
 	width: 100%;
@@ -110,7 +110,37 @@ iframe {
 	marginheight: 0px;
 	scrolling: yes;
 }
+/* 모달 스타일 */
+.modal-input{
+	/* float: right; */
+}
 
+/* 라디오버튼 숨기기 */
+.themeradio input[type=radio] { 
+	display:none;  
+	margin:10px; 
+
+} 
+/* 라디오버튼 직사각형 버튼 모양 만들기 */
+.themeradio input[type=radio] + label { 
+	display:inline-block; 
+	margin:-2px;
+	padding: 8px 19px;
+	background-color: #f5f5f5;
+	border: 1px solid #ccc;
+	font-size: 13px !important;
+	width: 80px;
+	text-align: center; 
+}
+/* 선택한 라디오버튼 배경색 변경 */
+.themeradio input[type=radio]:checked + label {  
+	background-image: none;
+	background-color:#3598dc;
+	color:#fff; 
+}
+
+
+/*푸터 스타일  */
 .footer {
 	box-sizing: border-box;
 	background-color: black;

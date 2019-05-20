@@ -255,7 +255,7 @@
               type: "GET",
               url: "./socketOut.do", // 소켓 닫기
               async: false
-           }); 
+           });
       }
       
       function disconnect() {
@@ -279,14 +279,13 @@
           }
         });
       }      
-      
-      
-      
+
       window.onload = function () {
           if (window.Notification) {
               Notification.requestPermission();
           }
       }
+
 </script>
 </head>
 <body onbeforeunload="roomClose()">
@@ -308,7 +307,8 @@
    <div class="chat_div" style="display:none; margin-top: 10px;">
       <textarea id="txtarea" class="chat"
              onKeypress="if(event.keyCode==13) $('.chat_btn').click();" ></textarea>
-      <div class="chat_btn"></div>          
+      <div class="chat_btn"></div>
+      <div class="exit">exit</div>        
    </div>
      그룹아이디 : <%=chr_id%>
 나의아이디 :   <%=user %>

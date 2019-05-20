@@ -104,6 +104,7 @@
 		</script>
 </head>
 <body>
+
 	<!--젤로 레이아웃- 전체 영역 감싸는 div-->
 	<div class="main-wrapper">
 		<%@include file="../common/Sidebar.jsp"%>
@@ -128,11 +129,11 @@
 					</div>
 				</div>
 			</div>
-
 			<!-- </div> 여기까지 메인 컨텐츠  -->
 			<div class="footer">landpeople</div>
 		</div>
 	</div>
 </body>
+
 
 </html>

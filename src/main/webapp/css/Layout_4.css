@@ -1,0 +1,38 @@
+@charset "UTF-8";
+*{
+ padding: 0px;
+ margin: 0px;
+}
+#Left-Side{
+/*  	border: 1px solid black;  */
+	float: left;
+	width: 50%;
+	height: 100vh;
+	text-align: center; /*참고 문구용 CSS*/
+}
+
+#Right-Side{
+/*  	border: 1px solid black;  */
+	float: right;
+	width: 49%;
+	height: 100vh;
+	text-align: center; /*참고 문구용 CSS*/
+}
+
+#LS_IMG_1{
+	border: 1px solid black;  
+	float: left;
+	width: 97%;
+	height: 97%;
+	margin-left: 17px;
+	margin-top: 5px;
+}
+
+#RS_TXT_1{
+	border: 1px solid black;  
+	float: left;
+	width: 97%;
+	height: 97%;
+	margin-right: 17px;
+	margin-top: 5px;
+}
