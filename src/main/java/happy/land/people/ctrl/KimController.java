@@ -23,6 +23,9 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.simple.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jdo.LocalPersistenceManagerFactoryBean;
@@ -160,7 +163,7 @@ public class KimController {
     }
     
     @RequestMapping(value="detailCanvas.do",method=RequestMethod.GET)
-    public String detailDaysCanvas(HttpServletRequest request){
+    public String detailDaysCanvas(HttpServletRequest request) throws IOException{
     	// 스케치북 id에 따른 캔버스의 개수
     	int canvasCnt = canvasService.canvasCnt("1");
     	System.out.println("해당 스케치북의 캔버스 개수:"+canvasCnt);
@@ -176,7 +179,7 @@ public class KimController {
     	for(int i=0; i < canvasCnt ; i++) {    		
     		if(canvasList.get(i).getCan_type().equalsIgnoreCase("1")) {    		
     			List<LPDaysDto> daysList =  daysService.daysSelectAll(canvasList.get(i).getCan_id());
-    			map.put(i, daysList);
+    			map.put(i, daysList);      			
     		}
     		else {
     			// 자유 캔버스는 여기에 
@@ -191,6 +194,8 @@ public class KimController {
     	request.setAttribute("daysType", canvasList);
     	// 자유 캔버스 화면으로 보내기
     	request.setAttribute("textList", freeMap);
+    	
+    	
     	
     	//List<LPDaysDto> daysList1 =  daysService.daysSelectAll("0002");
     	//request.setAttribute("daysList1", daysList1);
@@ -219,10 +224,17 @@ public class KimController {
     	// 캔버스 dto 세팅
     	canvasDto = canvasService.canvasSelectOne(id);
     	session.setAttribute("canvas", canvasDto);
-    	// 일정 캔버스 세팅
-    	List<LPDaysDto> daysDto = daysService.daysSelectAll(id);
-    	session.setAttribute("days", daysDto);
-    	return "kim_updateDaysCanvas";
+    	if(canvasDto.getCan_type().equalsIgnoreCase("1")) {
+	    	// 일정 캔버스 세팅
+	    	List<LPDaysDto> daysDto = daysService.daysSelectAll(id);
+	    	session.setAttribute("days", daysDto);
+	    	return "kim_updateDaysCanvas";
+    	}else if(canvasDto.getCan_type().equalsIgnoreCase("2")){
+    		// 자유 캔버스
+    		return "na_detailFreeCanvas1";
+    	}else {
+    		return "error";
+    	}    	
     }
     
     @RequestMapping(value="deleteDaysForm.do",method=RequestMethod.POST)
@@ -296,10 +308,41 @@ public class KimController {
 		    row = sheet.createRow(rowNo);
    	        cell = row.createCell(0);   	        
     	    cell.setCellValue(canvasList.get(i).getDays_title());
-   	        cell = row.createCell(1);   	       
-   	        cell.setCellValue(canvasList.get(i).getDays_sdate());
-   	        cell = row.createCell(2);   	       
-   	        cell.setCellValue(canvasList.get(i).getDays_edate());
+   	        cell = row.createCell(1); 
+   	        
+   	        SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-mm-dd HH:mm");
+   	        String sDate = transFormat.format(canvasList.get(i).getDays_sdate());
+   	        String[] split_sDate = sDate.split(" ");
+   	        // split_sTime[0] 시간 , split_sTime[1] 분
+   	        String[] split_sTime = split_sDate[1].split(":");   	        
+   	        // 12보다 크면 오후 작으면 오전
+   	        String result_sDate = "";
+   	        if(Integer.parseInt(split_sTime[0]) >= 12) {
+   	        	if(Integer.parseInt(split_sTime[0]) >= 22 )
+   	        		result_sDate = "오후 "+(Integer.parseInt(split_sTime[0])-12)+":"+split_sTime[1]; 
+   	        	else 
+   	        		result_sDate = "오후 0"+(Integer.parseInt(split_sTime[0])-12)+":"+split_sTime[1]; 
+   	        }else {
+   	        	result_sDate = "오전 "+split_sTime[0]+":"+split_sTime[1];
+   	        }   	        
+   	        cell.setCellValue(result_sDate);
+   	        cell = row.createCell(2);   	   
+   	        
+   	        String eDate = transFormat.format(canvasList.get(i).getDays_edate());
+   	        String[] split_eDate = eDate.split(" ");
+   	        // split_sTime[0] 시간 , split_sTime[1] 분
+   	        String[] split_eTime = split_eDate[1].split(":");   	        
+   	        // 12보다 크면 오후 작으면 오전
+   	        String result_eDate = "";
+   	        if(Integer.parseInt(split_eTime[0]) >= 12) {
+   	        	if(Integer.parseInt(split_eTime[0]) >= 22 )
+   	        		result_eDate = "오후 "+(Integer.parseInt(split_eTime[0])-12)+":"+split_eTime[1]; 
+   	        	else 
+   	        		result_eDate = "오후 0"+(Integer.parseInt(split_eTime[0])-12)+":"+split_eTime[1]; 
+   	        }else {
+   	        	result_eDate = "오전 "+split_eTime[0]+":"+split_eTime[1];
+   	        }   	        
+   	        cell.setCellValue(result_eDate);
    	        cell = row.createCell(3);   	       
 	        cell.setCellValue(canvasList.get(i).getDays_address());
 	        rowNo++;    

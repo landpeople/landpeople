@@ -95,7 +95,14 @@
 	    			disableDoubleClickZoom : true			
 	    		};	    		
 	 var map = new daum.maps.Map(container, options);
-	  
+	// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+	 var mapTypeControl = new daum.maps.MapTypeControl();
+	// 지도에 컨트롤을 추가해야 지도위에 표시됩니다	    		
+	 map.addControl(mapTypeControl, daum.maps.ControlPosition.TOPRIGHT);
+	// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+	 var zoomControl = new daum.maps.ZoomControl();
+	 map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT);
+		
 	 // 일정 마커들
 	 var daysMarker = [];
 	 // 일정 마커들의 인포윈도우
@@ -151,15 +158,16 @@
 				var div = document.createElement('div');
 				if(i >= 1){
 					//시작 지점 과 끝지점 가져와서 최단거리 설정
-					div.innerHTML += "↓";
+					div.innerHTML += "<span style='margin-Left:226px;'>↓</span>";
 					var startCoord = new daum.maps.LatLng(daysMarker[i-1].getPosition().getLat(), daysMarker[i-1].getPosition().getLng());
 					var endCoord =  new daum.maps.LatLng(daysMarker[i].getPosition().getLat(), daysMarker[i].getPosition().getLng());
-					div.innerHTML += "<a href='https://map.kakao.com/?sX="+startCoord.toCoords().getX()+"&sY="+startCoord.toCoords().getY()+"&sName=출발점&eX="+endCoord.toCoords().getX()+"&eY="+endCoord.toCoords().getY()+"&eName=도착점'"
+					div.innerHTML += "<a style='float:right; margin-right:30px;' href='https://map.kakao.com/?sX="+startCoord.toCoords().getX()+"&sY="+startCoord.toCoords().getY()+"&sName=출발점&eX="+endCoord.toCoords().getX()+"&eY="+endCoord.toCoords().getY()+"&eName=도착점'"
 							+ " onclick='window.open(this.href, \"_경로보기\", \"width=1000px,height=800px;\"); return false;'"
 							+ ">최단경로보기</a><br>";
 				}				
-				div.innerHTML += "<span>"+(i+1)+"번째 일정:"+daysInfo[i]+"</span>"								
-								+"<input type='button' class='deleteDays' title='"+i+"' value='일정삭제'>";
+				div.innerHTML += "<div style='font-size:20px; width:450px; height:38px; border:1px solid black;'>"+(i+1)+"번째 일정:"+daysInfo[i]								
+							    + "<img src='./img/canvas/normalClose.png' style='float:right;' class='deleteDays' title='"+i+"' width='38' height='38'></div>";
+								
 				daysPage.appendChild(div);	
 			}	
 			
@@ -262,6 +270,7 @@
 					});		
 	    			// 마커에  이벤트 등록	
 	    			daum.maps.event.addListener(daysMarker[daysMarker.length-1], 'click', makeOverListener(map,daysMarker[daysMarker.length-1],addwindow));
+	    			daum.maps.event.addListener(daysMarker[daysMarker.length-1], 'dragend', initRender);
 	    			// 생성시 그리기
 					createRender();
 					
@@ -271,15 +280,15 @@
 					
 					if(daysMarker.length >= 2){
 						//시작 지점 과 끝지점 가져와서 최단거리 설정
-						div.innerHTML += "↓";
+						div.innerHTML += "<span style='margin-Left:226px;'>↓</span>";
 						var startCoord = new daum.maps.LatLng(daysMarker[daysMarker.length-2].getPosition().getLat(), daysMarker[daysMarker.length-2].getPosition().getLng());
 						var endCoord =  new daum.maps.LatLng(daysMarker[daysMarker.length-1].getPosition().getLat(), daysMarker[daysMarker.length-1].getPosition().getLng());
-						div.innerHTML += "<a href='https://map.kakao.com/?sX="+startCoord.toCoords().getX()+"&sY="+startCoord.toCoords().getY()+"&sName=출발점&eX="+endCoord.toCoords().getX()+"&eY="+endCoord.toCoords().getY()+"&eName=도착점'"
+						div.innerHTML += "<a style='float:right; margin-right:30px;' href='https://map.kakao.com/?sX="+startCoord.toCoords().getX()+"&sY="+startCoord.toCoords().getY()+"&sName=출발점&eX="+endCoord.toCoords().getX()+"&eY="+endCoord.toCoords().getY()+"&eName=도착점'"
 								+ " onclick='window.open(this.href, \"_경로보기\", \"width=1000px,height=800px;\"); return false;'"
 								+ ">최단경로보기</a><br>";
 					}
-					div.innerHTML += "<span>"+daysMarker.length+"번째 일정:"+title+"</span>"
-								  +"<input type='button' class='deleteDays' title='"+i+"' value='일정삭제'>";
+					div.innerHTML += "<div style='font-size:20px; width:450px; height:38px; border:1px solid black;'>"+daysMarker.length+"번째 일정:"+title
+					 			  + "<img src='./img/canvas/normalClose.png' style='float:right;' class='deleteDays' title='"+(daysMarker.length-1)+"' width='38' height='38'></div>";						
 					daysPage.appendChild(div);
 					infoWindow.close();
 					isInsertOpen = false;
@@ -336,7 +345,9 @@
 				 daysStart.splice(number,1);
 				 daysEnd.splice(number,1);	
 				 
-				 alert(daysMarker);
+				 for(var i = 0 ; i < daysMarker.length ; i++)
+					 alert(daysMarker[i]);
+				 alert(polyline);
 				 // 선 다시 그려주기
 				 initRender();
 				 var diffDays = document.getElementsByClassName("deleteDays");
@@ -348,10 +359,13 @@
 					}
 				 }				 
 				 
-				$(this).closest('div').remove();
+				$(this).parent().parent().remove();
 					if(number =="0"){
-						// 0일경우 다음 일정에 있는 최단경로보기 찍어준 링크 찾아서 지워주기						
-						$('.deleteDays').parent().children('a').remove();
+						var deleteContent = document.getElementsByClassName("deleteDays");
+						// 0일경우 다음 일정에 있는 최단경로보기 찍어준 링크 찾아서 지워주기							
+						$('.deleteDays:eq(0)').parent().parent().children('a').remove();
+						$('.deleteDays:eq(0)').parent().parent().children('span').remove();
+						$('.deleteDays:eq(0)').parent().parent().children('br').remove();
 					}
 				}
 			});
