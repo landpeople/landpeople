@@ -78,7 +78,7 @@ public class LeeController implements ServletConfigAware {
 			session.setAttribute("user", sender);
 			String chr_content = service.chatRoom_SelectContent(chr_id);
 			System.out.println(chr_content);
-			model.addAttribute(chr_content);
+			model.addAttribute("msg","<div class = 'sendTxt'<span class ='sender_img'>안녕<br><br>");
 		}
 
 		/* 채팅 리스트 띄워주기 */

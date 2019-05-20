@@ -37,8 +37,8 @@
       UPDATE LPCHATROOM SET CHR_CONTENT = #{chr_content} WHERE CHR_ID = #{chr_id}
    </update>
 
-   <select id="chatRoom_SelectContent" parameterType="java.lang.String">
-      SELECT CHR_CONTENT FROM LPCHATROOM WHERER CHR_ID = #{chr_id}
+   <select id="chatRoom_SelectContent" parameterType="java.lang.String" resultType="java.lang.String">
+      SELECT CHR_CONTENT FROM LPCHATROOM WHERE CHR_ID = #{chr_id}
    </select>
 
    <select id="chkChatMember" parameterType="java.lang.String" resultType="java.util.Map">

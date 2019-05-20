@@ -157,19 +157,21 @@
       
       $(document).ready(function() {
 	  
-	  	document.getElementById("contentsss").innerHTML = ${model};
+// 	  	document.getElementById("contentsss").innerHTML = ${model};
 	 
           nick = $("#nickName").val();
-          alert(nick);
+          alert("● groupChat.jsp var nick : " + nick);
           $(".receive_msg").html('');
           $(".chat_div").show();
           $(".chat").focus();
           
-          ws = new WebSocket("ws://192.168.4.31:8091/LandPeople/wsChat.do");
+          ws = new WebSocket("ws://192.168.7.36:8091/LandPeople/wsChat.do");
           
           ws.onopen = function() {
              alert("● groupChat.jsp ws.onopen");
+             alert("${msg}");
              ws.send("#$nick_"+nick); // 소켓이 열렸을 때 사용자가 입장하면 입장 메시지를 화면에 띄워 줄 수있도록 이벤트를 발생하여 핸들러를 호출
+             document.getElementsByClassName(".receive_msg").append($("<div>").text("${msg}")).append($("</div>"));
           };
           
           ws.onmessage = function(event) {
@@ -288,20 +290,20 @@
 </script>
 </head>
 <body onbeforeunload="roomClose()">
-<!--    <table id = "contentsss"> -->
-<!--       <tr> -->
-<!--          <td width="360x" height="390px" align="center"> -->
-<!--          <div class ="receive_msg" style="border:1px"> -->
-<!--          <div class = "last"></div>  -->
-<%--          <input type="text" id="nickName" value = <%=user%> /> --%>
-<!--          </div> -->
-<!--          </td> -->
-<!--          <td width="130px" class = "memListBox"> -->
-<!--             <div class = "listTitle">접속자 목록</div> -->
-<!--             <div class = "memList"></div>  -->
-<!--          </td> -->
-<!--       </tr> -->
-<!--    </table> -->
+   <table id = "contentsss">
+      <tr>
+         <td width="360x" height="390px" align="center">
+         <div class ="receive_msg" style="border:1px">
+         <div class = "last"></div> 
+         <input type="text" id="nickName" value = <%=user%> />
+         </div>
+         </td>
+         <td width="130px" class = "memListBox">
+            <div class = "listTitle">접속자 목록</div>
+            <div class = "memList"></div> 
+         </td>
+      </tr>
+   </table>
    
    <div class="chat_div" style="display:none; margin-top: 10px;">
       <textarea id="txtarea" class="chat"
