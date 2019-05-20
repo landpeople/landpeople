@@ -46,4 +46,10 @@ public class LeeServiceImpl implements ILeeService {
 		logger.info("● Service chatRoom_Insert 실행");
 		return dao.chatRoom_Insert(map);
 	}
+
+	@Override
+	public String chkChatMember(String chr_id) {
+		logger.info("● Service chkChatMember 실행");
+		return dao.chkChatMember(chr_id);
+	}
 }

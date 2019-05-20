@@ -8,9 +8,6 @@
 <title>Insert title here</title>
 
 <script src="./js/jquery-3.3.1.js"></script>
-<script src="./js/chat/chat.js"></script>
-<link rel="stylesheet" href="./css/lp-style.css">
-<!--   <link rel="stylesheet" href="./css/bootstrap.min.css"> -->
 
 </head>
 <body>
@@ -23,13 +20,6 @@
 			<!-- 메인 컨텐츠   -->
 			<div class="lpcontents">
 				<div class="content">
-					<a href="#" id="test">체팅으로 가자mem=접속자1&gr=New01</a> <br> <a
-						href="./socketOpen.do?mem=BBB&gr=New01">체팅으로
-						가자mem=BBB&gr=New01</a> <br> <a
-						href="./socketOpen.do?mem=AAA&gr=New02">체팅으로
-						가자mem=AAA&gr=New02</a> <br> <a
-						href="./socketOpen.do?mem=DDD&gr=New02">체팅으로
-						가자mem=DDD&gr=New02</a> <br>
 				</div>
 			</div>
 			<!-- </div> 여기까지 메인 컨텐츠  -->

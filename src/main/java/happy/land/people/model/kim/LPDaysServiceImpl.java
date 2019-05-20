@@ -12,7 +12,7 @@ import happy.land.people.dto.kim.LPDaysDto;
 public class LPDaysServiceImpl implements ILPDaysService{
 
 	@Autowired
-	private LPDaysDaoImpl daysDao;
+	private ILPDaysDao daysDao;
 	
 	@Override
 	public int daysInsert(LPDaysDto dto) {
