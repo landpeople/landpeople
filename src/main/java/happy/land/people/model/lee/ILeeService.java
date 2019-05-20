@@ -14,5 +14,11 @@ public interface ILeeService {
 	public int chatRoom_UpdateOut(String chr_id);
 	public int chatRoom_Insert(Map<String,String> map);
 	
+	// 채팅 메시지 저장
+	public int chatRoom_UpdateContent(Map<String, String> map);
+	
+	// 기존의 채팅방 내역 가져오기
+	public String chatRoom_SelectContent(String chr_id);
+	
 	public String chkChatMember(String chr_id);
 }

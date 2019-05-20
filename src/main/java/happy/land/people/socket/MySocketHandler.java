@@ -52,7 +52,7 @@ public class MySocketHandler extends TextWebSocketHandler{
 				for(WebSocketSession s : list) {	
 					Map<String, Object> sessionMap = s.getHandshakeAttributes();
 					String otherGrSession = (String)sessionMap.get("chr_id"); // 같은 그룹끼리 묶어 주는 거 같은데??
-					String otherMemSession = (String)sessionMap.get("user");
+					String otherMemSession = (String)sessionMap.get("users");
 
 					ArrayList<String> grMemList = new ArrayList<String>();
 					System.out.println("● MySocketHandler 접속자 chr_id : " + myGrSession);
@@ -93,15 +93,19 @@ public class MySocketHandler extends TextWebSocketHandler{
 		
 		super.afterConnectionClosed(session, status);
 		Map<String, Object> mySession = session.getHandshakeAttributes();
-		String myGrSession = (String)mySession.get("gr_id");
-		String myMemSession = (String)mySession.get("mem_id");
+		String myGrSession = (String)mySession.get("chr_id");
+		String myMemSession = (String)mySession.get("user");
+		
+		System.out.println("● MySocketHandler afterConnectionClosed() / myGrSession 채팅 종료 : " + myGrSession);
+		System.out.println("● MySocketHandler afterConnectionClosed() / myMemSession 채팅 종료 : " + myMemSession);
+		
 		list.remove(session);
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분");
 		String now = sdf.format(new Date());
 		for(WebSocketSession a : list) {
 			Map<String, Object> sessionMap = a.getHandshakeAttributes();
-			String otherGrSession = (String)sessionMap.get("gr_id");
+			String otherGrSession = (String)sessionMap.get("chr_id");
 			if(myGrSession.equals(otherGrSession)){
 				a.sendMessage(new TextMessage("<font color='blue' size='1px'>"+myMemSession+"님이 퇴장했습니다 ("+now+")</font>"));
 			}

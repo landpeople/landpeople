@@ -156,13 +156,16 @@
       var nick = null ; 
       
       $(document).ready(function() {
+	  
+	  	document.getElementById("contentsss").innerHTML = ${model};
+	 
           nick = $("#nickName").val();
           alert(nick);
           $(".receive_msg").html('');
           $(".chat_div").show();
           $(".chat").focus();
           
-          ws = new WebSocket("ws://192.168.11.85:8091/LandPeople/wsChat.do");
+          ws = new WebSocket("ws://192.168.4.31:8091/LandPeople/wsChat.do");
           
           ws.onopen = function() {
              alert("● groupChat.jsp ws.onopen");
@@ -187,50 +190,79 @@
           
           ws.onclose = function(event) {
              alert("● groupChat.jsp ws.close / 웹소켓 닫힘");  //
+             ws.send("#$nick_"+nick);
           }
       
          $(".chat_btn").bind("click",function() {
-        	 var canWrite;
-        	 var nullval;
-        	 $.ajax({
+          var canWrite;
+          var nullval;
+          $.ajax({
                  type: "POST",
                  url: "./chkChatMember.do",
                  data: { chr_id: <%=chr_id%> },
                  dataType: "json",
                  async: false,
                  success: function(result){
-                	 canWrite = result.result;
+                   canWrite = result.result;
                   },
                   error : function() {
-					alert("실패");
-				}
+               alert("실패");
+            }
                });
-        	 
+          
             if($(".chat").val() == '' ) {
                alert("● groupChat.jsp / 내용을 입력하세요. ");
                $('#txtarea').val(nullval);
                return;
             }else if(canWrite=='cantChat'){
-            	alert("● 대화 상대가 없습니다. *채팅 불가*");
-            	return;
+               alert("● 대화 상대가 없습니다. *채팅 불가*");
+               return;
             }else {
                ws.send(nick+" : "+$(".chat").val());
                $(".chat").val('');
                $(".chat").focus();
             }
          });
+         
+        
+         
+         $(window).bind("beforeunload", function() {
+           //실행할 함수를 리턴해야한다.
+             return fn_removeLocalStorage("openchatwait");
+            });
       });
       
+
+     	function fn_removeLocalStorage(x){
+     	    alert(x);
+     	}
+      
+      
       function roomClose(){ // close 버튼 선택시 발생하는 이벤트 처리
-        alert("● groupChat.jsp roomClose() / 채팅을 종료합니다.");
-           $.ajax({
-              type: "GET",
-              url: "./socketOut.do", // 소켓 닫기
-              async: false
-           });
-      }
+          var content = document.getElementById("contentsss").innerHTML;
+      
+            $.ajax({
+               type: "GET",
+               url: "./socketOut.do", // 소켓 닫기
+               data: {"chr_content": content},
+               async: false
+            });
+       }
+      
+      
+      
       
       function disconnect() {
+	   var content = document.getElementById("contentsss").innerHTML;
+           alert(content);
+           alert("● groupChat.jsp roomClose() / 채팅을 종료합니다.");
+      
+            $.ajax({
+               type: "GET",
+               url: "./socketOut.do", // 소켓 닫기
+               data: {"content": content},
+               async: false
+            });
          ws.close();
          ws = null ;
       } 
@@ -256,20 +288,20 @@
 </script>
 </head>
 <body onbeforeunload="roomClose()">
-   <table>
-      <tr>
-         <td width="360x" height="390px" align="center">
-         <div class ="receive_msg" style="border:1px">
-         <div class = "last"></div> 
-         <input type="text" id="nickName" value = <%=user%> />
-         </div>
-         </td>
-         <td width="130px" class = "memListBox">
-            <div class = "listTitle">접속자 목록</div>
-            <div class = "memList"></div> 
-         </td>
-      </tr>   
-   </table>
+<!--    <table id = "contentsss"> -->
+<!--       <tr> -->
+<!--          <td width="360x" height="390px" align="center"> -->
+<!--          <div class ="receive_msg" style="border:1px"> -->
+<!--          <div class = "last"></div>  -->
+<%--          <input type="text" id="nickName" value = <%=user%> /> --%>
+<!--          </div> -->
+<!--          </td> -->
+<!--          <td width="130px" class = "memListBox"> -->
+<!--             <div class = "listTitle">접속자 목록</div> -->
+<!--             <div class = "memList"></div>  -->
+<!--          </td> -->
+<!--       </tr> -->
+<!--    </table> -->
    
    <div class="chat_div" style="display:none; margin-top: 10px;">
       <textarea id="txtarea" class="chat"

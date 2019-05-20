@@ -1,9 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+<script type="text/javascript" charset="utf-8" src="./js/chat/timeoutchk.js"></script>
 <script src="./js/chat/chat.js"></script>
 
 <link rel="stylesheet" href="./css/bootstrap.min.css">
 <link rel="stylesheet" href="./css/lp-style.css">
+
+
+아아아
+<span id="timer"></span>
+<a href="javascript:refreshTimer();">
+   <img src="/images_std/kor/btn/btn_time_extension.gif" align="top">
+</a>
+
 
 <!-- SIDEBAR -->
 <div class="sidebar-menu">
