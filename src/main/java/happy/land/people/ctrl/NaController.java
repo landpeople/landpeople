@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.util.StringUtil;
 import org.imgscalr.Scalr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -194,43 +195,115 @@ public class NaController {
 	private String makeTumbnail(String originalImgPath, HttpServletRequest request) {
 		String thumbnailRealPath = null;
 		try {
-			String path = WebUtils.getRealPath(request.getSession().getServletContext(), "/tempFolder"); //원본 이미지 상대 경로
-			String originalImgName = originalImgPath.substring(originalImgPath.lastIndexOf("/")+1); //원본 파일 이름(확장자 포함)
-			File file = new File(path+"/"+originalImgName);
 			
-			//원본 이미지 메모리상에 로딩
-			BufferedImage originalImg = ImageIO.read(file);
+			if(!originalImgPath.contains("S_")) {
+				System.out.println("------------------썸네일이 아닌 사진");
+				String path = WebUtils.getRealPath(request.getSession().getServletContext(), "/tempFolder"); //원본 이미지 상대 경로
+				String originalImgName = originalImgPath.substring(originalImgPath.lastIndexOf("/")+1); //원본 파일 이름(확장자 포함)
+				File file = new File(path+"/"+originalImgName);
+				
+				//원본 이미지 메모리상에 로딩
+				BufferedImage originalImg = ImageIO.read(file);
+				
+				//썸네일 생성 (300*450)
+				BufferedImage thumbnailImg = Scalr.resize(originalImg, Scalr.Mode.AUTOMATIC, 300, 450);
+				
+				//썸네일 업로드 경로
+				String thumbnailPath = WebUtils.getRealPath(request.getSession().getServletContext(), "/thumbnailImg"); //썸네일 상대 경로
+				System.out.println("===========실제 썸네일 업로드 경로 : "+thumbnailPath);
+				
+				//썸네일 폴더 생성
+				File folder = new File(WebUtils.getRealPath(request.getSession().getServletContext(), "/thumbnailImg"));
+				if(!folder.exists()) {
+					folder.mkdirs();
+				}
+				
+				//썸네일 이름 
+				String thumbnailSaveName = "S_"+originalImgName;
+				
+				//썸네일 파일 객체 생성
+				File thumbnailFile = new File(thumbnailPath +"/"+thumbnailSaveName);
+				
+				//썸네일 파일 출력
+				ImageIO.write(thumbnailImg, originalImgName.substring(originalImgName.lastIndexOf(".")+1), thumbnailFile);
+				
+				//썸네일 상대 경로
+				thumbnailRealPath = request.getContextPath()+"/thumbnailImg/"+thumbnailSaveName;
+				System.out.println("썸네일 상대 경로 : "+thumbnailRealPath);
 			
-			//썸네일 생성 (300*450)
-			BufferedImage thumbnailImg = Scalr.resize(originalImg, Scalr.Mode.AUTOMATIC, 300, 450);
-			
-			//썸네일 업로드 경로
-			String thumbnailPath = WebUtils.getRealPath(request.getSession().getServletContext(), "/thumbnailImg"); //썸네일 상대 경로
-			System.out.println("===========실제 썸네일 업로드 경로 : "+thumbnailPath);
-			
-			//썸네일 폴더 생성
-			File folder = new File(WebUtils.getRealPath(request.getSession().getServletContext(), "/thumbnailImg"));
-			if(!folder.exists()) {
-				folder.mkdirs();
+			}else {
+				System.out.println("------------------썸네일인 사진");
+				String path = request.getContextPath()+"/thumbnailImg/"+originalImgPath;
+				System.out.println("변경 되지 않은 썸네일 경로 : "+path);
+				return path;
 			}
-			
-			//썸네일 이름 
-			String thumbnailSaveName = "S_"+originalImgName;
-			
-			//썸네일 파일 객체 생성
-			File thumbnailFile = new File(thumbnailPath +"/"+thumbnailSaveName);
-			
-			//썸네일 파일 출력
-			ImageIO.write(thumbnailImg, originalImgName.substring(originalImgName.lastIndexOf(".")+1), thumbnailFile);
-			
-			//썸네일 상대 경로
-			thumbnailRealPath = request.getContextPath()+"/thumbnailImg/"+thumbnailSaveName;
-			System.out.println("썸네일 상대 경로 : "+thumbnailRealPath);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 				
 		return thumbnailRealPath;
+	}
+	
+	//자유 캔버스 수정
+    @RequestMapping(value="/updateFreeCanvas.do", method=RequestMethod.POST)
+	public String updateData(LPTextDto tDto, HttpSession session, HttpServletRequest request) {
+		
+		LPCanvasDto cdto = (LPCanvasDto)session.getAttribute("canvas");
+		System.out.println("캔버스 값 : "+cdto.toString());
+		System.out.println("화면에서 수정을 위해 받은 값"+tDto.getList().toString());
+		
+		//캔버스 id 가져오기
+		String can_id = textService.canvasSelectID(cdto);
+		System.out.println("can_id : "+can_id);
+		int delCnt = 0;
+		
+		//해당 캔버스 내용 삭제
+		if(cdto != null) {
+			delCnt = textService.textDelete(cdto.getCan_id());
+		}
+		
+		//수정 내용 재저장
+		for(LPTextDto dto:tDto.getList()) {
+			if(delCnt>0) {
+				
+				if(dto.getImg_spath()!=null) {
+					//썸네일 생성 및 dto에 추가
+					String thumbnailPath = makeTumbnail(dto.getImg_spath(), request);
+					tDto.setImg_spath(thumbnailPath);
+					
+					//텍스트 값 null로 치환 및 dto에 추가
+					String text_content = StringUtils.defaultString(dto.getText_content());
+					dto.setText_content(text_content);
+					
+					//캔버스 id 추가
+					dto.setCan_id(can_id);
+					
+					//DB에 저장
+					textService.insertImgFile(dto);
+				}else {
+					//이미지 경로 null로 치환 및 dto에 추가
+					String img_spath = StringUtils.defaultString(dto.getImg_spath());
+					dto.setImg_spath(img_spath);
+					
+					// 엔터키 지우기
+					String resultText = dto.getText_content();				
+					// 엔터 추출
+					int cutWord =  10;
+					resultText = resultText.substring(0, resultText.length()-2);	
+					dto.setText_content(resultText);
+					
+					//캔버스 id 추가
+					dto.setCan_id(can_id);
+					
+					//DB에 저장
+					textService.insertImgFile(dto);
+				}
+				
+			}else {
+				return "404Error";
+			}
+		}
+		return "kim";
 	}
 }

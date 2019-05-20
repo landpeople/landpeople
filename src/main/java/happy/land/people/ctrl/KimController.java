@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
@@ -204,7 +205,7 @@ public class KimController {
     }
     // 수정폼으로 이동
     @RequestMapping(value="updateDaysForm.do",method=RequestMethod.POST)
-    public String updateDaysFrom(HttpSession session,String nowPageNo){
+    public String updateDaysFrom(HttpSession session,String nowPageNo, Model model){
         //캔버스 세팅	
     	LPCanvasDto canvasDto = new LPCanvasDto();
     	canvasDto.setCan_pageno(nowPageNo);
@@ -215,10 +216,47 @@ public class KimController {
     	// 캔버스 dto 세팅
     	canvasDto = canvasService.canvasSelectOne(id);
     	session.setAttribute("canvas", canvasDto);
-    	// 일정 캔버스 세팅
-    	List<LPDaysDto> daysDto = daysService.daysSelectAll(id);
-    	session.setAttribute("days", daysDto);
-    	return "kim_updateDaysCanvas";
+    	
+    	if(canvasDto.getCan_type().equalsIgnoreCase("1")) {
+    		// 일정 캔버스 세팅
+    		List<LPDaysDto> daysDto = daysService.daysSelectAll(id);
+    		session.setAttribute("days", daysDto);
+    		
+    		return "kim_updateDaysCanvas";
+    		
+    	}else if(canvasDto.getCan_type().equalsIgnoreCase("2")) {
+    		List<LPTextDto> textList = textService.textSelectOne(id);
+    		model.addAttribute("textList1", textList);
+    		System.out.println("=========자유 캔버스 레이아웃 1번으로 이동===========");
+    		return "na_updateFreeCanvas_1";
+    		
+    	}else if(canvasDto.getCan_type().equalsIgnoreCase("3")) {
+    		List<LPTextDto> textList = textService.textSelectOne(id);
+    		model.addAttribute("textList2", textList);
+    		System.out.println("=========자유 캔버스 레이아웃 2번으로 이동===========");
+    		return "na_updateFreeCanvas_2";
+    		
+    	}else if(canvasDto.getCan_type().equalsIgnoreCase("4")) {
+    		List<LPTextDto> textList = textService.textSelectOne(id);
+    		model.addAttribute("textList3", textList);
+    		System.out.println("=========자유 캔버스 레이아웃 3번으로 이동===========");
+    		return "na_updateFreeCanvas_3";
+    		
+    	}else if(canvasDto.getCan_type().equalsIgnoreCase("5")) {
+    		List<LPTextDto> textList = textService.textSelectOne(id);
+    		model.addAttribute("textList4", textList);
+    		System.out.println("=========자유 캔버스 레이아웃 4번으로 이동===========");
+    		return "na_updateFreeCanvas_4";
+    		
+    	}else if(canvasDto.getCan_type().equalsIgnoreCase("6")) {
+    		List<LPTextDto> textList = textService.textSelectOne(id);
+    		model.addAttribute("textList5", textList);
+    		System.out.println("=========자유 캔버스 레이아웃 5번으로 이동===========");
+    		return "na_updateFreeCanvas_5";
+    		
+    	}
+    	
+    	return "404Error";
     }
     
     @RequestMapping(value="deleteDaysForm.do",method=RequestMethod.POST)
@@ -344,4 +382,6 @@ public class KimController {
     public void canvasDownloadImage(HttpServletResponse response) {
     	
     }
+    
+    
 }
