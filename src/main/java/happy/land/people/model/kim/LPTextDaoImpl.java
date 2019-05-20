@@ -17,7 +17,7 @@ public class LPTextDaoImpl implements ILPTextDao {
 	@Override
 	public boolean insertImgFile(LPTextDto conDto) {
 		int cnt = 0;
-		cnt = sqlSession.insert("na_test.ImgInsert", conDto);
+		cnt = sqlSession.insert("na_test.text_Insert", conDto);
 		return cnt>0?true:false;
 	}
 
