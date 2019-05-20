@@ -25,6 +25,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.simple.JSONObject;
 import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.jdo.LocalPersistenceManagerFactoryBean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,9 +37,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import happy.land.people.dto.kim.LPCanvasDto;
 import happy.land.people.dto.kim.LPDaysDto;
 import happy.land.people.dto.kim.LPMapdataDto;
+import happy.land.people.dto.kim.LPTextDto;
 import happy.land.people.model.kim.ILPCanvasService;
 import happy.land.people.model.kim.ILPDaysService;
 import happy.land.people.model.kim.ILPMapdataService;
+import happy.land.people.model.kim.ILPTextService;
 
 @Controller
 public class KimController {
@@ -51,6 +54,9 @@ public class KimController {
 	
 	@Autowired
 	private ILPCanvasService canvasService;
+	
+	@Autowired
+	private ILPTextService textService;
 	
     @RequestMapping(value="loadMap.do")
     public String loadMap() throws IOException {
@@ -159,8 +165,12 @@ public class KimController {
     	int canvasCnt = canvasService.canvasCnt("1");
     	System.out.println("해당 스케치북의 캔버스 개수:"+canvasCnt);
     	
+    	// 캔버스 리스트
     	List<LPCanvasDto> canvasList = canvasService.canvasSelectType("1");
+    	// 일정 캔버스 리스트
     	Map<Integer,List<LPDaysDto>> map = new HashMap<Integer,List<LPDaysDto>>();
+    	// 자유 캔버스 리스트
+    	Map<Integer,List<LPTextDto>> freeMap = new HashMap<Integer,List<LPTextDto>>();
     	System.out.println(canvasList);
     	// 캔버스 개수에 맞게 map에 canvas를 입력
     	for(int i=0; i < canvasCnt ; i++) {    		
@@ -170,13 +180,17 @@ public class KimController {
     		}
     		else {
     			// 자유 캔버스는 여기에 
+    			List<LPTextDto> textList = textService.textSelectOne(canvasList.get(i).getCan_id());
+    			freeMap.put(i,textList);
     		}    		
     	}
     	System.out.println(map);
-    	// 캔버스들 화면으로 보내기
+    	// 일정 캔버스 화면으로 보내기
     	request.setAttribute("daysList", map);
     	// 캔버스들 타입을 화면으로 보내기
     	request.setAttribute("daysType", canvasList);
+    	// 자유 캔버스 화면으로 보내기
+    	request.setAttribute("textList", freeMap);
     	
     	//List<LPDaysDto> daysList1 =  daysService.daysSelectAll("0002");
     	//request.setAttribute("daysList1", daysList1);
@@ -187,7 +201,7 @@ public class KimController {
     
     @RequestMapping(value="insertDaysForm.do",method=RequestMethod.POST)
     public String insertDaysFrom(HttpSession session,String nowPageNo){
-     // 페이지 번호 , 캔버스 id     	
+    	// 페이지 번호 , 캔버스 id     	
     	LPCanvasDto dto = new LPCanvasDto("0001", "1", "제목은 대충", "내용도 아무거나", "1", nowPageNo);
     	session.setAttribute("canvas", dto);
     	return "kim_insertDaysCanvas";
@@ -213,7 +227,7 @@ public class KimController {
     
     @RequestMapping(value="deleteDaysForm.do",method=RequestMethod.POST)
     public String deleteDaysFrom(HttpSession session,String nowPageNo){
-     // 페이지 번호 , 캔버스 id     	
+    	// 페이지 번호 , 캔버스 id     	
     	System.out.println("페이지번호:"+nowPageNo);
     	LPCanvasDto canvasDto = new LPCanvasDto();
     	canvasDto.setCan_pageno(nowPageNo);

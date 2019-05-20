@@ -70,6 +70,7 @@ public class LPCanvasDaoImpl implements ILPCanvasDao{
 			sqlSession.delete("kim_test.days_Delete", map.get("can_id"));
 		else {
 			// 자유 캔버스 삭제
+			sqlSession.delete("na_test.free_Delete", map.get("can_id"));
 		}
 		delChk = sqlSession.delete("kim_test.canvas_Delete", map.get("can_id"));
 		Map<String,String> delMap = new HashMap<String,String>();

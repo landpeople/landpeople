@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="na_test">
-
+	<!-- 자유 캔버스 삭제 -->
+	<delete id="free_Delete" parameterType="java.lang.String">
+		DELETE FROM LPTEXT WHERE CAN_ID=#{id} 
+	</delete>	
+	<!-- 쿼리 문서 반영 안한것 -->
+	<insert parameterType="happy.land.people.dto.kim.LPTextDto" id="ImgInsert"> 
+		INSERT INTO LPTEXT(TEXT_ID, CAN_ID, TEXT_CONTENT, TEXT_NO, IMG_SPATH) 
+			VALUES(LPTEXT_SEQ.NEXTVAL, #{can_id}, #{text_content}, #{text_no}, #{img_spath}) 
+	</insert>
+	<!-- 쿼리 문서 반영 -->
+	<!-- 자유캔버스 하나 조회 -->
+	<select parameterType="java.lang.String" id="text_SelectOne" resultType="happy.land.people.dto.kim.LPTextDto"> 
+		SELECT TEXT_ID, CAN_ID, TEXT_CONTENT, TEXT_NO, IMG_SPATH FROM LPTEXT 
+			WHERE CAN_ID=#{can_id} ORDER BY TEXT_NO 
+	</select>
 </mapper>
