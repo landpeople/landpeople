@@ -37,6 +37,7 @@
 		<property value="1048576" name="maxInMemorySize"/>
 	<!-- 1MB -->
 	</bean>
+	
    <!-- 추가 기능으로 interceptor -->
    <!-- 가로채가지고, 필터의 기능인데 필터를 사용하지 않고 인터셉트를 사용하는 이유는, filter는 url 화면과 화면을 이동할 
       때 잡아주는거고 -->
@@ -113,12 +114,7 @@
          <bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"></bean>
       </websocket:handshake-interceptors>
    </websocket:handlers>
-   
-   
-   
-   
-   
-   
+  
    <bean id="googleConnectionFactory" class="org.springframework.social.google.connect.GoogleConnectionFactory">
    	<constructor-arg value="302749873898-fq7tebgkhe04612h4fm02n6c4hlonrno.apps.googleusercontent.com"/>
    	<constructor-arg value="S9hUasoYIzVHxozaEYokHHVd"/>
@@ -130,10 +126,6 @@
    
    </bean>
 
-   
-   
-   
-   
 </beans>
 
 
