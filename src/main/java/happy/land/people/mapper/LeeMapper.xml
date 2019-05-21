@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="lee_test">
+	
+	
+	<!-- 임시 쿼리 * 세션에 접속한 사용자의 닉네임이 존재한다면 테이블에 저장하지 않도록 체크해주기 위한 쿼리 -->
+   <select id="chatList_SelectOne" parameterType="java.lang.String" resultType="java.lang.Integer">
+      SELECT COUNT(*) FROM LPCHATLIST WHERE USER_NICKNAME = #{user_nickname}
+   </select>
+   
 	<!-- 로그인 시 세션에 접속한 사용자의 닉네임을 채팅 가능한 사용자 테이블에 입력-->
    <insert id="chatList_Insert" parameterType="java.lang.String">
       INSERT INTO LPCHATLIST VALUES(#{user_nickname})
@@ -29,17 +36,24 @@
    
    <!--  2.2 기존에 채팅방이 없다면 -> 채팅 리스트에 추가 -->
    <insert id="chatRoom_Insert" parameterType="java.util.Map">
-      INSERT INTO LPCHATROOM VALUES(LPCHATROOM_SEQ.NEXTVAL, #{sender}, #{receiver}, 'F', 'F', '', SYSDATE)
+      INSERT INTO LPCHATROOM VALUES(LPCHATROOM_SEQ.NEXTVAL, #{sender}, #{receiver}, 'F', 'F')
    </insert>
+   <!-- 채팅방 생성 -->
   
-  <!-- 채팅방 메시지 업데이트 -->
-   <update id="chatRoom_UpdateContent" parameterType="java.util.Map">
-      UPDATE LPCHATROOM SET CHR_CONTENT = #{chr_content} WHERE CHR_ID = #{chr_id}
-   </update>
+  
+  
+  
+  
+  
+  
+  <!-- 채팅방 메시지 업데이트 --> <!-- 테이블 변경으로 잠시 주석처리 -->
+<!--    <update id="chatRoom_UpdateContent" parameterType="java.util.Map"> -->
+<!--       UPDATE LPCHATROOM SET CHR_CONTENT = #{chr_content} WHERE CHR_ID = #{chr_id} -->
+<!--    </update> -->
 
-   <select id="chatRoom_SelectContent" parameterType="java.lang.String" resultType="java.lang.String">
-      SELECT CHR_CONTENT FROM LPCHATROOM WHERE CHR_ID = #{chr_id}
-   </select>
+<!--    <select id="chatRoom_SelectContent" parameterType="java.lang.String" resultType="java.lang.String"> -->
+<!--       SELECT CHR_CONTENT FROM LPCHATROOM WHERE CHR_ID = #{chr_id} -->
+<!--    </select> -->
 
    <select id="chkChatMember" parameterType="java.lang.String" resultType="java.util.Map">
       SELECT CHR_SENDER, CHR_RECEIVER FROM LPCHATROOM

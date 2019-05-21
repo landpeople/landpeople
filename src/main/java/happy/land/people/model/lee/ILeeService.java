@@ -6,6 +6,10 @@ import java.util.Map;
 public interface ILeeService {
 	public List<String> chatList_SelectAll();
 	
+
+	//채팅 리스트에 추가할지 안할 지 선택하기 위함
+	public int chatList_SelectOne(String user_nickname);
+	
 	// 세션에 있는 사용자 정보를 채팅 리스트에 입력
 	public int chatList_Insert(String user_nickname);
 	

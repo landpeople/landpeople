@@ -21,6 +21,13 @@ public class LeeDaoImpl implements ILeeDao {
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
+	public int chatList_SelectOne(String user_nickname) {
+		logger.info("● Repository chatList_SelectOne 실행");
+		int result = sqlSession.selectOne("lee_test.chatList_SelectOne", user_nickname);
+		return result;
+	}
+
+	@Override
 	public int chatList_Insert(String user_nickname) {
 		logger.info("● Repository chatList_Insert 실행");
 		return sqlSession.insert("lee_test.chatList_Insert", user_nickname);

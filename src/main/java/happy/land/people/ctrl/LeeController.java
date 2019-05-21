@@ -1,10 +1,14 @@
 package happy.land.people.ctrl;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -14,10 +18,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.ServletConfigAware;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import happy.land.people.model.lee.ILeeService;
 
@@ -31,6 +38,9 @@ public class LeeController implements ServletConfigAware {
 	 * 채팅에 관련된 정보를 담기 위해 Application 객체 생성
 	 */
 	private ServletContext servletContext;
+	
+	@Resource(name="uploadPath")
+	String uploadPath;
 
 	// 8. log처리를 위한 logger객체 생성
 	Logger logger = LoggerFactory.getLogger(LeeController.class);
@@ -76,9 +86,9 @@ public class LeeController implements ServletConfigAware {
 			System.out.println("● LeeController socketOpen.do / 채팅방 보이기(1은 성공) : " + n);
 			session.setAttribute("chr_id", chr_id);
 			session.setAttribute("user", sender);
-			String chr_content = service.chatRoom_SelectContent(chr_id);
-			System.out.println(chr_content);
-			model.addAttribute("msg","<div class = 'sendTxt'<span class ='sender_img'>안녕<br><br>");
+//			String chr_content = service.chatRoom_SelectContent(chr_id);
+//			System.out.println(chr_content);
+			model.addAttribute("msg","<div class = 'sendTxt'><span class ='sender_img'>안녕</span><br><br></div>");
 		}
 
 		/* 채팅 리스트 띄워주기 */
@@ -104,19 +114,17 @@ public class LeeController implements ServletConfigAware {
 
 	// WebSocket 채팅 종료했을 때
 	@RequestMapping(value = "/socketOut.do", method = { RequestMethod.GET, RequestMethod.POST })
-	public void socketOut(HttpSession session, String chr_content) {
+	public void socketOut(HttpSession session, String chc_content) {
 
-		System.out.println("*******************content" + chr_content);
-		logger.info("*******************content{}", chr_content);
+		System.out.println("● LeeController socketOut.do DB에 저장할 chc_content : " + chc_content);
 		
 		Map<String, String> map = new HashMap<String, String>();
 		String chr_id = (String)session.getAttribute("chr_id");
 		map.put("chr_id", chr_id);
 		System.out.println("● LeeController socketOut.do / chr_id : " + chr_id);
-		map.put("chr_content", chr_content);
-		int n = service.chatRoom_UpdateContent(map);
-		System.out.println("잘 들어갔나 ? :" + ( n > 0 ? true : false) );
-		logger.info("socketOut 소켓에서 나오기");
+		map.put("chr_content", chc_content);
+//		int n = service.chatRoom_UpdateContent(map);
+//		System.out.println("잘 들어갔나 ? :" + ( n > 0 ? true : false) );
 		String mem_id = (String) session.getAttribute("user");
 		HashMap<String, String> chatList = (HashMap<String, String>) servletContext.getAttribute("chatList");
 		System.out.println("● LeeController socketOut.do / 기존 접속 회원 리스트:" + chatList);
@@ -149,4 +157,40 @@ public class LeeController implements ServletConfigAware {
 		map.put("result", str);
 		return map;
 	}
+	
+	@RequestMapping(value="/regiFile.do", method=RequestMethod.POST, produces="application/text; charset-utf-8;")
+	@ResponseBody
+	public String fileUpload(happy.land.people.dto.FileDto dto,  MultipartHttpServletRequest mtsRequest, String chat_seq) throws IOException {
+		logger.info("file Upload Controller");
+		boolean isc = false;
+		Iterator<String> itr = mtsRequest.getFileNames();
+		System.out.println("파일이름 : " + itr);
+		String originalName = null;
+		while(itr.hasNext()) {
+			MultipartFile file = mtsRequest.getFile(itr.next());
+			originalName = file.getOriginalFilename();
+			String savedName = "";
+			System.out.println("Orginal Name : " + originalName);
+			// 이름이 겹치지 않기위해 랜덤 생성
+			UUID uuid = UUID.randomUUID();
+			savedName = uuid.toString()+"_"+originalName;
+			File dir = new File(uploadPath);
+			File target = new File(uploadPath, savedName);
+			// 폴더가 없다면 폴더를 생성
+			if(!dir.exists()) {
+				dir.mkdirs();
+			}
+			
+			// 파일을 서버에 저장
+			FileCopyUtils.copy(file.getBytes(), target);
+			
+			// argument로 받아온 dto에 파일 이름이 들어가 있지 않아서 직접 set
+			dto.setFile_rname(originalName);
+			dto.setFile_tname(savedName);
+//			isc = service.uploadFile(dto);
+			System.out.println("파일업로드 성공 : " + isc);
+		}
+		return uploadPath + "\\" + originalName;
+	}
+	
 }
