@@ -1,5 +1,6 @@
 package happy.land.people.model.lee;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -47,6 +48,25 @@ public class LeeDaoImpl implements ILeeDao {
 	public int chatRoom_Insert(Map<String, String> map) {
 		logger.info("● Repository chatRoom_Insert 실행");
 		return sqlSession.insert("lee_test.chatRoom_Insert", map);
+	}
+
+	@Override
+	public String chkChatMember(String chr_id) {
+		logger.info("● Repository chkChatMember 실행");
+		Map<String, String> map = sqlSession.selectOne("lee_test.chkChatMember", chr_id);
+//		System.out.println(map.get("CHR_SENDER"));
+//		System.out.println(map.get("CHR_RECEIVER"));
+		
+		logger.info("● Repository chkDelflag 실행");
+		String str1 = sqlSession.selectOne("lee_test.chkDelflag", map.get("CHR_SENDER"));
+		String str2 = sqlSession.selectOne("lee_test.chkDelflag", map.get("CHR_RECEIVER"));
+//		System.out.println("str1 = "+str1+"str2 = "+str2+"********************");
+		
+		if (str1.equals("F") && str2.equals("F")) {
+			return "canChat";
+		} else {
+			return "cantChat";
+		}
 	}
 
 }

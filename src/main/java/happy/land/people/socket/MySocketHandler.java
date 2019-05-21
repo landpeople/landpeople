@@ -72,7 +72,7 @@ public class MySocketHandler extends TextWebSocketHandler{
 					String otherMemSession = (String)sessionMap.get("user");
 					if(myGrSession.equals(otherGrSession)){
 						if(msg2.equals(otherMemSession)){
-							String newMsg = "[나]"+msg.replace(msg.substring(0, msg.trim().indexOf(":")+1),"");
+							String newMsg = "["+otherMemSession+"]"+msg.replace(msg.substring(0, msg.trim().indexOf(":")+1),"");
 							System.out.println("newMsg:"+newMsg);
 							txt = newMsg;
 						}else{

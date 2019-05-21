@@ -6,6 +6,34 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>그룹채팅</title>
 
+
+<!-- Firebase App is always required and must be first -->
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-app.js"></script>
+
+<!-- Add additional services that you want to use -->
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-messaging.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-functions.js"></script>
+<!-- Comment out (or don't include) services that you don't want to use -->
+<!-- <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script> -->
+<script>
+  // Initialize Firebase
+  // TODO: Replace with your project's customized code snippet
+  var config = {
+	  apiKey: "AIzaSyBMapdnIIEh-OEgBPZPtMc9ndKPD8gTeTw",
+      authDomain: "landpeople-444c5.firebaseapp.com",
+      databaseURL: "https://landpeople-444c5.firebaseio.com",
+      projectId: "landpeople-444c5",
+      storageBucket: "landpeople-444c5.appspot.com",
+      messagingSenderId: "593127478674",
+      appId: "1:593127478674:web:ec271f0a5609507f"
+  };
+  firebase.initializeApp(config);
+</script>
+
+
 <style type="text/css">
 @import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
 /*    @font-face{
@@ -162,7 +190,7 @@
           $(".chat_div").show();
           $(".chat").focus();
           
-          ws = new WebSocket("ws://192.168.4.31:8091/LandPeople/wsChat.do");
+          ws = new WebSocket("ws://192.168.12.204:8091/LandPeople/wsChat.do");
           
           ws.onopen = function() {
              alert("● groupChat.jsp ws.onopen");
@@ -175,8 +203,8 @@
             if(msg.startsWith("<font color=")){ // 입장,퇴장
                $(".receive_msg").append($("<div class = 'noticeTxt'>").append(msg+"<br/>"));
             viewList(id);
-            }else if(msg.startsWith("[나]")){ //대화내용
-               msg = msg.substring(3);
+            }else if(msg.startsWith("[${user}]")){ //대화내용
+//                msg = msg.substring(3);// [나] 라는거 자르는 거 였음
                $(".receive_msg").append($("<div class = 'sendTxt'>").append($("<span class ='sender_img'>").text(msg))).append("<br><br>");
             }else{
                $(".receive_msg").append($("<div class = 'receiveTxt'>").append($("<span class = 'receiver_img'>").text(msg))).append("<br><br>");
@@ -190,9 +218,29 @@
           }
       
          $(".chat_btn").bind("click",function() {
+        	 var canWrite;
+        	 var nullval;
+        	 $.ajax({
+                 type: "POST",
+                 url: "./chkChatMember.do",
+                 data: { chr_id: <%=chr_id%> },
+                 dataType: "json",
+                 async: false,
+                 success: function(result){
+                	 canWrite = result.result;
+                  },
+                  error : function() {
+					alert("실패");
+				}
+               });
+        	 
             if($(".chat").val() == '' ) {
                alert("● groupChat.jsp / 내용을 입력하세요. ");
-               return ;
+               $('#txtarea').val(nullval);
+               return;
+            }else if(canWrite=='cantChat'){
+            	alert("● 대화 상대가 없습니다. *채팅 불가*");
+            	return;
             }else {
                ws.send(nick+" : "+$(".chat").val());
                $(".chat").val('');
@@ -207,7 +255,7 @@
               type: "GET",
               url: "./socketOut.do", // 소켓 닫기
               async: false
-           }); 
+           });
       }
       
       function disconnect() {
@@ -231,6 +279,13 @@
           }
         });
       }      
+
+      window.onload = function () {
+          if (window.Notification) {
+              Notification.requestPermission();
+          }
+      }
+
 </script>
 </head>
 <body onbeforeunload="roomClose()">
@@ -250,11 +305,14 @@
    </table>
    
    <div class="chat_div" style="display:none; margin-top: 10px;">
-      <textarea class="chat"
+      <textarea id="txtarea" class="chat"
              onKeypress="if(event.keyCode==13) $('.chat_btn').click();" ></textarea>
-      <div class="chat_btn"></div>          
+      <div class="chat_btn"></div>
+      <div class="exit">exit</div>        
    </div>
      그룹아이디 : <%=chr_id%>
 나의아이디 :   <%=user %>
+
+
 </body>
 </html>

@@ -61,9 +61,9 @@ public class TestController {
 		return "jang";
 	}
 	
-	@RequestMapping(value = "/jung.do", method = RequestMethod.GET)
+	@RequestMapping(value = "/jeong.do", method = RequestMethod.GET)
 	public String Jung() {
-		return "jung";
+		return "jeong";
 	}
 	
 	@RequestMapping(value = "/cho.do", method = RequestMethod.GET)
@@ -145,5 +145,11 @@ public class TestController {
 		logger.info("● TestController crytographicCompare실행 {}", lDto);
 		session.setAttribute("login", lDto);
 		return "start";
+	}
+	
+	@RequestMapping(value="/push.do", method=RequestMethod.GET)
+	public String testPush() {
+		logger.info("● TestController testPush 실행");
+		return "testPush";
 	}
 }

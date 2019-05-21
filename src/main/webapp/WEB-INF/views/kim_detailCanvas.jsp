@@ -3,8 +3,7 @@
 <%@page import="java.util.Map"%>
 <%@page import="happy.land.people.dto.kim.LPDaysDto"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,19 +15,13 @@
 	Map<Integer,List<LPTextDto>> textList = (Map<Integer,List<LPTextDto>>)request.getAttribute("textList");
 %>
 
-
 <script src="./js/jquery-3.3.1.js"></script>
+
 <!-- 책모양  -->
-<link href="./css/jquery.booklet.latest.css" type="text/css" rel="stylesheet" media="screen, projection, tv" />
 <script src="./js/jquery-ui.js"></script>
 <script src="./js/jquery.easing.1.3.js"></script>
-<script src="./js/jquery.booklet.latest.min.js"></script> 
-
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> -->
-<link rel="stylesheet" href="./css/Testbootstrap.css">
-<link rel="stylesheet" href="./css/templatemo-style.css">
-<link rel="stylesheet" href="./css/normalize.css">
-<link rel="stylesheet" href="./css/font-awesome.css">
+<script src="./js/jquery.booklet.latest.min.js"></script>
+<link href="./css/jquery.booklet.latest.css" type="text/css" rel="stylesheet" media="screen, projection, tv" />
 
 <script src="./js/vendor/modernizr-2.6.2.min.js"></script>
 <script src="./js/min/plugins.min.js"></script>
@@ -37,72 +30,47 @@
 
 <!-- 카카오 지도를 위한 js파일 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=2a8ce23f7f516bf0c39441ce65105c56&libraries=services"></script>
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=559fa9d8ea227159941f35acba720d2b&libraries=services"></script>
 
 <!-- 자유 캔버스 레이아웃  -->
 <link rel="stylesheet" href="css/Layout_1.css">
-
 </head>
-	<body>
-	<!-- SIDEBAR -->
-	<div class="sidebar-menu hidden-xs hidden-sm">
-		<div class="top-section" style="padding-bottom: 0;">
-			<div class="profile-image">
-				<img src="img/제주배경임.png" alt="Volton">
-			</div>
-			<!--  <h3 class="profile-title">Volton</h3>
-                <p class="profile-description">Digital Photography</p> -->
-		</div>
-		<!-- .top-section -->
-		<div class="main-navigation">
-			<ul class="navigation">
-				<li><a href="#"><i class="fa fa-globe"></i>Welcome</a></li>
-				<li><a href="#"><i class="fa fa-pencil"></i>About Me</a></li>
-				<li><a href="#"><i class="fa fa-paperclip"></i>My Gallery</a></li>
-				<li><a href="#"><i class="fa fa-link"></i>Contact Me</a></li>
-			</ul>
-		</div>
-		<!-- .main-navigation -->
+<body>
+   <div class="main-wrapper">
+      <%@include file="./common/Sidebar.jsp"%>
+      <div class="content-wrapper">
 
-		<!-- 채팅 -->
-		<div class="chatting"></div>
-	</div>
-	<!-- .sidebar-menu -->
+         <!-- 메인 컨텐츠   -->
+         <div class="lpcontents">
+            <div class="content">
+               <input type="button" id="downloadExcel">
+               <a href="./canvasDownloadExcel.do">테스트용 엑셀 다운로드</a>
+               <a href="./canvasDownloadImage.do">테스트용 이미지 다운로드</a>
+               <div id="mybook" style="border: 1px solid black;">
+                  <div>입력된 캔버스가 없습니다.</div>
+                  <div>입력된 캔버스가 없습니다.</div>
+               </div>
+               <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">캔버스 입력</button>
+               <input type="button" id="pageUpdate" value="페이지 수정"></input>
+               <input type="button" id="pageDelete" value="페이지 삭제"></input>
+               <input type="hidden" value="0" id="selectType">
 
-	
-	<!-- 여기에 div 잡아서 작업하면 됨 -->
-	<!-- templatemo-style.css에 보면 이안에 들어가는 div 클래스가 있음. 아니면 css를 temp -->
-	<div class="main-content">			
-			 <input type="button" id="downloadExcel">	
-			 <a href="./canvasDownloadExcel.do">테스트용 엑셀 다운로드</a> 
-			 <a href="./canvasDownloadImage.do">테스트용 이미지 다운로드</a>
-			 <div id="mybook" style="border: 1px solid black;">
-			    <div>
-			        	입력된 캔버스가 없습니다.
-			    </div>
-			    <div>
-			       		입력된 캔버스가 없습니다.
-			    </div>			    
-			</div>
-  			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">캔버스 입력</button>
-			<input type="button" id="pageUpdate" value="페이지 수정"></input>
-			<input type="button" id="pageDelete" value="페이지 삭제"></input>
-			<input type="hidden" value="0" id="selectType">
-			
-			<form action="./insertDaysForm.do" onsubmit="return false" method="post">
-				<input type="hidden" value=1 id="nowPageNo" name="nowPageNo">			
-			</form>
-			
-			<!-- <form action="./updateDaysForm.do" onsubmit="return false" method="post">
-				<input type="hidden" value=1 id="nowPageNo" name="nowPageNo">			
-			</form>
-			
-			<form action="./deleteDaysForm.do" onsubmit="return false" method="post">
-				<input type="hidden" value=1 id="nowPageNo" name="nowPageNo">			
-			</form> -->
-  
- 
+               <form action="./insertDaysForm.do" onsubmit="return false" method="post">
+                  <input type="hidden" value=1 id="nowPageNo" name="nowPageNo">
+               </form>
 
+               <!-- <form action="./updateDaysForm.do" onsubmit="return false" method="post">
+            <input type="hidden" value=1 id="nowPageNo" name="nowPageNo">        
+         </form>
+         
+         <form action="./deleteDaysForm.do" onsubmit="return false" method="post">
+            <input type="hidden" value=1 id="nowPageNo" name="nowPageNo">        
+         </form> -->
+         </div>
+         </div>
+         </div>
+         </div>
+              
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
@@ -127,16 +95,11 @@
           <button type="button" class="btn btn-default" id="canvasInsertFrom">ok</button>
         </div>
       </div>
-      
-    </div>
-  </div>
-  
-</div>
-	 
-  
+   </div>
+   </div>
+   
 
-	
-	<script>  		
+ <script>  		
 	$("document").ready(function() {		
 		 //책 모양 가져오기
  	    $('#mybook').booklet({
@@ -237,6 +200,16 @@
 	    		
 	    		var map = new daum.maps.Map(container, options);
 	    		
+	    		// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+	    		var mapTypeControl = new daum.maps.MapTypeControl();
+
+	    		// 지도에 컨트롤을 추가해야 지도위에 표시됩니다	    		
+	    		map.addControl(mapTypeControl, daum.maps.ControlPosition.TOPRIGHT);
+
+	    		// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+	    		var zoomControl = new daum.maps.ZoomControl();
+	    		map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT);
+	    		
 	    		// 일정 마커들
 	    		var daysMarker = [];
 	    		// 일정 마커들의 인포윈도우
@@ -294,16 +267,19 @@
 	    			
 	    			for(var i = 0 ; i < daysMarker.length ; i++){
 	    				var div = document.createElement('div');
+	    				div.style.width="460px";
+	    				div.style.height = "40px";
 	    				if(i >= 1){
+	    					div.style.height = "60px";
 	    					//시작 지점 과 끝지점 가져와서 최단거리 설정
-	    					div.innerHTML += "↓";
+	    					div.innerHTML += "<span style='margin-Left:226px;'>↓</span>";
 	    					var startCoord = new daum.maps.LatLng(daysMarker[i-1].getPosition().getLat(), daysMarker[i-1].getPosition().getLng());
 	    					var endCoord =  new daum.maps.LatLng(daysMarker[i].getPosition().getLat(), daysMarker[i].getPosition().getLng());
-	    					div.innerHTML += "<a href='https://map.kakao.com/?sX="+startCoord.toCoords().getX()+"&sY="+startCoord.toCoords().getY()+"&sName=출발점&eX="+endCoord.toCoords().getX()+"&eY="+endCoord.toCoords().getY()+"&eName=도착점'"
+	    					div.innerHTML += "<a style='float:right; margin-right:30px;' href='https://map.kakao.com/?sX="+startCoord.toCoords().getX()+"&sY="+startCoord.toCoords().getY()+"&sName=출발점&eX="+endCoord.toCoords().getX()+"&eY="+endCoord.toCoords().getY()+"&eName=도착점'"
 	    							+ " onclick='window.open(this.href, \"_경로보기\", \"width=1000px,height=800px;\"); return false;'"
 	    							+ ">최단경로보기</a><br>";
 	    				}				
-	    				div.innerHTML += "<span>"+(i+1)+"번째 일정:"+daysInfo[i]+"</span>";
+	    				div.innerHTML += "<div style='font-size:20px; width:450px; height:38px; border:1px solid black;'>"+(i+1)+"번째 일정:"+daysInfo[i]+"</div>";
 	    				daysPage.appendChild(div);	
 	    			}	
 	    			

@@ -12,19 +12,12 @@
 <head>
 <meta charset="UTF-8">
 <title>김태우 화면 테스트</title>
-
 <script src="./js/jquery-3.3.1.js"></script>
 <!-- 책모양  -->
 <link href="./css/jquery.booklet.latest.css" type="text/css" rel="stylesheet" media="screen, projection, tv" />
 <script src="./js/jquery-ui.js"></script>
 <script src="./js/jquery.easing.1.3.js"></script>
-<script src="./js/jquery.booklet.latest.min.js"></script> 
-
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> -->
-<link rel="stylesheet" href="./css/Testbootstrap.css">
-<link rel="stylesheet" href="./css/templatemo-style.css">
-<link rel="stylesheet" href="./css/normalize.css">
-<link rel="stylesheet" href="./css/font-awesome.css">
+<script src="./js/jquery.booklet.latest.min.js"></script>
 
 <script src="./js/vendor/modernizr-2.6.2.min.js"></script>
 <script src="./js/min/plugins.min.js"></script>
@@ -33,49 +26,34 @@
 
 <!-- 카카오 지도를 위한 js파일 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=2a8ce23f7f516bf0c39441ce65105c56&libraries=services"></script>
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=559fa9d8ea227159941f35acba720d2b&libraries=services"></script>
+
 
 
 
 </head>
 	<body>
-	<!-- SIDEBAR -->
-	<div class="sidebar-menu hidden-xs hidden-sm">
-		<div class="top-section" style="padding-bottom: 0;">
-			<div class="profile-image">
-				<img src="img/제주배경임.png" alt="Volton">
-			</div>
-			<!--  <h3 class="profile-title">Volton</h3>
-                <p class="profile-description">Digital Photography</p> -->
-		</div>
-		<!-- .top-section -->
-		<div class="main-navigation">
-			<ul class="navigation">
-				<li><a href="#"><i class="fa fa-globe"></i>Welcome</a></li>
-				<li><a href="#"><i class="fa fa-pencil"></i>About Me</a></li>
-				<li><a href="#"><i class="fa fa-paperclip"></i>My Gallery</a></li>
-				<li><a href="#"><i class="fa fa-link"></i>Contact Me</a></li>
-			</ul>
-		</div>
-		<!-- .main-navigation -->
+	 <!--젤로 레이아웃- 전체 영역 감싸는 div-->
+   <div class="main-wrapper">
+      <%@include file="./common/Sidebar.jsp"%>
+      <div class="content-wrapper">
 
-		<!-- 채팅 -->
-		<div class="chatting"></div>
-	</div>
-	<!-- .sidebar-menu -->
-
-	<div class="main-content">
-	
-		<div id="mybook" style="border: 1px solid black;">
-				   	 
-	          <div id="page">					   	 				   	 	 
-			  </div>
-			   <div>
-				   	<div id='map' style='width:440px;height:560px;'></div>
-				   	<input id="updateCanvas" type="button" value="수정완료"></input>	 
-			  </div>				   	 
-		</div>
-	</div>
+         <!-- 메인 컨텐츠   -->
+         <div class="lpcontents">
+            <div class="content">
+               <div id="mybook" style="border: 1px solid black;">
+                  <div id="page"></div>
+                  <div>
+                     <div id='map' style='width: 440px; height: 560px;'></div>
+                     <input id="updateCanvas" type="button" value="수정완료"></input>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- </div> 여기까지 메인 컨텐츠  -->
+         <div class="footer">landpeople</div>
+      </div>
+   </div>	
 	
 	<!-- 여기에 div 잡아서 작업하면 됨 -->
 	<!-- templatemo-style.css에 보면 이안에 들어가는 div 클래스가 있음. 아니면 css를 temp -->
@@ -95,7 +73,14 @@
 	    			disableDoubleClickZoom : true			
 	    		};	    		
 	 var map = new daum.maps.Map(container, options);
-	  
+	// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+	 var mapTypeControl = new daum.maps.MapTypeControl();
+	// 지도에 컨트롤을 추가해야 지도위에 표시됩니다	    		
+	 map.addControl(mapTypeControl, daum.maps.ControlPosition.TOPRIGHT);
+	// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+	 var zoomControl = new daum.maps.ZoomControl();
+	 map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT);
+		
 	 // 일정 마커들
 	 var daysMarker = [];
 	 // 일정 마커들의 인포윈도우
@@ -142,7 +127,7 @@
 			daysMarker[i].setDraggable(true);				
 		}		
 		// 선을 그려줌
-		createRender();	
+		initRender();	
 		
 		// 일정 페이지 정보 가져오기
 		var daysPage = document.getElementById("page");				
@@ -151,15 +136,16 @@
 				var div = document.createElement('div');
 				if(i >= 1){
 					//시작 지점 과 끝지점 가져와서 최단거리 설정
-					div.innerHTML += "↓";
+					div.innerHTML += "<span style='margin-Left:226px;'>↓</span>";
 					var startCoord = new daum.maps.LatLng(daysMarker[i-1].getPosition().getLat(), daysMarker[i-1].getPosition().getLng());
 					var endCoord =  new daum.maps.LatLng(daysMarker[i].getPosition().getLat(), daysMarker[i].getPosition().getLng());
-					div.innerHTML += "<a href='https://map.kakao.com/?sX="+startCoord.toCoords().getX()+"&sY="+startCoord.toCoords().getY()+"&sName=출발점&eX="+endCoord.toCoords().getX()+"&eY="+endCoord.toCoords().getY()+"&eName=도착점'"
+					div.innerHTML += "<a style='float:right; margin-right:30px;' href='https://map.kakao.com/?sX="+startCoord.toCoords().getX()+"&sY="+startCoord.toCoords().getY()+"&sName=출발점&eX="+endCoord.toCoords().getX()+"&eY="+endCoord.toCoords().getY()+"&eName=도착점'"
 							+ " onclick='window.open(this.href, \"_경로보기\", \"width=1000px,height=800px;\"); return false;'"
 							+ ">최단경로보기</a><br>";
 				}				
-				div.innerHTML += "<span>"+(i+1)+"번째 일정:"+daysInfo[i]+"</span>"								
-								+"<input type='button' class='deleteDays' title='"+i+"' value='일정삭제'>";
+				div.innerHTML += "<div style='font-size:20px; width:450px; height:38px; border:1px solid black;'>"+(i+1)+"번째 일정:"+daysInfo[i]								
+							    + "<img src='./img/canvas/normalClose.png' style='float:right;' class='deleteDays' title='"+i+"' width='38' height='38'></div>";
+								
 				daysPage.appendChild(div);	
 			}	
 			
@@ -174,12 +160,10 @@
 				if(polyline != null){
 					polyline.setMap(null);
 					initLine();
+				}else if(polyline == null){
+					initLine();
 				}
-			}
-			// 생성시 그려주기
-			function createRender(){
-				initLine();
-			}
+			}		
 			
 			// 라인  그려주기
 			function initLine() {	
@@ -262,8 +246,9 @@
 					});		
 	    			// 마커에  이벤트 등록	
 	    			daum.maps.event.addListener(daysMarker[daysMarker.length-1], 'click', makeOverListener(map,daysMarker[daysMarker.length-1],addwindow));
+	    			daum.maps.event.addListener(daysMarker[daysMarker.length-1], 'dragend', initRender);
 	    			// 생성시 그리기
-					createRender();
+					initRender();
 					
 					// 일정 페이지 정보 가져오기
 					var daysPage = document.getElementById("page");
@@ -271,15 +256,15 @@
 					
 					if(daysMarker.length >= 2){
 						//시작 지점 과 끝지점 가져와서 최단거리 설정
-						div.innerHTML += "↓";
+						div.innerHTML += "<span style='margin-Left:226px;'>↓</span>";
 						var startCoord = new daum.maps.LatLng(daysMarker[daysMarker.length-2].getPosition().getLat(), daysMarker[daysMarker.length-2].getPosition().getLng());
 						var endCoord =  new daum.maps.LatLng(daysMarker[daysMarker.length-1].getPosition().getLat(), daysMarker[daysMarker.length-1].getPosition().getLng());
-						div.innerHTML += "<a href='https://map.kakao.com/?sX="+startCoord.toCoords().getX()+"&sY="+startCoord.toCoords().getY()+"&sName=출발점&eX="+endCoord.toCoords().getX()+"&eY="+endCoord.toCoords().getY()+"&eName=도착점'"
+						div.innerHTML += "<a style='float:right; margin-right:30px;' href='https://map.kakao.com/?sX="+startCoord.toCoords().getX()+"&sY="+startCoord.toCoords().getY()+"&sName=출발점&eX="+endCoord.toCoords().getX()+"&eY="+endCoord.toCoords().getY()+"&eName=도착점'"
 								+ " onclick='window.open(this.href, \"_경로보기\", \"width=1000px,height=800px;\"); return false;'"
 								+ ">최단경로보기</a><br>";
 					}
-					div.innerHTML += "<span>"+daysMarker.length+"번째 일정:"+title+"</span>"
-								  +"<input type='button' class='deleteDays' title='"+i+"' value='일정삭제'>";
+					div.innerHTML += "<div style='font-size:20px; width:450px; height:38px; border:1px solid black;'>"+daysMarker.length+"번째 일정:"+title
+					 			  + "<img src='./img/canvas/normalClose.png' style='float:right;' class='deleteDays' title='"+(daysMarker.length-1)+"' width='38' height='38'></div>";						
 					daysPage.appendChild(div);
 					infoWindow.close();
 					isInsertOpen = false;
@@ -335,8 +320,7 @@
 				 daysInfo.splice(number,1);	
 				 daysStart.splice(number,1);
 				 daysEnd.splice(number,1);	
-				 
-				 alert(daysMarker);
+				 				 				
 				 // 선 다시 그려주기
 				 initRender();
 				 var diffDays = document.getElementsByClassName("deleteDays");
@@ -348,10 +332,13 @@
 					}
 				 }				 
 				 
-				$(this).closest('div').remove();
+				$(this).parent().parent().remove();
 					if(number =="0"){
-						// 0일경우 다음 일정에 있는 최단경로보기 찍어준 링크 찾아서 지워주기						
-						$('.deleteDays').parent().children('a').remove();
+						var deleteContent = document.getElementsByClassName("deleteDays");
+						// 0일경우 다음 일정에 있는 최단경로보기 찍어준 링크 찾아서 지워주기							
+						$('.deleteDays:eq(0)').parent().parent().children('a').remove();
+						$('.deleteDays:eq(0)').parent().parent().children('span').remove();
+						$('.deleteDays:eq(0)').parent().parent().children('br').remove();
 					}
 				}
 			});
