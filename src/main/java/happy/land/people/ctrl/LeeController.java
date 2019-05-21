@@ -39,7 +39,7 @@ public class LeeController implements ServletConfigAware {
 	 */
 	private ServletContext servletContext;
 	
-	@Resource(name="uploadPath")
+//	@Resource(name="uploadPath")
 	String uploadPath;
 
 	// 8. log처리를 위한 logger객체 생성

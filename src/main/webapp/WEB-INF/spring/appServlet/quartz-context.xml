@@ -17,7 +17,7 @@
 	
 	<!-- CronTrigger 설정 -->
 	<bean id="cronTriggerFactoryBean" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"
-		p:jobDetail-ref="jobDetailFactoryBean" p:cronExpression="*/30****?"/><!-- 30초 -->
+		p:jobDetail-ref="jobDetailFactoryBean" p:cronExpression="*/30 * * * *?"/><!-- 30초 -->
 		
 	<!-- scheduler 설정 -->
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean"
