@@ -47,7 +47,7 @@ $(function() {
 	//이메일 유효성 검사
 	$("#email").keyup(function() {
 		var email = $(this).val();
-		alert(email);
+	//	alert(email);
 
 
 	var regExp =  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
@@ -65,14 +65,15 @@ $(function() {
 			url : "./emailchk.do",
 			async : true,
 			type: "post",
-			data : "user_email"+email,
-			dataType: "String",
+			data : "user_email="+email,
 			success: function(msg) {
-			if(msg.substr(0,10)=="사용가능한 이메일"){
+			if(msg=="0"){
+				//alert(msg);
 				$("#emailresult").css("color","forestgreen");
 				$("#emailresult").html("사용가능한 이메일입니다.");
 				$("#emailchkVal").val("1");
 			}else{
+				//alert(msg);
 				$("#emailresult").css("color","red");
 				$("#emailresult").html("사용 불가능한 이메일입니다.");
 				$("#emailchkVal").val("0");
@@ -120,6 +121,57 @@ $(function() {
 		}
 	});
 	
+	//닉네임 작성시 유효성 검사 (자리수 2~10 , 닉네임 중복여부 , 공백포함여부)
+	$("#nickname").keyup(function() {
+		var inputLen = $(this).val().length;
+	//	alert(inputLen);
+		
+		var nickname = $(this).val();
+	//	alert(nickname);
+		
+	// 닉네임 정규표현식
+	var regex = /^[\w\Wㄱ-ㅎㅏ-ㅣ가-힣]{2,10}$/;
+	
+	// 공백여부 검사
+	if(nickname.indexOf(" ") != -1){
+		$("#nicknameresult").css("color","red");
+		$("#nicknameresult").html("공백이 포함된 아이디는 사용 불가능합니다");
+		$("#nicknamechkVal").val("0");
+	}else if (inputLen>1 && nickname.match(regex)!=null){
+		//2자리 이상 공백 없는 닉네임 입력시 중복 여부 검사
+		//alert("아작스실행하자");
+		
+		$.ajax({
+			url : "./nicknamecheck.do",
+			type : "post",
+			data : "user_nickname="+$(this).val(),
+			async : true,
+			success : function(msg){
+				//alert(msg)
+//					alert(msg.substr(0, 10)); // 사용 가능한 아이디 / 사용 불가능한 아이
+				$("#nicknameresult").html(msg);
+				if(msg == "0"){
+					$("#nicknameresult").css("color", "forestgreen");
+					$("#nicknameresult").html("사용가능한 닉네임입니다.");
+					$("#nicknamechkVal").val("1");
+				} else{
+					$("#nicknameresult").css("color", "red");
+					$("#nicknameresult").html("이미 존재하는 닉네임입니다.");
+					$("#nicknamechkVal").val("0");
+				}
+				
+			} , error : function () {
+				alert("실패"); 
+				alert(nickname);
+			}
+		});
+	}else{
+		$("#nicknameresult").css("color", "red");
+		$("#nicknameresult").html("닉네임은 2~10 사이 영문, 한글, 숫자만 사용 가능합니다.");
+	}
+	
+	
+	});
 	
 	
 });//제일큰
@@ -150,8 +202,8 @@ $(function() {
 <input type="text" id="passOK" placeholder="비밀번호 확인" required="required" maxlength="12">
 <br>&nbsp;<span id="pwchk"></span><br>
 
-<input type="text" name="user_nickname" id="nickname" placeholder="닉네임" required="required" maxlength="10"><br><br>
-
+<input type="text" name="user_nickname" id="nickname" placeholder="닉네임" required="required" maxlength="10">
+<br>&nbsp;<span id="nicknameresult">2~10자리의 닉네임을 입력</span><br>
 <input type="submit" value="가입!">
 
 <input type="button" value="돌아가기" onclick="javascript:history.back(-1)">

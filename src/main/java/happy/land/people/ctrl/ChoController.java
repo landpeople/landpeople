@@ -1,8 +1,10 @@
 package happy.land.people.ctrl;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
@@ -119,7 +121,7 @@ public class ChoController {
         dto.setUser_nickname(user_name[0]);
     	dto.setUser_auth("N");
 		boolean isc = iChoService.signUp(dto);
-		
+		session.setAttribute("ldto", dto);
         return isc?"redirect:./index.jsp":"404";
     }
  
@@ -135,9 +137,25 @@ public class ChoController {
 	
 	// 여기는 나중에 한다 ^^ 로그인기능 => 다 됐다 로그인 기능
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public String login(ChoDto dto, HttpSession session) {
+	public String login(ChoDto dto, HttpSession session,HttpServletResponse response) throws IOException {
 
+		
+		//여기서 막아버리자 로그인시 확인하는거 api인지 일반인지  api면 api가입자라고 보여주자
+		System.out.println("login쿼리 실행전");
 		ChoDto ldto = iChoService.login(dto);
+		System.out.println("login쿼리 실행후");
+		
+		
+	/*	
+		String user_email = ldto.getUser_email();
+		PrintWriter out = response.getWriter();
+			
+		if(user_email == null) {
+			out.print("<script type='text/javascript'>");
+			out.print("alert('가입안함')");
+			out.print("</script>");
+		}*/
+		//이제 여기서
 
 		System.out.println(ldto);
 		iLeeService.chatList_Insert(ldto.getUser_nickname());
@@ -154,7 +172,7 @@ public class ChoController {
 		System.out.println("로그아웃.do 현재 세션 : " + session);
 
 		session.invalidate();
-		return "forward:./index.jsp";
+		return "redirect:./index.jsp";
 	}
 
 	//회원가입 페이지로가기 ^^
@@ -199,12 +217,29 @@ public class ChoController {
 	@ResponseBody
 	public String emailChk(String user_email) {
 		logger.info("이메일 중복체크 컨트롤러");
-		int n = iChoService.emailDupChk(user_email);
-		return(n==0)?"사용가능한이메일입니다":"사용불가능한 이메일입니다";
+		String email = user_email;
+		
+		System.out.println(email);
+		
+		
+		int n=iChoService.emailDupChk(user_email);
+		
+		System.out.println("이메일이 있으면 1 없으면 0 이떠야함:"+n);
+		return (n==0) ? "0":"1"; //0은 사용가능 1은 사용x 
 	}
 	
-	
-	
+	//회원가입 닉네임 중복 체크
+	@RequestMapping(value="/nicknamecheck.do" , method=RequestMethod.POST,produces="application/text; charset=utf-8")
+	@ResponseBody
+	public String nicknameChk(String user_nickname) {
+		logger.info("닉네임 중복체크");
+		
+		System.out.println(user_nickname);
+		
+		int n = iChoService.nicknameDupChk(user_nickname);
+		System.out.println("닉네임 있으면 1 없으면 0 이떠야함:"+n);
+		return (n==0)?"0":"1";//0은 사용가능 1은 사용x 
+	}
 	
 	
 	
@@ -216,6 +251,8 @@ public class ChoController {
 	public String mypage(HttpSession session) {
 		
 		
+		
+		
 		return "users/mypage";
 	}
 	
@@ -223,11 +260,11 @@ public class ChoController {
 	//마이페이지 수정 완료
 	@RequestMapping(value="/modifyMypage.do" , method=RequestMethod.POST)
 	public String modifyMypage(ChoDto dto, HttpSession session) {
-		
+		ChoDto userDto = (ChoDto)session.getAttribute("ldto");
+		System.out.println("dto잘봤냐"+dto);
+		dto.setUser_auth(userDto.getUser_auth());
 		iChoService.userInfo(dto);
-		ChoDto ldto = (ChoDto)session.getAttribute("ldto");
-		ldto.setUser_nickname(dto.getUser_nickname());
-		session.setAttribute("ldto", ldto);
+		
 		return "forward:./index.jsp";
 	}
 	

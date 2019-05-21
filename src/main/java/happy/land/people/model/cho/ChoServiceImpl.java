@@ -31,6 +31,20 @@ public class ChoServiceImpl implements IChoService {
 		System.out.println("signUp 서비스 임플");
 		boolean isc = iChoDao.signUp(dto);
 		System.out.println("==============================================================="+isc);
+		
+		
+		// 만약에 user_auth가 n 이거나 g면 바로 가입 u면 이메일인증 하기
+		
+		String user_auth = dto.getUser_auth();
+		
+		if(user_auth == "N") {
+			
+			return isc;
+		}else if(user_auth == "G") {
+			return isc;
+		}else {
+		
+		
 		//authkey 임시 생성 후 dto 같이 담아줌
 		String user_emailkey = new TempKey().getKey(50, false);
 		dto.setUser_emailkey(user_emailkey);
@@ -67,6 +81,7 @@ public class ChoServiceImpl implements IChoService {
 			e.printStackTrace();
 		}
 		
+		}
 		return isc;
 	}
 
@@ -93,7 +108,7 @@ public class ChoServiceImpl implements IChoService {
 
 	@Override
 	public int nicknameDupChk(String user_nickname) {
-		// TODO Auto-generated method stub
+		logger.info("닉네임 중복체크 서비스 임플");
 		return iChoDao.nicknameDupChk(user_nickname);
 	}
 
