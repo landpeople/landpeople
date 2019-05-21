@@ -6,6 +6,32 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>그룹채팅</title>
 
+<!-- Firebase App is always required and must be first -->
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-app.js"></script>
+
+<!-- Add additional services that you want to use -->
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-messaging.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-functions.js"></script>
+<!-- Comment out (or don't include) services that you don't want to use -->
+<!-- <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script> -->
+<script>
+  // Initialize Firebase
+  // TODO: Replace with your project's customized code snippet
+  var config = {
+	  apiKey: "AIzaSyBMapdnIIEh-OEgBPZPtMc9ndKPD8gTeTw",
+      authDomain: "landpeople-444c5.firebaseapp.com",
+      databaseURL: "https://landpeople-444c5.firebaseio.com",
+      projectId: "landpeople-444c5",
+      storageBucket: "landpeople-444c5.appspot.com",
+      messagingSenderId: "593127478674",
+      appId: "1:593127478674:web:ec271f0a5609507f"
+  };
+  firebase.initializeApp(config);
+</script>
+
 <style type="text/css">
 @import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
 /*    @font-face{
@@ -23,6 +49,7 @@
       border-collapse: collapse;
    }
    
+
    .sender_img{ /* 본인 메시지 css */
       border: 1px solid;
       background-color: #69B55B; 
@@ -39,6 +66,7 @@
       text-align: justify;
    }
    
+
    .receiver_img{ /* 상대방 메시지 css */
       border: 1px solid;
       background-color: #E6F4B5; 
@@ -79,6 +107,7 @@
       outline: none;
    }
    
+
 /*    .chat_btn{ */
 /*       margin-top: 0px; */
 /*       margin-left: 5px; */
@@ -154,8 +183,6 @@
       var ws = null ;
       var url = null ;
       var nick = null ; 
-      
-      
       var content = [];
       
       $(document).ready(function() {

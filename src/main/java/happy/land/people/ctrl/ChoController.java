@@ -3,15 +3,11 @@ package happy.land.people.ctrl;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.sound.midi.MidiDevice.Info;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,9 +26,8 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
 
 import happy.land.people.dto.cho.ChoDto;
 import happy.land.people.model.cho.IChoService;
-
-import happy.land.people.naver.NaverLoginBO;
 import happy.land.people.model.lee.ILeeService;
+import happy.land.people.naver.NaverLoginBO;
 
 @Controller
 public class ChoController {
@@ -91,7 +86,7 @@ public class ChoController {
 		System.out.println("구글:" + url);
 
 		model.addAttribute("google_url", url);
-
+    
 		return "users/loginPage";
 	}
 
@@ -184,4 +179,31 @@ public class ChoController {
 		boolean isc = iChoService.authStatusUpdate(dto.getUser_email());
 		return isc ? "users/sign/auth" : "error";
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//마이페이지
+	@RequestMapping(value="/mypage.do", method= {RequestMethod.GET ,RequestMethod.POST})
+	public String mypage(HttpSession session) {
+		
+		
+		return "users/mypage";
+	}
+	
+	
+	//마이페이지 수정 완료
+	@RequestMapping(value="/modifyMypage.do" , method=RequestMethod.POST)
+	public String modifyMypage(ChoDto dto) {
+		iChoService.userInfo(dto);
+		return "forward:./index.jsp";
+	}
+	
 }
