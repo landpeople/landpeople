@@ -66,27 +66,11 @@
          <form action="./deleteDaysForm.do" onsubmit="return false" method="post">
             <input type="hidden" value=1 id="nowPageNo" name="nowPageNo">        
          </form> -->
-
-               <!-- Modal -->
-               <div class="modal fade" id="myModal" role="dialog">
-                  <div class="modal-dialog">
-
-                     <!-- Modal content-->
-                     <div class="modal-content" style="width: 1000px; height: 800px;">
-                        <div class="modal-header">
-                           <button type="button" class="close" data-dismiss="modal">&times;</button>
-                           <h4 class="modal-title">Modal Header</h4>
-                        </div>
-                        <div class="modal-body">
-                           <p>
-                              <img src="./img/days.png" id="insertDaysForm"></img> <img src="./img/free2.png"></img> <img src="./img/free2.png"></img><br> <img src="./img/free3.png"></img> <img src="./img/free4.png"></img> <img src="./img/free5.png"></img>
-                           </p>
-                        </div>
-                        <div class="modal-footer">
-                           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                           <button type="button" class="btn btn-default" id="canvasInsertFrom">ok</button>
-                        </div>
-                     </div>
+         </div>
+         </div>
+         </div>
+         </div>
+              
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
@@ -112,6 +96,8 @@
         </div>
       </div>
    </div>
+   </div>
+   
 
  <script>  		
 	$("document").ready(function() {		
@@ -181,7 +167,6 @@
 				 document.forms[0].action = "./upload.do";
 				 document.forms[0].submit();
 			}
-
 		});
 		
 		
@@ -215,6 +200,16 @@
 	    		
 	    		var map = new daum.maps.Map(container, options);
 	    		
+	    		// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+	    		var mapTypeControl = new daum.maps.MapTypeControl();
+
+	    		// 지도에 컨트롤을 추가해야 지도위에 표시됩니다	    		
+	    		map.addControl(mapTypeControl, daum.maps.ControlPosition.TOPRIGHT);
+
+	    		// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+	    		var zoomControl = new daum.maps.ZoomControl();
+	    		map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT);
+	    		
 	    		// 일정 마커들
 	    		var daysMarker = [];
 	    		// 일정 마커들의 인포윈도우
@@ -235,6 +230,7 @@
     		        content: '<div><%=daysList.get(i).get(j).getDays_title()%></div>', // 인포윈도우에 표시할 내용
     		        removable : true
 	    		});
+
     		    // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
     		    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
     		    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
@@ -271,16 +267,19 @@
 	    			
 	    			for(var i = 0 ; i < daysMarker.length ; i++){
 	    				var div = document.createElement('div');
+	    				div.style.width="460px";
+	    				div.style.height = "40px";
 	    				if(i >= 1){
+	    					div.style.height = "60px";
 	    					//시작 지점 과 끝지점 가져와서 최단거리 설정
-	    					div.innerHTML += "↓";
+	    					div.innerHTML += "<span style='margin-Left:226px;'>↓</span>";
 	    					var startCoord = new daum.maps.LatLng(daysMarker[i-1].getPosition().getLat(), daysMarker[i-1].getPosition().getLng());
 	    					var endCoord =  new daum.maps.LatLng(daysMarker[i].getPosition().getLat(), daysMarker[i].getPosition().getLng());
-	    					div.innerHTML += "<a href='https://map.kakao.com/?sX="+startCoord.toCoords().getX()+"&sY="+startCoord.toCoords().getY()+"&sName=출발점&eX="+endCoord.toCoords().getX()+"&eY="+endCoord.toCoords().getY()+"&eName=도착점'"
+	    					div.innerHTML += "<a style='float:right; margin-right:30px;' href='https://map.kakao.com/?sX="+startCoord.toCoords().getX()+"&sY="+startCoord.toCoords().getY()+"&sName=출발점&eX="+endCoord.toCoords().getX()+"&eY="+endCoord.toCoords().getY()+"&eName=도착점'"
 	    							+ " onclick='window.open(this.href, \"_경로보기\", \"width=1000px,height=800px;\"); return false;'"
 	    							+ ">최단경로보기</a><br>";
 	    				}				
-	    				div.innerHTML += "<span>"+(i+1)+"번째 일정:"+daysInfo[i]+"</span>";
+	    				div.innerHTML += "<div style='font-size:20px; width:450px; height:38px; border:1px solid black;'>"+(i+1)+"번째 일정:"+daysInfo[i]+"</div>";
 	    				daysPage.appendChild(div);	
 	    			}	
 	    			
@@ -315,6 +314,7 @@
 			%>
 		}
 		
+		
 		// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
 		function makeOverListener(map, marker, infowindow) {
 		    return function() {
@@ -334,6 +334,7 @@
     var infowindow = new daum.maps.InfoWindow({
         content: positions[i].content // 인포윈도우에 표시할 내용
     });
+
     // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
     // 이벤트 리스너로는 클로저를 만들어 등록합니다 
     // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
@@ -341,7 +342,8 @@
     daum.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
 }
 */
-	</script> 
-
-</body>
+		
+	</script> 	
+	
+	</body>
 </html>
