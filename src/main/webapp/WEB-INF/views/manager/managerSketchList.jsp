@@ -140,6 +140,7 @@
 // 			}
 		}).trigger("reloadGrid"); // jqgrid가 데이터를 가져온 후 리로드를 해줘야 그리드에 적용이 되기 때문에 작업이 완료된 후 reload를 해줌
 	});
+	
 </script>
 </head>
 <body>

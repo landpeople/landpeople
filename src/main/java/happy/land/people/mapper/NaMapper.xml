@@ -1,19 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="na_test">
+
 	<!-- 자유 캔버스 삭제 -->
 	<delete id="free_Delete" parameterType="java.lang.String">
 		DELETE FROM LPTEXT WHERE CAN_ID=#{id} 
 	</delete>	
-	<!-- 쿼리 문서 반영 안한것 -->
+	
+	<!-- 자유 캔버스 작성(등록) -->
 	<insert parameterType="happy.land.people.dto.kim.LPTextDto" id="text_Insert"> 
 		INSERT INTO LPTEXT(TEXT_ID, CAN_ID, TEXT_CONTENT, TEXT_NO, IMG_SPATH) 
 			VALUES(LPTEXT_SEQ.NEXTVAL, #{can_id}, #{text_content}, #{text_no}, #{img_spath}) 
 	</insert>
-	<!-- 쿼리 문서 반영 -->
-	<!-- 자유캔버스 하나 조회 -->
+	
+	<!-- 자유 캔버스 하나의 정보 조회 -->
 	<select parameterType="java.lang.String" id="text_SelectOne" resultType="happy.land.people.dto.kim.LPTextDto"> 
 		SELECT TEXT_ID, CAN_ID, TEXT_CONTENT, TEXT_NO, IMG_SPATH FROM LPTEXT 
 			WHERE CAN_ID=#{can_id} ORDER BY TEXT_NO 
+	</select>
+	
+	<!-- 캔버스 작성(등록) -->
+	<insert id="canvas_Insert" parameterType="happy.land.people.dto.kim.LPCanvasDto">
+		INSERT INTO LPCANVAS 
+		VALUES(LPCANVAS_SEQ.NEXTVAL,#{sketch_id},#{can_title}, #{can_content} , #{can_type} ,#{can_pageno})
+	</insert>
+	
+	<!-- 자유 캔버스 수정 -->
+	<update id="text_Update" parameterType="happy.land.people.dto.kim.LPTextDto">
+		UPDATE LPTEXT SET CAN_CONTENT = #{can_content}, IMG_SPATH = #{img_spath}
+		WHERE CAN_ID = #{can_id} AND TEXT_NO = #{text_no}
+	</update>
+	
+	<!-- 자유 캔버스 수정(삭제 후 등록 형식의 수정) / 안씀-->
+	<insert id="text_UpdateInsert" parameterType="happy.land.people.dto.kim.LPTextDto">
+		INSERT INTO LPTEXT(TEXT_ID, TEXT_CONTENT, TEXT_NO, IMG_SPATH)
+			VALUES(LPTEXT_SEQ.NEXTVAL, #{text_content}, #{text_no}, #{img_spath})
+			WHERE CAN_ID=#{can_id}
+	</insert>
+	
+	<!-- 생성된 캔버스의 ID 값 찾기 -->
+	<select id="canvas_SelectID" parameterType="happy.land.people.dto.kim.LPCanvasDto" resultType="java.lang.String">
+		SELECT CAN_ID 
+			FROM LPCANVAS 
+			WHERE CAN_PAGENO=#{can_pageno} AND SKETCH_ID=#{sketch_id}
 	</select>
 </mapper>
