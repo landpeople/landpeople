@@ -66,27 +66,11 @@
          <form action="./deleteDaysForm.do" onsubmit="return false" method="post">
             <input type="hidden" value=1 id="nowPageNo" name="nowPageNo">        
          </form> -->
-
-               <!-- Modal -->
-               <div class="modal fade" id="myModal" role="dialog">
-                  <div class="modal-dialog">
-
-                     <!-- Modal content-->
-                     <div class="modal-content" style="width: 1000px; height: 800px;">
-                        <div class="modal-header">
-                           <button type="button" class="close" data-dismiss="modal">&times;</button>
-                           <h4 class="modal-title">Modal Header</h4>
-                        </div>
-                        <div class="modal-body">
-                           <p>
-                              <img src="./img/days.png" id="insertDaysForm"></img> <img src="./img/free2.png"></img> <img src="./img/free2.png"></img><br> <img src="./img/free3.png"></img> <img src="./img/free4.png"></img> <img src="./img/free5.png"></img>
-                           </p>
-                        </div>
-                        <div class="modal-footer">
-                           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                           <button type="button" class="btn btn-default" id="canvasInsertFrom">ok</button>
-                        </div>
-                     </div>
+         </div>
+         </div>
+         </div>
+         </div>
+              
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
@@ -112,6 +96,8 @@
         </div>
       </div>
    </div>
+   </div>
+   
 
  <script>  		
 	$("document").ready(function() {		

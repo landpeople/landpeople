@@ -12,19 +12,12 @@
 <head>
 <meta charset="UTF-8">
 <title>김태우 화면 테스트</title>
-
 <script src="./js/jquery-3.3.1.js"></script>
 <!-- 책모양  -->
 <link href="./css/jquery.booklet.latest.css" type="text/css" rel="stylesheet" media="screen, projection, tv" />
 <script src="./js/jquery-ui.js"></script>
 <script src="./js/jquery.easing.1.3.js"></script>
-<script src="./js/jquery.booklet.latest.min.js"></script> 
-
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"> -->
-<link rel="stylesheet" href="./css/Testbootstrap.css">
-<link rel="stylesheet" href="./css/templatemo-style.css">
-<link rel="stylesheet" href="./css/normalize.css">
-<link rel="stylesheet" href="./css/font-awesome.css">
+<script src="./js/jquery.booklet.latest.min.js"></script>
 
 <script src="./js/vendor/modernizr-2.6.2.min.js"></script>
 <script src="./js/min/plugins.min.js"></script>
@@ -33,49 +26,34 @@
 
 <!-- 카카오 지도를 위한 js파일 -->
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=2a8ce23f7f516bf0c39441ce65105c56&libraries=services"></script>
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=559fa9d8ea227159941f35acba720d2b&libraries=services"></script>
+
 
 
 
 </head>
 	<body>
-	<!-- SIDEBAR -->
-	<div class="sidebar-menu hidden-xs hidden-sm">
-		<div class="top-section" style="padding-bottom: 0;">
-			<div class="profile-image">
-				<img src="img/제주배경임.png" alt="Volton">
-			</div>
-			<!--  <h3 class="profile-title">Volton</h3>
-                <p class="profile-description">Digital Photography</p> -->
-		</div>
-		<!-- .top-section -->
-		<div class="main-navigation">
-			<ul class="navigation">
-				<li><a href="#"><i class="fa fa-globe"></i>Welcome</a></li>
-				<li><a href="#"><i class="fa fa-pencil"></i>About Me</a></li>
-				<li><a href="#"><i class="fa fa-paperclip"></i>My Gallery</a></li>
-				<li><a href="#"><i class="fa fa-link"></i>Contact Me</a></li>
-			</ul>
-		</div>
-		<!-- .main-navigation -->
+	 <!--젤로 레이아웃- 전체 영역 감싸는 div-->
+   <div class="main-wrapper">
+      <%@include file="./common/Sidebar.jsp"%>
+      <div class="content-wrapper">
 
-		<!-- 채팅 -->
-		<div class="chatting"></div>
-	</div>
-	<!-- .sidebar-menu -->
-
-	<div class="main-content">
-	
-		<div id="mybook" style="border: 1px solid black;">
-				   	 
-	          <div id="page">					   	 				   	 	 
-			  </div>
-			   <div>
-				   	<div id='map' style='width:440px;height:560px;'></div>
-				   	<input id="updateCanvas" type="button" value="수정완료"></input>	 
-			  </div>				   	 
-		</div>
-	</div>
+         <!-- 메인 컨텐츠   -->
+         <div class="lpcontents">
+            <div class="content">
+               <div id="mybook" style="border: 1px solid black;">
+                  <div id="page"></div>
+                  <div>
+                     <div id='map' style='width: 440px; height: 560px;'></div>
+                     <input id="updateCanvas" type="button" value="수정완료"></input>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- </div> 여기까지 메인 컨텐츠  -->
+         <div class="footer">landpeople</div>
+      </div>
+   </div>	
 	
 	<!-- 여기에 div 잡아서 작업하면 됨 -->
 	<!-- templatemo-style.css에 보면 이안에 들어가는 div 클래스가 있음. 아니면 css를 temp -->
@@ -149,7 +127,7 @@
 			daysMarker[i].setDraggable(true);				
 		}		
 		// 선을 그려줌
-		createRender();	
+		initRender();	
 		
 		// 일정 페이지 정보 가져오기
 		var daysPage = document.getElementById("page");				
@@ -182,12 +160,10 @@
 				if(polyline != null){
 					polyline.setMap(null);
 					initLine();
+				}else if(polyline == null){
+					initLine();
 				}
-			}
-			// 생성시 그려주기
-			function createRender(){
-				initLine();
-			}
+			}		
 			
 			// 라인  그려주기
 			function initLine() {	
@@ -272,7 +248,7 @@
 	    			daum.maps.event.addListener(daysMarker[daysMarker.length-1], 'click', makeOverListener(map,daysMarker[daysMarker.length-1],addwindow));
 	    			daum.maps.event.addListener(daysMarker[daysMarker.length-1], 'dragend', initRender);
 	    			// 생성시 그리기
-					createRender();
+					initRender();
 					
 					// 일정 페이지 정보 가져오기
 					var daysPage = document.getElementById("page");
