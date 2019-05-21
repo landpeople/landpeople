@@ -90,9 +90,9 @@ public class SketchBookServiceImpl implements ISketchBookService {
 	}
 
 	@Override
-	public boolean scrapeMutilUpdate(Map<String, String[]> map) {
-		logger.info("service scrapeMutilUpdate 스크랩한 스케치북 다중 취소 실행 {}", map);
-		return iSketchBookDao.scrapeMutilUpdate(map);
+	public boolean scrapeUpdateMulti(Map<String, String[]> map) {
+		logger.info("service scrapeUpdateMulti 스크랩한 스케치북 다중 취소 실행 {}", map);
+		return iSketchBookDao.scrapeUpdateMulti(map);
 	}
 
 	@Override
@@ -101,11 +101,34 @@ public class SketchBookServiceImpl implements ISketchBookService {
 		return iSketchBookDao.sketchSelectMine(map);
 	}
 
+	
+	@Override
+	public LPSketchbookDto sketchSelectOne(LPSketchbookDto dto) {
+		logger.info("service sketchSelectOne 작성 스케치북 상세 조회 실행 {}", dto);
+		return iSketchBookDao.sketchSelectOne(dto);
+	}
+	
+	
+	
 	@Override
 	public boolean sketchUpdate(LPSketchbookDto dto) {
 		logger.info("service sketchUpdate 작성한 스케치북 정보 수정 실행 {}", dto);
 		return iSketchBookDao.sketchUpdate(dto);
 	}
+
+	@Override
+	public List<LPSketchbookDto> sketchSelectTheme(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return iSketchBookDao.sketchSelectTheme(map);
+	}
+
+	@Override
+	public int sketchCntTheme(String theme) {
+		// TODO Auto-generated method stub
+		return iSketchBookDao.sketchCntTheme(theme);
+	}
+
+	
 
 	
 

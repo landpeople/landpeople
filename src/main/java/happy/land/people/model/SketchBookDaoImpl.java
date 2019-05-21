@@ -102,9 +102,9 @@ public class SketchBookDaoImpl implements ISketchBookDao {
 	}
 
 	@Override
-	public boolean scrapeMutilUpdate(Map<String, String[]> map) {
+	public boolean scrapeUpdateMulti(Map<String, String[]> map) {
 		System.out.println("스크랩한 스케치북 다중 취소"+map);
-		int n = sqlsession.update(NS+"scrape_MutilUpdate", map);
+		int n = sqlsession.update(NS+"scrape_UpdateMulti", map);
 		System.out.println(n+"스크랩 다중 취소 성공");
 		return n>0?true:false;
 	}
@@ -117,12 +117,34 @@ public class SketchBookDaoImpl implements ISketchBookDao {
 	}
 
 	@Override
+	public LPSketchbookDto sketchSelectOne(LPSketchbookDto dto) {
+		System.out.println("작성 스케치북 수정을 위한 스케치북 상세조회"+dto);
+		
+		return sqlsession.selectOne(NS+"sketch_SelectOne", dto);
+	}
+	
+	
+	@Override
 	public boolean sketchUpdate(LPSketchbookDto dto) {
 		System.out.println("작성 스케치북 정보 수정"+dto);
 		int n = sqlsession.update(NS+"sketch_Update",dto);
 		System.out.println(n+"작성 스케치북 정보 수정 성공");
 		return n>0?true:false;
 	}
+
+	@Override
+	public List<LPSketchbookDto> sketchSelectTheme(Map<String, String> map) {
+		
+		return sqlsession.selectList(NS+"sketch_SelectTheme", map);
+	}
+
+	@Override
+	public int sketchCntTheme(String theme) {
+		// TODO Auto-generated method stub
+		return sqlsession.selectOne(NS+"sketch_CntTheme", theme);
+	}
+
+	
 
 	
 

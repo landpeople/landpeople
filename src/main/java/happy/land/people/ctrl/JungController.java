@@ -14,6 +14,8 @@ import java.util.UUID;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.imgscalr.Scalr;
@@ -33,6 +35,9 @@ import org.springframework.web.util.WebUtils;
 
 import happy.land.people.dto.LPCollectDto;
 import happy.land.people.dto.LPSketchbookDto;
+import happy.land.people.dto.LPUserDto;
+import happy.land.people.dto.SketchPagingDto;
+
 import happy.land.people.model.ISketchBookService;
 
 @Controller
@@ -49,7 +54,9 @@ public class JungController {
 		
 		Map<String, String> map = new HashMap<String, String>();
 		// 스케치북 작성권한 확인
+		
 		String user_iswrite = iSketchBookService.sketchSelectWrite(user_email);
+	
 		map.put("user_email", user_email);
 		map.put("user_iswrite", user_iswrite);
 		System.out.println(map);
@@ -58,6 +65,7 @@ public class JungController {
 		return map;
 	}
 	
+	// 스케치북 작성
 	@RequestMapping(value="/writeSketch.do", method=RequestMethod.POST)
 	public  String sketchMake(LPSketchbookDto dto) {
 		logger.info("sketchBook 생성 {}", dto);
@@ -116,8 +124,8 @@ public class JungController {
 		
 		// 스케치북 스크랩 상태 확인
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("user_email", "128@happy.com");
-		map.put("sketch_id", "0007");
+		map.put("user_email", dto.getUser_email());
+		map.put("sketch_id", dto.getSketch_id());
 		String scrape = iSketchBookService.scrapeSelect(map);
 	
 		// 스케치북 스크랩 상태 변경(등록, 취소)
@@ -203,7 +211,7 @@ public class JungController {
 	}
 	
 	
-	
+	// 스케치북 스크랩 다중 취소 
 	@RequestMapping(value="multiScrapeUpdate.do", method=RequestMethod.POST)
 	public String scrapeMutilUpdate(String[] chkVal, Model model) {
 		logger.info("JungController scrapeMutilUpdate {}", Arrays.toString(chkVal));
@@ -213,13 +221,14 @@ public class JungController {
 		map.put("user_email_", user_email);
 		map.put("sketch_id_", chkVal);
 		
-		boolean isc = iSketchBookService.scrapeMutilUpdate(map);
+		boolean isc = iSketchBookService.scrapeUpdateMulti(map);
 		
 		
 		
 		return "redirect:/jeong.do";
 	}
 	
+	// 작성 스케치북 조회
 	@RequestMapping(value="sketchSelMine.do", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, String> sketchSelMine(String user_email) {
@@ -267,13 +276,17 @@ public class JungController {
 		
 	}
 	
-	//sketchModifyForm.do
+	//스케치북 수정폼 생성
 	@RequestMapping(value="sketchModifyForm.do", method=RequestMethod.POST)
 	@ResponseBody
-	public Map<String, LPSketchbookDto> sketchModifyForm(String user_email){
+	public Map<String, LPSketchbookDto> sketchModifyForm(String user_email, String sketch_id, LPSketchbookDto dto){
+		
+		LPSketchbookDto sdto = iSketchBookService.sketchSelectOne(dto);
+		System.out.println(sdto);
 		Map<String, LPSketchbookDto> map = new HashMap<String, LPSketchbookDto>();
-		LPSketchbookDto dto=;
-		return null;
+		map.put("sdto", sdto);
+	
+		return map;
 	} 
 	
 	
@@ -385,8 +398,41 @@ public class JungController {
 			return thumbnailRealPath;
 		}
 	
-	
-
+		// 테마별 스케치북 조회
+		@RequestMapping(value="/sketchBookTheme.do" ,method = RequestMethod.GET)
+		public String sketchBookTheme(String type,HttpServletRequest request) {
+			
+			int cnt = iSketchBookService.sketchCntTheme(type);			
+			SketchPagingDto pagingDto = new SketchPagingDto(9, 1, cnt, 9);
+			Map<String,String> map = new HashMap<String,String>();
+			map.put("theme", type);
+			map.put("first", String.valueOf(pagingDto.getFirstBoardNo()));
+			map.put("end", String.valueOf(pagingDto.getEndBoardNo()));			
+			List<LPSketchbookDto> sketchBookList= iSketchBookService.sketchSelectTheme(map);
+			request.setAttribute("pagingDto", pagingDto);
+			request.setAttribute("sketchBook", sketchBookList);
+			return "/sketchBook/sketchBookTheme";
+		}
+		
+		// 페이징 처리
+		
+		@ResponseBody
+		@RequestMapping(value="/sketchBookPaging.do" ,method = RequestMethod.GET)
+		public Map<String,List<LPSketchbookDto>> sketchBookPaging(String pageNo,String type,Model model) {
+			
+			int cnt = iSketchBookService.sketchCntTheme(type);
+			SketchPagingDto pagingDto = new SketchPagingDto(9, Integer.parseInt(pageNo), cnt, 9);
+			Map<String,String> map = new HashMap<String,String>();
+			map.put("theme", type);
+			map.put("first", String.valueOf(pagingDto.getFirstBoardNo()));
+			map.put("end", String.valueOf(pagingDto.getEndBoardNo()));
+						
+			List<LPSketchbookDto> sketchBookList= iSketchBookService.sketchSelectTheme(map);
+			Map<String,List<LPSketchbookDto>> resultMap = new HashMap<String,List<LPSketchbookDto>>();
+			resultMap.put("addSketchBook", sketchBookList);		
+			
+			return resultMap;
+		}
 }
 	
 

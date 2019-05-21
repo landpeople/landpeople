@@ -40,11 +40,20 @@ public interface ISketchBookDao {
 	public int likeCnt(String sketch_id);
 	
 	// 스크랩한 스케치북 다중 취소
-	public boolean scrapeMutilUpdate(Map<String, String[]> map);
+	public boolean scrapeUpdateMulti(Map<String, String[]> map);
 	
 	// 자신이 작성한 스케치북 조회 (사용자- 마이페이지)
 	public List<LPSketchbookDto> sketchSelectMine(Map<String, String> map);
 	
+	// 작성 스케치북 상세조회(사용자- 마이페이지 정보 수정을 위한 상세 조회)
+	public LPSketchbookDto sketchSelectOne(LPSketchbookDto dto);
+	
 	// 작성 스케치북 정보 수정
 	public boolean sketchUpdate(LPSketchbookDto dto);
+	
+	// 페이징 처리된 테마별 스케치북 조회
+	public List<LPSketchbookDto> sketchSelectTheme(Map<String,String> map);
+	
+	// 페이징 처리를 위한 스케치북 카운드 조회
+	public int sketchCntTheme(String theme);
 }

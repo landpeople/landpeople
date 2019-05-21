@@ -44,6 +44,8 @@
 					</form>
 					<br>
 					<input type="button" value="내 스케치북 보기" onclick="sketchSelectMine()">
+					<input type="button" value="테마 조회" onclick="sketchSelectTheme()">
+					<input type="hidden" value="나홀로" id="themeType"> 
 					<div id="sketchSel" style="width: 500px;">
 					<a href="#" onclick="sketchBookModify()"><img alt="modi" src="img/sketchBookImg/modifyIcon.png"></a>
 					</div>
@@ -63,13 +65,6 @@
 						</div>
 					</div>
 					<!-- 여기까지 스케치북 생성 Modal -->
-				
-				
-				
-				
-				
-				
-				
 				
 				
 				
@@ -272,32 +267,84 @@ function sketchSelectMine() {
 
 function sketchBookModify() {
 	var user_email = "124@happy.com"
+	var sketch_id = "0002"
 //	alert("스케치북 수정");
 //	alert(user_email);
-	ajaxSketchModi(user_email);
+	ajaxSketchModi(user_email, sketch_id);
 	$("#sketchModiForm").modal();
 }
 
-	var ajaxSketchModi = function(user_email){
-	alert(user_email);
+	var ajaxSketchModi = function(user_email, sketch_id){
+//	alert(user_email);
 	
 	$.ajax({
 		url : "sketchModifyForm.do",
 		type : "post",
-		data : { "user_email" : user_email },
+		data : { "user_email" : user_email,
+				 "sketch_id"  :	sketch_id },
 		dataType : "json",
 		success :function(modiModal){
+			//alert(modiModal.sdto.sketch_title);
+			//alert(modiModal.sdto.sketch_id);
 			
+			alert(modiModal.sdto.sketch_theme);
+			
+			
+			var modiFormHTML = "<input type='hidden' name='sketch_id' value='"+modiModal.sdto.sketch_id+"'>"+
+						
+						 "<div class='form-group'>"
+						+ "<label>스케치북 제목</label>"
+						+ "<div class='modal-input'>"
+						+ "<input type='text' class='form-control' id='sketchtitle' name='sketch_title' value='"+modiModal.sdto.sketch_title+"' style='width : 400px;' required='required'></div>"
+						+ "</div>"
+						+
+			
+						"<div class='form-group'>"
+						+ "<label>스케치북 테마</label>"
+						+ "<div class='themeradio'>"
+						+ "<input type='radio' id='familytheme' name='sketch_theme' value='가족여행'><label for='familytheme'>가족여행</label>"
+						+ "<input type='radio' id='solotheme' name='sketch_theme' value='나홀로'><label for='solotheme'>나홀로여행</label>"
+						+ "<input type='radio' id='coupletheme' name='sketch_theme' value='연인과 함께'><label for='coupletheme'>연인과 함께</label>"
+						+ "<input type='radio' id='friendtheme' name='sketch_theme' value='친구와 함께'><label for='friendtheme'>친구와 함께</label></div>"
+						+ "</div>"
+						+
+			
+						"<div class='form-group'>"
+						+ "<label>스케치북 커버이미지</label>"
+						+ "<input type='text' class='form-control' id='cover' name='coverimage' value='"+modiModal.sdto.sketch_spath+"' style='width : 400px;'>"
+						+ "</div>"
+						+
+			
+						"<div class='modal-footer'>"
+						+ "<input class='btn btn-success' type='button' value='수정완료 ' onclick='sketchModify()'>"
+						+ "<button type='button' class='btn btn-default' data-dismiss='modal'>닫기</button>"
+						+ "</div>";
+					$("#modiSketchBook").html(modiFormHTML);
+					
+					
+					$('input:radio[name=sketch_theme]:input[value='+modiModal.sdto.sketch_theme+']').attr("checked", true);
+					//$("input:radio[name='sketch_theme'][value="+ modiModal.sdto.sketch_theme +"]").prop('checked', true);
+
+					
 		}, error : function(){
 			alert("실패");
 		}
 	});
 	
-	
-	
 }
 
 //-------------------- 작성 스케치북 수정 --------------------
+
+//-------------------  테마별 스케치북 조회 ------------------ 
+
+function sketchSelectTheme(){
+	var themeType = $("#themeType").val();
+	
+	location.href="./sketchBookTheme.do?type="+themeType;
+}
+
+
+//-------------------  테마별 스케치북 조회 ------------------
 
 </script>
 </html>
