@@ -23,7 +23,6 @@
 </head>
 <body>
 
-	<form method="post" enctype="multipart/form-data" name="frm" id="frm">
 		<!-- 왼쪽 -->
 		<div id="Left-Side">
 			<div id="IMG1" style="background-image: url('<%=list.get(0).getImg_spath()%>')">		
@@ -58,6 +57,5 @@
 				</div>
 			</div>
 		</div>
-	</form>
 </body>
 </html>

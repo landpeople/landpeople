@@ -146,4 +146,10 @@ public class TestController {
 		session.setAttribute("login", lDto);
 		return "start";
 	}
+	
+	@RequestMapping(value="/push.do", method=RequestMethod.GET)
+	public String testPush() {
+		logger.info("● TestController testPush 실행");
+		return "testPush";
+	}
 }

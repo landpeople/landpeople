@@ -21,6 +21,13 @@ public class LeeDaoImpl implements ILeeDao {
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
+	public int chatList_SelectOne(String user_nickname) {
+		logger.info("● Repository chatList_SelectOne 실행");
+		int result = sqlSession.selectOne("lee_test.chatList_SelectOne", user_nickname);
+		return result;
+	}
+
+	@Override
 	public int chatList_Insert(String user_nickname) {
 		logger.info("● Repository chatList_Insert 실행");
 		return sqlSession.insert("lee_test.chatList_Insert", user_nickname);
@@ -51,6 +58,18 @@ public class LeeDaoImpl implements ILeeDao {
 	}
 
 	@Override
+	public int chatRoom_UpdateContent(Map<String, String> map) {
+		logger.info("● Repository chatRoom_Insert 실행");
+		return sqlSession.update("lee_test.chatRoom_UpdateContent", map);
+	}
+	
+	@Override
+	public String chatRoom_SelectContent(String chr_id) {
+		logger.info("● Repository chatRoom_SelectContent 실행");
+		return sqlSession.selectOne("lee_test.chatRoom_SelectContent", chr_id);
+	}
+	
+	@Override
 	public String chkChatMember(String chr_id) {
 		logger.info("● Repository chkChatMember 실행");
 		Map<String, String> map = sqlSession.selectOne("lee_test.chkChatMember", chr_id);
@@ -68,5 +87,14 @@ public class LeeDaoImpl implements ILeeDao {
 			return "cantChat";
 		}
 	}
+
+	@Override
+	public int chatList_Delete(String user_nickname) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+
+
 
 }
