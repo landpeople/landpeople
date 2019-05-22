@@ -326,7 +326,7 @@
 		    <artifactId>spring-context-support</artifactId>
 		    <version>4.0.1.RELEASE</version>
 		</dependency>
-		</dependencies>
+  </dependencies>
 
    <build>
       <finalName>LandPeople</finalName>

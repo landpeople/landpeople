@@ -29,6 +29,7 @@
 	 			<a href="./jqgrid.do">회원 목록 조회</a><br>
 				<a href="./jqgrid2.do">스케치북 목록 조회</a><br>
 				<a href="./push.do">푸쉬 서버</a>
+				<a href="./scheduler.do">스케줄러</a>
 			</div>
 			<!-- </div> 여기까지 메인 컨텐츠  -->
 			<div class="footer">landpeople</div>
