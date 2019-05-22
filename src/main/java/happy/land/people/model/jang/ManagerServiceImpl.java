@@ -6,6 +6,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import happy.land.people.dto.LPSketchbookDto;
@@ -53,6 +54,12 @@ public class ManagerServiceImpl implements IManagerService {
 	public boolean modifyBlock(String id) {
 		logger.info("스케치북 공개/비공개 수정  modifyBlock {}", id);
 		return iManagerDao.modifyBlock(id);
+	}
+
+	@Override
+	public void scheduler() {
+		System.out.println("스케줄러 성공!");
+		
 	}
 
 	

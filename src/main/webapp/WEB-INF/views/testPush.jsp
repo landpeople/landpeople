@@ -6,39 +6,27 @@
     <title></title>
 </head>
 <body>
-<!-- HTML 문서에 버튼을 하나 생성하고, 버튼을 클릭하면 calculate() 함수가 호출된다. -->
-    <button onclick="calculate()">calculate</button>
- 
- <!-- HTML 문서가 생성될 때, notification 기능에 대한 허용 여부를 확인한다. -->
-    <script type="text/javascript">
-        window.onload = function () {
-            if (window.Notification) {
-                Notification.requestPermission();
-            }
-        }
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/6.0.2/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-database.js"></script>
 
-//notify() 함수를 호출하여 브라우저에 알림을 출력한다. [코드 1]에서는 의도적으로 1초 후에 알림을 출력하도록 했다.
-        function calculate() {
-            setTimeout(function () {
-                notify();
-            }, 100);
-        }
- 
-        function notify() {
-            if (Notification.permission !== 'granted') { // 알림 거부 버튼을 눌렀을 시
-                alert('notification is disabled'); 
-            }
-            else { // 알림 허용 버튼을 눌렀을 시
-                var notification = new Notification('Notification title', {
-                    icon: 'http://cdn.sstatic.net/stackexchange/img/logos/so/so-icon.png',
-                    body: 'Notification text',
-                });
- 
-                notification.onclick = function () {
-                    window.open('http://google.com');
-                };
-            }
-        }
-    </script>
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#config-web-app -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyBbfnazJbymHv9WPuef6XMVF28L9n6PM_M",
+    authDomain: "landpeople2.firebaseapp.com",
+    databaseURL: "https://landpeople2.firebaseio.com",
+    projectId: "landpeople2",
+    storageBucket: "landpeople2.appspot.com",
+    messagingSenderId: "116333295073",
+    appId: "1:116333295073:web:9428a88be11bfa34"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  
+</script>
 </body>
 </html>

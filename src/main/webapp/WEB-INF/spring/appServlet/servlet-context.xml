@@ -125,7 +125,6 @@
    	<property name="redirectUri" value="http://localhost:8091/LandPeople/callbackgoogle.do"/>
    
    </bean>
-
 </beans>
 
 

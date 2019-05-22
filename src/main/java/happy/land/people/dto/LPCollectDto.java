@@ -19,7 +19,8 @@ public class LPCollectDto implements Serializable {
 	
 		this.user_email = user_email;
 		this.sketch_id = sketch_id;
-		
+		this.col_scrape = col_scrape;
+		this.col_like = col_like;
 	}
 
 	public String getCol_id() {

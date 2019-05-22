@@ -14,6 +14,7 @@
 
 </head>
 <body>
+<%=request.getAttribute("sketch_id")%>
 	<!--젤로 레이아웃- 전체 영역 감싸는 div-->
 	<div class="main-wrapper">
 		<%@include file="./common/Sidebar.jsp"%>
@@ -22,7 +23,7 @@
 			<!-- 메인 컨텐츠   -->
 			<div class="lpcontents">
 				<div class="content">
-					<input id="detailCanvas" type="button" value="저장된 내용 가져오기"></input>
+					<input id="detailCanvas" type="button" value="저장된 내용 가져오기"></input>					
 				</div>
 			</div>
 			<!-- </div> 여기까지 메인 컨텐츠  -->

@@ -168,7 +168,7 @@ public class KimController {
     	
     	// 캔버스 리스트
     	List<LPCanvasDto> canvasList = canvasService.canvasSelectType("1");
-    	// 일정 캔버스 리스트
+    	// 일정 캔버스 리스트 
     	Map<Integer,List<LPDaysDto>> map = new HashMap<Integer,List<LPDaysDto>>();
     	// 자유 캔버스 리스트
     	Map<Integer,List<LPTextDto>> freeMap = new HashMap<Integer,List<LPTextDto>>();
@@ -188,17 +188,11 @@ public class KimController {
     	System.out.println(map);
     	// 일정 캔버스 화면으로 보내기
     	request.setAttribute("daysList", map);
-    	// 캔버스들 타입을 화면으로 보내기
+    	// 캔버스 타입들
     	request.setAttribute("daysType", canvasList);
     	// 자유 캔버스 화면으로 보내기
-    	request.setAttribute("textList", freeMap);
+    	request.setAttribute("textList", freeMap);  
     	
-    	
-    	
-    	//List<LPDaysDto> daysList1 =  daysService.daysSelectAll("0002");
-    	//request.setAttribute("daysList1", daysList1);
-    	//System.out.println(daysList1.get(0));
-    	//model.addAttribute(attributeValue);
     	return "kim_detailCanvas";
     }
     
