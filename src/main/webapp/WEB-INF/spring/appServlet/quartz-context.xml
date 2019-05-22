@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:task="http://www.springframework.org/schema/task"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:task="http://www.springframework.org/schema/task"
 	xsi:schemaLocation="http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.0.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 	
-	<!-- 빈 등록 -->
+	<!-- 스케쥴링을 적용할 클래스를 빈으로 등록 -->
 	<bean id="executeUsingQuartz" class="happy.land.people.beans.ExecuteUsingQuartz"/>
-	
-	<!-- 주기적으로 실행시킬 메소드 등록 및 동시 실행 방지 -->
+	<!-- 메소드 등록 및 동시 실행 방지 -->
 	<bean id="jobDetailFactoryBean" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"
 		p:targetObject-ref="executeUsingQuartz" p:targetMethod="delFile" p:concurrent="false"/>
-	
-	<!-- CronTrigger 설정 -->
+	<!-- trigger 설정 -->	
 	<bean id="cronTriggerFactoryBean" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"
-		p:jobDetail-ref="jobDetailFactoryBean" p:cronExpression="*/30****?"/><!-- 30초 -->
-		
-	<!-- scheduler 설정 -->
+		p:jobDetail-ref="jobDetailFactoryBean" p:cronExpression="0 0 12 * * ?"/><!-- 매일 정오 -->
+	<!-- 스케쥴러 설정 -->
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean"
 		p:triggers-ref="cronTriggerFactoryBean"/>
 </beans>
