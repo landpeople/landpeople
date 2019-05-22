@@ -46,7 +46,6 @@
         	 </if>
      		 ORDER BY USER_NICKNAME
     </select>
-    
     <select id="selectSketchList" parameterType="happy.land.people.dto.LPSketchbookDto" resultType="java.util.Map">
         SELECT  a.*
           FROM  (
@@ -55,18 +54,19 @@
 	                    FLOOR((ROWNUM - 1) /#{rows} + 1) pageNumber
 	              FROM  (
 		                    SELECT  SKETCH_ID
-		                         , USER_EMAIL
+		                         , lps.USER_EMAIL USER_EMAIL
+    							 , lpu.USER_NICKNAME USER_NICKNAME
 		                         , SKETCH_TITLE
 		                         , SKETCH_THEME
 		                         , SKETCH_SHARE
 		                         , SKETCH_DELFLAG
 		                         , SKETCH_BLOCK
-		                      FROM LPSKETCHBOOK
-		                     WHERE 1=1
+		                      FROM LPSKETCHBOOK lps, LPUSER lpu
+ 							  WHERE lps.USER_EMAIL = lpu.USER_EMAIL
 		                      <if test='serviceImplYn != ""'>
 		                         <choose>
-		                             <when test='serviceImplYn == "user_email"'>
-		                                 AND USER_EMAIL LIKE '%'||#{input}||'%'
+		                             <when test='serviceImplYn == "user_nickname"'>
+		                                 AND USER_NICKNAME LIKE '%'||#{input}||'%'
 		                             </when>
 		                               <when test='serviceImplYn == "sketch_title"'>
 		                                 AND SKETCH_TITLE LIKE '%'||#{input}||'%'
