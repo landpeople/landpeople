@@ -1,5 +1,6 @@
 package happy.land.people.model;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -21,26 +22,26 @@ public class SketchBookServiceImpl implements ISketchBookService {
 	
 	@Override
 	public String sketchSelectWrite(String user_email) {
-		logger.info("service sketchSelectWrite 스케치북 작성 권한 확인");
+		logger.info("service sketchSelectWrite 스케치북 작성 권한 확인 {}", user_email);
 		return iSketchBookDao.sketchSelectWrite(user_email);
 	}
 	
 	@Override
 	public boolean sketchInsert(LPSketchbookDto dto) {
-		logger.info("service sketchInsert 스케치북 생성 실행");
+		logger.info("service sketchInsert 스케치북 생성 실행 {}", dto);
 		return iSketchBookDao.sketchInsert(dto);
 	}
 	
 	
 	@Override
 	public boolean collectInsert(LPCollectDto dto) {
-		logger.info("service collectInsert 좋아요 최초등록 실행");
+		logger.info("service collectInsert 스크랩 및 좋아요 최초등록 실행 {}", dto);
 		return iSketchBookDao.collectInsert(dto);
 	}
 	
 	@Override
 	public String scrapeSelect(Map<String, String> map) {
-		logger.info("service selScrape 좋아요 현재상태 가져오기");
+		logger.info("service scrapeSelect 좋아요 현재상태 가져오기 {}", map);
 		return iSketchBookDao.scrapeSelect(map);
 		
 	}
@@ -48,24 +49,88 @@ public class SketchBookServiceImpl implements ISketchBookService {
 	@Override
 	public boolean scrapeUpdate(Map<String, String> map) {
 		// TODO Auto-generated method stub
-		logger.info("service scrapeChange 스크랩 상태 변경 실행");
+		logger.info("service scrapeUpdate 스크랩 상태 변경 실행 {}", map);
 		return iSketchBookDao.scrapeUpdate(map);
 	}
 
 	@Override
 	public boolean likeUpdate(Map<String, String> map) {
 		// TODO Auto-generated method stub
-		logger.info("service likeCancel 좋아요 상태 변경 실행");
+		logger.info("service likeUpdate 좋아요 상태 변경 실행 {}", map);
 		return iSketchBookDao.likeUpdate(map);
 	}
 
 	@Override
 	public String likeSelect(Map<String, String> map) {
 		
-		logger.info("service selLike 좋아요 상태 변경 실행");
+		logger.info("service likeSelect 좋아요 상태 가져오기 실행 {}", map);
 		return iSketchBookDao.likeSelect(map);
 	}
 
+	@Override
+	public List<LPSketchbookDto> scrapeSelectMine(Map<String, String> map) {
+		logger.info("service scrapeSelectMine 스크랩한 스케치북 조회 실행 {}", map);
+		return iSketchBookDao.scrapeSelectMine(map);
+	}
+
+	@Override
+	public int scrapeCnt(String user_email) {
+		logger.info("service scrapeCnt 스크랩한 스케치북 갯수 조회 실행 {}", user_email);
+		return iSketchBookDao.scrapeCnt(user_email);
+	}
+
+	
+	
+	
+	@Override
+	public int likeCnt(String sketch_id) {
+		logger.info("service likeCnt 스케치북 좋아요 갯수 조회 실행 {}", sketch_id);
+		
+		return iSketchBookDao.likeCnt(sketch_id);
+	}
+
+	@Override
+	public boolean scrapeUpdateMulti(Map<String, String[]> map) {
+		logger.info("service scrapeUpdateMulti 스크랩한 스케치북 다중 취소 실행 {}", map);
+		return iSketchBookDao.scrapeUpdateMulti(map);
+	}
+
+	@Override
+	public List<LPSketchbookDto> sketchSelectMine(Map<String, String> map) {
+		logger.info("service sketchSelectMine 작성한 스케치북 조회 실행 {}", map);
+		return iSketchBookDao.sketchSelectMine(map);
+	}
+
+	
+	@Override
+	public LPSketchbookDto sketchSelectOne(LPSketchbookDto dto) {
+		logger.info("service sketchSelectOne 작성 스케치북 상세 조회 실행 {}", dto);
+		return iSketchBookDao.sketchSelectOne(dto);
+	}
+	
+	
+	
+	@Override
+	public boolean sketchUpdate(LPSketchbookDto dto) {
+		logger.info("service sketchUpdate 작성한 스케치북 정보 수정 실행 {}", dto);
+		return iSketchBookDao.sketchUpdate(dto);
+	}
+
+	@Override
+	public List<LPSketchbookDto> sketchSelectTheme(Map<String, String> map) {
+		// TODO Auto-generated method stub
+		return iSketchBookDao.sketchSelectTheme(map);
+	}
+
+	@Override
+	public int sketchCntTheme(String theme) {
+		// TODO Auto-generated method stub
+		return iSketchBookDao.sketchCntTheme(theme);
+	}
+
+	
+
+	
 
 	
 

@@ -32,7 +32,6 @@ import happy.land.people.model.cho.IChoService;
 import happy.land.people.model.lee.ILeeService;
 import happy.land.people.naver.NaverLoginBO;
 
-
 @Controller
 public class ChoController {
 
@@ -40,21 +39,21 @@ public class ChoController {
 
 	@Autowired
 	private IChoService iChoService;
-  
+
 	/* NaverLoginBO */
-    private NaverLoginBO naverLoginBO;
-    private String apiResult = null;
-    
-    @Autowired
-    private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
-        this.naverLoginBO = naverLoginBO;
-    }
-	
-  /* GoogleLogin */
- @Autowired
-  private GoogleConnectionFactory googleConnectionFactory;
-  @Autowired
-  private OAuth2Parameters googleOAuth2Parameters;
+	private NaverLoginBO naverLoginBO;
+	private String apiResult = null;
+
+	@Autowired
+	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
+		this.naverLoginBO = naverLoginBO;
+	}
+
+	/* GoogleLogin */
+	@Autowired
+	private GoogleConnectionFactory googleConnectionFactory;
+	@Autowired
+	private OAuth2Parameters googleOAuth2Parameters;
 
 	@Autowired
 	ILeeService iLeeService;
@@ -67,22 +66,21 @@ public class ChoController {
 	public String mainPage() {
 		return "foward:./index.jsp";
 	}
+
 	// 로그인 페이지로 가는 컨트롤러 + 네이버 값받아오는거 추가함
-	@RequestMapping(value="/loginPage.do", method= {RequestMethod.GET, RequestMethod.POST})
+	@RequestMapping(value = "/loginPage.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public String loginPage(Model model, HttpSession session) {
 		logger.info("loginPage 컨트롤러");
-		
-	      
-        /* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
-        String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
-        
-        //https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=sE***************&
-        //redirect_uri=http%3A%2F%2F211.63.89.90%3A8090%2Flogin_project%2Fcallback&state=e68c269c-5ba9-4c31-85da-54c16c658125
-        System.out.println("네이버:" + naverAuthUrl);
-        
-        //네이버 
-        model.addAttribute("url", naverAuthUrl);
 
+		/* 네이버아이디로 인증 URL을 생성하기 위하여 naverLoginBO클래스의 getAuthorizationUrl메소드 호출 */
+		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+
+		// https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=sE***************&
+		// redirect_uri=http%3A%2F%2F211.63.89.90%3A8090%2Flogin_project%2Fcallback&state=e68c269c-5ba9-4c31-85da-54c16c658125
+		System.out.println("네이버:" + naverAuthUrl);
+
+		// 네이버
+		model.addAttribute("url", naverAuthUrl);
 
 		/* 구글code 발행 */
 		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
@@ -94,32 +92,30 @@ public class ChoController {
     
 		return "users/loginPage";
 	}
-	
-	
-	 //네이버 로그인 성공시 callback호출 메소드
-    @RequestMapping(value = "/callback.do", method = { RequestMethod.GET, RequestMethod.POST })
-    public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session, ChoDto dto) throws Exception {
-        System.out.println("여기는 callback");
-        OAuth2AccessToken oauthToken;
-        oauthToken = naverLoginBO.getAccessToken(session, code, state);
-        //로그인 사용자 정보를 읽어온다.
-        apiResult = naverLoginBO.getUserProfile(oauthToken);
-        System.out.println(naverLoginBO.getUserProfile(oauthToken).toString());
-        model.addAttribute("result", apiResult);
-        
-        JSONParser jsonParser = new JSONParser();
-        JSONObject jsonArray = (JSONObject) jsonParser.parse(apiResult);
-        JSONObject resultObject = (JSONObject)jsonArray.get("response");
-        System.out.println(resultObject.get("email"));
-        //dto.setUser_email(jsonArray.get("email").);
-        
-        String user_email =(String)resultObject.get("email");
-       
-        
-        dto.setUser_email(user_email);
-        String[] user_name = user_email.split("@");
-        dto.setUser_nickname(user_name[0]);
-    	dto.setUser_auth("N");
+
+	// 네이버 로그인 성공시 callback호출 메소드
+	@RequestMapping(value = "/callback.do", method = { RequestMethod.GET, RequestMethod.POST })
+	public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session, ChoDto dto) throws Exception {
+		System.out.println("여기는 callback");
+		OAuth2AccessToken oauthToken;
+		oauthToken = naverLoginBO.getAccessToken(session, code, state);
+		// 로그인 사용자 정보를 읽어온다.
+		apiResult = naverLoginBO.getUserProfile(oauthToken);
+		System.out.println(naverLoginBO.getUserProfile(oauthToken).toString());
+		model.addAttribute("result", apiResult);
+
+		JSONParser jsonParser = new JSONParser();
+		JSONObject jsonArray = (JSONObject) jsonParser.parse(apiResult);
+		JSONObject resultObject = (JSONObject) jsonArray.get("response");
+		System.out.println(resultObject.get("email"));
+		// dto.setUser_email(jsonArray.get("email").);
+
+		String user_email = (String) resultObject.get("email");
+
+		dto.setUser_email(user_email);
+		String[] user_name = user_email.split("@");
+		dto.setUser_nickname(user_name[0]);
+		dto.setUser_auth("N");
 		boolean isc = iChoService.signUp(dto);
 		session.setAttribute("ldto", dto);
         return isc?"redirect:./index.jsp":"404";
@@ -132,9 +128,8 @@ public class ChoController {
 
     	
 		return "redirect:./index.jsp";
-    }
-	
-	
+	}
+
 	// 여기는 나중에 한다 ^^ 로그인기능 => 다 됐다 로그인 기능
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	public String login(ChoDto dto, HttpSession session,HttpServletResponse response) throws IOException {
@@ -158,35 +153,39 @@ public class ChoController {
 		//이제 여기서
 
 		System.out.println(ldto);
-		iLeeService.chatList_Insert(ldto.getUser_nickname());
+
+		int n = iLeeService.chatList_SelectOne(ldto.getUser_nickname());
+		if (n == 0) {
+			iLeeService.chatList_Insert(ldto.getUser_nickname());
+		}
 		session.setAttribute("ldto", ldto);
-		
+
 		return "forward:./index.jsp";
 	}
-  
+
 	// 로그아웃
-	@RequestMapping(value="/logout.do",method=RequestMethod.GET)
-	public String logout(HttpSession session ,ChoDto dto) {
+	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
+	public String logout(HttpSession session, ChoDto dto) {
 		logger.info("logout");
-		
+
 		System.out.println("로그아웃.do 현재 세션 : " + session);
 
 		session.invalidate();
 		return "redirect:./index.jsp";
 	}
 
-	//회원가입 페이지로가기 ^^
-	@RequestMapping(value="/regiForm.do" , method=RequestMethod.GET)
+	// 회원가입 페이지로가기 ^^
+	@RequestMapping(value = "/regiForm.do", method = RequestMethod.GET)
 	public String regiForm() {
 		logger.info("regiForm 컨트롤러");
 
 		return "users/sign/regiForm";
 	}
-	
-	//회원가입(db에저장하기 헤헤) 일반유저
-	@RequestMapping(value="/signUp.do" , method=RequestMethod.POST)
+
+	// 회원가입(db에저장하기 헤헤) 일반유저
+	@RequestMapping(value = "/signUp.do", method = RequestMethod.POST)
 	public String signUp(HttpServletRequest req, ChoDto dto) {
-		
+
 		dto.setUser_auth("U");
 		boolean isc = iChoService.signUp(dto);
 

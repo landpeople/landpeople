@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Repository;
 
 import happy.land.people.dto.LPSketchbookDto;
@@ -71,5 +72,6 @@ public class ManagerDaoImpl implements IManagerDao {
 		logger.info("스케치북 공개/비공개 수정 완료! modifyIswrite {}", n);
 		return n>0 ? true:false;
 	}
+	
 
 }

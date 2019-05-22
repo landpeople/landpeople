@@ -6,6 +6,32 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>그룹채팅</title>
 
+<!-- Firebase App is always required and must be first -->
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-app.js"></script>
+
+<!-- Add additional services that you want to use -->
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-messaging.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-functions.js"></script>
+<!-- Comment out (or don't include) services that you don't want to use -->
+<!-- <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script> -->
+<script>
+  // Initialize Firebase
+  // TODO: Replace with your project's customized code snippet
+  var config = {
+	  apiKey: "AIzaSyBMapdnIIEh-OEgBPZPtMc9ndKPD8gTeTw",
+      authDomain: "landpeople-444c5.firebaseapp.com",
+      databaseURL: "https://landpeople-444c5.firebaseio.com",
+      projectId: "landpeople-444c5",
+      storageBucket: "landpeople-444c5.appspot.com",
+      messagingSenderId: "593127478674",
+      appId: "1:593127478674:web:ec271f0a5609507f"
+  };
+  firebase.initializeApp(config);
+</script>
+
 <style type="text/css">
 @import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
 /*    @font-face{
@@ -23,8 +49,9 @@
       border-collapse: collapse;
    }
    
-   .sender_img{
-      border: 6px solid;
+
+   .sender_img{ /* 본인 메시지 css */
+      border: 1px solid;
       background-color: #69B55B; 
       background-clip: padding-box;
       -webkit-border-image: url(images/sender_bubble.png) 25 25 round;
@@ -39,8 +66,9 @@
       text-align: justify;
    }
    
-   .receiver_img{
-      border: 6px solid;
+
+   .receiver_img{ /* 상대방 메시지 css */
+      border: 1px solid;
       background-color: #E6F4B5; 
       background-clip: padding-box;
       -webkit-border-image: url(images/receiver_bubble.png) 25 25 round;
@@ -66,7 +94,7 @@
    
    .chat{
       width: 340px;
-      height: 35px;
+      height: 20px;
       padding: 5px;
       float:left; 
       margin-top:4px; 
@@ -79,15 +107,16 @@
       outline: none;
    }
    
-   .chat_btn{
-      margin-top: 0px;
-      margin-left: 5px;
-      width: 52px;
-      height: 31px;
-      background-image: url('images/btn_send.png');
-      background-size: 100% 100%;
-      display: inline-block;
-   }
+
+/*    .chat_btn{ */
+/*       margin-top: 0px; */
+/*       margin-left: 5px; */
+/*       width: 52px; */
+/*       height: 31px; */
+/*       background-image: url('images/btn_send.png'); */
+/*       background-size: 100% 100%; */
+/*       display: inline-block; */
+/*    } */
    
    .memListBox{
       text-align: center; 
@@ -154,94 +183,142 @@
       var ws = null ;
       var url = null ;
       var nick = null ; 
+      var content = [];
       
       $(document).ready(function() {
+	  
+// 	  	document.getElementById("contentsss").innerHTML = ${model};
+	 
           nick = $("#nickName").val();
-          alert(nick);
+          alert("● groupChat.jsp var nick : " + nick);
           $(".receive_msg").html('');
           $(".chat_div").show();
-          $(".chat").focus();
+          $(".chat").focus(); /* 텍스트 박스에 focus를 주어 입력할 수 있는 상태로 만들어 줌 */
           
-          ws = new WebSocket("ws://192.168.12.204:8091/LandPeople/wsChat.do");
+          ws = new WebSocket("ws://192.168.4.31:8091/LandPeople/wsChat.do");
           
           ws.onopen = function() {
              alert("● groupChat.jsp ws.onopen");
+//              alert("${msg}");
              ws.send("#$nick_"+nick); // 소켓이 열렸을 때 사용자가 입장하면 입장 메시지를 화면에 띄워 줄 수있도록 이벤트를 발생하여 핸들러를 호출
+//              $(".receive_msg").append("${msg}");
           };
           
           ws.onmessage = function(event) {
+              
             var msg = event.data;
-            var id = "<%=chr_id%>";
+            var chr_id = "<%=chr_id%>";
+            
+            content.push(msg); // 받은 메시지 content에 저장
+            
+            alert("content : " + content);
             if(msg.startsWith("<font color=")){ // 입장,퇴장
                $(".receive_msg").append($("<div class = 'noticeTxt'>").append(msg+"<br/>"));
-            viewList(id);
-            }else if(msg.startsWith("[${user}]")){ //대화내용
-//                msg = msg.substring(3);// [나] 라는거 자르는 거 였음
-               $(".receive_msg").append($("<div class = 'sendTxt'>").append($("<span class ='sender_img'>").text(msg))).append("<br><br>");
+           	   viewList(chr_id);
             }else{
-               $(".receive_msg").append($("<div class = 'receiveTxt'>").append($("<span class = 'receiver_img'>").text(msg))).append("<br><br>");
-            }
-            
-            $(".receive_msg").scrollTop($(".receive_msg")[0].scrollHeight);
+        		if(msg.startsWith("[${user}]")){ //대화내용
+   //                msg = msg.substring(3);// [나] 라는거 자르는 거 였음
+                 	 $(".receive_msg").append($("<div class = 'sendTxt'>").append($("<span class ='sender_img'>").text(msg))).append("<br><br>");
+            	}else{
+               		 $(".receive_msg").append($("<div class = 'receiveTxt'>").append($("<span class = 'receiver_img'>").text(msg))).append("<br><br>");
+            	}  
+             		$(".receive_msg").scrollTop($(".receive_msg")[0].scrollHeight);              
+             			for(var i = 1 ; i < content.length ; i++){
+        	 			console.log(content[i]);
+             		}
+          		}
           }
+         
           
           ws.onclose = function(event) {
              alert("● groupChat.jsp ws.close / 웹소켓 닫힘");  //
+             ws.send("#$nick_"+nick);
           }
       
-         $(".chat_btn").bind("click",function() {
-        	 var canWrite;
-        	 var nullval;
-        	 $.ajax({
+         $(".chat_btn").bind("click",function() { /* 전송 버튼 눌렀을 때 이벤트 */
+          var canWrite;
+          $.ajax({
                  type: "POST",
                  url: "./chkChatMember.do",
                  data: { chr_id: <%=chr_id%> },
                  dataType: "json",
                  async: false,
                  success: function(result){
-                	 canWrite = result.result;
+                   canWrite = result.result;
                   },
                   error : function() {
-					alert("실패");
-				}
+               alert("실패");
+            }
                });
-        	 
-            if($(".chat").val() == '' ) {
+          
+            if($(".chat").val().trim() == '' || $(".chat").val() =='\n' ) { /*공백이나 개행문자만 입력 했을 시 전송 안되도록 함*/
                alert("● groupChat.jsp / 내용을 입력하세요. ");
-               $('#txtarea').val(nullval);
                return;
             }else if(canWrite=='cantChat'){
-            	alert("● 대화 상대가 없습니다. *채팅 불가*");
-            	return;
+               alert("● 대화 상대가 없습니다. *채팅 불가*");
+               return;
             }else {
                ws.send(nick+" : "+$(".chat").val());
+              // content.push(nick+" : "+$(".chat").val()); // 보내는 메시지 content에 저장
                $(".chat").val('');
+               $(".chat").empty();
                $(".chat").focus();
             }
-         });
+         }); /* 전송 버튼 눌렀을 때 이벤트 */
+         
+         $(window).bind("beforeunload", function() {
+           //실행할 함수를 리턴해야한다.
+             return fn_removeLocalStorage("openchatwait");
+            });
       });
       
-      function roomClose(){ // close 버튼 선택시 발생하는 이벤트 처리
-        alert("● groupChat.jsp roomClose() / 채팅을 종료합니다.");
-           $.ajax({
-              type: "GET",
-              url: "./socketOut.do", // 소켓 닫기
-              async: false
-           });
-      }
+
+     	function fn_removeLocalStorage(x){
+     	    alert(x);
+     	}
+      
+      
+     	
+     	
+     	
+     var isCheck = true; /* 나중에 저장하기 버튼이나, 그런거,, 비밀채팅 하고싶을 때 써먹을려고 혹~시나 만들어둠 */
+        
+     window.addEventListener("beforeunload", function (e) { /* 새로고침이나 닫기 버튼 클릭시의 이벤트 */
+   	  var confirmationMessage = "\o/";
+
+   	  (e || window.event).returnValue = confirmationMessage; /*ie*/
+   	  return roomClose(e); //Webkit, Safari, Chrome
+   	  });
+     
+     function roomClose(e){
+	 
+	 /* 새로운 변경사항이 있다면 ?*/
+   	  if(isCheck){
+   		  $.ajax({
+         	  	  type: "POST",
+         		  url: "./socketOut.do",
+         		  data : { "chc_content" : content},
+         		  async: false,
+         		  success : function (){
+         			  alert("처리");
+         		  }
+         	  });  
+   	  }
+   	  }  
+      
       
       function disconnect() {
-         ws.close();
-         ws = null ;
+	       ws.close();
+	         ws = null ;
       } 
       
-      function viewList(grId){
+      function viewList(grId){ /* 접속자 목록 보여주기 위한 함수*/
         $(".memList").children().remove();
         $.ajax({
           type: "POST",
           url: "./viewChatList.do",
           data: "user="+$("#nickName"),
-          async: false,
+          async: false, /* 동기식으로 전달 */
           success: function(result){
              for(var k in result.list){
                if(result.list[k]==grId){
@@ -255,8 +332,8 @@
   
 </script>
 </head>
-<body onbeforeunload="roomClose()">
-   <table>
+<body>
+   <table id = "contentsss">
       <tr>
          <td width="360x" height="390px" align="center">
          <div class ="receive_msg" style="border:1px">
@@ -268,14 +345,14 @@
             <div class = "listTitle">접속자 목록</div>
             <div class = "memList"></div> 
          </td>
-      </tr>   
+      </tr>
    </table>
    
    <div class="chat_div" style="display:none; margin-top: 10px;">
-      <textarea id="txtarea" class="chat"
-             onKeypress="if(event.keyCode==13) $('.chat_btn').click();" ></textarea>
-      <div class="chat_btn"></div>
-      <div class="exit">exit</div>        
+      <input type="text" id="txtarea" class="chat"
+             onKeypress="if(event.keyCode==13) $('.chat_btn').click();"/>
+      <input type="button" class="chat_btn" value="전송"/>
+      <input type="button" class="exit_btn" value="나가기"/><br>     
    </div>
      그룹아이디 : <%=chr_id%>
 나의아이디 :   <%=user %>
