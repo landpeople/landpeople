@@ -44,11 +44,16 @@
 					</form>
 					<br>
 					<input type="button" value="내 스케치북 보기" onclick="sketchSelectMine()">
+					
+					<form action="#" method="post" id="sketchDel" name="sketchDel" onsubmit="return DelchkBox()"> 
+					<input type="submit" value="스케치북 삭제">
+					<div id="sketchSel" style="width: 500px;">
+					
+					</div>
+					</form>
+					
 					<input type="button" value="테마 조회" onclick="sketchSelectTheme()">
 					<input type="hidden" value="나홀로" id="themeType"> 
-					<div id="sketchSel" style="width: 500px; height: 500px;">
-					<!-- <a href="#" onclick="sketchBookModify()"><img alt="modi" src="img/sketchBookImg/modifyIcon.png"></a> -->
-					</div>
 					
 				<!-- 스케치북 수정 Modal -->
 					<div class="modal fade" id="sketchModiForm" role="dialog">
@@ -166,7 +171,7 @@ function scrapeSelectMine() {
 						"<th>스케치북 타이틀</th>"+
 						"<th>스케치북 커버이미지</th>"+
 						"<th>좋아요 Cnt</th>"+
-						"<tr>";
+						"</tr>";
 				htmlTable += scrape.scrapeResult;	
 				$("#scrapeSel").html(htmlTable);
 			}
@@ -244,11 +249,13 @@ function sketchSelectMine() {
 			//alert(mySketchBookSize);
 			htmlTable = "";
 			htmlTable +="<table class='table table-bordered'>"+
+					"<tr>"+
+					"<th><input type='checkbox' onclick='checkAllSketch(this.checked)'></th>"+
 					"<th>스케치북 타이틀</th>"+
 					"<th>스케치북 커버이미지</th>"+
 					"<th>좋아요 Cnt</th>"+
 					"<th>스케치북 수정</th>"+
-					"<tr>";
+					"</tr>";
 			htmlTable += sketchBook.mySketchBook;		
 			$("#sketchSel").html(htmlTable);
 			
@@ -290,8 +297,8 @@ function sketchBookModify() {
 			
 			alert(modiModal.sdto.user_email);
 			alert(modiModal.sdto.sketch_theme);
-			
-			var modiFormHTML =	"<input type='hidden' name='sketch_id' value='"+modiModal.sdto.user_email+"'>"+
+			alert(modiModal.sdto.sketch_spath);
+			var modiFormHTML =	"<input type='hidden' name='user_email' value='"+modiModal.sdto.user_email+"'>"+
 							  	"<input type='hidden' name='sketch_id' value='"+modiModal.sdto.sketch_id+"'>"+
 						
 						 "<div class='form-group'>"
@@ -313,7 +320,7 @@ function sketchBookModify() {
 			
 						"<div class='form-group'>"
 						+ "<label>스케치북 커버이미지</label>"
-						+ "<input type='text' class='form-control' id='cover' name='coverimage' value='"+modiModal.sdto.sketch_spath+"' style='width : 400px;'>"
+						+ "<input type='text' class='form-control' id='cover' name='sketch_spath' value='"+modiModal.sdto.sketch_spath+"' style='width : 400px;'>"
 						+ "</div>"
 						+
 			
@@ -341,14 +348,23 @@ function sketchBookModify() {
 
 
 function sketchModify(){
+	var sketchModiModal = document.getElementById("modiSketchBook");
+	var sketch_theme = $("input[name=sketch_theme]:checked").val();
+	sketchModiModal.action = "./modifySketch.do";
 	
+	var title = $("#sketchtitle").val();
+	var theme = $("input[name=sketch_theme]:checked").length;
 	
+	if (title == "" || theme == 0) {
+		alert("스케치북 제목 혹은 스케치북 타입을 확인해주세요");
+	} else if (title.length >= 20) {
+		alert("스케치북의 제목이 너무 깁니다.");
+		$("#sketchtitle").val("");
+	} else {
+		sketchModiModal.submit();
+		alert("스케치북 수정완료");
+	}
 }
-
-
-
-
-
 
 
 
@@ -370,6 +386,55 @@ function sketchSelectTheme(){
 //-------------------  테마별 스케치북 조회 ------------------
 
 
+//------------------- 작성 스케치북 완전 다중 삭제 ----------------- 
+
+function checkAllSketch(bool){
+	var chks =  document.getElementsByName("chkVal");
+//	alert(chks.length);
+	for (var i = 0; i < chks.length; i++) {
+		chks[i].checked = bool;
+	}
+}
+
+function DelchkBox(){
+//	alert("작동");
+	var chks =  document.getElementsByName("chkVal");
+	var c = 0;
+	for (var i = 0; i < chks.length; i++) {
+		if(chks[i].checked){
+			c++;
+		}
+	}
+	if(c>0){
+//		var doc = document.getElementById("scrapeDiv");
+//		var doc = document.forms[0];
+		var sketchDelChk = confirm("스케치북을 삭제하시겠습니까?");
+		if(sketchDelChk == true){
+		
+			var doc =document.sketchSel;
+			doc.action = "./sketchRealDeleteMulti.do";
+			
+			return true;
+		}else{
+			alert("스케치북 삭제가 취소되었습니다.");
+			
+			return false;
+		}
+		
+	}else{
+		alert("선택된 스케치북이 없습니다.");
+		return false;
+	}
+}
+
+
+
+
+
+
+
+
+//------------------- 작성 스케치북 완전 다중 삭제 ----------------- 
 
 </script>
 </html>

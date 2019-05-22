@@ -10,7 +10,7 @@
   	<!-- 스케치북 생성 -->
 	<insert id="sketch_Insert" parameterType="happy.land.people.dto.LPSketchbookDto">
 		INSERT INTO LPSKETCHBOOK(SKETCH_ID, USER_EMAIL, SKETCH_TITLE, SKETCH_THEME, SKETCH_SHARE, SKETCH_DELFLAG, SKETCH_SPATH, SKETCH_BLOCK)
-		VALUES('0013', #{user_email}, #{sketch_title}, #{sketch_theme}, 'F', 'F', 'c:\abc\defg', 'F')	
+		VALUES('0013', #{user_email}, #{sketch_title}, #{sketch_theme}, 'F', 'F', #{sketch_spath}, 'F')	
 	</insert>
 	
 	<!-- 스크랩, 좋아요 최초 등록 -->
@@ -76,7 +76,7 @@
 	
 	<!-- 자신이 작성한 스케치북 조회 (사용자 - 마이페이지) -->
 	<select id="sketch_SelectMine" resultType="happy.land.people.dto.LPSketchbookDto" parameterType="java.util.Map">
-		SELECT SKETCH_ID, SKETCH_TITLE, SKETCH_THEME, SKETCH_SPATH
+		SELECT SKETCH_ID, USER_EMAIL, SKETCH_TITLE, SKETCH_THEME, SKETCH_SPATH
 					FROM LPSKETCHBOOK 
 					WHERE USER_EMAIL=#{user_email} AND SKETCH_DELFLAG='F' AND SKETCH_BLOCK='F' 
 					ORDER BY SKETCH_ID DESC
@@ -85,16 +85,23 @@
 	
 	<!-- 작성 스케치북 상세조회(사용자- 마이페이지 정보 수정을 위한 상세 조회)-->
 	<select id="sketch_SelectOne" resultType="happy.land.people.dto.LPSketchbookDto" parameterType="happy.land.people.dto.LPSketchbookDto">
-		SELECT SKETCH_ID, SKETCH_TITLE, SKETCH_THEME, SKETCH_SPATH FROM LPSKETCHBOOK WHERE  USER_EMAIL=#{user_email} AND SKETCH_ID=#{sketch_id}
+		SELECT SKETCH_ID, USER_EMAIL, SKETCH_TITLE, SKETCH_THEME, SKETCH_SPATH FROM LPSKETCHBOOK WHERE  USER_EMAIL=#{user_email} AND SKETCH_ID=#{sketch_id}
 	</select>
 	
-	
-	
 	<!-- 작성 스케치북 정보 수정   -->
-	<update id="sketch_Update" parameterType="java.util.Map">
+	<update id="sketch_Update" parameterType="happy.land.people.dto.LPSketchbookDto">
 		UPDATE LPSKETCHBOOK SET SKETCH_TITLE=#{sketch_title}, SKETCH_THEME=#{sketch_theme}, SKETCH_SPATH=#{sketch_spath} 
 		       WHERE USER_EMAIL=#{user_email} AND SKETCH_ID=#{sketch_id}
 	</update>
+	
+	<!-- 작성 스케치북 완전 다중 삭제 -->
+	<delete id="sketch_RealDeleteMulti" parameterType="java.util.Map">
+		DELETE FROM LPSKETCHBOOK WHERE SKETCH_ID IN
+		<foreach collection="sketch_id_" item="sketch_id" open="(" close=")" separator=",">
+		#{sketch_id} 
+		</foreach>
+	</delete>
+	
 	
 	<!-- 페이징 처리된 테마별 스케치북 조회 -->
 	<select id="sketch_SelectTheme" parameterType="java.util.Map" resultType="happy.land.people.dto.LPSketchbookDto">

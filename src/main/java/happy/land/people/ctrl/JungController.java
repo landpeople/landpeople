@@ -70,6 +70,7 @@ public class JungController {
 	public  String sketchMake(LPSketchbookDto dto) {
 		logger.info("sketchBook 생성 {}", dto);
 		// 스케치북 생성 (제목, 여행테마, 공유 여부)
+		System.out.println(dto.getSketch_spath());
 		boolean isc = iSketchBookService.sketchInsert(dto);
 		System.out.println(isc);		
 		return "kim";
@@ -261,13 +262,15 @@ public class JungController {
 				System.out.println(likeCnt);
 				
 				htmlMysketchBook = "<tr>"+
-						"<td>"+mySketchlists.get(i).getSketch_title()+"</td>"+
-						"<td>"+mySketchlists.get(i).getSketch_spath()+"</td>"+
-						"<td>"+likeCnt+"</td>"+
-						"<td>"+
-						"<a href='#' onclick='sketchBookModify()'><img alt='modi' src='img/sketchBookImg/modifyIcon.png'></a>"+
-						"</td>"+
-						"</tr>";
+							"<td>"+
+							"<input type='checkbox' name='chkVal' value='"+sketch_id+"'></td>"+
+							"<td>"+mySketchlists.get(i).getSketch_title()+"</td>"+
+							"<td>"+mySketchlists.get(i).getSketch_spath()+"</td>"+
+							"<td>"+likeCnt+"</td>"+
+							"<td>"+
+							"<a href='#' onclick='sketchBookModify()'><img alt='modi' src='img/sketchBookImg/modifyIcon.png'></a>"+
+							"</td>"+
+							"</tr>";
 			
 			System.out.println(htmlMysketchBook);
 			}
@@ -279,7 +282,7 @@ public class JungController {
 		
 	}
 	
-	//스케치북 수정폼 생성
+	// 스케치북 수정폼 생성
 	@RequestMapping(value="sketchModifyForm.do", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, LPSketchbookDto> sketchModifyForm(String user_email, String sketch_id, LPSketchbookDto dto){
@@ -288,9 +291,37 @@ public class JungController {
 		System.out.println(sdto);
 		Map<String, LPSketchbookDto> map = new HashMap<String, LPSketchbookDto>();
 		map.put("sdto", sdto);
-	
+		System.out.println(sdto.getUser_email());
 		return map;
 	} 
+	
+	// 작성 스케치북 수정
+	@RequestMapping(value="modifySketch.do", method=RequestMethod.POST)
+	public String modifySketchBook(LPSketchbookDto dto) {
+		logger.info("JungController modifySketchBook {}", dto);
+		boolean isc = iSketchBookService.sketchUpdate(dto);
+		System.out.println(isc);
+		return "redirect:/jeong.do";
+	}
+	
+	
+	// 작성 스케치북 삭제
+	@RequestMapping(value="sketchRealDeleteMulti.do", method=RequestMethod.POST)
+	public String sketchRealDeleteMulti(String[] chkVal, Model model) {
+		logger.info("JungController sketchRealDeleteMulti {}", Arrays.toString(chkVal));
+		Map<String, String[]>map = new HashMap<String, String[]>();
+		System.out.println(Arrays.toString(chkVal));
+		map.put("sketch_id_", chkVal);
+		
+		boolean isc = iSketchBookService.sketchRealDeleteMulti(map);
+		
+		return "redirect:/jeong.do";
+	}
+	
+	
+	
+	
+	
 	
 	
 	

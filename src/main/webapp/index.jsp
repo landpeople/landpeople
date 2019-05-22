@@ -14,7 +14,7 @@
 
 </head>
 <body>
-	${ldto.user_email }
+	${ldto.user_email}
 	<!--젤로 레이아웃- 전체 영역 감싸는 div-->
 	<div class="main-wrapper">
 
