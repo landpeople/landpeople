@@ -57,8 +57,8 @@
    </div>
 
 
-<a href="">비밀번호 찾기</a>
 
+<a href="./inputemail.do">비밀번호찾기</a>
 
 </body>
 </html>

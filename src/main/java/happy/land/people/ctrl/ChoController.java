@@ -189,7 +189,7 @@ public class ChoController {
 		dto.setUser_auth("U");
 		boolean isc = iChoService.signUp(dto);
 
-		return isc ? "users/sign/auth" : "404";
+		return isc ? "users/sign/emailSubmit" : "404";
 	}
 
 	// 이메일 링크 클릭으로 들어옴
@@ -200,14 +200,64 @@ public class ChoController {
 		return isc ? "users/sign/auth" : "error";
 	}
 	
+	//이메일 입력하는페이지로가기
+	@RequestMapping(value="/inputemail.do",method=RequestMethod.GET)
+	public String inputemail() {
+		
+		return "users/pwforget/inputemail";
+	}
+	
+	
+	//아작스인데 이메일 유저인지 네이버인지 구글인지 구별해주는 컨트롤러
+	@RequestMapping(value="/findEmailchk.do" , method=RequestMethod.POST)
+	@ResponseBody
+	public String findEmailchk(String user_email,ChoDto dto) {
+		logger.info("여기는 비밀번호찾기할떄 이메일 뭐야 무슨가입자인지 그리고 가입했는지 구별해주는곳");
+		
+		String email = user_email;
+		System.out.println(email);
+		
+		int n =iChoService.emailAuthChk(user_email);
+		
+		System.out.println("n은 뭘 리턴하니?"+n);
+		
+		// 0=비회원 1=유저 2=네이버 3=구글
+		if(n == 0) {
+			logger.info("======가입하지 않은회원");
+			return "0";
+		}else if (n==1) {
+			System.out.println("n=1 유저");
+			return "U";
+		}else if(n==2) {
+			System.out.println("n=2 네이버");
+			return "N";
+		}else if(n==3) {
+			System.out.println("n=3 구글");
+			return "G";
+		}else {
+			System.out.println("어드민ㅋㅋ");
+			return "4";
+		}
+		
+		
+	}
+	
+	
+	//이메일로 링크보내주기
+	@RequestMapping(value="/findPW.do" , method=RequestMethod.GET)
+	public String findPW(ChoDto dto) {
+		iChoService.findPW(dto);
+		return "users/pwforget/pwemailSubmit";
+	}
+	
 	
 	//비밀번호 찾기로 와서 비밀번호 수정
-	@RequestMapping(value="/pwforget.do",method=RequestMethod.POST)
+	@RequestMapping(value="/pwforget.do",method=RequestMethod.GET)
 	public String pwforget(ChoDto dto) {
 		
 		
 		boolean isc = true;
-		return isc ? "pwforget/pwforget":"error";
+		return isc ? "users/pwforget/pwforget":"error";
 	}
 	
 	

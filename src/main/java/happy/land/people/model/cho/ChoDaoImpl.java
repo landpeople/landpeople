@@ -1,5 +1,6 @@
 package happy.land.people.model.cho;
 
+import java.util.List;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -91,6 +92,8 @@ public class ChoDaoImpl implements IChoDao {
 	public boolean userInfo(ChoDto dto) {
 		//여기에다가 비밀번호 닉네임 어케어케?
 		if(dto.getUser_auth().equalsIgnoreCase("U")) {
+			String passwordEncode = passwordEncoder.encode(dto.getUser_password());
+			dto.setUser_password(passwordEncode);
 			session.update(NS+"modifyPassword",dto);
 		}
 		boolean isc = session.update(NS+"modifyNickname",dto)>0? true:false;
@@ -99,13 +102,14 @@ public class ChoDaoImpl implements IChoDao {
 	}
 
 	
-	
+	       
 	//이메일 중복체크
 	@Override
 	public int emailDupChk(String user_email) {
 		
 		logger.info("이메일중복체크 다오임플");
 		
+		System.out.printf("이메일중복체크 ------"+session.selectOne(NS+"emailDupChk",user_email));
 		return session.selectOne(NS+"emailDupChk",user_email);
 	}
 
@@ -119,6 +123,36 @@ public class ChoDaoImpl implements IChoDao {
 	@Override
 	public boolean authStatusUpdate(String user_email) {
 		return session.update(NS+"authStatusUpdate",user_email)>0? true:false;
+	}
+
+	@Override
+	public boolean findPW(ChoDto dto) {
+		
+		return true;
+	}
+
+	@Override
+	public int emailAuthChk(String user_email) {
+		logger.info("비밀번호찾기 가입자 확인하고 auth주기");
+		
+		 ChoDto dto = session.selectOne(NS+"emailAuthChk",user_email);
+		 System.out.printf("이쿼리가 반환하는거뭔지보기용"+session.selectOne(NS+"emailAuthChk",user_email));
+		 
+		 System.out.println("이메일:"+dto.getUser_email());
+		 System.out.println("어스:"+dto.getUser_auth());
+		 
+		 if(dto.getUser_email() == null) {
+			 return 0;
+		 }else if(dto.getUser_auth().equals("U")) {
+			 return 1;
+		 }else if(dto.getUser_auth().equals("N")) {
+			 return 2;
+		 }else if(dto.getUser_auth().equals("G")) {
+			 return 3;
+		 }else {
+			 return 4;
+		 }
+		
 	}
 
 }
