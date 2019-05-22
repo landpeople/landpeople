@@ -1,3 +1,4 @@
+<%@page import="happy.land.people.dto.kim.LPTextDto"%>
 <%@page import="happy.land.people.dto.kim.LPCanvasDto"%>
 <%@page import="java.util.Map"%>
 <%@page import="happy.land.people.dto.kim.LPDaysDto"%>
@@ -11,6 +12,7 @@
 <%
 	Map<Integer,List<LPDaysDto>>  daysList = (Map<Integer,List<LPDaysDto>>)request.getAttribute("daysList");
 	List<LPCanvasDto>	 canvasList = 	(List<LPCanvasDto>)request.getAttribute("daysType");
+	Map<Integer,List<LPTextDto>> textList = (Map<Integer,List<LPTextDto>>)request.getAttribute("textList");
 %>
 
 <script src="./js/jquery-3.3.1.js"></script>
@@ -21,7 +23,6 @@
 <script src="./js/jquery.booklet.latest.min.js"></script>
 <link href="./css/jquery.booklet.latest.css" type="text/css" rel="stylesheet" media="screen, projection, tv" />
 
-<script src="./js/vendor/modernizr-2.6.2.min.js"></script>
 <script src="./js/min/plugins.min.js"></script>
 <script src="./js/min/main.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -30,6 +31,8 @@
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=559fa9d8ea227159941f35acba720d2b&libraries=services"></script>
 
+<!-- 자유 캔버스 레이아웃  -->
+<link rel="stylesheet" href="css/Layout_1.css">
 </head>
 <body>
    <div class="main-wrapper">
@@ -62,36 +65,38 @@
          <form action="./deleteDaysForm.do" onsubmit="return false" method="post">
             <input type="hidden" value=1 id="nowPageNo" name="nowPageNo">        
          </form> -->
-
-               <!-- Modal -->
-               <div class="modal fade" id="myModal" role="dialog">
-                  <div class="modal-dialog">
-
-                     <!-- Modal content-->
-                     <div class="modal-content" style="width: 1000px; height: 800px;">
-                        <div class="modal-header">
-                           <button type="button" class="close" data-dismiss="modal">&times;</button>
-                           <h4 class="modal-title">Modal Header</h4>
-                        </div>
-                        <div class="modal-body">
-                           <p>
-                              <img src="./img/days.png" id="insertDaysForm"></img> <img src="./img/free2.png"></img> <img src="./img/free2.png"></img><br> <img src="./img/free3.png"></img> <img src="./img/free4.png"></img> <img src="./img/free5.png"></img>
-                           </p>
-                        </div>
-                        <div class="modal-footer">
-                           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                           <button type="button" class="btn btn-default" id="canvasInsertFrom">ok</button>
-                        </div>
-                     </div>
-
-                  </div>
-               </div>
-            </div>
          </div>
-         <!-- </div> 여기까지 메인 컨텐츠  -->
-         <div class="footer">landpeople</div>
+         </div>
+         </div>
+         </div>
+              
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content" style="width:1000px; height:800px;">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <p><img src="./img/days.png" id="insertDaysForm"></img>
+          	 <img src="./img/free2.png" id="insertFreeForm"></img>
+          	 <img src="./img/free2.png"></img><br>
+          	 <img src="./img/free3.png"></img>
+          	 <img src="./img/free4.png"></img>
+          	 <img src="./img/free5.png"></img>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-default" id="canvasInsertFrom">ok</button>
+        </div>
       </div>
    </div>
+   </div>
+   
 
  <script>  		
 	$("document").ready(function() {		
@@ -107,6 +112,11 @@
 		// 일정 캔버스 클릭시(임시)
 		$("#insertDaysForm").click(function(){
 			$('#selectType').val("1");
+			alert($('#selectType').val());
+		});
+		// 자유캔버스 1번째 클릭시
+		$("#insertFreeForm").click(function() {
+			$('#selectType').val("2");
 			alert($('#selectType').val());
 		});
 		// 엑셀로 다운로드
@@ -150,6 +160,11 @@
 				alert("돌아가냐");
 				 var pageNo = $('#nowPageNo').val();
 				 document.forms[0].submit();				
+			}else if($('#selectType').val() == "2"){
+				alert("아아아");
+				 var pageNo = $('#nowPageNo').val();
+				 document.forms[0].action = "./upload.do";
+				 document.forms[0].submit();
 			}
 		});
 		
@@ -161,7 +176,7 @@
 				
 		function makePage(){
 			<%
-			for(int i = 0 ; i < daysList.size(); i++){
+			for(int i = 0 ; i < canvasList.size(); i++){
 			%>
 				$('#mybook').booklet("add", <%=2*i%>,"<div id='page<%=i+1%>'></div>");
     			$('#mybook').booklet("add", <%=2*i+1%>,"<div><div id='map<%=i+1%>' style='width:440px;height:560px;'></div>");
@@ -172,7 +187,7 @@
 		
 		function daysLoad() {			
 			<%
-				for(int i = 0 ; i < daysList.size();i++){
+				for(int i = 0 ; i < canvasList.size();i++){
 					if(canvasList.get(i).getCan_type().equalsIgnoreCase("1")){
 			%>
 				var container = document.getElementById("map"+<%=i+1%>);
@@ -183,6 +198,16 @@
 	    		};
 	    		
 	    		var map = new daum.maps.Map(container, options);
+	    		
+	    		// 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
+	    		var mapTypeControl = new daum.maps.MapTypeControl();
+
+	    		// 지도에 컨트롤을 추가해야 지도위에 표시됩니다	    		
+	    		map.addControl(mapTypeControl, daum.maps.ControlPosition.TOPRIGHT);
+
+	    		// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+	    		var zoomControl = new daum.maps.ZoomControl();
+	    		map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT);
 	    		
 	    		// 일정 마커들
 	    		var daysMarker = [];
@@ -204,6 +229,7 @@
     		        content: '<div><%=daysList.get(i).get(j).getDays_title()%></div>', // 인포윈도우에 표시할 내용
     		        removable : true
 	    		});
+
     		    // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
     		    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
     		    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
@@ -240,24 +266,53 @@
 	    			
 	    			for(var i = 0 ; i < daysMarker.length ; i++){
 	    				var div = document.createElement('div');
+	    				div.style.width="460px";
+	    				div.style.height = "40px";
 	    				if(i >= 1){
+	    					div.style.height = "60px";
 	    					//시작 지점 과 끝지점 가져와서 최단거리 설정
-	    					div.innerHTML += "↓";
+	    					div.innerHTML += "<span style='margin-Left:226px;'>↓</span>";
 	    					var startCoord = new daum.maps.LatLng(daysMarker[i-1].getPosition().getLat(), daysMarker[i-1].getPosition().getLng());
 	    					var endCoord =  new daum.maps.LatLng(daysMarker[i].getPosition().getLat(), daysMarker[i].getPosition().getLng());
-	    					div.innerHTML += "<a href='https://map.kakao.com/?sX="+startCoord.toCoords().getX()+"&sY="+startCoord.toCoords().getY()+"&sName=출발점&eX="+endCoord.toCoords().getX()+"&eY="+endCoord.toCoords().getY()+"&eName=도착점'"
+	    					div.innerHTML += "<a style='float:right; margin-right:30px;' href='https://map.kakao.com/?sX="+startCoord.toCoords().getX()+"&sY="+startCoord.toCoords().getY()+"&sName=출발점&eX="+endCoord.toCoords().getX()+"&eY="+endCoord.toCoords().getY()+"&eName=도착점'"
 	    							+ " onclick='window.open(this.href, \"_경로보기\", \"width=1000px,height=800px;\"); return false;'"
 	    							+ ">최단경로보기</a><br>";
 	    				}				
-	    				div.innerHTML += "<span>"+(i+1)+"번째 일정:"+daysInfo[i]+"</span>";
+	    				div.innerHTML += "<div style='font-size:20px; width:450px; height:38px; border:1px solid black;'>"+(i+1)+"번째 일정:"+daysInfo[i]+"</div>";
 	    				daysPage.appendChild(div);	
 	    			}	
 	    			
 			<%
 					}
+					else if(canvasList.get(i).getCan_type().equalsIgnoreCase("2")){
+			%>
+					// 일정 페이지 정보 가져오기
+					var daysPage = document.getElementById("page"+<%=i+1%>);
+					var div = document.createElement('div');
+					div.innerHTML += "<div id='Left-Side'>"
+								  +  "<div id='IMG1' style='background-image: url(\"<%=textList.get(i).get(0).getImg_spath()%>\")'>"
+								  +  "</div><div id='LS_Container'><div id='TXT1'>"
+								  +  "<%=textList.get(i).get(1).getText_content()%>"
+								  + "</div></div></div>";								 					
+					daysPage.appendChild(div);	
+					
+					var mapPage = document.getElementById("map"+<%=i+1%>);
+					var div1 = document.createElement('div');
+					div1.innerHTML  += "<div id='Right-Side'><div id='RS_Container_1'>"
+					  				+ "<div id='TXT2'><%=textList.get(i).get(2).getText_content()%></div>"
+					  				+	"<div id='TXT3'><%=textList.get(i).get(3).getText_content()%></div>"
+					  				+ "<div id='TXT4'><%=textList.get(i).get(4).getText_content()%></div>"
+					  				+ "</div><div id='RS_Container_2'><div>"
+					  				+	"<div id='IMG2' style='background-image: url(\"<%=textList.get(i).get(5).getImg_spath()%>\")'>"
+					  				+ "</div><div id='IMG3' style='background-image: url(\"<%=textList.get(i).get(6).getImg_spath()%>\")'>"
+					  				+	"</div></div></div></div>";	
+					mapPage.appendChild(div1);
+			<%
+					}
 				}
 			%>
 		}
+		
 		
 		// 인포윈도우를 표시하는 클로저를 만드는 함수입니다 
 		function makeOverListener(map, marker, infowindow) {
@@ -278,6 +333,7 @@
     var infowindow = new daum.maps.InfoWindow({
         content: positions[i].content // 인포윈도우에 표시할 내용
     });
+
     // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
     // 이벤트 리스너로는 클로저를 만들어 등록합니다 
     // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
@@ -285,7 +341,8 @@
     daum.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
 }
 */
-	</script> 
-
-</body>
+		
+	</script> 	
+	
+	</body>
 </html>

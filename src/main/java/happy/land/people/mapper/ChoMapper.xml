@@ -31,11 +31,11 @@
 
 <!-- 이메일 중복체크  -->
 <select id="emailDupChk" parameterType="java.lang.String" resultType="java.lang.Integer">
-	SELECT COUNT(USER_EMAIL) USER_EMAIL FROM LPUSER WHERE USER_EMAIL = #{user_email}
+	SELECT COUNT(USER_EMAIL) FROM LPUSER WHERE USER_EMAIL = #{user_email}
 </select>
 <!-- 닉네임 중복체크 -->
 <select id="nicknameDupChk" parameterType="java.lang.String" resultType="java.lang.Integer">
-	SELECT COUNT(USER_NICKNAME) USER_NICKNAME FROM LPUSER WHERE USER_NICKNAME = #{user_nickname}
+	SELECT COUNT(USER_NICKNAME) FROM LPUSER WHERE USER_NICKNAME = #{user_nickname}
 </select>
 
 
@@ -58,18 +58,18 @@
 <!-- ///////////////////////정보수정 //////////////////////////-->
 
 <!-- 일반회원 정보수정 (비밀번호)-->
-<update id="modifyPassword">
+<update id="modifyPassword" parameterType="ChoDto">
 UPDATE LPUSER SET USER_PASSWORD = #{user_password} WHERE USER_EMAIL = #{user_email} AND USER_AUTH = 'U'
 </update>
 
 <!-- 일반회원,API 정보수정 (닉네임) -->
-<update id="modifyNickname">
+<update id="modifyNickname" parameterType="ChoDto">
 UPDATE LPUSER SET USER_NICKNAME = #{user_nickname} WHERE USER_EMAIL = #{user_email}
 </update>
 
 
 <!-- 회원탈퇴 -->
-<update id="delflag">
+<update id="delflag" parameterType="java.lang.String">
 UPDATE LPUSER SET USER_DELFLAG = 'T' WHERE USER_EMAIL = #{user_email}
 </update>
 

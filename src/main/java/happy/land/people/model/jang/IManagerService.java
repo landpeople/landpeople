@@ -20,4 +20,5 @@ public interface IManagerService {
 	
 	public boolean modifyBlock(String id);
 	
+	public void scheduler();
 }

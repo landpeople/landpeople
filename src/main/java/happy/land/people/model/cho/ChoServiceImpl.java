@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.mail.MessagingException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -21,12 +23,28 @@ public class ChoServiceImpl implements IChoService {
 	@Autowired
 	private JavaMailSender mailSender;
 	
+	private Logger logger = LoggerFactory.getLogger(ChoServiceImpl.class);
+	
 	
 	@Override
 	public boolean signUp(ChoDto dto) {
 		System.out.println("signUp 서비스 임플");
 		boolean isc = iChoDao.signUp(dto);
 		System.out.println("==============================================================="+isc);
+		
+		
+		// 만약에 user_auth가 n 이거나 g면 바로 가입 u면 이메일인증 하기
+		
+		String user_auth = dto.getUser_auth();
+		
+		if(user_auth == "N") {
+			
+			return isc;
+		}else if(user_auth == "G") {
+			return isc;
+		}else {
+		
+		
 		//authkey 임시 생성 후 dto 같이 담아줌
 		String user_emailkey = new TempKey().getKey(50, false);
 		dto.setUser_emailkey(user_emailkey);
@@ -63,6 +81,7 @@ public class ChoServiceImpl implements IChoService {
 			e.printStackTrace();
 		}
 		
+		}
 		return isc;
 	}
 
@@ -73,25 +92,23 @@ public class ChoServiceImpl implements IChoService {
 
 	@Override
 	public boolean deleteUser(String user_email) {
-		// TODO Auto-generated method stub
 		return iChoDao.deleteUser(user_email);
 	}
 
 	@Override
-	public boolean userInfo(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean userInfo(ChoDto dto) {
+		return iChoDao.userInfo(dto);
 	}
 
 	@Override
 	public int emailDupChk(String user_email) {
-		// TODO Auto-generated method stub
+		logger.info("이메일중복체크 서비스임플");
 		return iChoDao.emailDupChk(user_email);
 	}
 
 	@Override
 	public int nicknameDupChk(String user_nickname) {
-		// TODO Auto-generated method stub
+		logger.info("닉네임 중복체크 서비스 임플");
 		return iChoDao.nicknameDupChk(user_nickname);
 	}
 

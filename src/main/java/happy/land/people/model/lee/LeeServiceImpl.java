@@ -22,6 +22,12 @@ public class LeeServiceImpl implements ILeeService {
 		logger.info("● Service chatList_Insert 실행");
 		return dao.chatList_Insert(user_nickname);
 	}
+
+	@Override
+	public int chatList_SelectOne(String user_nickname) {
+		logger.info("● Service chatList_SelectOne 실행");
+		return dao.chatList_SelectOne(user_nickname);
+	}
 	
 	@Override
 	public List<String> chatList_SelectAll() {
@@ -52,4 +58,17 @@ public class LeeServiceImpl implements ILeeService {
 		logger.info("● Service chkChatMember 실행");
 		return dao.chkChatMember(chr_id);
 	}
+
+	@Override
+	public int chatRoom_UpdateContent(Map<String, String> map) {
+		logger.info("● Service chatRoom_UpdateContent 실행");
+		return dao.chatRoom_UpdateContent(map);
+	}
+
+	@Override
+	public String chatRoom_SelectContent(String chr_id) {
+		logger.info("● Service chatRoom_SelectContent 실행");
+		return dao.chatRoom_SelectContent(chr_id);
+	}
+
 }

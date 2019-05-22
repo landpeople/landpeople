@@ -6,17 +6,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원가입 하러옴 regiForm페이지</title>
-</head>
-<link rel="stylesheet" type="text/css" href="./css/sweetalert.css">
-<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="./css/bootstrap-theme.min.css">
-<link rel="stylesheet" type="text/css" href="./css/SignUp.css">
+<title>마이 페이지 회원정보 수정 가능</title>
 <script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="./js/bootstrap.min.js"></script>
-<script type="text/javascript" src="./js/sweetalert.min.js"></script>
-
 <script type="text/javascript">
+
 
 function regicheck() {
 // email 중복 + 유효값
@@ -44,47 +37,7 @@ if(emailchk=="1" && pwchk == "1" && nicknamechk=="1" && pw ==passOK){
 
 
 $(function() {
-	//이메일 유효성 검사
-	$("#email").keyup(function() {
-		var email = $(this).val();
-	//	alert(email);
-
-
-	var regExp =  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
 	
-	if(email.indexOf(" ") !=-1){
-		$("emailresult").css("color","red");
-		$("emailresult").html("공백이 포함된 이메일은 사용이 불가능 합니다");
-		$("emailchkVal").val("0");
-	}else if(email.match(regExp)==null){
-		$("#emailresult").css("color","red");
-		$("#emailresult").html("이메일 주소를 형식에 맞게 입력하세요");
-		$("emailchkVal").val("0");
-	}else if (email.match(regExp) != null){
-		$.ajax({
-			url : "./emailchk.do",
-			async : true,
-			type: "post",
-			data : "user_email="+email,
-			success: function(msg) {
-			if(msg=="0"){
-				//alert(msg);
-				$("#emailresult").css("color","forestgreen");
-				$("#emailresult").html("사용가능한 이메일입니다.");
-				$("#emailchkVal").val("1");
-			}else{
-				//alert(msg);
-				$("#emailresult").css("color","red");
-				$("#emailresult").html("사용 불가능한 이메일입니다.");
-				$("#emailchkVal").val("0");
-			}
-			} , error : function () {
-				alert("실패"); 
-				alert(email);
-			}
-		});
-	}
-	});//이메일유효성 끝
 	
 	$("#pw").keyup(function() {
 		var pw = $(this).val();
@@ -178,37 +131,46 @@ $(function() {
 
 
 
-
-
-
-
-
 </script>
+</head>
 <body>
-<h1>환영합니다 ~~~~ landpeople</h1>
+세션 : ${session}
+<br>
 
+ldto :${ldto}<br>
 <div>
 <input type="hidden" value="0" id="emailchkVal">
 <input type="hidden" value="0" id="pwchkVal">
 <input type="hidden" value="0" id="nicknamechkVal">
-<form action="./signUp.do" method="post" onsubmit="return regicheck()">
+<form action="./modifyMypage.do" method="post" onsubmit="return regicheck()">
+이메일 : <input type="text" name="user_email" value="${ldto.user_email}" readonly="readonly"><br>
 
-<input type="text" name="user_email" id="email" placeholder="이메일" required="required">
-<br>&nbsp;&nbsp;<span id="emailresult"></span><br>
-
-<input type="text"  name="user_password" id="pw" placeholder="비밀번호" required="required" maxlength="12">
+<input type="text"  name="user_password" id="pw" placeholder="비밀번호" maxlength="12">
 <br>&nbsp;<span id="pwresult">4~10자리의 영문+숫자</span><br>
 
-<input type="text" id="passOK" placeholder="비밀번호 확인" required="required" maxlength="12">
+<input type="text" id="passOK" placeholder="비밀번호 확인"  maxlength="12">
 <br>&nbsp;<span id="pwchk"></span><br>
 
-<input type="text" name="user_nickname" id="nickname" placeholder="닉네임" required="required" maxlength="10">
+
+<input type="text" name="user_nickname" id="nickname" placeholder="닉네임" value="${ldto.user_nickname}"  maxlength="10">
 <br>&nbsp;<span id="nicknameresult">2~10자리의 닉네임을 입력</span><br>
-<input type="submit" value="가입!">
+
+<input type="submit" value="수정">
+</form>
+
+</div>
+
+
+
+
+<form action="./delpage.do" method="get">
+	<input type="submit" value="회원탈퇴">
+</form>
 
 <input type="button" value="돌아가기" onclick="javascript:history.back(-1)">
-</form>
-</div>
+
+
+
 
 
 </body>

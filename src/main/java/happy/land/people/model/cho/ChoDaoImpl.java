@@ -53,6 +53,12 @@ public class ChoDaoImpl implements IChoDao {
 	public ChoDto login(ChoDto dto) {
 		logger.info("login 실행");
 		
+		String email=dto.getUser_email();
+		System.out.println(email);
+		//이제 여기는 일반 가입자만 오니까 비밀번호 일치하는지 확인해주면됨
+		
+		
+		
 		// db의 pw값
 		ChoDto DBPWDto = session.selectOne(NS+"login", dto);
 		// 암호화된 비번
@@ -70,28 +76,44 @@ public class ChoDaoImpl implements IChoDao {
 		}else {
 			logger.info("--------------패스워드 불일치----------");
 		}
+		
+		System.out.println("비밀번호어쩌고까지 다했냐?");
 		return session.selectOne(NS+"login", dto);
 	}
 
 	@Override
 	public boolean deleteUser(String user_email) {
-		return false;
+		return session.update(NS+"delflag", user_email)>0? true:false;
 	}
 
+	//회원정보 수정인데
 	@Override
-	public boolean userInfo(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean userInfo(ChoDto dto) {
+		//여기에다가 비밀번호 닉네임 어케어케?
+		if(dto.getUser_auth().equalsIgnoreCase("U")) {
+			session.update(NS+"modifyPassword",dto);
+		}
+		boolean isc = session.update(NS+"modifyNickname",dto)>0? true:false;
+		
+		return isc;
 	}
 
+	
+	
+	//이메일 중복체크
 	@Override
 	public int emailDupChk(String user_email) {
-		return session.update(NS+"emailDupChk",user_email);
+		
+		logger.info("이메일중복체크 다오임플");
+		
+		return session.selectOne(NS+"emailDupChk",user_email);
 	}
 
+	//닉네임중복체크
 	@Override
 	public int nicknameDupChk(String user_nickname) {
-		return session.update(NS+"nicknameDupChk",user_nickname);
+		logger.info("닉네임 중복체크 다오 임플");
+		return session.selectOne(NS+"nicknameDupChk",user_nickname);
 	}
 
 	@Override
