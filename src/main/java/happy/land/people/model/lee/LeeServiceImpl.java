@@ -20,6 +20,25 @@ public class LeeServiceImpl implements ILeeService {
 	
 
 	@Override
+	public void chatRoom_Make(Map<String, String> map) {
+		String chr_id = dao.chatRoom_Select(map);
+		
+		if(chr_id == null) {
+			chr_id = dao.chatRoom_Insert(map); // 채팅방 생성
+
+		}else {
+			int n = dao.chatRoom_UpdateOut(chr_id);
+		}
+		
+		
+		
+		
+	}
+
+	
+	
+	
+	@Override
 	public int chatList_Insert(String user_nickname) {
 		logger.info("● Service chatList_Insert 실행");
 		return dao.chatList_Insert(user_nickname);
@@ -80,5 +99,4 @@ public class LeeServiceImpl implements ILeeService {
 		logger.info("● Service chatRoom_SelectContent 실행");
 		return dao.chatRoom_SelectContent(chr_id);
 	}
-
 }

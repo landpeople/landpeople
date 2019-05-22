@@ -8,6 +8,9 @@ import happy.land.people.dto.LPChatContentDto;
 public interface ILeeService {
 	public List<String> chatList_SelectAll();
 	
+	
+	public void chatRoom_Make(Map<String,String> map);
+	
 
 	//채팅 리스트에 추가할지 안할 지 선택하기 위함
 	public int chatList_SelectOne(String user_nickname);

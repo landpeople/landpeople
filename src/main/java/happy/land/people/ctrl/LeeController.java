@@ -76,37 +76,37 @@ public class LeeController implements ServletConfigAware {
 		// 여기서 테이블의 다오를 통해서 나랑 상대방의 채팅방이 기존에 있는지 확인해줌
 		
 		
-		
-		
-		
-		
-		
-		
-		
-		
-		String chr_id = service.chatRoom_Select(map);
-
-		if (chr_id == null) {
-			int n = service.chatRoom_Insert(map); // 채팅방 생성
-			chr_id = service.chatRoom_Select(map); // 채팅방 아이디 가져오기
-			List<LPChatContentDto> lists = new ArrayList<LPChatContentDto>();
-			LPChatContentDto dto1 = new LPChatContentDto(chr_id, sender);
-			LPChatContentDto dto2 = new LPChatContentDto(chr_id, receiver);
-			lists.add(dto1);
-			lists.add(dto2);
-			service.chatContent_Insert(lists);
-			System.out.println("● LeeController socketOpen.do / 채팅방 생성(1은 성공) : " + n);
-			session.setAttribute("chr_id", chr_id); // setAttribute 하면 handler에서 이 내용을 가지고 철 가능
-			session.setAttribute("user", sender);
-		} else {
-			int n = service.chatRoom_UpdateOut(chr_id);
-			System.out.println("● LeeController socketOpen.do / 채팅방 보이기(1은 성공) : " + n);
-			session.setAttribute("chr_id", chr_id);
-			session.setAttribute("user", sender);
-//			String chr_content = service.chatRoom_SelectContent(chr_id);
-//			System.out.println(chr_content);
-			model.addAttribute("msg","<div class = 'sendTxt'><span class ='sender_img'>안녕</span><br><br></div>");
-		}
+//		List<LPChatContentDto> lists = new ArrayList<LPChatContentDto>();
+//		LPChatContentDto dto1 = new LPChatContentDto(chr_id, sender);
+//		LPChatContentDto dto2 = new LPChatContentDto(chr_id, receiver);
+//		
+//		
+//		
+//		
+//		
+//		
+//		
+//		String chr_id = service.chatRoom_Select(map);
+//
+//		if (chr_id == null) {
+//			int n = service.chatRoom_Insert(map); // 채팅방 생성
+//			chr_id = service.chatRoom_Select(map); // 채팅방 아이디 가져오기
+//
+//			lists.add(dto1);
+//			lists.add(dto2);
+//			service.chatContent_Insert(lists);
+//			System.out.println("● LeeController socketOpen.do / 채팅방 생성(1은 성공) : " + n);
+//			session.setAttribute("chr_id", chr_id); // setAttribute 하면 handler에서 이 내용을 가지고 철 가능
+//			session.setAttribute("user", sender);
+//		} else {
+//			int n = service.chatRoom_UpdateOut(chr_id);
+//			System.out.println("● LeeController socketOpen.do / 채팅방 보이기(1은 성공) : " + n);
+//			session.setAttribute("chr_id", chr_id);
+//			session.setAttribute("user", sender);
+////			String chr_content = service.chatRoom_SelectContent(chr_id);
+////			System.out.println(chr_content);
+//			model.addAttribute("msg","<div class = 'sendTxt'><span class ='sender_img'>안녕</span><br><br></div>");
+//		}
 
 		/* 채팅 리스트 띄워주기 */
 		String mem_id = (String) session.getAttribute("user");

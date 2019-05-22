@@ -17,7 +17,7 @@ import happy.land.people.dto.TestDto;
 @Repository
 public class LeeDaoImpl implements ILeeDao {
 	private Logger logger = LoggerFactory.getLogger(LeeDaoImpl.class);
-
+	
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 	
@@ -29,9 +29,9 @@ public class LeeDaoImpl implements ILeeDao {
 	}
 
 	@Override
-	public int chatList_Insert(String user_nickname) {
+	public String chatList_Insert(String user_nickname) {
 		logger.info("● Repository chatList_Insert 실행");
-		return sqlSession.insert("lee_test.chatList_Insert", user_nickname);
+		return sqlSession.selectOne("lee_test.chatList_Insert", user_nickname);
 	}
 	
 	@Override
@@ -105,6 +105,8 @@ public class LeeDaoImpl implements ILeeDao {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
+
 
 
 

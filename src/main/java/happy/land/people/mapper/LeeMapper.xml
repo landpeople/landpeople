@@ -42,12 +42,15 @@
    <!-- 채팅방 생성 -->
 
    <!-- 채팅방 생성시 채팅방의 메시지를 저장해줄 공간을 생성 -->
-   <insert id="chatContent_Insert" parameterType="java.util.List">
-      <foreach collection="list" item="item" open="INSERT ALL " separator=" " close="SELECT * FROM DUAL">
-         INTO LPCHATCONTENT(CHC_ID, CHR_ID, USER_NICKNAME, CHC_MASSAGE, CHC_OUT, CHC_REGDATE)
-         VALUES (GET_CONTENT_SEQ, #{item.chr_id}, #{item.user_nickname}, '', 'F', SYSDATE)
-      </foreach>
-   </insert>
+<!--    <insert id="chatContent_Insert" parameterType="java.util.List"> -->
+<!--       <foreach collection="list" item="item" open="INSERT ALL " separator=" " close="SELECT * FROM DUAL"> -->
+<!--          INTO LPCHATCONTENT(CHC_ID, CHR_ID, USER_NICKNAME, CHC_MASSAGE, CHC_OUT, CHC_REGDATE) -->
+<!--          VALUES (GET_CONTENT_SEQ, #{item.chr_id}, #{item.user_nickname}, '', 'F', SYSDATE) -->
+<!--       </foreach> -->
+<!--    </insert> -->
+
+
+
   
   <!-- 채팅방 메시지 업데이트 --> <!-- 테이블 변경으로 잠시 주석처리 -->
 <!--    <update id="chatRoom_UpdateContent" parameterType="java.util.Map"> -->

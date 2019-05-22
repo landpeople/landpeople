@@ -3,7 +3,10 @@ NAME VARCHAR2(20),
 AGE VARCHAR2(10)
 );
 
-INSERT INTO TEST VALUES('연지','28'),('보람','29')1;
+
+
+
+INSERT INTO TEST(NAME, AGE) VALUES('연지','28'), ('보람','29');
 
  insert ALL
    into LLL VALUES SELECT empno, hiredate, sal FROM (SELECT () empno, '20190712' hiredate,'123' sal FROM DUAL)
