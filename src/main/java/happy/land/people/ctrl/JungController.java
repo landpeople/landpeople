@@ -292,7 +292,7 @@ public class JungController {
 	
 	
 	
-	@RequestMapping(value="/uploadFile.do", method= RequestMethod.POST, produces="application/text;charset=UTF-8")
+	@RequestMapping(value="/uploadSketchBook.do", method= RequestMethod.POST, produces="application/text;charset=UTF-8")
 	@ResponseBody
 	public String upload(MultipartHttpServletRequest mr, String text_no, HttpServletRequest request, Model model) {
 		List<MultipartFile> tt = (List<MultipartFile>) mr.getFiles("file");
