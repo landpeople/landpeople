@@ -297,11 +297,7 @@
    		  $.ajax({
          	  	  type: "POST",
          		  url: "./socketOut.do",
-         		  data : { "chc_content" : content},
-         		  async: false,
-         		  success : function (){
-         			  alert("처리");
-         		  }
+         		  data : { "chc_content" : content.toString()},
          	  });  
    	  }
    	  }  

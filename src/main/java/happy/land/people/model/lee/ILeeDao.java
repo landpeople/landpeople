@@ -3,6 +3,8 @@ package happy.land.people.model.lee;
 import java.util.List;
 import java.util.Map;
 
+import happy.land.people.dto.LPChatContentDto;
+
 public interface ILeeDao {
 	
 	//채팅 리스트 테이블의 모든 사용자를 데려옴
@@ -12,7 +14,7 @@ public interface ILeeDao {
 	//채팅 리스트에 추가할지 안할 지 선택하기 위함
 	public int chatList_SelectOne(String user_nickname);
 	// 채팅 가능 리스트 생성
-	public int chatList_Insert(String user_nickname);
+	public String chatList_Insert(String user_nickname);
 	// 채팅 리스트에서 제거
 	public int chatList_Delete(String user_nickname);
 	
@@ -24,9 +26,10 @@ public interface ILeeDao {
 	public int chatRoom_UpdateOut(String chr_id);
 	
 	// 2.2 기존에 채팅방이 없다면 -> 채팅 리스트에 추가 
-	public int chatRoom_Insert(Map<String,String> map);
+	public int chatRoom_Insert(Map<String, String> map);
 	/** 채팅방 생성 */
 	
+	public int chatContent_Insert(List<LPChatContentDto> dto);
 	
 	// 채팅 메시지 저장
 	public int chatRoom_UpdateContent(Map<String, String> map);

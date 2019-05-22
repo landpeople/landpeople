@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import happy.land.people.dto.LPChatContentDto;
+
 @Service
 public class LeeServiceImpl implements ILeeService {
 
@@ -18,7 +20,7 @@ public class LeeServiceImpl implements ILeeService {
 	
 
 	@Override
-	public int chatList_Insert(String user_nickname) {
+	public String chatList_Insert(String user_nickname) {
 		logger.info("● Service chatList_Insert 실행");
 		return dao.chatList_Insert(user_nickname);
 	}
@@ -41,6 +43,14 @@ public class LeeServiceImpl implements ILeeService {
 		return dao.chatRoom_Select(map);
 	}
 
+	
+	public int chatContent_Insert(List<LPChatContentDto> dto) {
+		logger.info("● Service chatContent_Insert 실행");
+		return dao.chatContent_Insert(dto);
+	}
+	
+	
+	
 	@Override
 	public int chatRoom_UpdateOut(String chr_id) {
 		logger.info("● Service chatRoom_UpdateOut 실행");

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import happy.land.people.dto.LPChatContentDto;
 import happy.land.people.dto.TestDto;
 
 @Repository
@@ -28,9 +29,9 @@ public class LeeDaoImpl implements ILeeDao {
 	}
 
 	@Override
-	public int chatList_Insert(String user_nickname) {
+	public String chatList_Insert(String user_nickname) {
 		logger.info("● Repository chatList_Insert 실행");
-		return sqlSession.insert("lee_test.chatList_Insert", user_nickname);
+		return sqlSession.selectOne("lee_test.chatList_Insert", user_nickname);
 	}
 	
 	@Override
@@ -39,6 +40,17 @@ public class LeeDaoImpl implements ILeeDao {
 		return sqlSession.selectList("lee_test.chatList_SelectAll");
 	}
 
+
+	@Override
+	public int chatContent_Insert(List<LPChatContentDto> dto) {
+		logger.info("● Repository chatContent_Insert 실행");
+		return sqlSession.insert("lee_test.chatContent_Insert", dto);
+	}
+	
+	
+	
+	
+	
 	@Override
 	public String chatRoom_Select(Map<String, String> map) {
 		logger.info("● Repository chatList_SelectAll 실행");
@@ -93,6 +105,7 @@ public class LeeDaoImpl implements ILeeDao {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 
 

@@ -2,13 +2,13 @@ package happy.land.people.ctrl;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.annotation.Resource;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -26,6 +26,7 @@ import org.springframework.web.context.ServletConfigAware;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import happy.land.people.dto.LPChatContentDto;
 import happy.land.people.model.lee.ILeeService;
 
 @Controller
@@ -77,8 +78,14 @@ public class LeeController implements ServletConfigAware {
 
 		if (chr_id == null) {
 			int n = service.chatRoom_Insert(map); // 채팅방 생성
+			chr_id = service.chatRoom_Select(map); // 채팅방 아이디 가져오기
+			List<LPChatContentDto> lists = new ArrayList<LPChatContentDto>();
+			LPChatContentDto dto1 = new LPChatContentDto(chr_id, sender);
+			LPChatContentDto dto2 = new LPChatContentDto(chr_id, receiver);
+			lists.add(dto1);
+			lists.add(dto2);
+			service.chatContent_Insert(lists);
 			System.out.println("● LeeController socketOpen.do / 채팅방 생성(1은 성공) : " + n);
-			chr_id = service.chatRoom_Select(map);
 			session.setAttribute("chr_id", chr_id); // setAttribute 하면 handler에서 이 내용을 가지고 철 가능
 			session.setAttribute("user", sender);
 		} else {

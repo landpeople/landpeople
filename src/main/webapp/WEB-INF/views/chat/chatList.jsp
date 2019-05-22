@@ -15,7 +15,7 @@
 </head>
 <body id="body">
 
-   채팅 리스트 페이지 : ${ldto.user_email }
+   채팅 리스트 페이지 : ${ldto.user_nickname }
    <%
    	//    	response.setHeader("P3P", "CP='CAO PSA CONi OTR OUR DEM ONL'"); // iframe 세션이 날아가지 않도록 잡아줌
    	String session_name = ""; //session_name은 세션의 이름으로 저장할 변수
