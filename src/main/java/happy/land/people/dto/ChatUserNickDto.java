@@ -1,11 +1,14 @@
 package happy.land.people.dto;
 
-public class LPChatContentDto {
+public class ChatUserNickDto {
 
 	private String chr_id;
 	private String user_nickname;
 
-	public LPChatContentDto(String chr_id, String user_nickname) {
+	public ChatUserNickDto() {
+	}
+
+	public ChatUserNickDto(String chr_id, String user_nickname) {
 		super();
 		this.chr_id = chr_id;
 		this.user_nickname = user_nickname;
@@ -25,10 +28,5 @@ public class LPChatContentDto {
 
 	public void setUser_nickname(String user_nickname) {
 		this.user_nickname = user_nickname;
-	}
-
-	@Override
-	public String toString() {
-		return "LPChatContentDto [chr_id=" + chr_id + ", user_nickname=" + user_nickname + "]";
 	}
 }

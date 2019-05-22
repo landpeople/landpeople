@@ -76,6 +76,12 @@ public class LeeController implements ServletConfigAware {
 		// 여기서 테이블의 다오를 통해서 나랑 상대방의 채팅방이 기존에 있는지 확인해줌
 		
 		
+		
+		
+		
+		
+		
+		
 //		List<LPChatContentDto> lists = new ArrayList<LPChatContentDto>();
 //		LPChatContentDto dto1 = new LPChatContentDto(chr_id, sender);
 //		LPChatContentDto dto2 = new LPChatContentDto(chr_id, receiver);
@@ -111,19 +117,19 @@ public class LeeController implements ServletConfigAware {
 		/* 채팅 리스트 띄워주기 */
 		String mem_id = (String) session.getAttribute("user");
 		logger.info("● LeeController socketOpen.do / 유저 닉네임 : " + mem_id);
-		logger.info("● LeeController socketOpen.do / 채팅방 아이디 : " + chr_id);
+//		logger.info("● LeeController socketOpen.do / 채팅방 아이디 : " + chr_id);
 		HashMap<String, String> chatList = (HashMap<String, String>) servletContext.getAttribute("chatList");
 		if (chatList == null) {
 			chatList = new HashMap<String, String>();
-			chatList.put(mem_id, chr_id);
+//			chatList.put(mem_id, chr_id);
 			servletContext.setAttribute("chatList", chatList);
 		} else {
-			chatList.put(mem_id, chr_id);
+//			chatList.put(mem_id, chr_id);
 			servletContext.setAttribute("chatList", chatList);
 		}
 		logger.info("socketOpen 소켓 화면 이동 2)리스트 값 전달");
 
-		System.out.println("● LeeController socketOpen.do / 채팅방이 존재여부(채팅방 아이디): " + chr_id);
+//		System.out.println("● LeeController socketOpen.do / 채팅방이 존재여부(채팅방 아이디): " + chr_id);
 		session.setAttribute("user", sender);
 
 		return "/chat/groupChat";
