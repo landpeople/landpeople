@@ -12,7 +12,6 @@
 <script src="./js/jquery.easing.1.3.js"></script>
 <script src="./js/jquery.booklet.latest.min.js"></script>
 
-<script src="./js/vendor/modernizr-2.6.2.min.js"></script>
 <script src="./js/min/plugins.min.js"></script>
 <script src="./js/min/main.min.js"></script>
 
