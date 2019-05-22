@@ -46,8 +46,8 @@
 					<input type="button" value="내 스케치북 보기" onclick="sketchSelectMine()">
 					<input type="button" value="테마 조회" onclick="sketchSelectTheme()">
 					<input type="hidden" value="나홀로" id="themeType"> 
-					<div id="sketchSel" style="width: 500px;">
-					<a href="#" onclick="sketchBookModify()"><img alt="modi" src="img/sketchBookImg/modifyIcon.png"></a>
+					<div id="sketchSel" style="width: 500px; height: 500px;">
+					<!-- <a href="#" onclick="sketchBookModify()"><img alt="modi" src="img/sketchBookImg/modifyIcon.png"></a> -->
 					</div>
 					
 				<!-- 스케치북 수정 Modal -->
@@ -232,7 +232,7 @@ function chkBox(){
 
 function sketchSelectMine() {
 //	alert("작성 스케치북 보기");
-	var user_email ="128@happy.com";
+	var user_email ="124@happy.com";
 	$.ajax({
 		url : "sketchSelMine.do",
 		type : "post",
@@ -247,6 +247,7 @@ function sketchSelectMine() {
 					"<th>스케치북 타이틀</th>"+
 					"<th>스케치북 커버이미지</th>"+
 					"<th>좋아요 Cnt</th>"+
+					"<th>스케치북 수정</th>"+
 					"<tr>";
 			htmlTable += sketchBook.mySketchBook;		
 			$("#sketchSel").html(htmlTable);
@@ -263,7 +264,7 @@ function sketchSelectMine() {
 
 
 
-//-------------------- 작성 스케치북 수정 --------------------
+//-------------------- 작성 스케치북 수정 모달 생성 --------------------
 
 function sketchBookModify() {
 	var user_email = "124@happy.com"
@@ -287,10 +288,11 @@ function sketchBookModify() {
 			//alert(modiModal.sdto.sketch_title);
 			//alert(modiModal.sdto.sketch_id);
 			
+			alert(modiModal.sdto.user_email);
 			alert(modiModal.sdto.sketch_theme);
 			
-			
-			var modiFormHTML = "<input type='hidden' name='sketch_id' value='"+modiModal.sdto.sketch_id+"'>"+
+			var modiFormHTML =	"<input type='hidden' name='sketch_id' value='"+modiModal.sdto.user_email+"'>"+
+							  	"<input type='hidden' name='sketch_id' value='"+modiModal.sdto.sketch_id+"'>"+
 						
 						 "<div class='form-group'>"
 						+ "<label>스케치북 제목</label>"
@@ -333,7 +335,28 @@ function sketchBookModify() {
 	
 }
 
-//-------------------- 작성 스케치북 수정 --------------------
+//-------------------- 작성 스케치북 수정 모달 생성 --------------------
+
+//-------------------- 작성 스케치북 수정  --------------------
+
+
+function sketchModify(){
+	
+	
+}
+
+
+
+
+
+
+
+
+//-------------------- 작성 스케치북 수정  --------------------
+
+
+
+
 
 //-------------------  테마별 스케치북 조회 ------------------ 
 
@@ -345,6 +368,8 @@ function sketchSelectTheme(){
 
 
 //-------------------  테마별 스케치북 조회 ------------------
+
+
 
 </script>
 </html>

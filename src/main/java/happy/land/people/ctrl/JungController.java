@@ -236,7 +236,7 @@ public class JungController {
 		map.put("user_email", user_email);
 		List<LPSketchbookDto> mySketchlists = iSketchBookService.sketchSelectMine(map);
 		System.out.println(mySketchlists);
-		
+		System.out.println(mySketchlists.size());
 		if(mySketchlists.size()==0) {
 			String htmlMysketchBook="";
 			htmlMysketchBook +="<tr>"+
@@ -255,6 +255,7 @@ public class JungController {
 			for (int i = 0; i < mySketchlists.size(); i++) {
 				String sketch_id = mySketchlists.get(i).getSketch_id();
 				System.out.println(sketch_id);
+				System.out.println(mySketchlists.size()+"내가 작성한 스케치북 갯수!!!!!!!!!!");
 				// 좋아요 갯수 조회
 				int likeCnt = iSketchBookService.likeCnt(sketch_id);
 				System.out.println(likeCnt);
@@ -263,14 +264,16 @@ public class JungController {
 						"<td>"+mySketchlists.get(i).getSketch_title()+"</td>"+
 						"<td>"+mySketchlists.get(i).getSketch_spath()+"</td>"+
 						"<td>"+likeCnt+"</td>"+
+						"<td>"+
+						"<a href='#' onclick='sketchBookModify()'><img alt='modi' src='img/sketchBookImg/modifyIcon.png'></a>"+
+						"</td>"+
 						"</tr>";
-			}
 			
+			System.out.println(htmlMysketchBook);
+			}
 			Map<String, String> mySketchBook = new HashMap<String, String>();
 			mySketchBook.put("mySketchBook", htmlMysketchBook);
-			
 			System.out.println(mySketchBook);
-			
 			return mySketchBook;
 		}
 		
