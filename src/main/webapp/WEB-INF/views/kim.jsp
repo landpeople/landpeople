@@ -14,7 +14,6 @@
 
 </head>
 <body>
-<%=request.getAttribute("sketch_id")%>
 	<!--젤로 레이아웃- 전체 영역 감싸는 div-->
 	<div class="main-wrapper">
 		<%@include file="./common/Sidebar.jsp"%>
@@ -35,7 +34,7 @@
 	<!-- templatemo-style.css에 보면 이안에 들어가는 div 클래스가 있음. 아니면 css를 temp -->
 	<script type="text/javascript">
 		$("#detailCanvas").click(function() {
-			location.href = "./detailCanvas.do";
+			location.href = "./detailCanvas.do?sketch_id=1";
 		});
 	</script>
 

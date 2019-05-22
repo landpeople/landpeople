@@ -40,7 +40,7 @@
                      <button onclick="showTrip()">관광지</button>
                      <button onclick="showRest()">숙소</button>
                      <div id="map" style="width: 440px; height: 560px;"></div>
-                     <input id="insertCanvas" type="button" value="DB에 저장"></input>
+                     <input id="insertCanvas" type="button" value="DB에 저장"/>
                   </div>
                </div>
             </div>
@@ -104,51 +104,46 @@
 		/* var icon = new daum.maps.MarkerImage(
 		        './food.png',
 		        new daum.maps.Size(32, 32)); */
-		daum.maps.event
-			.addListener(
-				map,
-				'click',
-				function(mouseEvent) {
+		daum.maps.event.addListener(map,'click',function(mouseEvent) {
 				    if (isInsertOpen != true) {
 					// 클릭한 위도, 경도 정보를 가져옵니다 
 					var latlng = mouseEvent.latLng;
 					// 마커 생성			
 					marker = new daum.maps.Marker({
-					    position : new daum.maps.LatLng(
-						    latlng.getLat(), latlng
-							    .getLng()),
+					    position : new daum.maps.LatLng(latlng.getLat(), latlng.getLng()),
 					    clickable : true
 					});
 					//마커에 넣기
 					marker.setMap(map);
 					marker.setDraggable(true);
 					// 입력 윈도우를 생성합니다
-					infoWindow = new daum.maps.InfoWindow(
-						{
+					infoWindow = new daum.maps.InfoWindow({
 						    content : '<div style="width:200px; height:140px;">일정제목 &nbsp;<input style="width:100px; height=30px;" type="text" id="daysTitle">'
 							    + '<br>시작시간:&nbsp;<input id="startDays" style="width:120px; height=40px; text-align:center;" type="time">'
 							    + '<br>종료시간:&nbsp;<input id="endDays" style="width:120px; height=40px; text-align:center;" type="time">'
-							    + '<br><br><button style="width:100px; height=30px;" onclick="daysMake()">일정등록</button><button style="width:100px; height=30px;" onclick="closeInfo()">취소</button></div>',
+							    + '<br><br><button style="width:100px; height=30px;" onclick="daysMake()">일정등록</button><button style="width:100px; height=30px;" onclick="closeInfo()">취소</button></div>'
 						});
 					infoWindow.open(map, marker);
 					isInsertOpen = true;
 					map.setDraggable(false);
 					map.setZoomable(false);
 				    }
-				});
+		});
+	
 
 		// 일정 만들기
 		function daysMake() {
-
 		    var title = document.getElementById('daysTitle').value;
 		    var startDays = $('#startDays').val();
 		    var endDays = $('#endDays').val();
 		    if (title == "" || title == null) {
-			alert("일정 제목을 입력해주세요.");
-		    } else if (startDays == "" || startDays == null) {
-			alert("시작 시간을 입력해주세요.");
-		    } else if (endDays == "" || endDays == null) {
-			alert("종료 시간을 입력해주세요.");
+		    	alert("일정 제목을 입력해주세요.");		    
+		    } 
+		    else if (startDays == "" || startDays == null) {
+				alert("시작 시간을 입력해주세요.");
+		    } 
+		    else if (endDays == "" || endDays == null) {
+				alert("종료 시간을 입력해주세요.");
 		    } else {
 			// 완성이 되면 넣고 아니면 넣지 않는다.
 			daysMarker.push(marker);
@@ -159,95 +154,33 @@
 
 			// 클릭 이벤트 설정
 			var addwindow = new daum.maps.InfoWindow({
-			    content : '<div>' + title + '</div>', // 인포윈도우에 표시할 내용
+			    content : '<div>'+title+'</div>', // 인포윈도우에 표시할 내용
 			    removable : true
 			});
 			// 마커에  이벤트 등록	
-			daum.maps.event.addListener(
-				daysMarker[daysMarker.length - 1], 'click',
-				makeOverListener(map,
-					daysMarker[daysMarker.length - 1],
-					addwindow));
-			daum.maps.event.addListener(
-				daysMarker[daysMarker.length - 1], 'dragend',
-				initRender);
+			daum.maps.event.addListener(daysMarker[daysMarker.length - 1], 'click',	makeOverListener(map,daysMarker[daysMarker.length - 1],addwindow));
+			daum.maps.event.addListener(daysMarker[daysMarker.length - 1], 'dragend',initRender);
 			// 선 그리기
-			createRender();
+			initRender();
 			// 일정 페이지 정보 가져오기
 			var daysPage = document.getElementById("page3");
 			var div = document.createElement('div');
-
-			if (daysNum >= 2) {
-			    //시작 지점 과 끝지점 가져와서 최단거리 설정
-			    div.innerHTML += "↓";
-			    var startCoord = new daum.maps.LatLng(
-				    daysMarker[daysNum - 2].getPosition()
-					    .getLat(), daysMarker[daysNum - 2]
-					    .getPosition().getLng());
-			    var endCoord = new daum.maps.LatLng(
-				    daysMarker[daysNum - 1].getPosition()
-					    .getLat(), daysMarker[daysNum - 1]
-					    .getPosition().getLng());
-			    div.innerHTML += "<a href='https://map.kakao.com/?sX="
-				    + startCoord.toCoords().getX()
-				    + "&sY="
-				    + startCoord.toCoords().getY()
-				    + "&sName=출발점&eX="
-				    + endCoord.toCoords().getX()
-				    + "&eY="
-				    + endCoord.toCoords().getY()
-				    + "&eName=도착점'"
-				    + " onclick='window.open(this.href, \"_경로보기\", \"width=1000px,height=800px;\"); return false;'"
-				    + ">최단경로보기</a><br>";
+		
+			if(daysMarker.length >= 2){
+				//시작 지점 과 끝지점 가져와서 최단거리 설정
+				div.innerHTML += "<span style='margin-Left:226px;'>↓</span>";
+				var startCoord = new daum.maps.LatLng(daysMarker[daysMarker.length-2].getPosition().getLat(), daysMarker[daysMarker.length-2].getPosition().getLng());
+				var endCoord =  new daum.maps.LatLng(daysMarker[daysMarker.length-1].getPosition().getLat(), daysMarker[daysMarker.length-1].getPosition().getLng());
+				div.innerHTML += "<a style='float:right; margin-right:30px;' href='https://map.kakao.com/?sX="+startCoord.toCoords().getX()+"&sY="+startCoord.toCoords().getY()+"&sName=출발점&eX="+endCoord.toCoords().getX()+"&eY="+endCoord.toCoords().getY()+"&eName=도착점' onclick='window.open(this.href, \"_경로보기\", \"width=1000px,height=800px;\"); return false;'>최단경로보기</a><br>";
 			}
-			else if(startDays == "" || startDays == null){
-				alert("시작 시간을 입력해주세요.");
-			}
-			else if(endDays == "" || endDays == null){
-				alert("종료 시간을 입력해주세요.");
-			}
-			else{				
-				// 완성이 되면 넣고 아니면 넣지 않는다.
-				daysMarker.push(marker);					
-				// 내용에 넣기
-				daysInfo.push(title);
-				daysStart.push($('#startDays').val());
-				daysEnd.push($('#endDays').val());	
-				
-				// 클릭 이벤트 설정
-				var addwindow = new daum.maps.InfoWindow({
-       			 content: '<div>'+title+'</div>', // 인포윈도우에 표시할 내용
-        		 removable : true
-				});		
-    			// 마커에  이벤트 등록	
-    			daum.maps.event.addListener(daysMarker[daysMarker.length-1], 'click', makeOverListener(map,daysMarker[daysMarker.length-1],addwindow));
-    			daum.maps.event.addListener(daysMarker[daysMarker.length-1], 'dragend', initRender);
-    			    			
-    			// 선 그리기
-				initRender();											
-				// 일정 페이지 정보 가져오기
-				var daysPage = document.getElementById("page3");
-				var div = document.createElement('div');			
-				
-				if(daysMarker.length >= 2){
-					//시작 지점 과 끝지점 가져와서 최단거리 설정
-					div.innerHTML += "<span style='margin-Left:226px;'>↓</span>";
-					var startCoord = new daum.maps.LatLng(daysMarker[daysMarker.length-2].getPosition().getLat(), daysMarker[daysMarker.length-2].getPosition().getLng());
-					var endCoord =  new daum.maps.LatLng(daysMarker[daysMarker.length-1].getPosition().getLat(), daysMarker[daysMarker.length-1].getPosition().getLng());
-					div.innerHTML += "<a style='float:right; margin-right:30px;' href='https://map.kakao.com/?sX="+startCoord.toCoords().getX()+"&sY="+startCoord.toCoords().getY()+"&sName=출발점&eX="+endCoord.toCoords().getX()+"&eY="+endCoord.toCoords().getY()+"&eName=도착점'"
-							+ " onclick='window.open(this.href, \"_경로보기\", \"width=1000px,height=800px;\"); return false;'"
-							+ ">최단경로보기</a><br>";
-				}
-				div.innerHTML += "<div style='font-size:20px; width:450px; height:38px; border:1px solid black;'>"+daysMarker.length+"번째 일정:"+title
-						       +"<img src='./img/canvas/normalClose.png' style='float:right;' class='deleteDays' onclick='deleteDay(this.title)' title='"+(daysMarker.length-1)+"' width='38' height='38'></div>";
+				div.innerHTML += "<div style='font-size:20px; width:450px; height:38px; border:1px solid black;'>"+daysMarker.length+"번째 일정:"+title+"<img src='./img/canvas/normalClose.png' style='float:right;' class='deleteDays' onclick='deleteDay(this.title)' title='"+(daysMarker.length-1)+"' width='38' height='38'></div>";
 				daysPage.appendChild(div);
 				infoWindow.close();
 				isInsertOpen = false;
 				map.setDraggable(true);
-				map.setZoomable(true);
-				daysNum++;		
-			}			
-		}         	
+				map.setZoomable(true);							
+			}       
+		}
 		
 		// 그려주기
 		function render() {
@@ -271,15 +204,7 @@
 					// 지도에 선을 표시합니다 
 					polyline.setMap(map);  
 				}    		    
-		}
-		// 일정 등록시 info메세지 닫기
-		function closeInfo() {
-			infoWindow.close();
-			isInsertOpen = false;
-			map.setDraggable(true);
-			map.setZoomable(true);
-			daysNum++;		    
-		}
+		}		
 		// 초기화 후 그려주기
 		function initRender() {
 		    if (polyline != null) {
@@ -287,8 +212,7 @@
 				render();
 		    }else if(polyline == null){
 		    	render();
-		    }
-		    
+		    }		    
 		}				
 		// 일정 등록시 info메세지 닫기
 		function closeInfo() {
@@ -304,31 +228,31 @@
 		    //alert(daysMarker[0].getPosition().getLat());		
 		    var jsonObj = {};
 		    for (var i = 0; i < daysMarker.length; i++) {
-			var testVal = {
-			    'title' : String(daysInfo[i]),
-			    'content' : "내용" + i,
-			    'startDate' : "2019-05-14 " + daysStart[i] + ":00",
-			    'endDate' : "2019-05-14 " + daysEnd[i] + ":00",
-			    'x' : String(daysMarker[i].getPosition().getLat()),
-			    'y' : String(daysMarker[i].getPosition().getLng()),
-			    'address' : "제주특별자치도 서귀포시 성산읍 고성리 127-2"
-			};
-			jsonObj["days" + i] = testVal;
+				var testVal = {
+				    'title' : String(daysInfo[i]),
+				    'content' : "내용" + i,
+				    'startDate' : "2019-05-14 " + daysStart[i] + ":00",
+				    'endDate' : "2019-05-14 " + daysEnd[i] + ":00",
+				    'x' : String(daysMarker[i].getPosition().getLat()),
+				    'y' : String(daysMarker[i].getPosition().getLng()),
+				    'address' : "제주특별자치도 서귀포시 성산읍 고성리 127-2"
+				};
+				jsonObj["days" + i] = testVal;
 		    }
 		    alert(jsonObj);
 		    $.ajax({
-			url : "insertDaysCanvas.do", //요청 url
-			type : "post", // 전송 처리방식
-			asyn : false, // true 비동기 false 동기
-			contentType : 'application/json',
-			data : JSON.stringify(jsonObj), // 서버 전송 파라메터
-			dataType : "json", // 서버에서 받는 데이터 타입
-			success : function(msg) {
-			    alert("성공");
-			},
-			error : function() {
-			    alert("삶의 지혜가 부족하다.");
-			}
+				url : "insertDaysCanvas.do", //요청 url
+				type : "post", // 전송 처리방식
+				asyn : false, // true 비동기 false 동기
+				contentType : 'application/json',
+				data : JSON.stringify(jsonObj), // 서버 전송 파라메터
+				dataType : "json", // 서버에서 받는 데이터 타입
+				success : function(msg) {
+				    alert("성공");
+				},
+				error : function() {
+				    alert("삶의 지혜가 부족하다.");
+				}
 		    });
 		});
 
@@ -405,9 +329,7 @@
 					markers.push(foodMarker);
 					var foodMarkerInfo = new daum.maps.InfoWindow(
 						{
-						    content : '<div style="width:200px; height:90px; padding:5px;">'
-							    + msg.result[i].map_title
-							    + '</div><button style="width:99px; height:30px">일정등록</button><button style="width:99px; height:30px">닫기</button>',
+						    content : '<div style="width:200px; height:90px; padding:5px;">'+msg.result[i].map_title+'</div><button style="width:99px; height:30px">일정등록</button><button style="width:99px; height:30px">닫기</button>',
 						    removable : true
 						});
 
@@ -424,8 +346,8 @@
 				error : function() {
 				    alert("실패");
 				}
-		});
-	 }
+			});
+	 	}
 	
 	
  	function deleteDay(number){ 		
@@ -463,10 +385,8 @@
 			}
 		}
  	}
-	
- 	
- 	
 	</script>
+	
 	<script type="text/javascript">
 	$(function() {
  	    //single book
