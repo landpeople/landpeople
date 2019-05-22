@@ -1,8 +1,10 @@
 package happy.land.people.ctrl;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
@@ -21,6 +23,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
@@ -114,23 +117,40 @@ public class ChoController {
 		dto.setUser_nickname(user_name[0]);
 		dto.setUser_auth("N");
 		boolean isc = iChoService.signUp(dto);
+		session.setAttribute("ldto", dto);
+        return isc?"redirect:./index.jsp":"404";
+    }
+ 
+    //구글 로그인 성공시 콜백
+    @RequestMapping(value="/callbackgoogle.do" , method= {RequestMethod.POST,RequestMethod.GET})
+    public String callbackGoogle(Model model, @RequestParam String code, HttpSession session , ChoDto dto) {
+    	System.out.println("여기는 googleCallback");
 
-		return isc ? "redirect:./index.jsp" : "404";
-	}
-
-	// 구글 로그인 성공시 콜백
-	@RequestMapping(value = "/callbackgoogle.do", method = { RequestMethod.POST, RequestMethod.GET })
-	public String callbackGoogle(Model model, @RequestParam String code, HttpSession session, ChoDto dto) {
-		System.out.println("여기는 googleCallback");
-
+    	
 		return "redirect:./index.jsp";
 	}
 
 	// 여기는 나중에 한다 ^^ 로그인기능 => 다 됐다 로그인 기능
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public String login(ChoDto dto, HttpSession session) {
+	public String login(ChoDto dto, HttpSession session,HttpServletResponse response) throws IOException {
 
+		
+		//여기서 막아버리자 로그인시 확인하는거 api인지 일반인지  api면 api가입자라고 보여주자
+		System.out.println("login쿼리 실행전");
 		ChoDto ldto = iChoService.login(dto);
+		System.out.println("login쿼리 실행후");
+		
+		
+	/*	
+		String user_email = ldto.getUser_email();
+		PrintWriter out = response.getWriter();
+			
+		if(user_email == null) {
+			out.print("<script type='text/javascript'>");
+			out.print("alert('가입안함')");
+			out.print("</script>");
+		}*/
+		//이제 여기서
 
 		System.out.println(ldto);
 
@@ -151,7 +171,7 @@ public class ChoController {
 		System.out.println("로그아웃.do 현재 세션 : " + session);
 
 		session.invalidate();
-		return "forward:./index.jsp";
+		return "redirect:./index.jsp";
 	}
 
 	// 회원가입 페이지로가기 ^^
@@ -181,9 +201,44 @@ public class ChoController {
 	}
 	
 	
+	//비밀번호 찾기로 와서 비밀번호 수정
+	@RequestMapping(value="/pwforget.do",method=RequestMethod.POST)
+	public String pwforget(ChoDto dto) {
+		
+		
+		boolean isc = true;
+		return isc ? "pwforget/pwforget":"error";
+	}
 	
 	
+	//회원가입 이메일 중복 체크
+	@RequestMapping(value="/emailchk.do" , method=RequestMethod.POST,produces="application/text; charset=utf-8")
+	@ResponseBody
+	public String emailChk(String user_email) {
+		logger.info("이메일 중복체크 컨트롤러");
+		String email = user_email;
+		
+		System.out.println(email);
+		
+		
+		int n=iChoService.emailDupChk(user_email);
+		
+		System.out.println("이메일이 있으면 1 없으면 0 이떠야함:"+n);
+		return (n==0) ? "0":"1"; //0은 사용가능 1은 사용x 
+	}
 	
+	//회원가입 닉네임 중복 체크
+	@RequestMapping(value="/nicknamecheck.do" , method=RequestMethod.POST,produces="application/text; charset=utf-8")
+	@ResponseBody
+	public String nicknameChk(String user_nickname) {
+		logger.info("닉네임 중복체크");
+		
+		System.out.println(user_nickname);
+		
+		int n = iChoService.nicknameDupChk(user_nickname);
+		System.out.println("닉네임 있으면 1 없으면 0 이떠야함:"+n);
+		return (n==0)?"0":"1";//0은 사용가능 1은 사용x 
+	}
 	
 	
 	
@@ -195,14 +250,35 @@ public class ChoController {
 	public String mypage(HttpSession session) {
 		
 		
+		
+		
 		return "users/mypage";
 	}
 	
 	
 	//마이페이지 수정 완료
 	@RequestMapping(value="/modifyMypage.do" , method=RequestMethod.POST)
-	public String modifyMypage(ChoDto dto) {
+	public String modifyMypage(ChoDto dto, HttpSession session) {
+		ChoDto userDto = (ChoDto)session.getAttribute("ldto");
+		System.out.println("dto잘봤냐"+dto);
+		dto.setUser_auth(userDto.getUser_auth());
 		iChoService.userInfo(dto);
+		
+		return "forward:./index.jsp";
+	}
+	
+	
+	//회원탈퇴페이지로가기
+	@RequestMapping(value="/delpage.do" , method=RequestMethod.GET)
+	public String delflagPage() {
+		logger.info("회원탈테페이지로 ㄱㄱㄱ     ///오니?");
+		return "users/delpage";
+	}
+	
+	// 회원탈퇴
+	@RequestMapping(value="/delflag.do" , method=RequestMethod.GET)
+	public String delflag(ChoDto dto ,String user_email) {
+		iChoService.deleteUser(user_email);
 		return "forward:./index.jsp";
 	}
 	

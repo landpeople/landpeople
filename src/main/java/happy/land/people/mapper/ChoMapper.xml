@@ -31,11 +31,11 @@
 
 <!-- 이메일 중복체크  -->
 <select id="emailDupChk" parameterType="java.lang.String" resultType="java.lang.Integer">
-	SELECT COUNT(USER_EMAIL) USER_EMAIL FROM LPUSER WHERE USER_EMAIL = #{user_email}
+	SELECT COUNT(USER_EMAIL) FROM LPUSER WHERE USER_EMAIL = #{user_email}
 </select>
 <!-- 닉네임 중복체크 -->
 <select id="nicknameDupChk" parameterType="java.lang.String" resultType="java.lang.Integer">
-	SELECT COUNT(USER_NICKNAME) USER_NICKNAME FROM LPUSER WHERE USER_NICKNAME = #{user_nickname}
+	SELECT COUNT(USER_NICKNAME) FROM LPUSER WHERE USER_NICKNAME = #{user_nickname}
 </select>
 
 
@@ -69,7 +69,7 @@ UPDATE LPUSER SET USER_NICKNAME = #{user_nickname} WHERE USER_EMAIL = #{user_ema
 
 
 <!-- 회원탈퇴 -->
-<update id="delflag">
+<update id="delflag" parameterType="java.lang.String">
 UPDATE LPUSER SET USER_DELFLAG = 'T' WHERE USER_EMAIL = #{user_email}
 </update>
 
