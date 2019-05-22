@@ -4,15 +4,13 @@ function sketchBookMake(user) {
 		ajaxSketchMake(user_email);
 	}
 
-	var ajaxSketchMake = function(user_email) {
+	var ajaxSketchMake = function(/*user_email*/) {
 		//alert(user_email);
 
 		$.ajax({
 					url : "sketchMakeForm.do",
 					type : "get",
-					data : {
-						"user_email" : user_email
-					},
+					data : {"user_email" : user_email},
 					dataType : "json",
 					success : function(map) {
 

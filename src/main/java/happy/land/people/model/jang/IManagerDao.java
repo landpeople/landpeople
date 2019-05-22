@@ -19,4 +19,6 @@ public interface IManagerDao {
 	public boolean modifyIswrite(String email);
 	
 	public boolean modifyBlock(String id);
+	
+	
 }

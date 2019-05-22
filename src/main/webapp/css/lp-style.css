@@ -115,6 +115,30 @@ iframe {
 	/* float: right; */
 }
 
+.modal-content{
+	color: black;	
+}
+
+
+.moSketchBookCover{
+	width: 300px;
+	height: 100px;
+}
+
+
+.modalImg{
+	border: 1px solid black;
+	width: 200px;
+	height: 100px;
+	/* float: left; */
+	margin: 0px 20px 30px 20px;
+	background-size: contain;
+ 	background-repeat: no-repeat;
+ 	background-position: center;
+}
+
+
+
 /* 라디오버튼 숨기기 */
 .themeradio input[type=radio] { 
 	display:none;  

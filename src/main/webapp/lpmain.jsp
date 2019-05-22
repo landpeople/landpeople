@@ -38,7 +38,7 @@ var ajaxSketchMake = function(user_email){
 				//alert(map.user_iswrite);
 				//alert(map.user_email);
 				$("#sketchForm").modal();
-								var htmlModal = "<input type='hidden' name='user_email' value='"+map.user_email+"'>"+
+				var htmlModal = "<input type='hidden' name='user_email' value='"+map.user_email+"'>"+
 											
 								"<div class='form-group'>"+
 								"<label>스케치북 제목</label>"+
@@ -57,7 +57,16 @@ var ajaxSketchMake = function(user_email){
 								
 								"<div class='form-group'>"+
 								"<label>스케치북 커버이미지</label>"+
-								"<input type='text' class='form-control' id='cover' name='coverimage' style='width : 400px;'>"+
+									"<div class='moSketchBookCover'>"+
+										"<div>"+
+											"<div class='modalImg'>"+
+												"<label for='C_IMG2'><img src='./img/folder.png'></label>"+
+												"<input id='C_IMG2' class='file' name='file' type='file' multiple='multiple' style='display: none;'>"+
+											"</div>"+
+												"<input type='hidden' name='list[5].img_spath' class='img_spath1'>"+
+												"<input type='hidden' name='list[5].text_no' value='5'>"+
+										"</div>"+
+									"</div>"+
 								"</div>"+
 								
 								"<div class='modal-footer'>"+
@@ -131,6 +140,30 @@ function sketchInsert(){
 			<!-- 	<iframe src="http://www.daum.net"></iframe> -->
 			</div>
 			<!-- 채팅 -->
+			
+			<!-- 스케치북 생성 Modal -->
+				<div class="modal fade" id="sketchForm" role="dialog">
+				  <div class="modal-dialog">
+				
+				    
+				    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal">&times;</button>
+					        <h4 class="modal-title">스케치북 작성</h4>
+				      	  </div>
+						  <div class="modal-body">
+						<!--   <form method="post" enctype="multipart/form-data" name="frm" id="frm">	 -->
+						       <form action="#" role="form" method="post" enctype="multipart/form-data" id="makeSketchBook" name="makeSketchBook"></form>
+						      
+						  </div>
+				    </div>
+				  </div>
+				</div><!-- 여기까지 스케치북 생성 Modal -->
+			
+			
+			
+			
+			
 		</div>
 		<!-- .sidebar-menu 여기까지 사이드 바 -->
 
@@ -149,23 +182,19 @@ function sketchInsert(){
 						href="./lee.do">이연지 페이지로 이동</a><br> <a href="./jang.do">장석영
 						페이지로 이동</a><br> <a href="./jung.do">정희태 페이지로 이동</a> 
 				
-				<!-- 스케치북 생성 Modal -->
-				<div class="modal fade" id="sketchForm" role="dialog">
-				  <div class="modal-dialog">
-				
-				    
-				    <div class="modal-content">
-					      <div class="modal-header">
-					        <button type="button" class="close" data-dismiss="modal">&times;</button>
-					        <h4 class="modal-title">스케치북 작성</h4>
-				      	  </div>
-						  <div class="modal-body">
-						       <form action="#" role="form" method="post" id="makeSketchBook"></form>
-						      
-						  </div>
-				    </div>
-				  </div>
-				</div><!-- 여기까지 스케치북 생성 Modal -->
+		<form method="post" enctype="multipart/form-data" name="frm" id="frm">		
+			<div class="moSketchBookCover">
+				<div>
+					<div class="modalImg">
+						<label for="C_IMG2"><img src="./img/folder.png"></label> 
+						<input id="C_IMG2" class="file" name="file" type="file" multiple="multiple" style="display: none;">
+					</div>
+						<input type="hidden" name="list[5].img_spath" class="img_spath1">
+						<input type="hidden" name="list[5].text_no" value="5"> 
+				</div>
+			</div>
+		</form>		
+				<a href="./imgupload.do">업로드</a>
 				
 				
 			
@@ -185,4 +214,73 @@ function sketchInsert(){
 		</div>
 	</div>
 </body>
+
+<script type="text/javascript">
+var imgs =$("div[id*='IMG']");
+var subImgClass;
+
+$(document).ready(function() {
+	
+	//이미지 업로드
+	$(".file").on("change", function(){
+		var imgClass = $(this).attr("id");
+		subImgClass = imgClass.substring(imgClass.indexOf('_')+1);
+		fileUpload(subImgClass);
+	});
+});
+
+function fileUpload(subImgClass) {
+	
+	var frmEle = document.forms[0];
+	var formData = new FormData(frmEle);
+	for (var i = 0; i < imgs.length; i++) {
+		formData.append("file",$(".file")[i]);
+	}
+		formData.append("text_no",subImgClass);
+
+	//파일 업로드 확장자 확인
+	// 		var file = form.file; 여기 부분이 아직 불확실
+	// 		var fileExt = file.substring(file.lastIndex(".")+1);
+	// 		var reg = /gif|jpg|png|jpeg/i;
+	// 		if(reg.test(fileExt)==false){
+	// 			alert("이미지는 gifm jpg, png 파일만 올릴 수 있습니다.");
+
+	// 			return;
+	// 		}
+
+	//파일 사이즈 확인
+
+	//파일 업로드 확장자 및 사이즈 확인을 메소드로 만들어서 true가 되면 아작스 실행
+
+$.ajax({
+		url : './uploadFile.do',
+		type : 'post',
+		data : formData,
+		enctype : 'multipart/form-data',
+		processData : false,
+		contentType : false,
+		success : function(result) {
+			var imgDiv = subImgClass;
+			for (var i = 0; i < imgs.length; i++) {
+				
+				if (imgs.eq(i).attr("id") == imgDiv) {
+					$("div[id="+imgDiv+"]").css("background-image", "url('" + result+ "')");
+					var img_spath = $("input[class=img_spath"+i+"]");
+					img_spath.val(result);
+				}//if
+			
+			}//for
+		}
+	});
+}
+
+
+
+</script>
+
+
+
+
+
+
 </html>
