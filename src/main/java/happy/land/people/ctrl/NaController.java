@@ -50,8 +50,9 @@ public class NaController {
 	
 	@RequestMapping(value="/upload.do", method=RequestMethod.POST)
 	public String uploadPage(HttpSession session,String nowPageNo){
-    	// 페이지 번호 , 캔버스 id     	
-    	LPCanvasDto dto = new LPCanvasDto("0001", "1", "제목은 대충", "내용도 아무거나", "2", nowPageNo);
+    	// 페이지 번호 , 캔버스 id  
+    	String sketch_id = (String)session.getAttribute("sketch_id");
+    	LPCanvasDto dto = new LPCanvasDto("0001", sketch_id, "제목은 대충", "내용도 아무거나", "2", nowPageNo);
     	session.setAttribute("canvas", dto);
 		return "na_insertFreeCanvas_1";
 	}
@@ -156,28 +157,16 @@ public class NaController {
 				//이미지 null 값 공백으로 치환
 				String img_spath = StringUtils.defaultString(dto.getImg_spath());
 				dto.setImg_spath(img_spath);
-				// 엔터키 지우기
-				String resultText = dto.getText_content();				
-				// 엔터 추출
-				int cutWord =  10;
-				// 마지막에 있는 엔터 먼저 없애고 반복문 실행
-				if(resultText.length()!=0) {
-					resultText = resultText.substring(0, resultText.length()-2);	
-				}
-				// 입력한 내용 중간에 엔터가 있는지 탐색
-				/*for(int i = 0 ;i < resultText.length() ; i++) {
-					int chkNum = resultText.indexOf(cutWord);	
-					if(chkNum == -1)
-						break;
-					else {
-						String StartContent = resultText.substring(0, chkNum);
-						String EndContent = resultText.substring(chkNum,resultText.length()-1);
-						resultText = StartContent+EndContent;
-					}
-				}*/
-				
-				dto.setText_content(resultText);
-				System.out.println(resultText);
+
+				// 엔터키 지우기 위한 변수선언
+				String resultText = dto.getText_content();					
+				// 마지막에 있는 엔터 먼저 없애고 반복문 실행				
+				resultText = resultText.substring(0, resultText.length()-2);	
+				// 입력한 내용 중간에 엔터가 있는지 탐색 후 삭제
+				resultText = resultText.replaceAll(System.getProperty("line.separator")," ");
+				// 엔터키 삭제한 값을 dto에 다시 담음
+				dto.setText_content(resultText);				
+
 				//DB에 저장
 				isc = textService.insertImgFile(dto);				
 			}else if(StringUtils.isBlank(dto.getImg_spath())) {
