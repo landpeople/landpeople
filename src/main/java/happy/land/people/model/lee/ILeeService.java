@@ -13,7 +13,7 @@ public interface ILeeService {
 	public int chatList_SelectOne(String user_nickname);
 	
 	// 세션에 있는 사용자 정보를 채팅 리스트에 입력
-	public String chatList_Insert(String user_nickname);
+	public int chatList_Insert(String user_nickname);
 	
 	// 채팅방 생성
 	public String chatRoom_Select(Map<String,String> map);

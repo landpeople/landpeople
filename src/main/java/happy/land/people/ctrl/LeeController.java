@@ -74,6 +74,16 @@ public class LeeController implements ServletConfigAware {
 		map.put("sender", sender);
 		map.put("receiver", receiver);
 		// 여기서 테이블의 다오를 통해서 나랑 상대방의 채팅방이 기존에 있는지 확인해줌
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		String chr_id = service.chatRoom_Select(map);
 
 		if (chr_id == null) {

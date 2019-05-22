@@ -20,7 +20,7 @@ public class LeeServiceImpl implements ILeeService {
 	
 
 	@Override
-	public String chatList_Insert(String user_nickname) {
+	public int chatList_Insert(String user_nickname) {
 		logger.info("● Service chatList_Insert 실행");
 		return dao.chatList_Insert(user_nickname);
 	}
