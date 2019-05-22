@@ -242,7 +242,7 @@ public class KimController {
     	LPCanvasDto canvasDto = new LPCanvasDto();
     	canvasDto.setCan_pageno(nowPageNo);
     	// 스케치북 세팅
-    	canvasDto.setSketch_id("1");
+    	canvasDto.setSketch_id((String)session.getAttribute("sketch_id"));
     	// 보고 있는 페이지의 캔버스 id값을 가져옴
     	String id = canvasService.canvasSelectID(canvasDto);
     	// 캔버스 dto 세팅
