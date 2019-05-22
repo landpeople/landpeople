@@ -53,7 +53,7 @@ public class NaController {
     	// 페이지 번호 , 캔버스 id     	
     	LPCanvasDto dto = new LPCanvasDto("0001", "1", "제목은 대충", "내용도 아무거나", "2", nowPageNo);
     	session.setAttribute("canvas", dto);
-		return "na_insertFreeCanvas";
+		return "na_insertFreeCanvas_1";
 	}
 	
 	@RequestMapping(value="/uploadFile.do", method=RequestMethod.POST, produces="application/text;charset=UTF-8")
@@ -132,10 +132,11 @@ public class NaController {
 		
 		for (LPTextDto dto:cdto.getList()) {
 			System.out.println(dto.toString());
+			System.out.println("------------공백 값 : "+StringUtils.isBlank(dto.getImg_spath()));
 			
 			//썸네일 생성
 			//컨트롤러로 이동할 예정(request 객체를 DAO에서 못 받아 올 수 있기 때문에 완료 후 수정시 실행)
-			if(dto.getImg_spath()!=null) {
+			if(dto.getImg_spath()!=null && !StringUtils.isBlank(dto.getImg_spath())) {//이미지 DB 저장
 				String origianlImgPath = dto.getImg_spath();
 				String thumbnailImgPath = makeTumbnail(origianlImgPath, request);
 				
@@ -150,7 +151,7 @@ public class NaController {
 				
 				//DB에 저장
 				isc = textService.insertImgFile(dto);
-			}else {
+			}else if(dto.getText_content()!=null && !StringUtils.isBlank(dto.getText_content())){//텍스트 DB 저장
 				dto.setCan_id(canvasDto.getCan_id());
 				//이미지 null 값 공백으로 치환
 				String img_spath = StringUtils.defaultString(dto.getImg_spath());
@@ -159,8 +160,10 @@ public class NaController {
 				String resultText = dto.getText_content();				
 				// 엔터 추출
 				int cutWord =  10;
-				// 마지막에 있는 엔터 먼저 없애고 반복문 실행				
-				resultText = resultText.substring(0, resultText.length()-2);	
+				// 마지막에 있는 엔터 먼저 없애고 반복문 실행
+				if(resultText.length()!=0) {
+					resultText = resultText.substring(0, resultText.length()-2);	
+				}
 				// 입력한 내용 중간에 엔터가 있는지 탐색
 				/*for(int i = 0 ;i < resultText.length() ; i++) {
 					int chkNum = resultText.indexOf(cutWord);	
@@ -177,13 +180,23 @@ public class NaController {
 				System.out.println(resultText);
 				//DB에 저장
 				isc = textService.insertImgFile(dto);				
+			}else if(StringUtils.isBlank(dto.getImg_spath())) {
+				System.out.println("흰 배경 이미지 DB에 삽입");
+				System.out.println("텍스트 공백으로 DB에 삽입");
+					dto.setCan_id(canvasDto.getCan_id());
+					//기본 이미지로 경로 치환
+					dto.setImg_spath("img/empty.jpg");
+					//공백 추가
+					String text_content = "　";
+					dto.setText_content(text_content);
+					//DB에 저장
+					isc = textService.insertImgFile(dto);
 			}
 		}
 
 		if(isc) {
 			// List<LPTextDto> textList = textService.textSelectOne("2");
 			// session.setAttribute("textList", textList);		 
-			 
 			 System.out.println("데이터베이스 정보 추가 성공");
 		}else {
 			System.out.println("데이터베이스 정보 추가 실패.");

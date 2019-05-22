@@ -30,6 +30,7 @@ import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jdo.LocalPersistenceManagerFactoryBean;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -205,7 +206,7 @@ public class KimController {
     }
     // 수정폼으로 이동
     @RequestMapping(value="updateDaysForm.do",method=RequestMethod.POST)
-    public String updateDaysFrom(HttpSession session,String nowPageNo){
+    public String updateDaysFrom(HttpSession session,String nowPageNo, Model model){
         //캔버스 세팅	
     	LPCanvasDto canvasDto = new LPCanvasDto();
     	canvasDto.setCan_pageno(nowPageNo);
@@ -221,12 +222,15 @@ public class KimController {
 	    	List<LPDaysDto> daysDto = daysService.daysSelectAll(id);
 	    	session.setAttribute("days", daysDto);
 	    	return "kim_updateDaysCanvas";
+	    	
     	}else if(canvasDto.getCan_type().equalsIgnoreCase("2")){
     		// 자유 캔버스
-    		return "na_detailFreeCanvas1";
+    		List<LPTextDto> list = textService.textSelectOne(id);
+    		model.addAttribute("textList1", list);
+    		return "na_updateFreeCanvas_1";
     	}else {
     		return "error";
-    	}    	
+    	}       	
     }
     
     @RequestMapping(value="deleteDaysForm.do",method=RequestMethod.POST)

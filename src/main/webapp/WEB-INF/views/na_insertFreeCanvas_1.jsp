@@ -17,7 +17,6 @@
 <script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
 </head>
 <body>
-
 	<form method="post" enctype="multipart/form-data" name="frm" id="frm">
 		<!-- 왼쪽 -->
 		<div id="Left-Side">
