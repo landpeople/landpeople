@@ -24,7 +24,7 @@ public class LeeServiceImpl implements ILeeService {
 		String chr_id = dao.chatRoom_Select(map);
 		
 		if(chr_id == null) {
-			chr_id = dao.chatRoom_Insert(map); // 채팅방 생성
+			chr_id = dao.chatRoom_Insert(map.get()); // 채팅방 생성
 
 		}else {
 			int n = dao.chatRoom_UpdateOut(chr_id);
