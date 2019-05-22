@@ -25,5 +25,4 @@
          <aop:after method="afterThrowing" pointcut-ref="daoLogPoint"/>
       </aop:aspect>
    </aop:config>
-
 </beans>

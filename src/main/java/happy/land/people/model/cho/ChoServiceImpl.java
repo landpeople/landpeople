@@ -78,9 +78,8 @@ public class ChoServiceImpl implements IChoService {
 	}
 
 	@Override
-	public boolean userInfo(Map<String, String> map) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean userInfo(ChoDto dto) {
+		return iChoDao.userInfo(dto);
 	}
 
 	@Override
