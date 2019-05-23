@@ -1,6 +1,7 @@
 package happy.land.people.ctrl;
 
 import java.awt.image.BufferedImage;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -49,22 +50,19 @@ public class NaController {
 	private ILPCanvasService canvasService;
 	
 	@RequestMapping(value="/upload.do", method=RequestMethod.POST)
-	public String uploadPage(HttpSession session,String nowPageNo){
+	public String uploadPage(HttpSession session,String nowPageNo,String selectType){
     	// 페이지 번호 , 캔버스 id  
     	String sketch_id = (String)session.getAttribute("sketch_id");
-    	LPCanvasDto dto = new LPCanvasDto("0001", sketch_id, "제목은 대충", "내용도 아무거나", "2", nowPageNo);
-    	session.setAttribute("canvas", dto);
-		return "na_insertFreeCanvas_1";
+    	LPCanvasDto dto = new LPCanvasDto("0001", sketch_id, "제목은 대충", "내용도 아무거나", selectType, nowPageNo);
+    	session.setAttribute("canvas", dto);    	
+		return "na_insertFreeCanvas_"+(Integer.parseInt(selectType)-1);
 	}
 	
 	@RequestMapping(value="/uploadFile.do", method=RequestMethod.POST, produces="application/text;charset=UTF-8")
 	@ResponseBody
 	public String upload(MultipartHttpServletRequest mr, String text_no, HttpServletRequest request, Model model) {
 		List<MultipartFile> tt = (List<MultipartFile>) mr.getFiles("file");
-		System.out.println("1번 이미지 : "+tt.get(0).getOriginalFilename()); 
-		System.out.println("2번 이미지 : "+tt.get(1).getOriginalFilename()); 
-		System.out.println("3번 이미지 : "+tt.get(2).getOriginalFilename()); 
-		
+				
 		MultipartFile uploadfile = tt.get(Integer.parseInt(text_no.substring(3))-1);
 		
 		//원래 파일명
@@ -125,7 +123,8 @@ public class NaController {
 		boolean isc = false;
 		
 		// 캔버스 생성 부분 
-    	LPCanvasDto canvasDto =  (LPCanvasDto)session.getAttribute("canvas");    	
+    	LPCanvasDto canvasDto =  (LPCanvasDto)session.getAttribute("canvas"); 
+    	System.out.println(canvasDto);
     	int chk = canvasService.canvasInsert(canvasDto);
     	String canvasID = canvasService.canvasSelectID(canvasDto);
     	canvasDto.setCan_id(canvasID);
