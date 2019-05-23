@@ -210,10 +210,10 @@ table {
         		if(msg.startsWith("[${user}]")){ //대화내용
    //                msg = msg.substring(3);// [나] 라는거 자르는 거 였음
                  	 $(".receive_msg").append($("<div class = 'sendTxt'>").append($("<span class ='sender_img'>").text(msg))).append("<br><br>");
-                         content.push("<div class = 'sendTxt'><span class ='sender_img'>"+msg + "</span></div><br><br>"); // 받은 메시지 content에 저장
+//                          content.push("<div class = 'sendTxt'><span class ='sender_img'>"+msg + "</span></div><br><br>"); // 받은 메시지 content에 저장
         		}else{
                		 $(".receive_msg").append($("<div class = 'receiveTxt'>").append($("<span class = 'receiver_img'>").text(msg))).append("<br><br>");
-                         content.push("<div class = 'receiveTxt'><span class = 'receiver_img'>" + msg + "</span></div><br><br>"); // 받은 메시지 content에 저장
+//                          content.push("<div class = 'receiveTxt'><span class = 'receiver_img'>" + msg + "</span></div><br><br>"); // 받은 메시지 content에 저장
         		}  
              		$(".receive_msg").scrollTop($(".receive_msg")[0].scrollHeight);              
           		}
@@ -230,8 +230,7 @@ table {
           $.ajax({
                  type: "POST",
                  url: "./chkChatMember.do",
-                 data: { chr_id: <%=chr_id%>
-    },
+                 data: { chr_id: "${chr_id}"},
 				dataType : "json",
 				async : false,
 				success : function(result) {
@@ -241,17 +240,28 @@ table {
 				    alert("실패");
 				}
 			    });
-
+          
 			    if ($(".chat").val().trim() == ''
 				    || $(".chat").val() == '\n') { /*공백이나 개행문자만 입력 했을 시 전송 안되도록 함*/
 				alert("● groupChat.jsp / 내용을 입력하세요. ");
 				return;
-			    } else if (canWrite == 'cantChat') {
-				alert("● 대화 상대가 없습니다. *채팅 불가*");
-				return;
-			    } else {
+			    }
+// 			    else if (canWrite == 'cantChat') {
+// 				alert("● 대화 상대가 없습니다. *채팅 불가*");
+// 				return; }
+			    else {
 				ws.send(nick + " : " + $(".chat").val());
 				// content.push(nick+" : "+$(".chat").val()); // 보내는 메시지 content에 저장
+				
+				$.ajax({
+				  type: "POST",
+				  url : "./insertMessage.do",
+				  data: {"chc_content" : "<div class = 'sendTxt'><span class ='sender_img'>['${user}']"+$(".chat").val()+"</span></div><br><br>"}
+				  success : function(){
+				      alert("성고옹");
+				  }
+				});
+				
 				$(".chat").val('');
 				$(".chat").empty();
 				$(".chat").focus();

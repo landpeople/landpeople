@@ -148,13 +148,29 @@ public class LeeController implements ServletConfigAware {
 		return map;
 	}
 
-	@ResponseBody
 	@RequestMapping(value = "/chkChatMember.do", method = RequestMethod.POST)
+	@ResponseBody
 	public Map<String, String> chkChatMember(String chr_id) {
 		String str = service.chkChatMember(chr_id);
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("result", str);
 		return map;
+	}
+	
+	@RequestMapping(value = "/insertMessage.do", method = RequestMethod.POST)
+	@ResponseBody
+	public void insertMessage(HttpSession session, String chc_content) {
+System.out.println("● LeeController socketOut.do DB에 저장할 chc_content : " + chc_content);
+		
+		String chr_id = (String)session.getAttribute("chr_id");
+		String user = (String)session.getAttribute("user");
+		
+		System.out.println("● LeeController socketOut.do / chr_id : " + chr_id);
+		System.out.println("● LeeController socketOut.do / chr_id : " + user);
+		
+		ChatContentDto dto = new ChatContentDto(chr_id, user, chc_content);
+		
+		int n = service.chatContent_InsertMsg(dto);
 	}
 	
 	@RequestMapping(value="/regiFile.do", method=RequestMethod.POST, produces="application/text; charset-utf-8;")
