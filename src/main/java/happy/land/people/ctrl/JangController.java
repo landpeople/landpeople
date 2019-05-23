@@ -24,6 +24,7 @@ import happy.land.people.dto.JsonUtil;
 import happy.land.people.dto.LPSketchbookDto;
 import happy.land.people.dto.LPUserDto;
 import happy.land.people.model.jang.IManagerService;
+import happy.land.people.beans.ExecuteUsingQuartz;
 import happy.land.people.ctrl.JangController;
 
 @Controller
@@ -153,7 +154,6 @@ public class JangController {
 	}
 	
 	@RequestMapping(value="/scheduler.do")
-	@Scheduled(fixedDelay=500)
 	public void scheduler(HttpServletRequest request, HttpServletResponse response) {
 		logger.info("Controller scheduler");
 		iManagerService.scheduler();

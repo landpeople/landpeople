@@ -13,13 +13,24 @@
 	
 	<!-- 주기적으로 실행시킬 메소드 등록 및 동시 실행 방지 -->
 	<bean id="jobDetailFactoryBean" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"
-		p:targetObject-ref="executeUsingQuartz" p:targetMethod="delFile" p:concurrent="false"/>
+		p:targetObject-ref="executeUsingQuartz" p:targetMethod="test" p:concurrent="false"/>
 	
 	<!-- CronTrigger 설정 -->
 	<bean id="cronTriggerFactoryBean" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"
-		p:jobDetail-ref="jobDetailFactoryBean" p:cronExpression="*/30 * * * *?"/><!-- 30초 -->
+		p:jobDetail-ref="jobDetailFactoryBean" p:cronExpression="*/10 * * * *?"/><!-- 30초 -->
 		
 	<!-- scheduler 설정 -->
 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean"
 		p:triggers-ref="cronTriggerFactoryBean"/>
+		
+		
+		
+<!-- 	<bean id="jobDetailFactoryBean2" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean" -->
+<!-- 		p:targetObject-ref="executeUsingQuartz" p:targetMethod="test" p:concurrent="false"/> -->
+	
+<!-- 	<bean id="cronTriggerFactoryBean2" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean" -->
+<!-- 		p:jobDetail-ref="jobDetailFactoryBean2" p:cronExpression="*/2 * * * *?"/>30초 -->
+		
+<!-- 	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean" -->
+<!-- 		p:triggers-ref="cronTriggerFactoryBean2"/> -->
 </beans>

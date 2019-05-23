@@ -29,6 +29,9 @@ public class ExecuteUsingQuartz {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-
+	}
+	
+	public void test() {
+		System.out.println("스케줄러 실행!");
 	}
 }
