@@ -44,4 +44,22 @@
 			FROM LPCANVAS 
 			WHERE CAN_PAGENO=#{can_pageno} AND SKETCH_ID=#{sketch_id}
 	</select>
+	
+	<!-- insert 동적 쿼리 -->
+	<insert id="text_insert_notnull" parameterType="happy.land.people.dto.kim.LPTextDto">
+		INSERT INTO LPTEXT(TEXT_ID, CAN_ID, TEXT_CONTENT, TEXT_NO, IMG_SPATH)
+		<choose>
+			<when test="#{img_spath=null and img_spath=''}">
+				VALUES(LPTEXT_SEQ.NEXTVAL, #{can_id}, #{text_content}, #{text_no}, 'img/empty.jpg')
+			</when>
+			
+			<when test="#{text_content=null and text_content=''}">
+				VALUES(LPTEXT_SEQ.NEXTVAL, #{can_id}, '　', #{text_no}, #{img_spath})
+			</when>
+			
+			<otherwise>
+				VALUES(LPTEXT_SEQ.NEXTVAL, #{can_id}, #{text_content}, #{text_no}, #{img_spath})
+			</otherwise>
+		</choose>
+	</insert>
 </mapper>

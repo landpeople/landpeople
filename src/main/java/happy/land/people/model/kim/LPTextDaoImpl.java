@@ -59,5 +59,5 @@ public class LPTextDaoImpl implements ILPTextDao {
 	@Override
 	public int textUpdateInsert(LPTextDto conDto) {
 		return sqlSession.insert("na_test.text_UpdateInsert", conDto);
-	}	
+	}
 }

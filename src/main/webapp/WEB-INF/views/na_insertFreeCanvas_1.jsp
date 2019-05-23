@@ -116,15 +116,17 @@
 				formData.append("text_no",subImgClass);
 
 			//파일 업로드 확장자 확인
-			// 		var file = form.file; 여기 부분이 아직 불확실
-			// 		var fileExt = file.substring(file.lastIndex(".")+1);
-			// 		var reg = /gif|jpg|png|jpeg/i;
-			// 		if(reg.test(fileExt)==false){
-			// 			alert("이미지는 gifm jpg, png 파일만 올릴 수 있습니다.");
-
-			// 			return;
-			// 		}
-
+// 			var file = form.file; //여기 부분이 아직 불확실
+// 			alert("파일 : "+file);
+// 			var fileExt = file.substring(file.lastIndex(".")+1);
+// 			var reg = /gif|jpg|png|jpeg/i;
+			
+// 			if(!reg.test(fileExt)){
+// 				alert("이미지는 gif, jpg, png 파일만 올릴 수 있습니다.");
+// 				return;
+// 			}else if(){
+				
+// 			}
 			//파일 사이즈 확인
 
 			//파일 업로드 확장자 및 사이즈 확인을 메소드로 만들어서 true가 되면 아작스 실행
@@ -150,6 +152,14 @@
 				}
 			});
 		}
+		
+		var extension = function(){
+			alert("확장자 확인");
+		}
+		
+		var fileSize = function(){
+			alert("파일 크기 확인");
+		};
 		
 		function insert() {
 			//editor 텍스트를 서버에 넘기기 위한 변수에 저장

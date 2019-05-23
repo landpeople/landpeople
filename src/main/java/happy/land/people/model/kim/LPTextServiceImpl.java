@@ -58,7 +58,6 @@ public class LPTextServiceImpl  implements ILPTextService{
 	public int textUpdateInsert(LPTextDto conDto) {
 		return textDao.textUpdateInsert(conDto);
 	}
-
 }
 
 

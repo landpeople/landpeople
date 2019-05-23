@@ -151,6 +151,7 @@ public class NaController {
 				
 				//DB에 저장
 				isc = textService.insertImgFile(dto);
+				
 			}else if(dto.getText_content()!=null && !StringUtils.isBlank(dto.getText_content())){//텍스트 DB 저장
 				dto.setCan_id(canvasDto.getCan_id());
 				//이미지 null 값 공백으로 치환
@@ -180,6 +181,7 @@ public class NaController {
 				System.out.println(resultText);
 				//DB에 저장
 				isc = textService.insertImgFile(dto);				
+				
 			}else if(StringUtils.isBlank(dto.getImg_spath())) {
 				System.out.println("흰 배경 이미지 DB에 삽입");
 				System.out.println("텍스트 공백으로 DB에 삽입");
