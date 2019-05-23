@@ -103,7 +103,6 @@ public class LeeDaoImpl implements ILeeDao {
 		return sqlSession.insert("lee_test.chatContent_InsertMsg", dto);
 	}
 	
-
 	@Transactional
 	@Override
 	public String chkChatMember(String chr_id) {

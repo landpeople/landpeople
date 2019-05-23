@@ -32,11 +32,8 @@
    %>
 
    <span id="timer"></span>
-   <a href="javascript:refreshTimer();">
-      <img src="/images_std/kor/btn/btn_time_extension.gif" align="top">
-   </a>
-
-   <div style="width: 100%; height: 45px; background-color: black; color: white;">접속한 사용자 정보</div>
+   <a href="javascript:refreshTimer();"></a>
+   
    <c:choose>
       <c:when test="${ldto ne null}">
          <div id="userlist" style="width: 100%; height: 100%; overflow: auto;">
@@ -65,14 +62,12 @@
 		function click() { // 내부함수로 사용되며, this.innerHTML은 채팅을 하고 싶은 상대방의 닉네임을 가져옴
 		    alert("● chatList.jsp / 상대 : " + this.innerHTML);
 		    alert("● chatList.jsp / 나 : ${ldto.user_email}");
-		    window.open(
-			    "./socketOpen.do?sender=${ldto.user_email}&receiver="
+		    window.open("./socketOpen.do?sender=${ldto.user_email}&receiver="
 				    + this.innerHTML, '_blank', 'width=600px,height=600px');
 		}
 
 		var as = document.getElementById("userlist");
 		var a = as.getElementsByTagName("a");
-		//       alert("● chatList.jsp / 세션에 접속한 인원(나를 제외) : " + as.length);
 
 		[].forEach.call(a, function(e) {
 		    e.addEventListener("click", click); // 접속한 회원마다 이벤트를 붙여줌

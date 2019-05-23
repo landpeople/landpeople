@@ -166,10 +166,10 @@ table {
 }
 </style>
 
-<% 
+	<% 
     String chr_id = (String)session.getAttribute("chr_id"); 
     String user = (String) session.getAttribute("user");
-   %>
+    %>
 
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script type="text/javascript">
@@ -180,48 +180,42 @@ table {
       
       $(document).ready(function() {
 	  
-// 	  	document.getElementById("contentsss").innerHTML = ${model};
-	 
           nick = $("#nickName").val();
           alert("● groupChat.jsp var nick : " + nick);
           $(".receive_msg").html('');
           $(".chat_div").show();
           $(".chat").focus(); /* 텍스트 박스에 focus를 주어 입력할 수 있는 상태로 만들어 줌 */
           
-          ws = new WebSocket("ws://192.168.4.31:8091/LandPeople/wsChat.do");
+          ws = new WebSocket("ws://192.168.177.1:8091/LandPeople/wsChat.do");
           
           ws.onopen = function() {
-             alert("● groupChat.jsp ws.onopen");
-             alert("${messageList}");
-             ws.send("#$nick_"+nick); // 소켓이 열렸을 때 사용자가 입장하면 입장 메시지를 화면에 띄워 줄 수있도록 이벤트를 발생하여 핸들러를 호출
-             $(".receive_msg").append("${messageList}");
+          	alert("● groupChat.jsp ws.onopen");
+            alert("${messageList}");
+            ws.send("#$nick_"+nick); // 소켓이 열렸을 때 사용자가 입장하면 입장 메시지를 화면에 띄워 줄 수있도록 이벤트를 발생하여 핸들러를 호출
+            $(".receive_msg").append("${messageList}");
           };
           
-          ws.onmessage = function(event) {
-              
-            var msg = event.data;
+          ws.onmessage = function(event){
+           	var msg = event.data; // 이벤트 핸들러에서 처리해서 다시 되돌아온 data
             var chr_id = "<%=chr_id%>";
             
-            alert("content : " + content);
-            if(msg.startsWith("<font color=")){ // 입장,퇴장
+            if(msg.startsWith("<font color=")){ // 입장, 퇴장 시 이 메시지로 되돌아오게됨
                $(".receive_msg").append($("<div class = 'noticeTxt'>").append(msg+"<br/>"));
            	   viewList(chr_id);
             }else{
-        		if(msg.startsWith("[${user}]")){ //대화내용
-   //                msg = msg.substring(3);// [나] 라는거 자르는 거 였음
+        		if(msg.startsWith("[${user}]")){ // 대화 내용
                  	 $(".receive_msg").append($("<div class = 'sendTxt'>").append($("<span class ='sender_img'>").text(msg))).append("<br><br>");
-//                          content.push("<div class = 'sendTxt'><span class ='sender_img'>"+msg + "</span></div><br><br>"); // 받은 메시지 content에 저장
+                         content.push("<div class = 'sendTxt'><span class ='sender_img'>"+msg + "</span></div><br><br>"); // 받은 메시지 content에 저장
         		}else{
                		 $(".receive_msg").append($("<div class = 'receiveTxt'>").append($("<span class = 'receiver_img'>").text(msg))).append("<br><br>");
-//                          content.push("<div class = 'receiveTxt'><span class = 'receiver_img'>" + msg + "</span></div><br><br>"); // 받은 메시지 content에 저장
-        		}  
+                         content.push("<div class = 'receiveTxt'><span class = 'receiver_img'>" + msg + "</span></div><br><br>"); // 받은 메시지 content에 저장
+        		}
              		$(".receive_msg").scrollTop($(".receive_msg")[0].scrollHeight);              
           		}
           }
          
-          
           ws.onclose = function(event) {
-             alert("● groupChat.jsp ws.close / 웹소켓 닫힘");  //
+             alert("● groupChat.jsp ws.close / 웹소켓 닫힘");
              ws.send("#$nick_"+nick);
           }
       
@@ -231,9 +225,9 @@ table {
                  type: "POST",
                  url: "./chkChatMember.do",
                  data: { chr_id: "${chr_id}"},
-				dataType : "json",
-				async : false,
-				success : function(result) {
+				 dataType : "json",
+				 async : false,
+				 success : function(result) {
 				    canWrite = result.result;
 				},
 				error : function() {
@@ -246,21 +240,22 @@ table {
 				alert("● groupChat.jsp / 내용을 입력하세요. ");
 				return;
 			    }
-// 			    else if (canWrite == 'cantChat') {
-// 				alert("● 대화 상대가 없습니다. *채팅 불가*");
-// 				return; }
+			    else if (canWrite == 'cantChat') {
+				alert("● 대화 상대가 없습니다. *채팅 불가*");
+				return;
+				}
 			    else {
 				ws.send(nick + " : " + $(".chat").val());
 				// content.push(nick+" : "+$(".chat").val()); // 보내는 메시지 content에 저장
 				
-				$.ajax({
-				  type: "POST",
-				  url : "./insertMessage.do",
-				  data: {"chc_content" : "<div class = 'sendTxt'><span class ='sender_img'>['${user}']"+$(".chat").val()+"</span></div><br><br>"}
-				  success : function(){
-				      alert("성고옹");
-				  }
-				});
+// 				$.ajax({
+// 				  type: "POST",
+// 				  url : "./insertMessage.do",
+// 				  data: {"chc_content" : "<div class = 'sendTxt'><span class ='sender_img'>['${user}']"+$(".chat").val()+"</span></div><br><br>"}
+// 				  success : function(){
+// 				      alert("성고옹");
+// 				  }
+// 				});
 				
 				$(".chat").val('');
 				$(".chat").empty();
@@ -268,14 +263,14 @@ table {
 			    }
 			}); /* 전송 버튼 눌렀을 때 이벤트 */
 
-		$(window).bind("beforeunload", function() {
-		    //실행할 함수를 리턴해야한다.
-		    return fn_removeLocalStorage("openchatwait");
-		});
+// 		$(window).bind("beforeunload", function() {
+// 		    //실행할 함수를 리턴해야한다.
+// 		    return fn_removeLocalStorage("openchatwait");
+// 		});
 	    });
 
     function fn_removeLocalStorage(x) {
-	alert(x);
+		alert(x);
     }
 
     var isCheck = true; /* 나중에 저장하기 버튼이나, 그런거,, 비밀채팅 하고싶을 때 써먹을려고 혹~시나 만들어둠 */

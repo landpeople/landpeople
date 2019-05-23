@@ -63,12 +63,10 @@
 
    <!-- 양 측 모두 채팅방을 나간 상태를 확인하는 쿼리 -->   
    <select id="chkChatMember" parameterType="java.lang.String" resultType="java.util.Map">
-      SELECT CHR_SENDER, CHR_RECEIVER FROM LPCHATROOM
-      WHERE CHR_ID = #{chr_id}
+      SELECT CHR_SENDER, CHR_RECEIVER FROM LPCHATROOM WHERE CHR_ID = #{chr_id}
    </select>
 
    <select id="chkDelflag" parameterType="java.lang.String" resultType="java.lang.String">
-      SELECT USER_DELFLAG FROM LPUSER
-      WHERE USER_EMAIL = #{user_email}
+      SELECT USER_DELFLAG FROM LPUSER WHERE USER_NICKNAME = #{user_nickname}
    </select>
 </mapper>
