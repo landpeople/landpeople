@@ -54,12 +54,12 @@
 			}
 			else{
 				pageCnt++;			
-				getUser(pageCnt);		
+				getSketchBook(pageCnt);		
 			}
 		}
 	});
 	
-	function getUser(pageNo){		
+	function getSketchBook(pageNo){		
 		
 			$.ajax({
 				url: "sketchBookPaging.do",
