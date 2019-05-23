@@ -1,14 +1,14 @@
 package happy.land.people.model.lee;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import happy.land.people.dto.ChatUserDto;
-import happy.land.people.dto.ChatUserNickDto;
+import happy.land.people.dto.ChatContentDto;
 
 @Service
 public class LeeServiceImpl implements ILeeService {
@@ -43,24 +43,20 @@ public class LeeServiceImpl implements ILeeService {
 	}
 
 	@Override
-	public String chatRoom_Make(List<ChatUserDto> dto) {
+	public List<ChatContentDto> chatRoom_Make(Map<String, String> map) {
 		logger.info("● Service chatRoom_Make 실행");
-		
-		String chr_id = dao.chatRoom_Check(dto);
-		
-		if(chr_id == null) {
-			chr_id = dao.chatRoom_Insert(dto);
-			
-			ChatUserNickDto nDto = new ChatUserNickDto(chr_id, dto.get)
-			
-		}else {
-			
-		}
-		
-//		public int chatRoom_Show(String chr_id);
-//		public String chatRoom_Insert(List<ChatUserDto> dto);
-//		public int chatContent_Insert(List<ChatUserNickDto> dto);
-		return chr_id;
+		return dao.chatRoom_Make(map);
+	}
+	
+	@Override
+	public String chkChatMember(String chr_id) {
+		logger.info("● Service chkChatMember 실행");
+		return dao.chkChatMember(chr_id);
 	}
 
+	@Override
+	public int chatContent_InsertMsg(ChatContentDto dto) {
+		logger.info("● Service chatContent_InsertMsg 실행");
+		return dao.chatContent_InsertMsg(dto);
+	}
 }

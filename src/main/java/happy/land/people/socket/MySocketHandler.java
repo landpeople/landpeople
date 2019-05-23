@@ -43,9 +43,11 @@ public class MySocketHandler extends TextWebSocketHandler {
 		Map<String, Object> mySession = session.getHandshakeAttributes(); // WebsocketSession의 session값을 httpSesssion값으로 변경
 		String myGrSession = (String) mySession.get("chr_id"); // 접속자의 채팅방 아이디
 		String myMemSession = (String) mySession.get("user"); // 접속자 아이디
-		System.err.println("● MySocketHandler 접속자 chr_id : " + myGrSession);
-		System.err.println("● MySocketHandler 접속자 user : " + myMemSession);
-
+		String test = (String)mySession.get("test");
+		System.err.println("● MySocketHandler 접속자 my chr_id : " + myGrSession);
+		System.err.println("● MySocketHandler 접속자 my user : " + myMemSession);
+		System.err.println(test);
+		
 		if (msg != null && !msg.equals("")) { // 메시지가 null이 아닐 때 처리,
 			if (msg.indexOf("#$nick_") > -1) {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분");
@@ -53,11 +55,11 @@ public class MySocketHandler extends TextWebSocketHandler {
 				for (WebSocketSession s : list) {
 					Map<String, Object> sessionMap = s.getHandshakeAttributes();
 					String otherGrSession = (String) sessionMap.get("chr_id"); // 같은 그룹끼리 묶어 주는 거 같은데??
-					String otherMemSession = (String) sessionMap.get("users");
+					String otherMemSession = (String) sessionMap.get("user");
 
-					ArrayList<String> grMemList = new ArrayList<String>();
-					System.out.println("● MySocketHandler 접속자 chr_id : " + myGrSession);
-					System.out.println("● MySocketHandler 접속자 nickname : " + otherMemSession);
+//					ArrayList<String> grMemList = new ArrayList<String>();
+					System.out.println("● MySocketHandler 접속자 other chr_id : " + myGrSession);
+					System.out.println("● MySocketHandler 접속자 other nickname : " + otherMemSession);
 
 					if (myGrSession.equals(otherGrSession)) { // 같은 그룹 소속일 때 대화가 가능하도록 처리
 						s.sendMessage(new TextMessage("<font color='red' size='1px'>" + myMemSession + " 님이 입장했습니다 (" + now +")</font>"));

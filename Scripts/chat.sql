@@ -52,25 +52,33 @@ BEGIN RETURN LPCHATCONTENT_SEQ.NEXTVAL END;
 INSERT INTO LPCHATLIST VALUES(#{user_nickname});
 
 -- 1. 채팅방 생성 ==========================================================================================================================================			
--- @ String chatRoom_Make(List<ChatUserDto> dto)
+-- @ String chatRoom_Make(Map<String, String> map)
 
 -- 1. 기존에 상대방과 채팅방이 있는지 확인
--- @ String chatRoom_Check(List<ChatUserDto> dto)
+-- @ String chatRoom_Check(Map<String, String> map) - sender, receiver
 SELECT CHR_ID FROM LPCHATROOM WHERE (CHR_SENDER, CHR_RECEIVER) IN ((#{sender}, #{receiver}),(#{receiver}, #{sender}));
 
 -- 2.1 만약에 기존에 만들었던 채팅방이 있다면 나의 채팅 목록에서 보이게 만들어줌
--- @ int chatRoom_Show(String chr_id)
+-- @ int chatRoom_Show(String chr_id) 
 UPDATE LPCHATROOM SET CHR_SOUT='F', CHL_ROUT = 'F' WHERE CHR_ID = #{chr_id};
 
+-- 2.1.1 채팅 메시지 가져오기
+-- @ List<ChatContentDto> chatContent_SelectAll(ChatContentDto dto) - chr_id, user_nickname
+SELECT CHC_ID, CHR_ID, USER_NICKNAME, CHC_MESSAGE, CHC_OUT, CHC_REGDATE FROM LPCHATCONTENT WHERE CHR_ID = #{chr_id} AND USER_NICKNAME = #{user_nickname} AND CHC_OUT = 'F';
+
 -- 2.2 기존에 채팅방이 없다면 -> 채팅 리스트에 추가하면서, 채팅방 대화내용 저장 공간을 만들어줌
--- @ String chatRoom_Insert(List<ChatUserDto> dto)
+-- @ String chatRoom_Insert(Map<String, String> map)
 INSERT INTO LPCHATROOM VALUES(LPCHATROOM_SEQ.NEXTVAL, #{sender},  #{receiver}, 'F', 'F')
 SELECT @@IDENTITY AS CHR_ID
 
 -- 2.2.1 채팅방을 만들면서 대화내용 저장공간도 함께 만들어줌, SENDER와 RECEIVER 각각 하나씩
--- @ int chatContent_Insert(List<ChatUserName> dto)
+-- @ int chatContent_Insert(List<ChatUserDto> dto)
 INSERT INTO LPCHATCONTENT VALUES(LPCHATCONTENT_SEQ.NEXTVAL, #{chr_id}, #{user_nickname}, '', 'F', SYSDATE);
 
+-- 2. 채팅 메시지 저장하기 ==========================================================================================================================================
+
+-- @ int chatContent_InsertMsg(ChatContentDto dto)
+INSERT INTO LPCHATCONTENT VALUES(LPCHATCONTENT_SEQ.NEXTVAL, #{chr_id}, #{user_nickname}, #{chc_message}, 'F', SYSDATE) ORDER BY CHC_REGDATE;
 
 
 
