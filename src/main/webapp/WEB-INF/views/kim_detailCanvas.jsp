@@ -33,6 +33,16 @@
 
 <!-- 자유 캔버스 레이아웃  -->
 <link rel="stylesheet" href="css/Layout_1.css">
+
+<style type="text/css">
+.insertForms{
+	margin-right: 50px;
+	margin-bottom: 30px;
+	margin-top: 30px;
+	width : 180px;
+	height: 180px;
+}
+</style>
 </head>
 <body>
    <div class="main-wrapper">
@@ -49,9 +59,9 @@
                   <div>입력된 캔버스가 없습니다.</div>
                   <div>입력된 캔버스가 없습니다.</div>
                </div>
-               <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">캔버스 입력</button>
-               <input type="button" id="pageUpdate" value="페이지 수정"></input>
-               <input type="button" id="pageDelete" value="페이지 삭제"></input>
+               <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">페이지 입력</button>
+               <input type="button" class="btn btn-info btn-lg" id="pageUpdate" value="페이지 수정"></input>
+               <input type="button" class="btn btn-info btn-lg" id="pageDelete" value="페이지 삭제"></input>
                <input type="hidden" value="0" id="selectType">
 
                <form action="./insertDaysForm.do" onsubmit="return false" method="post">
@@ -78,15 +88,15 @@
       <div class="modal-content" style="width:1000px; height:800px;">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
+          <h4 class="modal-title" style="text-align: center;">페이지 입력</h4>
         </div>
-        <div class="modal-body">
-          <p><img src="./img/days.png" id="insertDaysForm"></img>
-          	 <img src="./img/free2.png" id="insertFreeForm"></img>
-          	 <img src="./img/free2.png"></img><br>
-          	 <img src="./img/free3.png"></img>
-          	 <img src="./img/free4.png"></img>
-          	 <img src="./img/free5.png"></img>
+        <div class="modal-body" style="padding: 50px;">
+          <p><img src="./img/days.png" class="insertForms" title="1번스타일"></img>
+          	 <img src="./img/free2.png" class="insertForms" title="2번스타일"></img>
+          	 <img src="./img/free2.png" class="insertForms" title="3번스타일"></img><br>
+          	 <img src="./img/free3.png" class="insertForms" title="4번스타일"></img>
+          	 <img src="./img/free4.png" class="insertForms" title="5번스타일"></img>
+          	 <img src="./img/free5.png" class="insertForms" title="6번스타일"></img>
           </p>
         </div>
         <div class="modal-footer">
@@ -109,16 +119,19 @@
  	  			  $('#nowPageNo').val(data.index/2+1);
  	  		   }
  	    });				 
-		// 일정 캔버스 클릭시(임시)
-		$("#insertDaysForm").click(function(){
-			$('#selectType').val("1");
+		// 캔버스 클릭시
+		$(".insertForms").click(function(){
+			// 모든 캔버스 투명도 및 배경색(나중에 이미지로 바뀔예정) 조절
+			$(".insertForms").css('opacity','1.0');
+			$(".insertForms").css('background-color','');
+			// 선택한 캔버스 아이콘 투명도 설정
+			$(this).css('opacity','0.5');
+			$(this).css('background-color','green');
+			// 현재 제목을 가져와서 해당 값을 넘김
+			var titleContent = $(this).attr('title');			
+			$('#selectType').val(titleContent.substr(0,1));	
 			alert($('#selectType').val());
-		});
-		// 자유캔버스 1번째 클릭시
-		$("#insertFreeForm").click(function() {
-			$('#selectType').val("2");
-			alert($('#selectType').val());
-		});
+		});		
 		// 엑셀로 다운로드
 		$("#downloadExcel").click(function() {
 			alert("엑셀다운~");
@@ -170,10 +183,11 @@
 		
 		
 		//페이지 만들기
-		makePage();
-		//일정 게시판일경우 불러오기
-		daysLoad();	
-				
+		<% if(canvasList != null){%>
+			makePage();
+			//일정 게시판일경우 불러오기
+			daysLoad();	
+		<% }%>
 		function makePage(){
 			<%
 			for(int i = 0 ; i < canvasList.size(); i++){

@@ -4,7 +4,7 @@ function sketchBookMake(user) {
 		ajaxSketchMake(user_email);
 	}
 
-	var ajaxSketchMake = function(/*user_email*/) {
+	var ajaxSketchMake = function(user_email) {
 		//alert(user_email);
 
 		$.ajax({
@@ -42,7 +42,7 @@ function sketchBookMake(user) {
 
 									"<div class='form-group'>"
 									+ "<label>스케치북 커버이미지</label>"
-									+ "<input type='text' class='form-control' id='cover' name='coverimage' style='width : 400px;'>"
+									+ "<input type='text' class='form-control' id='cover' name='sketch_spath' style='width : 400px;'>"
 									+ "</div>"
 									+
 

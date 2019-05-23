@@ -50,6 +50,9 @@ public interface ISketchBookService {
 	// 작성 스케치북 정보 수정
 	public boolean sketchUpdate(LPSketchbookDto dto);
 	
+	// 작성 스케치북 완전 다중 삭제
+	public boolean sketchRealDeleteMulti(Map<String, String[]> map);
+	
 	// 페이징 처리된 테마별 스케치북 조회
 	public List<LPSketchbookDto> sketchSelectTheme(Map<String,String> map);
 
