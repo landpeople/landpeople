@@ -8,6 +8,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -86,6 +87,14 @@ public class MySocketHandler extends TextWebSocketHandler {
 				}
 			}
 		}
+	}
+	
+	@Override
+	protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) {
+		// TODO Auto-generated method stub
+		
+		System.out.println("이미지 처리하기");
+		super.handleBinaryMessage(session, message);
 	}
 
 	@Override

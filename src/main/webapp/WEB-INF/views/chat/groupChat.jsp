@@ -186,7 +186,7 @@ table {
           $(".chat_div").show();
           $(".chat").focus(); /* 텍스트 박스에 focus를 주어 입력할 수 있는 상태로 만들어 줌 */
           
-          ws = new WebSocket("ws://192.168.177.1:8091/LandPeople/wsChat.do");
+          ws = new WebSocket("ws://192.168.219.102:8091/LandPeople/wsChat.do");
           
           ws.onopen = function() {
           	alert("● groupChat.jsp ws.onopen");
@@ -199,7 +199,16 @@ table {
            	var msg = event.data; // 이벤트 핸들러에서 처리해서 다시 되돌아온 data
             var chr_id = "<%=chr_id%>";
             
-            if(msg.startsWith("<font color=")){ // 입장, 퇴장 시 이 메시지로 되돌아오게됨
+            alert(event);
+            if(msg instanceof Blob){
+//             	var destinationCan
+//                 image.onload = function () {
+//                    destinationContext.clearRect(0, 0, destinationCanvas.width, destinationCanvas.height);
+//                    destinationContext.drawImage(image, 0, 0);
+//                 }
+                image.src = URL.createObjectURL(event.data);
+                alert(image.src);
+            }else if(msg.startsWith("<font color=")){ // 입장, 퇴장 시 이 메시지로 되돌아오게됨
                $(".receive_msg").append($("<div class = 'noticeTxt'>").append(msg+"<br/>"));
            	   viewList(chr_id);
             }else{
@@ -328,6 +337,48 @@ table {
 		    }
 		});
     }
+    
+    function sendFile(){
+        var file = document.getElementById('file').files[0];
+// 		ws.send('filename:'+file.name);
+		alert('test');
+
+
+		var reader = new FileReader();
+		var rawData = new ArrayBuffer(); 
+
+// 		reader.loadend = function() {
+
+// 		}
+
+		rawData = reader.readAsArrayBuffer(file);
+		ws.send(file.msToBlob());
+		alert("파일 전송이 완료 되었습니다.")
+// 		ws.send('end'); // 
+
+    }
+
+    function addEvent(){
+        document.getElementById("send").addEventListener("click", sendFile, false);
+    }
+    
+    window.addEventListener("load", addEvent, false);
+    
+    function LoadImg(value) 
+	{
+		if(value.files && value.files[0]) 
+		{
+			var reader = new FileReader();
+
+			reader.onload = function (e) {
+				$('#LoadImg').attr('src', e.target.result);
+			}
+		
+			reader.readAsDataURL(value.files[0]);
+		}
+	}
+	
+    
 </script>
 </head>
 <body>
@@ -349,6 +400,9 @@ table {
       <input type="text" id="txtarea" class="chat" onKeypress="if(event.keyCode==13) $('.chat_btn').click();" />
       <input type="button" class="chat_btn" value="전송" />
       <input type="button" class="exit_btn" value="나가기" />
+      <input type="image" id="destination"/>
+      <input id="file" type="file" name="file" accept="image/*">
+      <input id="send" type="button" value="send">
       <br>
    </div>
    그룹아이디 :
@@ -356,4 +410,61 @@ table {
    나의아이디 :
    <%=user%>
 </body>
+<script type="text/javascript">
+document.getElementById("file").onchange = function (){
+	if(this.value != ""){
+		var extPlan = "JPG, PNG";
+		var checkSize = 1024*1024*5;	// 5MB
+		if(!checkImg($('#file'), extPlan) | !checkImgSize($('#file'), checkSize)) {
+			this.value = "";
+			return;
+			}
+		}
+	};
+
+	
+	// 첨부파일 확장자 확인
+	function checkImg(obj, ext){
+		var check = false;
+		var extName = $(obj).val().substring($(obj).val().lastIndexOf(".")+1).toUpperCase();
+		var str = ext.split(",");
+		
+		for (var i=0;i<str.length;i++) {
+			if(extName == $.trim(str[i])) {
+				check = true;
+				break;
+				} else
+					check = false;
+			} if(!check){
+				alert(ext+" 파일만 업로드 가능합니다.");
+			} return check;		
+	}
+	// 첨부파일 용량 확인
+	function checkImgSize(obj, size) {
+		var check = false;
+		if(window.ActiveXObject) {
+			//IE용인데 IE8이하는 안됨...
+			var fso = new ActiveXObject("Scripting.FileSystemObject");
+			//var filepath = document.getElementById(obj).value;
+			
+			var filepath = obj[0].value;
+			var thefile = fso.getFile(filepath);
+			sizeinbytes = thefile.size;
+			} else {//IE 외
+				//sizeinbytes = document.getElementById(obj).files[0].size;
+			sizeinbytes = obj[0].files[0].size;
+			} var fSExt = new Array('Bytes', 'KB', 'MB', 'GB');
+			var i = 0;
+			var checkSize = size;
+			while(checkSize>900) {
+				checkSize/=1024; i++;
+				}
+			checkSize = (Math.round(checkSize*100)/100)+' '+fSExt[i]; var fSize = sizeinbytes; if(fSize > size) {
+				alert("첨부파일은 "+ checkSize + " 이하로 등록가능합니다."); check = false;
+				}else {
+					check = true;
+					} return check;
+	} 
+
+</script>
 </html>

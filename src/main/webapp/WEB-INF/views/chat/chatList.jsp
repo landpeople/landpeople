@@ -38,7 +38,7 @@
       <c:when test="${ldto ne null}">
          <div id="userlist" style="width: 100%; height: 100%; overflow: auto;">
             <c:forEach items="${users}" var="user">
-               <c:if test="${ldto.user_email ne user}">
+               <c:if test="${ldto.user_nickname ne user}">
                   <!-- 내가 아닌 상대방만 접속한 사용자정보에 출력됨 -->
                   <a href="#">${user}</a>
                </c:if>
@@ -61,8 +61,8 @@
 
 		function click() { // 내부함수로 사용되며, this.innerHTML은 채팅을 하고 싶은 상대방의 닉네임을 가져옴
 		    alert("● chatList.jsp / 상대 : " + this.innerHTML);
-		    alert("● chatList.jsp / 나 : ${ldto.user_email}");
-		    window.open("./socketOpen.do?sender=${ldto.user_email}&receiver="
+		    alert("● chatList.jsp / 나 : ${ldto.user_nickname}");
+		    window.open("./socketOpen.do?sender=${ldto.user_nickname}&receiver="
 				    + this.innerHTML, '_blank', 'width=600px,height=600px');
 		}
 
