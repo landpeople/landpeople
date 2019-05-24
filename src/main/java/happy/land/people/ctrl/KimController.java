@@ -168,7 +168,7 @@ public class KimController {
     		sketch_id = "1";
     	int canvasCnt = canvasService.canvasCnt(sketch_id);
     	//스케치북 번호를 세션에 추가
-    	session.setAttribute("sketck_id", sketch_id);
+    	session.setAttribute("sketch_id", sketch_id);
     	System.out.println("해당 스케치북의 캔버스 개수:"+canvasCnt);
     	
     	// 캔버스 리스트
@@ -217,11 +217,14 @@ public class KimController {
     	canvasDto.setCan_pageno(nowPageNo);
     	// 스케치북 세팅
     	String sketch_id = (String)session.getAttribute("sketch_id");    	
+    	System.out.println("스케치북 아이디 : "+sketch_id);
     	canvasDto.setSketch_id(sketch_id);
     	// 보고 있는 페이지의 캔버스 id값을 가져옴
     	String id = canvasService.canvasSelectID(canvasDto);
+    	System.out.println("캔버스 id : "+id);
     	// 캔버스 dto 세팅
     	canvasDto = canvasService.canvasSelectOne(id);
+    	System.out.println("캔버스 DTO : "+canvasDto);
     	session.setAttribute("canvas", canvasDto);
     	if(canvasDto.getCan_type().equalsIgnoreCase("1")) {
 	    	// 일정 캔버스 세팅
@@ -229,13 +232,11 @@ public class KimController {
 	    	session.setAttribute("days", daysDto);
 	    	return "kim_updateDaysCanvas";
 	    	
-    	}else if(canvasDto.getCan_type().equalsIgnoreCase("2")){
-    		// 자유 캔버스
+    	}else{
     		List<LPTextDto> list = textService.textSelectOne(id);
-    		model.addAttribute("textList1", list);
+    		model.addAttribute("textList", list);
     		return "na_updateFreeCanvas_1";
-    	}else {
-    		return "error";
+    		//return "na_updateFreeCanvas_"+(Integer.parseInt(canvasDto.getCan_type())-1);
     	}       	
     }
     

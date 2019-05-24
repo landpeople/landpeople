@@ -13,7 +13,6 @@ public class ExecuteUsingQuartz {
 	@Autowired
 	private HttpServletRequest request;
 	
-	@Scheduled
 	public void delFile(){
 		 System.out.println("작동 작동");
 	

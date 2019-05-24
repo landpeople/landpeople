@@ -1,5 +1,10 @@
+<%@page import="happy.land.people.dto.kim.LPTextDto"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
+<%
+	List<LPTextDto> list = (List<LPTextDto>)request.getAttribute("textList");
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,18 +24,18 @@
 	<!-- 왼쪽 -->
 	<div id="Left-Side">
 		<div id="LS_IContainer">
-			<div id="IMG1">
+			<div id="IMG1" style="background-image: url('<%=list.get(0).getImg_spath()%>')">
 			<label for="C_IMG1"><img src="./img/folder.png"></label> 
 			<input id="C_IMG1" class="file" name="file" type="file" multiple="multiple" style="display: none;">
 			</div>
-			<input type="hidden" name="list[0].img_spath" class="img_spath0">
+			<input type="hidden" name="list[0].img_spath" class="img_spath0" value="<%=list.get(0).getImg_spath()%>">
 			<input type="hidden" name="list[0].text_no" value="0"> 
 		</div>
 		<div id="LS_TContainer">
 			<div id="TXT1">
-				<textarea style="width: 100%; height: 100%; resize: none;"></textarea>
+				<textarea style="width: 100%; height: 100%; resize: none;"><%=list.get(1).getText_content() %></textarea>
 			</div>
-			<input type="hidden" name="list[1].text_content" class="text_content0">
+			<input type="hidden" name="list[1].text_content" class="text_content0" value="<%=list.get(1).getText_content() %>">
 			<input type="hidden" name="list[1].text_no" value="1"> 
 		</div>
 	</div>
@@ -38,40 +43,40 @@
 	<!-- 오른쪽 -->
 	<div id="Right-Side">
 		<div id="RS_ITContainer1">
-			<div id="IMG2">
+			<div id="IMG2" style="background-image: url('<%=list.get(2).getImg_spath()%>')">
 			<label for="C_IMG2"><img src="./img/folder.png"></label> 
 			<input id="C_IMG2" class="file" name="file" type="file" multiple="multiple" style="display: none;">
 			</div>
-			<input type="hidden" name="list[2].img_spath" class="img_spath1">
+			<input type="hidden" name="list[2].img_spath" class="img_spath1" value="<%=list.get(2).getImg_spath()%>">
 			<input type="hidden" name="list[2].text_no" value="2"> 
 			<div id="TXT2">
-				<textarea style="width: 100%; height: 100%; resize: none;"></textarea>
+				<textarea style="width: 100%; height: 100%; resize: none;"><%=list.get(3).getImg_spath()%></textarea>
 			</div>
-			<input type="hidden" name="list[3].text_content" class="text_content1">
+			<input type="hidden" name="list[3].text_content" class="text_content1" value="<%=list.get(3).getImg_spath()%>">
 			<input type="hidden" name="list[3].text_no" value="3"> 
-			<div id="IMG3">
+			<div id="IMG3" style="background-image: url('<%=list.get(4).getImg_spath()%>')">
 			<label for="C_IMG3"><img src="./img/folder.png"></label> 
 			<input id="C_IMG3" class="file" name="file" type="file" multiple="multiple" style="display: none;">
 			</div>
-			<input type="hidden" name="list[4].img_spath" class="img_spath2">
+			<input type="hidden" name="list[4].img_spath" class="img_spath2" value="<%=list.get(4).getImg_spath()%>">
 			<input type="hidden" name="list[4].text_no" value="4"> 
 		</div>
 		<div id="RS_ITContainer2">
 			<div id="TXT3">
-				<textarea style="width: 100%; height: 100%; resize: none;"></textarea>
+				<textarea style="width: 100%; height: 100%; resize: none;"><%=list.get(5).getText_content()%></textarea>
 			</div>
-			<input type="hidden" name="list[5].text_content" class="text_content2">
+			<input type="hidden" name="list[5].text_content" class="text_content2" val>
 			<input type="hidden" name="list[5].text_no" value="5"> 
-			<div id="IMG4">
+			<div id="IMG4" style="background-image: url('<%=list.get(6).getImg_spath()%>')">
 			<label for="C_IMG4"><img src="./img/folder.png"></label> 
 			<input id="C_IMG4" class="file" name="file" type="file" multiple="multiple" style="display: none;">
 			</div>
-			<input type="hidden" name="list[6].img_spath" class="img_spath3">
+			<input type="hidden" name="list[6].img_spath" class="img_spath3" value="<%=list.get(6).getImg_spath()%>">
 			<input type="hidden" name="list[6].text_no" value="6"> 
 			<div id="TXT4">
-				<textarea style="width: 100%; height: 100%; resize: none;"></textarea>
+				<textarea style="width: 100%; height: 100%; resize: none;"><%=list.get(7).getText_content()%></textarea>
 			</div>
-			<input type="hidden" name="list[7].text_content" class="text_content3">
+			<input type="hidden" name="list[7].text_content" class="text_content3" value="<%=list.get(7).getText_content()%>">
 			<input type="hidden" name="list[7].text_no" value="7"> 
 		</div>
 	</div>
@@ -162,7 +167,7 @@
 			}
 			
 			var frm = document.getElementById("frm");
-			frm.action = './updateFreeCanvas.do;
+			frm.action = './updateFreeCanvas.do';
 			frm.method = 'post';
 			frm.submit();
 		}

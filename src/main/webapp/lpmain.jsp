@@ -63,8 +63,8 @@ var ajaxSketchMake = function(user_email){
 												"<label for='C_IMG2'><img src='./img/folder.png'></label>"+
 												"<input id='C_IMG2' class='file' name='file' type='file' multiple='multiple' style='display: none;'>"+
 											"</div>"+
-												"<input type='hidden' name='list[5].img_spath' class='img_spath1'>"+
-												"<input type='hidden' name='list[5].text_no' value='5'>"+
+// 												"<input type='hidden' name='list[5].img_spath' class='img_spath1'>"+
+// 												"<input type='hidden' name='list[5].text_no' value='5'>"+
 										"</div>"+
 									"</div>"+
 								"</div>"+
@@ -182,18 +182,18 @@ function sketchInsert(){
 						href="./lee.do">이연지 페이지로 이동</a><br> <a href="./jang.do">장석영
 						페이지로 이동</a><br> <a href="./jung.do">정희태 페이지로 이동</a> 
 				
-		<form method="post" enctype="multipart/form-data" name="frm" id="frm">		
-			<div class="moSketchBookCover">
-				<div>
-					<div class="modalImg">
-						<label for="C_IMG2"><img src="./img/folder.png"></label> 
-						<input id="C_IMG2" class="file" name="file" type="file" multiple="multiple" style="display: none;">
-					</div>
-						<input type="hidden" name="list[5].img_spath" class="img_spath1">
-						<input type="hidden" name="list[5].text_no" value="5"> 
-				</div>
-			</div>
-		</form>		
+<!-- 		<form method="post" enctype="multipart/form-data" name="frm" id="frm">		 -->
+<!-- 			<div class="moSketchBookCover"> -->
+<!-- 				<div> -->
+<!-- 					<div class="modalImg"> -->
+<!-- 						<label for="C_IMG2"><img src="./img/folder.png"></label>  -->
+<!-- 						<input id="C_IMG2" class="file" name="file" type="file" multiple="multiple" style="display: none;"> -->
+<!-- 					</div> -->
+<!-- 						<input type="hidden" name="list[5].img_spath" class="img_spath1"> -->
+<!-- 						<input type="hidden" name="list[5].text_no" value="5">  -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+<!-- 		</form>		 -->
 				<a href="./imgupload.do">업로드</a>
 				
 				
@@ -216,27 +216,19 @@ function sketchInsert(){
 </body>
 
 <script type="text/javascript">
-var imgs =$("div[id*='IMG']");
-var subImgClass;
-
 $(document).ready(function() {
-	
 	//이미지 업로드
-	$(".file").on("change", function(){
-		var imgClass = $(this).attr("id");
-		subImgClass = imgClass.substring(imgClass.indexOf('_')+1);
-		fileUpload(subImgClass);
-	});
+	$(".file").on("change", fileUpload);
 });
 
-function fileUpload(subImgClass) {
+function fileUpload() {
 	
-	var frmEle = document.forms[0];
+	var frmEle = document.getElementById("makeSketchBook");
 	var formData = new FormData(frmEle);
-	for (var i = 0; i < imgs.length; i++) {
-		formData.append("file",$(".file")[i]);
-	}
-		formData.append("text_no",subImgClass);
+// 	for (var i = 0; i < imgs.length; i++) {
+// 		formData.append("file",$(".file")[i]);
+// 	}
+// 		formData.append("text_no",subImgClass);
 
 	//파일 업로드 확장자 확인
 	// 		var file = form.file; 여기 부분이 아직 불확실
@@ -260,16 +252,10 @@ $.ajax({
 		processData : false,
 		contentType : false,
 		success : function(result) {
-			var imgDiv = subImgClass;
-			for (var i = 0; i < imgs.length; i++) {
-				
-				if (imgs.eq(i).attr("id") == imgDiv) {
-					$("div[id="+imgDiv+"]").css("background-image", "url('" + result+ "')");
-					var img_spath = $("input[class=img_spath"+i+"]");
-					img_spath.val(result);
-				}//if
-			
-			}//for
+			$("div[class=modalImg]").css("background-image", "url('" + result+ "')");
+				var img_spath = $("#C_IMG2");
+				img_spath.val(result);
+		
 		}
 	});
 }

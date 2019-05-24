@@ -17,7 +17,7 @@
 <!-- jQuery -->
 <script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
 <%
-	List<LPTextDto> list = (List<LPTextDto>) request.getAttribute("textList1");
+	List<LPTextDto> list = (List<LPTextDto>) request.getAttribute("textList");
 %>
 <title>나원서 레이아웃1번 테스트 페이지</title>
 </head>
@@ -87,12 +87,15 @@
 		var editor = new Array(ids.length);
 		var imgs = $("div[id*='IMG']");
 		var subImgClass;
-
+		
+		
+		
 		$(document).ready(function() {
 			//에디터
 			for (var i = 0; i < ids.length; i++) {
 				setEditor(ids.eq(i).attr("id"), i);
 			}
+			
 			//이미지 업로드
 			$(".file").on("change", function() {
 				var imgClass = $(this).attr("id");
@@ -146,11 +149,8 @@
 							for (var i = 0; i < imgs.length; i++) {
 
 								if (imgs.eq(i).attr("id") == imgDiv) {
-									$("div[id=" + imgDiv + "]").css(
-											"background-image",
-											"url('" + result + "')");
-									var img_spath = $("input[class=img_spath"
-											+ i + "]");
+									$("div[id=" + imgDiv + "]").css("background-image","url('" + result + "')");
+									var img_spath = $("input[class=img_spath"+ i + "]");
 									img_spath.val(result);
 								}//if
 

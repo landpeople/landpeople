@@ -62,8 +62,6 @@ public class NaController {
 	public String upload(MultipartHttpServletRequest mr, String text_no, HttpServletRequest request, Model model) {
 		List<MultipartFile> tt = (List<MultipartFile>) mr.getFiles("file");
 		System.out.println("1번 이미지 : "+tt.get(0).getOriginalFilename()); 
-		System.out.println("2번 이미지 : "+tt.get(1).getOriginalFilename()); 
-		System.out.println("3번 이미지 : "+tt.get(2).getOriginalFilename()); 
 		
 		MultipartFile uploadfile = tt.get(Integer.parseInt(text_no.substring(3))-1);
 		
@@ -176,7 +174,7 @@ public class NaController {
 				System.out.println("텍스트 공백으로 DB에 삽입");
 					dto.setCan_id(canvasDto.getCan_id());
 					//기본 이미지로 경로 치환
-					dto.setImg_spath("img/empty.jpg");
+					dto.setImg_spath("　");
 					//공백 추가
 					String text_content = "　";
 					dto.setText_content(text_content);
@@ -237,9 +235,9 @@ public class NaController {
 			
 			}else {
 				System.out.println("------------------썸네일인 사진");
-				String path = request.getContextPath()+"/thumbnailImg/"+originalImgPath;
+				String path = originalImgPath;
 				System.out.println("변경 되지 않은 썸네일 경로 : "+path);
-				return path;
+				return originalImgPath;
 			}
 			
 		} catch (IOException e) {
@@ -271,10 +269,11 @@ public class NaController {
 		for(LPTextDto dto:tDto.getList()) {
 			if(delCnt>0) {
 				
-				if(dto.getImg_spath()!=null) {
+				if(dto.getImg_spath()!=null && !StringUtils.isBlank(dto.getImg_spath())) {
+					System.out.println("--------------이미지-----------");
 					//썸네일 생성 및 dto에 추가
 					String thumbnailPath = makeTumbnail(dto.getImg_spath(), request);
-					tDto.setImg_spath(thumbnailPath);
+					dto.setImg_spath(thumbnailPath);
 					
 					//텍스트 값 null로 치환 및 dto에 추가
 					String text_content = StringUtils.defaultString(dto.getText_content());
@@ -285,16 +284,20 @@ public class NaController {
 					
 					//DB에 저장
 					textService.insertImgFile(dto);
-				}else {
+					
+				}else if(dto.getText_content()!=null && !StringUtils.isBlank(dto.getText_content())){
+					System.out.println("--------------텍스트-----------");
 					//이미지 경로 null로 치환 및 dto에 추가
 					String img_spath = StringUtils.defaultString(dto.getImg_spath());
 					dto.setImg_spath(img_spath);
 					
-					// 엔터키 지우기
-					String resultText = dto.getText_content();				
-					// 엔터 추출
-					int cutWord =  10;
+					// 엔터키 지우기 위한 변수선언
+					String resultText = dto.getText_content();					
+					// 마지막에 있는 엔터 먼저 없애고 반복문 실행				
 					resultText = resultText.substring(0, resultText.length()-2);	
+					// 입력한 내용 중간에 엔터가 있는지 탐색 후 삭제
+					resultText = resultText.replaceAll(System.getProperty("line.separator")," ");
+					// 엔터키 삭제한 값을 dto에 다시 담음
 					dto.setText_content(resultText);
 					
 					//캔버스 id 추가
@@ -302,6 +305,23 @@ public class NaController {
 					
 					//DB에 저장
 					textService.insertImgFile(dto);
+					
+				}else if(StringUtils.isBlank(dto.getImg_spath())) {
+						System.out.println("기본 이미지로 공백으로 치환");
+						System.out.println("텍스트 공백으로 DB에 삽입");
+						
+						//캔버스 id 추가
+						dto.setCan_id(can_id);
+						
+						//기본 이미지로 공백으로 치환
+						dto.setImg_spath("　");
+						
+						//공백 추가
+						String text_content = "　";
+						dto.setText_content(text_content);
+						
+						//DB에 저장
+						textService.insertImgFile(dto);
 				}
 				
 			}else {

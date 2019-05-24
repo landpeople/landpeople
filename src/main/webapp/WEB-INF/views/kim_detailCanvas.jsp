@@ -62,9 +62,10 @@
                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">페이지 입력</button>
                <input type="button" class="btn btn-info btn-lg" id="pageUpdate" value="페이지 수정"></input>
                <input type="button" class="btn btn-info btn-lg" id="pageDelete" value="페이지 삭제"></input>
-               <input type="hidden" value="0" id="selectType">
+               
 
                <form action="./insertDaysForm.do" onsubmit="return false" method="post">
+               	  <input type="hidden" value="0" id="selectType" name="selectType">
                   <input type="hidden" value=1 id="nowPageNo" name="nowPageNo">
                </form>
 
