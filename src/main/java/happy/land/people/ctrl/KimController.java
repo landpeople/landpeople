@@ -229,14 +229,12 @@ public class KimController {
 	    	session.setAttribute("days", daysDto);
 	    	return "kim_updateDaysCanvas";
 	    	
-    	}else if(canvasDto.getCan_type().equalsIgnoreCase("2")){
+    	}else{
     		// 자유 캔버스
     		List<LPTextDto> list = textService.textSelectOne(id);
-    		model.addAttribute("textList1", list);
-    		return "na_updateFreeCanvas_1";
-    	}else {
-    		return "error";
-    	}       	
+    		model.addAttribute("textList", list);
+    		return "na_updateFreeCanvas_"+(Integer.parseInt(canvasDto.getCan_type())-1);
+    	}     	
     }
     
     @RequestMapping(value="deleteDaysForm.do",method=RequestMethod.POST)

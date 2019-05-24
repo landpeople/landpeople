@@ -17,7 +17,7 @@
 <!-- jQuery -->
 <script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
 <%
-	List<LPTextDto> list = (List<LPTextDto>) request.getAttribute("textList1");
+	List<LPTextDto> list = (List<LPTextDto>) request.getAttribute("textList");
 %>
 <title>나원서 레이아웃1번 테스트 페이지</title>
 </head>
