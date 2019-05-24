@@ -87,6 +87,8 @@
 				</div>
 			</div>
 			<!--  여기까지 메인 컨텐츠  -->
+			
+			
 			<div class="footer">landpeople</div>
 		</div>
 	</div>

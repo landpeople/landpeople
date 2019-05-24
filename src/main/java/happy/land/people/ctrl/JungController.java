@@ -67,10 +67,14 @@ public class JungController {
 	
 	// 스케치북 작성
 	@RequestMapping(value="/writeSketch.do", method=RequestMethod.POST)
-	public  String sketchMake(LPSketchbookDto dto) {
+	public  String sketchMake(LPSketchbookDto dto, HttpServletRequest request) {
 		logger.info("sketchBook 생성 {}", dto);
 		// 스케치북 생성 (제목, 여행테마, 공유 여부)
+		
+		
 		System.out.println(dto.getSketch_spath());
+		String s_path= makeTumbnail(dto.getSketch_spath(), request);
+		dto.setSketch_spath(s_path);
 		boolean isc = iSketchBookService.sketchInsert(dto);
 		System.out.println(isc);		
 		return "kim";
@@ -397,13 +401,13 @@ public class JungController {
 	
 	@RequestMapping(value="/uploadSketchBook.do", method= RequestMethod.POST, produces="application/text;charset=UTF-8")
 	@ResponseBody
-	public String upload(MultipartHttpServletRequest mr, String text_no, HttpServletRequest request, Model model) {
+	public String upload(MultipartHttpServletRequest mr, HttpServletRequest request, Model model) {
 		List<MultipartFile> tt = (List<MultipartFile>) mr.getFiles("file");
 		System.out.println("1번 이미지 : "+tt.get(0).getOriginalFilename()); 
-		System.out.println("2번 이미지 : "+tt.get(1).getOriginalFilename()); 
-		System.out.println("3번 이미지 : "+tt.get(2).getOriginalFilename()); 
+//		System.out.println("2번 이미지 : "+tt.get(1).getOriginalFilename()); 
+//		System.out.println("3번 이미지 : "+tt.get(2).getOriginalFilename()); 
 		
-		MultipartFile uploadfile = tt.get(Integer.parseInt(text_no.substring(3))-1);
+		MultipartFile uploadfile = tt.get(0);
 		
 		//원래 파일명
 		String filename = uploadfile.getOriginalFilename();
