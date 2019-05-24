@@ -73,5 +73,36 @@ public class ManagerDaoImpl implements IManagerDao {
 		return n>0 ? true:false;
 	}
 	
+	@Override
+	public void deleteChatroom() {
+		int n = sqlSession.delete(NS+"deleteChatroom");
+		logger.info("채팅방 삭제 실행! deleteChatroom");
+		System.out.println(n+"*************************");
+		logger.info("채팅방 삭제 완료! deleteChatroom");
+	}
+
+	@Override
+	public void selectChr() {
+		logger.info("ManagerDaoImpl selectChr");
+		String id = "jang";
+		List<Map<String, String>> resultListsR = null;
+		List<Map<String, String>> resultListsS = null;
+		List<Map<String, String>> lists = sqlSession.selectList(NS+"selectChr", id);
+		
+//			System.out.println("****** RECEIVER : "+lists.get(i).get("CHR_RECEIVER"));
+			for (int i = 0; i < lists.size(); i++) {
+				if (lists.get(i).get("CHR_SENDER").equals(id)) {
+					resultListsR = sqlSession.selectList(NS+"selectChrListR", id);
+					break;
+				}
+			}
+			for (int i = 0; i < lists.size(); i++) {
+				if (lists.get(i).get("CHR_RECEIVER").equals(id)) {
+					resultListsS = sqlSession.selectList(NS+"selectChrListS", id);
+					break;
+				}
+			}
+		System.out.println(resultListsR+" -- "+resultListsS);
+	}
 
 }
