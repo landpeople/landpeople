@@ -24,7 +24,7 @@
 				<label for="C_IMG1"><img src="./img/folder.png"></label> 
 				<input id="C_IMG1" class="file" name="file" type="file" multiple="multiple" style="display: none;">
 			</div>
-				<input type="hidden" name="list[0].img_spath" class="img_spath0">				
+				<input type="text" name="list[0].img_spath" class="img_spath0">				
 				<input type="hidden" name="list[0].text_no" value="0"> 
 			<div id="LS_Container">
 				<div id="TXT1">
@@ -93,10 +93,18 @@
 			$(".file").on("change", function(){
 				var imgClass = $(this).attr("id");
 				subImgClass = imgClass.substring(imgClass.indexOf('_')+1);
-				fileUpload(subImgClass);
+				//파일 확장자 확인
+				if(extension($("input[id="+imgClass+"]").val())){
+					alert("올바른 확장자입니다.");
+					//파일 업로드 실행
+					fileUpload(subImgClass);
+				}else{
+					alert("잘못된 확장자입니다.\n★jpg/png/gif★ 파일만 업로드 가능합니다.");
+				}
 			});
 		});
 
+		//에디터
 		function setEditor(id, i) {
 			editor[i] = new tui.Editor({
 							el : document.querySelector("#" + id),
@@ -106,6 +114,7 @@
 					});
 		}
 		
+		//파일 업로드
 		function fileUpload(subImgClass) {
 			
 			var frmEle = document.forms[0];
@@ -114,22 +123,7 @@
 				formData.append("file",$(".file")[i]);
 			}
 				formData.append("text_no",subImgClass);
-
-			//파일 업로드 확장자 확인
-// 			var file = form.file; //여기 부분이 아직 불확실
-// 			alert("파일 : "+file);
-// 			var fileExt = file.substring(file.lastIndex(".")+1);
-// 			var reg = /gif|jpg|png|jpeg/i;
-			
-// 			if(!reg.test(fileExt)){
-// 				alert("이미지는 gif, jpg, png 파일만 올릴 수 있습니다.");
-// 				return;
-// 			}else if(){
 				
-// 			}
-			//파일 사이즈 확인
-
-			//파일 업로드 확장자 및 사이즈 확인을 메소드로 만들어서 true가 되면 아작스 실행
 
 		$.ajax({
 				url : './uploadFile.do',
@@ -153,20 +147,28 @@
 			});
 		}
 		
-		var extension = function(){
-			alert("확장자 확인");
+		//확장자 확인 (업로드할 수 있는 확장자일시 true)
+		function extension(file){
+			alert("파일 이름"+file);
+			var reg = /gif|jpg|png|jpeg/i;
+			
+			return reg.test(file);
 		}
 		
-		var fileSize = function(){
+		function fileSize(){
 			alert("파일 크기 확인");
-		};
+		}
 		
+		//DB 저장
 		function insert() {
 			//editor 텍스트를 서버에 넘기기 위한 변수에 저장
 			for (var i = 0; i < editor.length; i++) {
 				var text_content = $("input[class=text_content"+i+"]");
 				text_content.val(editor[i].getHtml());
 			}
+			
+			var img = $("input[id=C_IMG1]").val();
+			alert("하나의 파일명 :"+img);
 			
 			var frm = document.getElementById("frm");
 			frm.action = './insertData.do';

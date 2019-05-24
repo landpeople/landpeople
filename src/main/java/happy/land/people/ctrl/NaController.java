@@ -137,6 +137,7 @@ public class NaController {
 			//컨트롤러로 이동할 예정(request 객체를 DAO에서 못 받아 올 수 있기 때문에 완료 후 수정시 실행)
 			if(dto.getImg_spath()!=null && !StringUtils.isBlank(dto.getImg_spath())) {//이미지 DB 저장
 				String origianlImgPath = dto.getImg_spath();
+				System.out.println(origianlImgPath);
 				String thumbnailImgPath = makeTumbnail(origianlImgPath, request);
 				
 				//dto에 썸네일 경로 넣어주기
