@@ -8,7 +8,6 @@ public class LPSketchbookDto {
 	private String sketch_theme;
 	private String sketch_share;
 	private String sketch_delflag;
-	private String sketch_content;
 	private String sketch_block;
 	private String sketch_spath;
 	
@@ -21,7 +20,7 @@ public class LPSketchbookDto {
 	}
 	
 	public LPSketchbookDto(String sketch_id, String user_email, String sketch_title, String sketch_theme,
-			String sketch_share, String sketch_delflag, String sketch_content, String sketch_block, String sketch_spath,
+			String sketch_share, String sketch_delflag, String sketch_block, String sketch_spath,
 			String serviceImplYn, String input, String rows, String page) {
 		super();
 		this.sketch_id = sketch_id;
@@ -30,7 +29,6 @@ public class LPSketchbookDto {
 		this.sketch_theme = sketch_theme;
 		this.sketch_share = sketch_share;
 		this.sketch_delflag = sketch_delflag;
-		this.sketch_content = sketch_content;
 		this.sketch_block = sketch_block;
 		this.sketch_spath = sketch_spath;
 		this.serviceImplYn = serviceImplYn;
@@ -87,14 +85,6 @@ public class LPSketchbookDto {
 		this.sketch_delflag = sketch_delflag;
 	}
 
-	public String getSketch_content() {
-		return sketch_content;
-	}
-
-	public void setSketch_content(String sketch_content) {
-		this.sketch_content = sketch_content;
-	}
-
 	public String getSketch_spath() {
 		return sketch_spath;
 	}
@@ -142,6 +132,18 @@ public class LPSketchbookDto {
 	public void setPage(String page) {
 		this.page = page;
 	}
+
+	@Override
+	public String toString() {
+		return "LPSketchbookDto [sketch_id=" + sketch_id + ", user_email=" + user_email + ", sketch_title="
+				+ sketch_title + ", sketch_theme=" + sketch_theme + ", sketch_share=" + sketch_share
+				+ ", sketch_delflag=" + sketch_delflag + ", sketch_block=" + sketch_block + ", sketch_spath="
+				+ sketch_spath + "]";
+	}
+
+
+	
+	
 	
 	
 }

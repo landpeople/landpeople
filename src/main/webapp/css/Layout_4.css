@@ -19,16 +19,19 @@
 	text-align: center; /*참고 문구용 CSS*/
 }
 
-#LS_IMG_1{
+#IMG1{
 	border: 1px solid black;  
 	float: left;
 	width: 97%;
 	height: 97%;
 	margin-left: 17px;
 	margin-top: 5px;
+	background-size: contain;
+ 	background-repeat: no-repeat;
+ 	background-position: center;
 }
 
-#RS_TXT_1{
+#TXT1{
 	border: 1px solid black;  
 	float: left;
 	width: 97%;

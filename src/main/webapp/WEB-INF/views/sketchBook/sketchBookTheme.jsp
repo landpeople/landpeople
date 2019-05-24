@@ -14,13 +14,18 @@
 <meta charset="UTF-8">
 <title>테마별 스케치북 조회 페이지</title>
 </head>
-<script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-<!-- <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<script src="./js/jquery-3.3.1.js"></script>
+<script src="./js/sketchbook/sketchbook.js"></script>
+<link rel="stylesheet" href="./css/lp-style.css">
+<link rel="stylesheet" href="./css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
+
+
+
+
 
 	<body>
 	${pagingDto}
@@ -35,7 +40,7 @@
 				<div class="content">
 					<% for(int i = 0 ; i <  sketchList.size() ; i++){ %>
 					
-						<div><a href="./kim.do?sketch_id=<%=sketchList.get(i).getSketch_id()%>"><%=sketchList.get(i).getSketch_id()%> &nbsp <%=sketchList.get(i).getSketch_title()%> &nbsp <%=sketchList.get(i).getSketch_spath()%></a></div>
+						<div><a href="./detailCanvas.do?sketch_id=<%=sketchList.get(i).getSketch_id()%>"><%=sketchList.get(i).getSketch_id()%> &nbsp <%=sketchList.get(i).getSketch_title()%> &nbsp <%=sketchList.get(i).getSketch_spath()%></a></div>
 					<%}%>
 					
 				</div>
@@ -54,12 +59,12 @@
 			}
 			else{
 				pageCnt++;			
-				getUser(pageCnt);		
+				getSketchBook(pageCnt);		
 			}
 		}
 	});
 	
-	function getUser(pageNo){		
+	function getSketchBook(pageNo){		
 		
 			$.ajax({
 				url: "sketchBookPaging.do",
@@ -72,7 +77,7 @@
 					for(var i = 0 ; i < msg.addSketchBook.length; i++){
 						
 						var div = document.createElement('div');
-						div.innerHTML = "<a href='./kim.do?sketch_id="+msg.addSketchBook[i].sketch_id+"'>"+
+						div.innerHTML = "<a href='./detailCanvas.do?sketch_id="+msg.addSketchBook[i].sketch_id+"'>"+
 										msg.addSketchBook[i].sketch_id+
 										msg.addSketchBook[i].sketch_title+
 										msg.addSketchBook[i].sketch_spath+"</a>";

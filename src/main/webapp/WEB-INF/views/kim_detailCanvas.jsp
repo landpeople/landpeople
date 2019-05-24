@@ -33,6 +33,16 @@
 
 <!-- 자유 캔버스 레이아웃  -->
 <link rel="stylesheet" href="css/Layout_1.css">
+
+<style type="text/css">
+.insertForms{
+	margin-right: 50px;
+	margin-bottom: 30px;
+	margin-top: 30px;
+	width : 180px;
+	height: 180px;
+}
+</style>
 </head>
 <body>
    <div class="main-wrapper">
@@ -44,18 +54,19 @@
             <div class="content">
                <input type="button" id="downloadExcel">
                <a href="./canvasDownloadExcel.do">테스트용 엑셀 다운로드</a>
-               <a href="./canvasDownloadImage.do">테스트용 이미지 다운로드</a>
+               <!-- <a href="./canvasDownloadImage.do">테스트용 이미지 다운로드</a> -->
                <div id="mybook" style="border: 1px solid black;">
                   <div>입력된 캔버스가 없습니다.</div>
                   <div>입력된 캔버스가 없습니다.</div>
                </div>
-               <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">캔버스 입력</button>
-               <input type="button" id="pageUpdate" value="페이지 수정"></input>
-               <input type="button" id="pageDelete" value="페이지 삭제"></input>
-               <input type="hidden" value="0" id="selectType">
+               <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">페이지 입력</button>
+               <input type="button" class="btn btn-info btn-lg" id="pageUpdate" value="페이지 수정"></input>
+               <input type="button" class="btn btn-info btn-lg" id="pageDelete" value="페이지 삭제"></input>
+               
 
                <form action="./insertDaysForm.do" onsubmit="return false" method="post">
-                  <input type="hidden" value=1 id="nowPageNo" name="nowPageNo">
+                  <input type="hidden" value=1  id="nowPageNo" name="nowPageNo">
+              	  <input type="hidden" value="0" id="selectType" name="selectType">
                </form>
 
                <!-- <form action="./updateDaysForm.do" onsubmit="return false" method="post">
@@ -78,15 +89,15 @@
       <div class="modal-content" style="width:1000px; height:800px;">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
+          <h4 class="modal-title" style="text-align: center;">페이지 입력</h4>
         </div>
-        <div class="modal-body">
-          <p><img src="./img/days.png" id="insertDaysForm"></img>
-          	 <img src="./img/free2.png" id="insertFreeForm"></img>
-          	 <img src="./img/free2.png"></img><br>
-          	 <img src="./img/free3.png"></img>
-          	 <img src="./img/free4.png"></img>
-          	 <img src="./img/free5.png"></img>
+        <div class="modal-body" style="padding: 50px;">
+          <p><img src="./img/days.png" class="insertForms" title="1번스타일"></img>
+          	 <img src="./img/free2.png" class="insertForms" title="2번스타일"></img>
+          	 <img src="./img/free2.png" class="insertForms" title="3번스타일"></img><br>
+          	 <img src="./img/free3.png" class="insertForms" title="4번스타일"></img>
+          	 <img src="./img/free4.png" class="insertForms" title="5번스타일"></img>
+          	 <img src="./img/free5.png" class="insertForms" title="6번스타일"></img>
           </p>
         </div>
         <div class="modal-footer">
@@ -105,20 +116,24 @@
  	    		width:  960,
  	            height: 650,
  	            shadow: false,
+ 	           arrows: true,
  	           change: function(event, data) { 
  	  			  $('#nowPageNo').val(data.index/2+1);
  	  		   }
  	    });				 
-		// 일정 캔버스 클릭시(임시)
-		$("#insertDaysForm").click(function(){
-			$('#selectType').val("1");
+		// 캔버스 클릭시
+		$(".insertForms").click(function(){
+			// 모든 캔버스 투명도 및 배경색(나중에 이미지로 바뀔예정) 조절
+			$(".insertForms").css('opacity','1.0');
+			$(".insertForms").css('background-color','');
+			// 선택한 캔버스 아이콘 투명도 설정
+			$(this).css('opacity','0.5');
+			$(this).css('background-color','green');
+			// 현재 제목을 가져와서 해당 값을 넘김
+			var titleContent = $(this).attr('title');			
+			$('#selectType').val(titleContent.substr(0,1));	
 			alert($('#selectType').val());
-		});
-		// 자유캔버스 1번째 클릭시
-		$("#insertFreeForm").click(function() {
-			$('#selectType').val("2");
-			alert($('#selectType').val());
-		});
+		});		
 		// 엑셀로 다운로드
 		$("#downloadExcel").click(function() {
 			alert("엑셀다운~");
@@ -134,8 +149,12 @@
 		    // 페이지 번호 받아옴
 		    var pageNo = $('<input type="hidden" name="nowPageNo">');
 		    pageNo.val($('#nowPageNo').val());
+		    // 해당 캔버스의 타입을 받아옴
+		    var typeNo = $('<input type="hidden" name="selectType">');
+		    typeNo.val($('#selectType').val());
 		    // 세션에 등록된 스케치북 받아오기		 
 		    updateForm.append(pageNo);
+		    updateForm.append(typeNo);
 		    updateForm.submit();	
 		});
 		//삭제 버튼 클릭시
@@ -156,12 +175,10 @@
 		
 		// 등록 버튼 클릭시
 		$("#canvasInsertFrom").click(function() {
-			if($('#selectType').val() == "1"){
-				alert("돌아가냐");
+			if($('#selectType').val() == "1"){				
 				 var pageNo = $('#nowPageNo').val();
 				 document.forms[0].submit();				
-			}else if($('#selectType').val() == "2"){
-				alert("아아아");
+			}else{				
 				 var pageNo = $('#nowPageNo').val();
 				 document.forms[0].action = "./upload.do";
 				 document.forms[0].submit();
@@ -170,10 +187,11 @@
 		
 		
 		//페이지 만들기
-		makePage();
-		//일정 게시판일경우 불러오기
-		daysLoad();	
-				
+		<% if(canvasList != null){%>
+			makePage();
+			//일정 게시판일경우 불러오기
+			daysLoad();	
+		<% }%>
 		function makePage(){
 			<%
 			for(int i = 0 ; i < canvasList.size(); i++){
@@ -308,7 +326,88 @@
 					  				+	"</div></div></div></div>";	
 					mapPage.appendChild(div1);
 			<%
-					}
+					}else if(canvasList.get(i).getCan_type().equalsIgnoreCase("3")){
+			%>
+						// 일정 페이지 정보 가져오기
+						var daysPage = document.getElementById("page"+<%=i+1%>);
+						var div = document.createElement('div');
+						div.innerHTML += "<div id='Left-Side2'>"
+									  +  "<div id='LS_TContainer2'>"
+									  + "<div id='TXT21'><%=textList.get(i).get(0).getText_content() %></div></div>"
+									  + "<div id='LS_IContainer2'>"
+									  + "<div id='IMG21' style='background-image: url(\"<%=textList.get(i).get(1).getImg_spath()%>\")'></div>"
+									  + "<div id='IMG22' style='background-image: url(\"<%=textList.get(i).get(2).getImg_spath()%>\")'></div>"	
+									  + "<div id='IMG23' style='background-image: url(\"<%=textList.get(i).get(3).getImg_spath()%>\")'></div>"
+					  				  + "</div></div>";
+						daysPage.appendChild(div);
+						
+						var mapPage = document.getElementById("map"+<%=i+1%>);
+						var div1 = document.createElement('div');
+						div1.innerHTML += "<div id='Right-Side2'>"
+									   + "<div id='IMG24' style='background-image: url(\"<%=textList.get(i).get(4).getImg_spath()%>\")'></div>"
+									   + "<div id='TXT22'><%=textList.get(i).get(5).getText_content() %></div></div>";
+					 mapPage.appendChild(div1);					
+			<%
+					}else if(canvasList.get(i).getCan_type().equalsIgnoreCase("4")){			
+			%>
+					// 일정 페이지 정보 가져오기
+					var daysPage = document.getElementById("page"+<%=i+1%>);
+					var div = document.createElement('div');
+					div.innerHTML += "<div id='Left-Side3'>"
+								  + "<div id='IMG31' style='background-image: url(\"<%=textList.get(i).get(0).getImg_spath()%>\")'></div></div>";
+					daysPage.appendChild(div);
+					
+					var mapPage = document.getElementById("map"+<%=i+1%>);
+					var div1 = document.createElement('div');
+					div1.innerHTML  += "<div id='Right-Side3'>"
+									+ "<div id='RS_TContainer3'>"
+									+ "<div id='TXT31'><%=textList.get(i).get(1).getText_content() %></div>"
+									+ "<div id='TXT32'><%=textList.get(i).get(2).getText_content() %></div></div>"
+									+ "<div id='RS_IContainer3'>"
+									+ "<div id='IMG32' style='background-image: url(\"<%=textList.get(i).get(3).getImg_spath()%>\")'></div>"
+									+ "<div id='IMG33' style='background-image: url(\"<%=textList.get(i).get(4).getImg_spath()%>\")'></div>"
+									+ "<div id='TXT33'><%=textList.get(i).get(5).getText_content() %></div></div></div>";
+					mapPage.appendChild(div1);	
+			<%
+					}else if(canvasList.get(i).getCan_type().equalsIgnoreCase("5")){			
+			%>
+					var daysPage = document.getElementById("page"+<%=i+1%>);
+					var div = document.createElement('div');
+					div.innerHTML += "<div id='Left-Side4'>"
+								   + "<div id='IMG41' style='background-image: url(\"<%=textList.get(i).get(0).getImg_spath()%>\")'></div></div>";
+					daysPage.appendChild(div);
+									
+					var mapPage = document.getElementById("map"+<%=i+1%>);
+					var div1 = document.createElement('div');
+					div1.innerHTML += "<div id='Right-Side4'>"
+								   + "<div id='TXT41'><%=textList.get(i).get(1).getText_content() %></div></div>";
+					mapPage.appendChild(div1);
+			<%
+					}else if(canvasList.get(i).getCan_type().equalsIgnoreCase("6")){			
+			%>							
+						var daysPage = document.getElementById("page"+<%=i+1%>);
+						var div = document.createElement('div');
+						div.innerHTML += "<div id='Left-Side5'>"
+									   + "<div id='LS_IContainer5'>"
+									   + "<div id='IMG51' style='background-image: url(\"<%=textList.get(i).get(0).getImg_spath()%>\")'></div></div>"
+									   + "<div id='LS_TContainer5'>"
+									   + "<div id='TXT51'><%=textList.get(i).get(1).getText_content() %></div></div></div>";
+						daysPage.appendChild(div);
+						
+						var mapPage = document.getElementById("map"+<%=i+1%>);
+						var div1 = document.createElement('div');
+						div1.innerHTML += "<div id='Right-Side5'>"
+									   + "<div id='RS_ITContainer51'>"
+									   + "<div id='IMG52' style='background-image: url(\"<%=textList.get(i).get(2).getImg_spath()%>\")'></div>"
+									   + "<div id='TXT52'><%=textList.get(i).get(3).getText_content() %></div>"
+									   + "<div id='IMG53' style='background-image: url(\"<%=textList.get(i).get(4).getImg_spath()%>\")'></div></div>"
+									   + "<div id='RS_ITContainer52'>"
+									   + "<div id='TXT53'><%=textList.get(i).get(5).getText_content() %></div>"
+									   + "<div id='IMG54' style='background-image: url(\"<%=textList.get(i).get(6).getImg_spath()%>\")'></div>"
+									   + "<div id='TXT54'><%=textList.get(i).get(7).getText_content() %></div></div></div>";
+						mapPage.appendChild(div1);						
+			<%
+					}					
 				}
 			%>
 		}
@@ -327,21 +426,7 @@
 		        infowindow.close();
 		    };
 		} 
-	});
-	
-/* 	// 마커에 표시할 인포윈도우를 생성합니다 
-    var infowindow = new daum.maps.InfoWindow({
-        content: positions[i].content // 인포윈도우에 표시할 내용
-    });
-
-    // 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
-    // 이벤트 리스너로는 클로저를 만들어 등록합니다 
-    // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
-    daum.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
-    daum.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-}
-*/
-		
+	});		
 	</script> 	
 	
 	</body>

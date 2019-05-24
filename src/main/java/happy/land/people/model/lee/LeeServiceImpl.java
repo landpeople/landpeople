@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import happy.land.people.dto.ChatContentDto;
+
 @Service
 public class LeeServiceImpl implements ILeeService {
 
@@ -16,13 +18,12 @@ public class LeeServiceImpl implements ILeeService {
 	@Autowired
 	private ILeeDao dao;
 	
-
 	@Override
-	public int chatList_Insert(String user_nickname) {
-		logger.info("● Service chatList_Insert 실행");
-		return dao.chatList_Insert(user_nickname);
+	public List<String> chatList_SelectAll() {
+		logger.info("● Service chatList_SelectAll 실행");
+		return dao.chatList_SelectAll();
 	}
-
+	
 	@Override
 	public int chatList_SelectOne(String user_nickname) {
 		logger.info("● Service chatList_SelectOne 실행");
@@ -30,29 +31,23 @@ public class LeeServiceImpl implements ILeeService {
 	}
 	
 	@Override
-	public List<String> chatList_SelectAll() {
-		logger.info("● Service chatList_SelectAll 실행");
-		return dao.chatList_SelectAll();
+	public int chatList_Insert(String user_nickname) {
+		logger.info("● Service chatList_Insert 실행");
+		return dao.chatList_Insert(user_nickname);
 	}
 
 	@Override
-	public String chatRoom_Select(Map<String, String> map) {
-		logger.info("● Service chatRoom_Select 실행");
-		return dao.chatRoom_Select(map);
+	public int chatList_Delete(String user_nickname) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	@Override
-	public int chatRoom_UpdateOut(String chr_id) {
-		logger.info("● Service chatRoom_UpdateOut 실행");
-		return dao.chatRoom_UpdateOut(chr_id);
+	public List<ChatContentDto> chatRoom_Make(Map<String, String> map) {
+		logger.info("● Service chatRoom_Make 실행");
+		return dao.chatRoom_Make(map);
 	}
-
-	@Override
-	public int chatRoom_Insert(Map<String, String> map) {
-		logger.info("● Service chatRoom_Insert 실행");
-		return dao.chatRoom_Insert(map);
-	}
-
+	
 	@Override
 	public String chkChatMember(String chr_id) {
 		logger.info("● Service chkChatMember 실행");
@@ -60,15 +55,8 @@ public class LeeServiceImpl implements ILeeService {
 	}
 
 	@Override
-	public int chatRoom_UpdateContent(Map<String, String> map) {
-		logger.info("● Service chatRoom_UpdateContent 실행");
-		return dao.chatRoom_UpdateContent(map);
+	public int chatContent_InsertMsg(ChatContentDto dto) {
+		logger.info("● Service chatContent_InsertMsg 실행");
+		return dao.chatContent_InsertMsg(dto);
 	}
-
-	@Override
-	public String chatRoom_SelectContent(String chr_id) {
-		logger.info("● Service chatRoom_SelectContent 실행");
-		return dao.chatRoom_SelectContent(chr_id);
-	}
-
 }

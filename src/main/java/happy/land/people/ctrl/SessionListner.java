@@ -20,7 +20,6 @@ public class SessionListner implements HttpSessionListener {
 	@Override
 	public void sessionCreated(HttpSessionEvent arg0) {
 		// 세션 생성시 호출
-
 		HttpSession session = arg0.getSession();
 		
 		String str = (String)session.getAttribute("user"); // 만료되지 않은 세션
@@ -34,7 +33,6 @@ public class SessionListner implements HttpSessionListener {
 	@Override
 	public void sessionDestroyed(HttpSessionEvent arg0) {
 		// 세션 만료시 호출
-		
 		HttpSession session = arg0.getSession();
 		
 		String str = (String)session.getAttribute("user"); // 만료되지 않은 세션

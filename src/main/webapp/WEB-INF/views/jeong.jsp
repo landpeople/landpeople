@@ -29,44 +29,25 @@
 			<div class="lpcontents">
 				<div class="content">
 					<div>
-				 		<a href="#" onclick="like()"><img id="likeState" alt="likeEmpty" src="./img/LikeBefore.png"></a>
-				 		<a href="#"><!-- <img id="likeAfter" alt="likeHeart" src="./img/LikeAfter.png"> --></a>
-				 		<a href="#" onclick="scrape()"> <img alt="scrape" src="./img/scrape.png"> </a>
+				 		<a href="#" onclick="like('${ldto.user_email}')"><img id="likeState" alt="likeEmpty" src="./img/LikeBefore.png"></a>
+				 		
+				 		<a href="#" onclick="scrape('${ldto.user_email}')"> <img alt="scrape" src="./img/scrape.png"> </a>
 	 				</div>	
-					<input type="button" value="내 스크랩  목록 보기" onclick="scrapeSelectMine()">
+					<input type="button" value="내 스크랩  목록 보기" onclick="scrapeSelectMine('${ldto.user_email}')">
+					
 					<form action="#" method="post" id="scrapDiv" name="scrapeDiv" onsubmit="return chkBox()">
 					<input type="submit" value="스크랩 취소">
 					<div id="scrapeSel" style="width: 500px;">
-					
 					</div>
-					
-					
 					</form>
 					<br>
 					<input type="button" value="내 스케치북 보기" onclick="sketchSelectMine()">
+					<input type="hidden" value="${ldto.user_email}" id="user_email">
+					
+										
 					<input type="button" value="테마 조회" onclick="sketchSelectTheme()">
 					<input type="hidden" value="나홀로" id="themeType"> 
-					<div id="sketchSel" style="width: 500px;">
-					<a href="#" onclick="sketchBookModify()"><img alt="modi" src="img/sketchBookImg/modifyIcon.png"></a>
-					</div>
 					
-				<!-- 스케치북 수정 Modal -->
-					<div class="modal fade" id="sketchModiForm" role="dialog">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal">&times;</button>
-									<h4 class="modal-title">스케치북 수정</h4>
-								</div>
-								<div class="modal-body">
-									<form action="#" role="form" method="post" id="modiSketchBook"></form>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- 여기까지 스케치북 생성 Modal -->
-				
-				
 				
 				
 				</div>
@@ -84,14 +65,14 @@
 <script type="text/javascript">
 
 //---------------------- 좋아요 등록 및 수정 --------------------
-function like(){
+function like(user){
 //	alert("좋아요 취소");
-	LpLike();
+	LpLike(user);
 }
 
-var LpLike = function(){
-    var user_email = "130@happy.com";
-    var sketch_id = "0004";
+var LpLike = function(user){
+    var user_email = user;
+    var sketch_id = "4";
 	$.ajax({
 		url: "LPLike.do",
 		type: "get",
@@ -116,19 +97,20 @@ var LpLike = function(){
 
 
 //---------------------- 스크랩 등록 및 수정 --------------------
-function scrape() {
+function scrape(user) {
 	//alert("스크랩");
-	LpScrape();
+	LpScrape(user);
+	alert(user);
 }
 
-var LpScrape = function(){
-	var user_email = "128@happy.com";
-	var sketch_id = "0007";
+var LpScrape = function(user){
+//	var user_email = "128@happy.com";
+	var sketch_id = "4";
 //	alert("스크랩 등록");	
 	$.ajax({
 		url : "Scrape.do",
 		type : "get",
-		data :  "user_email="+user_email+"&sketch_id="+sketch_id,
+		data :  "user_email="+user+"&sketch_id="+sketch_id,
 		success : function(sresult){
 			alert(sresult.sresult);
 		}, error : function() {
@@ -144,9 +126,10 @@ var LpScrape = function(){
 
 //---------------------- 스크랩한 스케치북 보기 ---------------------- 
 
-function scrapeSelectMine() {
+function scrapeSelectMine(email) {
 //	alert("스크랩 보기");
-	var user_email ="128@happy.com";
+	var user_email = email;
+	alert(user_email);
 	$.ajax({
 		url : "ScrapeSelect.do",
 		type : "get",
@@ -156,6 +139,8 @@ function scrapeSelectMine() {
 			//alert(scrapeCnt);
 			
 			//alert(scrape.size());
+			
+			
 			if(scrape== "" ||scrape==null){
 				alert("스크랩한 스케치북이 없습니다.");
 			}else{		
@@ -166,7 +151,7 @@ function scrapeSelectMine() {
 						"<th>스케치북 타이틀</th>"+
 						"<th>스케치북 커버이미지</th>"+
 						"<th>좋아요 Cnt</th>"+
-						"<tr>";
+						"</tr>";
 				htmlTable += scrape.scrapeResult;	
 				$("#scrapeSel").html(htmlTable);
 			}
@@ -230,9 +215,18 @@ function chkBox(){
 
 //--------------------- 작성한 스케치북 조회 -----------------------
 
-function sketchSelectMine() {
+function sketchSelectMine(){
+	var email = $("#user_email").val();
+	alert(email);
+	location.href = "./sketchSelMine.do?user_email="+email;
+	
+}
+
+
+
+/* function sketchSelectMine() {
 //	alert("작성 스케치북 보기");
-	var user_email ="128@happy.com";
+	var user_email ="124@happy.com";
 	$.ajax({
 		url : "sketchSelMine.do",
 		type : "post",
@@ -244,10 +238,13 @@ function sketchSelectMine() {
 			//alert(mySketchBookSize);
 			htmlTable = "";
 			htmlTable +="<table class='table table-bordered'>"+
+					"<tr>"+
+					"<th><input type='checkbox' onclick='checkAllSketch(this.checked)'></th>"+
 					"<th>스케치북 타이틀</th>"+
 					"<th>스케치북 커버이미지</th>"+
 					"<th>좋아요 Cnt</th>"+
-					"<tr>";
+					"<th>스케치북 수정</th>"+
+					"</tr>";
 			htmlTable += sketchBook.mySketchBook;		
 			$("#sketchSel").html(htmlTable);
 			
@@ -256,14 +253,14 @@ function sketchSelectMine() {
 			alert("실패");
 		}
 	});
-}
+} */
 
 //--------------------- 작성한 스케치북 조회 -----------------------
 
 
 
 
-//-------------------- 작성 스케치북 수정 --------------------
+//-------------------- 작성 스케치북 수정 모달 생성 --------------------
 
 function sketchBookModify() {
 	var user_email = "124@happy.com"
@@ -287,10 +284,12 @@ function sketchBookModify() {
 			//alert(modiModal.sdto.sketch_title);
 			//alert(modiModal.sdto.sketch_id);
 			
+			alert(modiModal.sdto.user_email);
 			alert(modiModal.sdto.sketch_theme);
-			
-			
-			var modiFormHTML = "<input type='hidden' name='sketch_id' value='"+modiModal.sdto.sketch_id+"'>"+
+			alert(modiModal.sdto.sketch_spath);
+			alert(modiModal.sdto.sketch_share);
+			var modiFormHTML =	"<input type='hidden' name='user_email' value='"+modiModal.sdto.user_email+"'>"+
+							  	"<input type='hidden' name='sketch_id' value='"+modiModal.sdto.sketch_id+"'>"+
 						
 						 "<div class='form-group'>"
 						+ "<label>스케치북 제목</label>"
@@ -310,8 +309,17 @@ function sketchBookModify() {
 						+
 			
 						"<div class='form-group'>"
+						+"<label>스케치북 공유여부</label>"
+						+"<div class='themeradio'>"
+						+"<input type='radio' id='sketchShareY' name='sketch_share' value='Y'><label for='sketchShareY'>Y</label>"
+						+"<input type='radio' id='sketchShareN' name='sketch_share' value='N'><label for='sketchShareN'>N</label>"
+						+"</div>"
+						+"</div>"
+						+
+						
+						"<div class='form-group'>"
 						+ "<label>스케치북 커버이미지</label>"
-						+ "<input type='text' class='form-control' id='cover' name='coverimage' value='"+modiModal.sdto.sketch_spath+"' style='width : 400px;'>"
+						+ "<input type='text' class='form-control' id='cover' name='sketch_spath' value='"+modiModal.sdto.sketch_spath+"' style='width : 400px;'>"
 						+ "</div>"
 						+
 			
@@ -323,6 +331,7 @@ function sketchBookModify() {
 					
 					
 					$('input:radio[name=sketch_theme]:input[value='+modiModal.sdto.sketch_theme+']').attr("checked", true);
+					//$("input:radio[name='sketch_share'][value="+ modiModal.sdto.sketch_share +"]").prop('checked', true);
 					//$("input:radio[name='sketch_theme'][value="+ modiModal.sdto.sketch_theme +"]").prop('checked', true);
 
 					
@@ -333,7 +342,37 @@ function sketchBookModify() {
 	
 }
 
-//-------------------- 작성 스케치북 수정 --------------------
+//-------------------- 작성 스케치북 수정 모달 생성 --------------------
+
+//-------------------- 작성 스케치북 수정  --------------------
+
+
+function sketchModify(){
+	var sketchModiModal = document.getElementById("modiSketchBook");
+	var sketch_theme = $("input[name=sketch_theme]:checked").val();
+	sketchModiModal.action = "./modifySketch.do";
+	
+	var title = $("#sketchtitle").val();
+	var theme = $("input[name=sketch_theme]:checked").length;
+	
+	if (title == "" || theme == 0) {
+		alert("스케치북 제목 혹은 스케치북 타입을 확인해주세요");
+	} else if (title.length >= 20) {
+		alert("스케치북의 제목이 너무 깁니다.");
+		$("#sketchtitle").val("");
+	} else {
+		sketchModiModal.submit();
+		alert("스케치북 수정완료");
+	}
+}
+
+
+
+//-------------------- 작성 스케치북 수정  --------------------
+
+
+
+
 
 //-------------------  테마별 스케치북 조회 ------------------ 
 
@@ -345,6 +384,52 @@ function sketchSelectTheme(){
 
 
 //-------------------  테마별 스케치북 조회 ------------------
+
+
+//------------------- 작성 스케치북 완전 다중 삭제 ----------------- 
+
+function checkAllSketch(bool){
+	var chks =  document.getElementsByName("chkVal");
+//	alert(chks.length);
+	for (var i = 0; i < chks.length; i++) {
+		chks[i].checked = bool;
+	}
+}
+
+function DelchkBox(){
+//	alert("작동");
+	var chks =  document.getElementsByName("chkVal");
+	var c = 0;
+	for (var i = 0; i < chks.length; i++) {
+		if(chks[i].checked){
+			c++;
+		}
+	}
+	if(c>0){
+//		var doc = document.getElementById("scrapeDiv");
+//		var doc = document.forms[0];
+		var sketchDelChk = confirm("스케치북을 삭제하시겠습니까?");
+		if(sketchDelChk == true){
+		
+			var doc =document.sketchSel;
+			doc.action = "./sketchRealDeleteMulti.do";
+			
+			return true;
+		}else{
+			alert("스케치북 삭제가 취소되었습니다.");
+			
+			return false;
+		}
+		
+	}else{
+		alert("선택된 스케치북이 없습니다.");
+		return false;
+	}
+}
+
+
+
+//------------------- 작성 스케치북 완전 다중 삭제 ----------------- 
 
 </script>
 </html>

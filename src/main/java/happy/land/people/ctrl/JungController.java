@@ -37,7 +37,7 @@ import happy.land.people.dto.LPCollectDto;
 import happy.land.people.dto.LPSketchbookDto;
 import happy.land.people.dto.LPUserDto;
 import happy.land.people.dto.SketchPagingDto;
-
+import happy.land.people.dto.cho.ChoDto;
 import happy.land.people.model.ISketchBookService;
 
 @Controller
@@ -70,6 +70,7 @@ public class JungController {
 	public  String sketchMake(LPSketchbookDto dto) {
 		logger.info("sketchBook 생성 {}", dto);
 		// 스케치북 생성 (제목, 여행테마, 공유 여부)
+		System.out.println(dto.getSketch_spath());
 		boolean isc = iSketchBookService.sketchInsert(dto);
 		System.out.println(isc);		
 		return "kim";
@@ -170,8 +171,9 @@ public class JungController {
 			System.out.println(lists.size());
 			String htmlScrape = "";
 			htmlScrape += "<tr>"+
-					"<td>스크랩한 스케치북이 없습니다.</td>"+
-					"</tr>";
+					"<td colspan='4' style='text-align: center;'>스크랩한 스케치북이 없습니다.</td>"+
+					"</tr>"+
+					"</table>";
 			
 			Map<String, String> scrapeResult = new HashMap<String, String>();
 			scrapeResult.put("scrapeResult", htmlScrape);
@@ -198,7 +200,8 @@ public class JungController {
 						"<td>"+lists.get(i).getSketch_title()+"</td>"+
 						"<td>"+lists.get(i).getSketch_spath()+"</td>"+
 						"<td>"+likeCnt+"</td>"+
-						"</tr>";
+						"</tr>"+
+						"</table>";
 		}
 		
 		Map<String, String> scrapeResult = new HashMap<String, String>();
@@ -213,10 +216,13 @@ public class JungController {
 	
 	// 스케치북 스크랩 다중 취소 
 	@RequestMapping(value="multiScrapeUpdate.do", method=RequestMethod.POST)
-	public String scrapeMutilUpdate(String[] chkVal, Model model) {
+	public String scrapeMutilUpdate(String[] chkVal, HttpSession sesseion, Model model) {
 		logger.info("JungController scrapeMutilUpdate {}", Arrays.toString(chkVal));
 		Map<String, String[]>map = new HashMap<String, String[]>();
-		String[] user_email = {"128@happy.com"};
+		ChoDto ldto = (ChoDto) sesseion.getAttribute("ldto");
+		String email = ldto.getUser_email();
+		System.out.println(email+"스크랩 취소할 유저 이메일 확인!!!!!!!");
+		String[] user_email = {email};
 		System.out.println(Arrays.toString(user_email));
 		map.put("user_email_", user_email);
 		map.put("sketch_id_", chkVal);
@@ -229,14 +235,39 @@ public class JungController {
 	}
 	
 	// 작성 스케치북 조회
-	@RequestMapping(value="sketchSelMine.do", method=RequestMethod.POST)
-	@ResponseBody
-	public Map<String, String> sketchSelMine(String user_email) {
-		Map<String, String> map = new HashMap<String, String>();
+	@RequestMapping(value="sketchSelMine.do", method=RequestMethod.GET)
+	public String sketchSelMine(String user_email, Model model) {
+		System.out.println(user_email);
+		int cnt = iSketchBookService.sketchCntMine(user_email);
+		
+		SketchPagingDto pagingDto = new SketchPagingDto(9, 1, cnt, 9);
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("user_email", user_email);
+		map.put("first", String.valueOf(pagingDto.getFirstBoardNo()));
+		map.put("last", String.valueOf(pagingDto.getEndBoardNo()));	
+		List<LPSketchbookDto> mySketchBookLists = iSketchBookService.sketchSelectMine(map);
+		
+		// 스케치북 id에 따른 카운트 저장할 변수 
+		Map<String,Integer> sketchLike = new HashMap<String,Integer>();
+		for (int i = 0; i < mySketchBookLists.size(); i++) {
+			String sketch_id = mySketchBookLists.get(i).getSketch_id();
+			int likeCnt = iSketchBookService.likeCnt(sketch_id);
+			sketchLike.put(sketch_id, likeCnt);
+		
+			//model.addAttribute("likeCnt", likeCnt);	
+		}
+		
+		model.addAttribute("pagingDto", pagingDto);
+		model.addAttribute("mySketchBookLists", mySketchBookLists);
+		model.addAttribute("sketchLike", sketchLike);
+		System.out.println(sketchLike);
+		return "/sketchBook/sketchBookMine";
+		
+		/*Map<String, String> map = new HashMap<String, String>();
 		map.put("user_email", user_email);
 		List<LPSketchbookDto> mySketchlists = iSketchBookService.sketchSelectMine(map);
 		System.out.println(mySketchlists);
-		
+		System.out.println(mySketchlists.size());
 		if(mySketchlists.size()==0) {
 			String htmlMysketchBook="";
 			htmlMysketchBook +="<tr>"+
@@ -255,28 +286,69 @@ public class JungController {
 			for (int i = 0; i < mySketchlists.size(); i++) {
 				String sketch_id = mySketchlists.get(i).getSketch_id();
 				System.out.println(sketch_id);
+				System.out.println(mySketchlists.size()+"내가 작성한 스케치북 갯수!!!!!!!!!!");
 				// 좋아요 갯수 조회
 				int likeCnt = iSketchBookService.likeCnt(sketch_id);
 				System.out.println(likeCnt);
 				
-				htmlMysketchBook = "<tr>"+
-						"<td>"+mySketchlists.get(i).getSketch_title()+"</td>"+
-						"<td>"+mySketchlists.get(i).getSketch_spath()+"</td>"+
-						"<td>"+likeCnt+"</td>"+
-						"</tr>";
-			}
+				htmlMysketchBook += "<tr>"+
+							"<td>"+
+							"<input type='checkbox' name='chkVal' value='"+sketch_id+"'></td>"+
+							"<td>"+mySketchlists.get(i).getSketch_title()+"</td>"+
+							"<td>"+mySketchlists.get(i).getSketch_spath()+"</td>"+
+							"<td>"+likeCnt+"</td>"+
+							"<td>"+
+							"<a href='#' onclick='sketchBookModify()'><img alt='modi' src='img/sketchBookImg/modifyIcon.png'></a>"+
+							"</td>"+
+							"</tr>";
 			
+			System.out.println(htmlMysketchBook);
+			}
 			Map<String, String> mySketchBook = new HashMap<String, String>();
 			mySketchBook.put("mySketchBook", htmlMysketchBook);
-			
 			System.out.println(mySketchBook);
-			
 			return mySketchBook;
-		}
+		}*/
 		
 	}
 	
-	//스케치북 수정폼 생성
+	// 작성 스케치북 페이징 처리
+	@ResponseBody
+	@RequestMapping(value="/mysketchBookPaging.do" ,method = RequestMethod.GET)
+	public Map<String,List<LPSketchbookDto>> mysketchBookPaging(String user_email, String pageNo,String type,Model model) {
+		
+		int cnt = iSketchBookService.sketchCntMine(user_email);
+		SketchPagingDto pagingDto = new SketchPagingDto(9, Integer.parseInt(pageNo), cnt, 9);
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("user_email", user_email);
+		map.put("first", String.valueOf(pagingDto.getFirstBoardNo()));
+		map.put("last", String.valueOf(pagingDto.getEndBoardNo()));
+					
+		List<LPSketchbookDto> MySketchBookList= iSketchBookService.sketchSelectMine(map);
+		Map<String,Integer> sketchLikes = new HashMap<String,Integer>();
+		for (int i = 0; i < MySketchBookList.size(); i++) {
+			String sketch_id = MySketchBookList.get(i).getSketch_id();
+			int likeCnt = iSketchBookService.likeCnt(sketch_id);
+			sketchLikes.put(sketch_id, likeCnt);
+		
+			//model.addAttribute("likeCnt", likeCnt);	
+		}
+		model.addAttribute("sketchLikes", sketchLikes);
+		System.out.println(sketchLikes);
+		
+		Map<String,List<LPSketchbookDto>> resultMap = new HashMap<String,List<LPSketchbookDto>>();
+		resultMap.put("addMySketchBook", MySketchBookList);		
+		
+		return resultMap;
+	}
+	
+	
+	
+	
+	
+	
+	
+	// 스케치북 수정폼 생성
 	@RequestMapping(value="sketchModifyForm.do", method=RequestMethod.POST)
 	@ResponseBody
 	public Map<String, LPSketchbookDto> sketchModifyForm(String user_email, String sketch_id, LPSketchbookDto dto){
@@ -285,9 +357,40 @@ public class JungController {
 		System.out.println(sdto);
 		Map<String, LPSketchbookDto> map = new HashMap<String, LPSketchbookDto>();
 		map.put("sdto", sdto);
-	
+		System.out.println(sdto.getUser_email());
 		return map;
 	} 
+	
+	// 작성 스케치북 수정
+	@RequestMapping(value="modifySketch.do", method=RequestMethod.POST)
+	public String modifySketchBook(LPSketchbookDto dto) {
+		logger.info("JungController modifySketchBook {}", dto);
+		boolean isc = iSketchBookService.sketchUpdate(dto);
+		
+		System.out.println(isc);
+		return "redirect:/jeong.do";
+	}
+	
+	
+	// 작성 스케치북 삭제
+	@RequestMapping(value="sketchRealDeleteMulti.do", method=RequestMethod.POST)
+	public String sketchRealDeleteMulti(String[] chkVal, Model model) {
+		logger.info("JungController sketchRealDeleteMulti {}", Arrays.toString(chkVal));
+		Map<String, String[]>map = new HashMap<String, String[]>();	
+	/*	for(int i = 0 ;i < chkVal.length ; i++) {
+			chkVal[i] = chkVal[i].substring(1, chkVal[i].length()-1);
+		}
+		System.out.println(chkVal[0]);*/
+		map.put("sketch_id_", chkVal);		
+		boolean isc = iSketchBookService.sketchRealDeleteMulti(map);
+		
+		return "redirect:/jeong.do";
+	}
+	
+	
+	
+	
+	
 	
 	
 	
@@ -407,14 +510,14 @@ public class JungController {
 			Map<String,String> map = new HashMap<String,String>();
 			map.put("theme", type);
 			map.put("first", String.valueOf(pagingDto.getFirstBoardNo()));
-			map.put("end", String.valueOf(pagingDto.getEndBoardNo()));			
+			map.put("last", String.valueOf(pagingDto.getEndBoardNo()));			
 			List<LPSketchbookDto> sketchBookList= iSketchBookService.sketchSelectTheme(map);
 			request.setAttribute("pagingDto", pagingDto);
 			request.setAttribute("sketchBook", sketchBookList);
 			return "/sketchBook/sketchBookTheme";
 		}
 		
-		// 페이징 처리
+		// 테마별 스케치북 조회 페이징 처리
 		
 		@ResponseBody
 		@RequestMapping(value="/sketchBookPaging.do" ,method = RequestMethod.GET)
@@ -425,7 +528,7 @@ public class JungController {
 			Map<String,String> map = new HashMap<String,String>();
 			map.put("theme", type);
 			map.put("first", String.valueOf(pagingDto.getFirstBoardNo()));
-			map.put("end", String.valueOf(pagingDto.getEndBoardNo()));
+			map.put("last", String.valueOf(pagingDto.getEndBoardNo()));
 						
 			List<LPSketchbookDto> sketchBookList= iSketchBookService.sketchSelectTheme(map);
 			Map<String,List<LPSketchbookDto>> resultMap = new HashMap<String,List<LPSketchbookDto>>();
