@@ -385,6 +385,91 @@
 			}
 		}
  	}
+ 	
+ 	// 관광지보기
+	 function showTrip(){
+		 for(var i = 0; i < markers.length; i++)
+			 markers[i].setMap(null);
+		 
+		 $.ajax({
+				url: "showTrip.do", //요청 url
+				type: "post", // 전송 처리방식
+				asyn: false, // true 비동기 false 동기
+				data: { 'type' : "관광"}, // 서버 전송 파라메터
+				dataType: "json", // 서버에서 받는 데이터 타입
+				success: function(msg){	
+					alert(msg.result[0].map_id);	
+					for(var i = 0; i < msg.result.length ; i++){
+						var foodMarker  = 	new daum.maps.Marker({ 			    
+						    position: new daum.maps.LatLng(msg.result[i].map_y, msg.result[i].map_x),
+						    clickable: true				   
+					    }); 		
+						
+						// 지도에 마커를 표시합니다
+						foodMarker.setMap(map);	
+						markers.push(foodMarker);
+						var foodMarkerInfo = new daum.maps.InfoWindow({
+						    content : '<div style="padding:5px;">'+msg.result[i].map_title+'</div><button>일정등록</button><button>닫기</button>',
+						    removable : true
+						});						
+						
+						(function(foodMarker, foodMarkerInfo) {
+					        // 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다 
+					       daum.maps.event.addListener(foodMarker, 'click', function() {
+						     // 마커 위에 인포윈도우를 표시합니다						          
+						    	 foodMarkerInfo.open(map, foodMarker); 							           
+							});						       
+					    })(foodMarker, foodMarkerInfo);
+						
+					}
+				}, error : function() {
+					alert("실패");
+				}
+			});	
+	 }
+	 
+	 // 숙소 보기
+	function showRest(){
+		 for(var i = 0; i < markers.length; i++)
+			 markers[i].setMap(null);
+		 
+		$.ajax({
+			url: "showRest.do", //요청 url
+			type: "post", // 전송 처리방식
+			asyn: false, // true 비동기 false 동기
+			data: { 'type' : "숙박"}, // 서버 전송 파라메터
+			dataType: "json", // 서버에서 받는 데이터 타입
+			success: function(msg){	
+				alert(msg.result[0].map_id);	
+				for(var i = 0; i < msg.result.length ; i++){
+					var foodMarker  = 	new daum.maps.Marker({ 			    
+					    position: new daum.maps.LatLng(msg.result[i].map_y, msg.result[i].map_x),
+					    clickable: true				   
+				    }); 		
+					
+					// 지도에 마커를 표시합니다
+					foodMarker.setMap(map);	
+					markers.push(foodMarker);
+					var foodMarkerInfo = new daum.maps.InfoWindow({
+					    content : '<div style="padding:5px;">'+msg.result[i].map_title+'</div><button>일정등록</button><button>닫기</button>',
+					    removable : true
+					});						
+					
+					(function(foodMarker, foodMarkerInfo) {
+				        // 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다 
+				       daum.maps.event.addListener(foodMarker, 'click', function() {
+					     // 마커 위에 인포윈도우를 표시합니다						    
+					    	 foodMarkerInfo.open(map, foodMarker); 							           
+						});						       
+				    })(foodMarker, foodMarkerInfo);
+					
+				}
+			}, error : function() {
+				alert("실패");
+			}
+		});
+	 }
+ 	
 	</script>
 	
 	<script type="text/javascript">
