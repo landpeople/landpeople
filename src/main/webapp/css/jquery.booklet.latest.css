@@ -64,12 +64,12 @@
 	.booklet .b-tab:hover  {background:#aaa; color:#000;}	
 	
    	/* Arrow Controls */
-	.booklet .b-arrow          {display:block; position:absolute; text-indent:-9999px; top:0; height:100%; width:74px;}
-	.booklet .b-arrow div      {display:none; text-indent:-9999px; height:170px; width:74px; position:absolute; left:0; top:25%;}
-	.booklet .b-arrow-next     {right:-80px;}
-	.booklet .b-arrow-prev     {left:-80px;}
-	.booklet .b-arrow-next div {background:url("../img/canvas/arrow-next.png") no-repeat left top;}
-	.booklet .b-arrow-prev div {background:url("../img/canvas/arrow-prev.png") no-repeat left top;}
+	.booklet .b-arrow          {display:block; position:absolute; text-indent:-9999px; top:0; height:64px; width:44px;}
+	.booklet .b-arrow div      {display:none; text-indent:-9999px; height:64px; width:44px; position:absolute; left:0; top:300px;}
+	.booklet .b-arrow-next     {right:-10px;}
+	.booklet .b-arrow-prev     {left:0px;}
+	.booklet .b-arrow-next div {opacity:0.5; background:url("../img/canvas/next_arrow.png") no-repeat left top;}
+	.booklet .b-arrow-prev div {opacity:0.5; background:url("../img/canvas/prev_arrow.png") no-repeat left top;}
 		
 /* @z-index fix (needed for older IE browsers)
 ----------------------------------------*/

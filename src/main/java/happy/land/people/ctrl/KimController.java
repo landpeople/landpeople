@@ -168,7 +168,7 @@ public class KimController {
     		sketch_id = "1";
     	int canvasCnt = canvasService.canvasCnt(sketch_id);
     	//스케치북 번호를 세션에 추가
-    	session.setAttribute("sketck_id", sketch_id);
+    	session.setAttribute("sketch_id", sketch_id);
     	System.out.println("해당 스케치북의 캔버스 개수:"+canvasCnt);
     	
     	// 캔버스 리스트
@@ -204,7 +204,7 @@ public class KimController {
     @RequestMapping(value="insertDaysForm.do",method=RequestMethod.POST)
     public String insertDaysFrom(HttpSession session,String nowPageNo){
     	// 페이지 번호 , 캔버스 id     	
-    	String sketch_id = (String)session.getAttribute("sketck_id");
+    	String sketch_id = (String)session.getAttribute("sketch_id");
     	LPCanvasDto dto = new LPCanvasDto("0001", sketch_id, "제목은 대충", "내용도 아무거나", "1", nowPageNo);
     	session.setAttribute("canvas", dto);
     	return "kim_insertDaysCanvas";
