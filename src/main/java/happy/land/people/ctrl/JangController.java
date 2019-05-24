@@ -158,4 +158,15 @@ public class JangController {
 		logger.info("Controller scheduler");
 		iManagerService.scheduler();
 	}
+	
+	public void test() {
+		logger.info("Controller test");
+		iManagerService.deleteChatroom();
+	}
+	
+	@RequestMapping(value="/selectChatList.do")
+	public void selectChatList() {
+		logger.info("Controller selectChatList");
+		iManagerService.selectChr();
+	}
 }

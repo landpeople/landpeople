@@ -4,15 +4,36 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.mybatis.spring.SqlSessionTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.util.WebUtils;
 
+import happy.land.people.ctrl.JangController;
+import happy.land.people.model.jang.IManagerService;
+import happy.land.people.model.jang.ManagerDaoImpl;
 public class ExecuteUsingQuartz {
 	
-	public void delFile(HttpServletRequest request) {
+	private SqlSessionTemplate sqlSession;
+	private Logger logger = LoggerFactory.getLogger(ExecuteUsingQuartz.class);
+	private final String NS = "jang_test.";
+	private JangController jang;
+	
+	private IManagerService iManagerService;
+	
+	@Autowired
+	private HttpServletRequest request;
+	
+	public void delFile() {
 		
 		try {
-			String path = WebUtils.getRealPath(request.getSession().getServletContext(), "/tempFolder");
+//			String path = WebUtils.getRealPath(request.getSession().getServletContext(), "/tempFolder");
+			String path = request.getSession().getServletContext().getRealPath("tempFolder");
 			System.out.println("폴더 경로 : "+path);
 			
 			File delFolder =new File(path);
@@ -26,12 +47,13 @@ public class ExecuteUsingQuartz {
 				}
 			}
 			
-		} catch (FileNotFoundException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public void test() {
-		System.out.println("스케줄러 실행!");
+		System.out.println("스케줄러 실행!!!**********************");
+		jang.test();
 	}
 }

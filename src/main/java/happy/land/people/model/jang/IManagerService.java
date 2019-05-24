@@ -21,4 +21,8 @@ public interface IManagerService {
 	public boolean modifyBlock(String id);
 	
 	public void scheduler();
+	
+	public void deleteChatroom();
+	
+	public void selectChr();
 }

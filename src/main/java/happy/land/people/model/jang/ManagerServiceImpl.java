@@ -62,5 +62,16 @@ public class ManagerServiceImpl implements IManagerService {
 		
 	}
 
-	
+	@Override
+	public void deleteChatroom() {
+		logger.info("채팅방 삭제 deleteChatroom");
+		iManagerDao.deleteChatroom();
+	}
+
+	@Override
+	public void selectChr() {
+		logger.info("ManagerServiceImpl selectChr");	
+		iManagerDao.selectChr();
+	}
+
 }

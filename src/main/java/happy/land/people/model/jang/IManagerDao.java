@@ -20,5 +20,7 @@ public interface IManagerDao {
 	
 	public boolean modifyBlock(String id);
 	
+	public void deleteChatroom();
 	
+	public void selectChr();
 }
