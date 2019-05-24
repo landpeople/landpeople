@@ -13,8 +13,9 @@
 
 <!-- 회원가입 (이메일) OK-->
 <insert id="signUpU" parameterType="ChoDto">
-	INSERT INTO LPUSER (USER_EMAIL, USER_PASSWORD, USER_NICKNAME, USER_AUTH, USER_EMAILKEY) 
-	VALUES(#{user_email}, #{user_password}, #{user_nickname}, 'U', '')
+	INSERT INTO LPUSER (USER_EMAIL, USER_PASSWORD, USER_NICKNAME, USER_AUTH,USER_EMAILKEY) 
+SELECT #{user_email}, #{user_password}, #{user_nickname}, 'U', '' FROM DUAL WHERE NOT EXISTS(SELECT* FROM LPUSER WHERE USER_EMAIL =#{user_email})
+	
 </insert>
 
 <!-- 회원가입 (네이버)  OK-->

@@ -76,10 +76,11 @@ public class ChoDaoImpl implements IChoDao {
 			return DBPWDto;
 		}else {
 			logger.info("--------------패스워드 불일치----------");
+			DBPWDto.setUser_password("no");
+			System.out.println(DBPWDto.getUser_password());
+			return DBPWDto;
 		}
 		
-		System.out.println("비밀번호어쩌고까지 다했냐?");
-		return session.selectOne(NS+"login", dto);
 	}
 
 	@Override
@@ -96,6 +97,11 @@ public class ChoDaoImpl implements IChoDao {
 			dto.setUser_password(passwordEncode);
 			session.update(NS+"modifyPassword",dto);
 		}
+		
+		if(dto.getUser_nickname() == null) {
+			return session.update(NS+"modifyPassword",dto)>0? true:false;
+		}
+		
 		boolean isc = session.update(NS+"modifyNickname",dto)>0? true:false;
 		
 		return isc;

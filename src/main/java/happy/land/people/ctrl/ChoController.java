@@ -1,7 +1,9 @@
 package happy.land.people.ctrl;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
+
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +16,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.social.connect.Connection;
+import org.springframework.social.google.api.Google;
+import org.springframework.social.google.api.impl.GoogleTemplate;
+import org.springframework.social.google.api.plus.Person;
+import org.springframework.social.google.api.plus.PlusOperations;
 import org.springframework.social.google.connect.GoogleConnectionFactory;
+import org.springframework.social.oauth2.AccessGrant;
 import org.springframework.social.oauth2.GrantType;
 import org.springframework.social.oauth2.OAuth2Operations;
 import org.springframework.social.oauth2.OAuth2Parameters;
@@ -125,14 +133,38 @@ public class ChoController {
     @RequestMapping(value="/callbackgoogle.do" , method= {RequestMethod.POST,RequestMethod.GET})
     public String callbackGoogle(Model model, @RequestParam String code, HttpSession session , ChoDto dto) {
     	System.out.println("여기는 googleCallback");
-
+    
     	
-		return "redirect:./index.jsp";
+    	/*
+    	OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations(); 
+    	AccessGrant accessGrant = oauthOperations.exchangeForAccess(code, googleOAuth2Parameters.getRedirectUri(), null); 
+    	String accessToken = accessGrant.getAccessToken(); 
+    	Long expireTime = accessGrant.getExpireTime(); 
+    	if (expireTime != null && expireTime < System.currentTimeMillis()) 
+    	{ accessToken = accessGrant.getRefreshToken(); 
+    	logger.info("accessToken is expired. refresh token = {}" , accessToken); }
+    	Connection<Google>connection = googleConnectionFactory.createConnection(accessGrant); 
+    	Google google = connection == null ? new GoogleTemplate(accessToken) : connection.getApi(); 
+    	PlusOperations plusOperations = google.plusOperations(); 
+    	Person person = plusOperations.getGoogleProfile();
+
+    	System.out.println(person.getAccountEmail());
+    	*/
+    	//String user_email = 
+
+		//dto.setUser_email(user_email);
+		//String[] user_name = user_email.split("@");
+		//dto.setUser_nickname(user_name[0]);
+		//dto.setUser_auth("N");
+		//boolean isc = iChoService.signUp(dto);
+		//session.setAttribute("ldto", dto);
+    	
+		return "forward:./index.jsp";
 	}
 
 	// 여기는 나중에 한다 ^^ 로그인기능 => 다 됐다 로그인 기능
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public String login(ChoDto dto, HttpSession session,HttpServletResponse response) throws IOException {
+	public String login(ChoDto dto, HttpSession session,HttpServletResponse response, HttpServletRequest request) throws IOException {
 
 		
 		//여기서 막아버리자 로그인시 확인하는거 api인지 일반인지  api면 api가입자라고 보여주자
@@ -153,13 +185,45 @@ public class ChoController {
 		//이제 여기서
 
 		System.out.println(ldto);
+		
+		
+		if(ldto.getUser_password().equals("no")) {
+			//비밀번호 일치 x
+			//쫓아내
+			System.out.println("비번 틀렸다");
+			
+			String no = "no";
+			
+			request.setAttribute("no", no);
+			
+			return "users/loginPage";
+		}else {
+			//비밀번호 일치 
+			// 이메일인증여부 확인
+			// 인증했으면 로긴
+			// 안했으면 쫓아내
+			if(ldto.getUser_emailchk().equals("N")) {
+				System.out.println("비번 일치 이메일 인증안함");
+				
+				String eChk = "eChk";
+				
+				request.setAttribute("eChk", eChk);
+				
+				return "users/loginPage";
+				
+			}else {
+				System.out.println("비번 일치 이메일인증 함");
+				
+			
+			}
+		}
 
 		int n = iLeeService.chatList_SelectOne(ldto.getUser_nickname());
 		if (n == 0) {
 			iLeeService.chatList_Insert(ldto.getUser_nickname());
 		}
 		session.setAttribute("ldto", ldto);
-
+		
 		return "forward:./index.jsp";
 	}
 
@@ -251,13 +315,26 @@ public class ChoController {
 	}
 	
 	
-	//비밀번호 찾기로 와서 비밀번호 수정
+	//비밀번호 찾기로 와서 비밀번호 수정페이지로보내주기
 	@RequestMapping(value="/pwforget.do",method=RequestMethod.GET)
-	public String pwforget(ChoDto dto) {
+	public String pwforget(ChoDto dto,HttpServletRequest request) {
+		request.setAttribute("user_email", dto.getUser_email());
+		System.out.println(dto.getUser_email());
+		return "users/pwforget/pwforget";
+	}
+	
+	//비밀번호찾기로 비밀번호 수정 완료했을때 오는 컨트롤러
+	@RequestMapping(value="/modifyPwSuc.do" , method=RequestMethod.POST)
+	public String modifyPwSuc(ChoDto dto) {
+		
+		System.out.println("dto이메일"+dto.getUser_email());
+		
+		dto.setUser_auth("U");
+		dto.setUser_email(dto.getUser_email());
+		iChoService.userInfo(dto);
 		
 		
-		boolean isc = true;
-		return isc ? "users/pwforget/pwforget":"error";
+		return "users/loginPage";
 	}
 	
 	
@@ -298,8 +375,11 @@ public class ChoController {
 	//마이페이지
 	@RequestMapping(value="/mypage.do", method= {RequestMethod.GET ,RequestMethod.POST})
 	public String mypage(HttpSession session) {
-		
-		
+		ChoDto ldto =(ChoDto) session.getAttribute("ldto");
+		System.out.println(ldto);
+		if(ldto == null) {
+			return "redirect:./index.jsp";
+		}
 		
 		
 		return "users/mypage";

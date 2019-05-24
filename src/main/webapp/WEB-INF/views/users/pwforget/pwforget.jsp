@@ -7,7 +7,35 @@
 <head>
 <meta charset="UTF-8">
 <title>이메일로 비밀번호 찾기 </title>
+<link rel="stylesheet" type="text/css" href="./css/sweetalert.css">
+<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="./css/bootstrap-theme.min.css">
+<script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="./js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./js/sweetalert.min.js"></script>
+
 <script type="text/javascript">
+function pwcheck() {
+	// email 중복 + 유효값
+	var pwchk = document.getElementById("pwchkVal").value;
+
+	var pw = document.getElementById("pw").value;
+	var passOK = document.getElementById("passOK").value;
+
+	if(pwchk == "1" && pw ==passOK){
+		swal("비밀번호 수정 완료","로그인하고 이용해주세요");
+		return true;
+	}else{
+		swal("비밀번호 수정 실패", "비밀번호를 형식에 맞쳐 일치하게 입력해주세요");
+		$("#passOK").val("");
+		$("#pwresult").html("");
+		$("#pwchk").html("");
+		return false;
+	}
+}
+
+
+
 
 $(function() {
 	
@@ -55,6 +83,8 @@ $(function() {
 
 </script>
 
+<% String user_email =  (String)request.getAttribute("user_email");%>
+
 </head>
 <body>
 <h1>여기는 이메일로 비밀번호찾기 페이지로 오는곳임</h1><br>
@@ -64,12 +94,11 @@ $(function() {
 <h2>변경할 비밀번호를 입력해주세요
 </h2><br>
 
+<%=user_email%>
 
-
-
-
-
-<form action="./pwforget.do" method="post">
+<input type="hidden" value="0" id="pwchkVal">
+<form action="./modifyPwSuc.do" method="post" onsubmit="return pwchkeck()">
+<input type="hidden" name="user_email" value="<%=user_email%>">
 	<input type="text" id="pw" name="user_password" placeholder="비밀번호" required="required" max="12">
 	<br>&nbsp;<span id="pwresult">4~10자리의 영문+숫자</span><br>
 	<input type="text" id="passOK" placeholder="비밀번호확인" required="required" max="12">
