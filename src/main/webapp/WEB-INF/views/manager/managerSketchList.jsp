@@ -25,7 +25,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 
-		var cnames = [ '아이디', '작성자 메일', '제목', '테마', '공유여부', '삭제여부', '공개여부' ];
+		var cnames = [ '아이디', '닉네임', '제목', '테마', '공유여부', '삭제여부', '공개여부' ];
 
 		$("#jqGrid").jqGrid({
 
@@ -48,8 +48,8 @@
 				width : 45,
 				align : 'center'
 			}, {
-				name : 'USER_EMAIL',
-				index : 'user_email',
+				name : 'USER_NICKNAME',
+				index : 'user_nickname',
 				width : 195,
 				align : 'center'
 			}, {
@@ -159,7 +159,7 @@
 								<br>
 							<select id="selectId">
 							<option value="" selected="selected">전체</option>
-							<option value="user_email">작성자</option>
+							<option value="user_nickname">작성자</option>
 							<option value="sketch_title">제목</option>
 							</select> 
 							<span><input id="input" type="text" placeholder="검색어를 입력하세요" value=""></span> 

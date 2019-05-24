@@ -152,4 +152,12 @@ public class TestController {
 		logger.info("● TestController testPush 실행");
 		return "testPush";
 	}
+	
+	@RequestMapping(value="/push2.do", method=RequestMethod.GET)
+	public String testPush22() {
+		logger.info("● TestController testPush 실행");
+		return "testPush2";
+	}
+	
+	
 }
