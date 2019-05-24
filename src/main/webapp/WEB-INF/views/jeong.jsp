@@ -72,7 +72,7 @@ function like(user){
 
 var LpLike = function(user){
     var user_email = user;
-    var sketch_id = "0004";
+    var sketch_id = "4";
 	$.ajax({
 		url: "LPLike.do",
 		type: "get",
@@ -105,7 +105,7 @@ function scrape(user) {
 
 var LpScrape = function(user){
 //	var user_email = "128@happy.com";
-	var sketch_id = "0007";
+	var sketch_id = "4";
 //	alert("스크랩 등록");	
 	$.ajax({
 		url : "Scrape.do",

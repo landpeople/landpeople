@@ -19,21 +19,21 @@
 	text-align: center; /*참고 문구용 CSS*/
 }
 
-#LS_Container{
+#LS_TContainer{
 /* 	border: 1px solid black;   */
 	width: 50%;
 	height: 98%;
 	float: left;
 }
 
-#LS_IMG_Container{
+#LS_IContainer{
 /* 	border: 1px solid black;   */
 	width: 48%;
 	height: 98%;
  	float: right;
 }
 
-#LS_TXT_1{
+#TXT1{
 	border: 1px solid black;
 	width: 85%;
 	height: 90%;
@@ -42,38 +42,50 @@
 	margin-left : 30px;
 }
 
-#LS_IMG_1{
+#IMG1{
 	border: 1px solid black;
 	float: none;
 	height: 26%;
 	width: 92%;
 	margin-top: 60px;
+	background-size: contain;
+ 	background-repeat: no-repeat;
+ 	background-position: center;
 }
 
-#LS_IMG_2{
+#IMG2{
 	border: 1px solid black;
 	float: none;
 	height: 26%;
 	width: 92%;
 	margin-top: 40px;
+	background-size: contain;
+ 	background-repeat: no-repeat;
+ 	background-position: center;
 }
 
-#LS_IMG_3{
+#IMG3{
 	border: 1px solid black;
 	float: none;
 	height: 26%;
 	width: 92%;
 	margin-top: 40px;
+	background-size: contain;
+ 	background-repeat: no-repeat;
+ 	background-position: center;
 }
 
-#RS_ING_1{
+#IMG4{
 	border: 1px solid black;
 	height: 45%;
 	width: 94%;
 	margin: 30px 0px 20px;
+	background-size: contain;
+ 	background-repeat: no-repeat;
+ 	background-position: center;
 }
 
-#RS_TXT_1{
+#TXT2{
 	border: 1px solid black;
 	height: 45%;
 	width: 94%;

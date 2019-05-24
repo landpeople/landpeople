@@ -1,3 +1,7 @@
+-- 임시 저장소 ==========================================================================================================================================			
+DELETE FROM LPCHATLIST WHERE USER_NICKNAME NOT IN ('lee','kim');
+
+
 -- 세션이 필요해서 테스트용으로 만들어 쓰는 테이블
 DROP TABLE LPUSER;
 
@@ -25,51 +29,60 @@ DROP SEQUENCE LPCHATCONTENT_SEQ;
 DROP SEQUENCE LPCHATIMAGE_SEQ;
 
 -- 테이블 생성
-CREATE TABLE LPCHATLIST(USER_NICKNAME VARCHAR2(20)); -- 접속한 사용자의 닉네임을 저장하는 테이블, 세션이 종료되면 세션에 없는 사용자는 테이블에서 제거함
-CREATE TABLE LPCHATROOM(CHR_ID VARCHAR2(20), CHR_SENDER VARCHAR2(20), CHR_RECEIVER VARCHAR2(50), CHR_SOUT CHAR(1), CHR_ROUT CHAR(1));
+-- 접속한 사용자의 닉네임을 저장하는 테이블, 세션이 종료되면 세션에 없는 사용자는 테이블에서 제거함
+CREATE TABLE LPCHATLIST(USER_NICKNAME VARCHAR2(20));
 -- 사용자간의 채팅방을 저장하는 테이블, 채팅방 상세페이지에서 채팅방 나가기를 선택하면 CHR_OUT 컬럼이 T로 바뀌며 채팅방 전체조회 페이지에서 조회되지 않음 
-CREATE TABLE LPCHATCONTENT(CHC_ID VARCHAR2(20), CHR_ID VARCHAR2(20), CHC_SOUT CHAR(1), CHC_ROUT CHAR(1), CHC_REGDATE DATE);
+CREATE TABLE LPCHATROOM(CHR_ID VARCHAR2(20), CHR_SENDER VARCHAR2(20), CHR_RECEIVER VARCHAR2(50), CHR_SOUT CHAR(1), CHR_ROUT CHAR(1));
 -- 채팅방의 메시지를 저장하는 테이블, 화면에서 새로운 메시지가 발생하면 리스트에 저장하고 있다가 채팅방을 종료시에 한 ROW를 생성하며 INSERT됨, 만일 CHR_OUT을 하면 CHC_OUT도 함께 보이지 않도록 되어짐
 -- 내가 SENDER인지 RECEVER인지 판단이 필요할 듯함 
-CREATE TABLE LPCHATIMAGE(CHI_ID VARCHAR2(20), CHI_RPATH VARCHAR2(200), CHI_SPATH VARCHAR2(200), FILE_SIZE NUMBER);
+CREATE TABLE LPCHATCONTENT(CHC_ID VARCHAR2(20), CHR_ID VARCHAR2(20), USER_NICKNAME VARCHAR2(20), CHC_MESSAGE VARCHAR2(4000), CHC_OUT CHAR(1), CHC_REGDATE DATE);
 -- 채팅방에서 주고 받은 이미지를 저장하는 테이블
+CREATE TABLE LPCHATIMAGE(CHI_ID VARCHAR2(20), CHI_RPATH VARCHAR2(200), CHI_SPATH VARCHAR2(200), FILE_SIZE NUMBER);
 
 -- 테이블 시퀀스 생성
 CREATE SEQUENCE LPCHATROOM_SEQ START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE LPCHATCONTENT_SEQ START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE LPCHATIMAGE_SEQ START WITH 1 INCREMENT BY 1;
 
--- 세션에 접속중인 상대방들과만 채팅할 수 있도록 테스트 하기 위해서 defalut로 사용자 몇 명 넣어줌 
-INSERT INTO LPCHATLIST VALUES('접속자1');
-INSERT INTO LPCHATLIST VALUES('접속자2');
-INSERT INTO LPCHATLIST VALUES('접속자3');
-INSERT INTO LPCHATLIST VALUES('접속자4');
-INSERT INTO LPCHATLIST VALUES('접속자5');
-INSERT INTO LPCHATLIST VALUES('접속자6');
-
--- 세션에 접속한 모든 사용자를 보여줌
-SELECT * FROM LPCHATLIST;
-
-DELETE FROM LPCHATLIST WHERE USER_NICKNAME NOT IN ('lee','kim');
-
--- default로 하나의 채팅방을 생성해줌
-INSERT INTO LPCHATROOM (CHR_ID, CHR_SENDER, CHR_RECEIVER, CHR_SOUT, CHR_ROUT, CHR_CONTENT, CHR_REGDATE)
-VALUES(LPCHATROOM_SEQ.NEXTVAL, '접속자1', '접속자2', 'F', 'F', '<p id="접속자 1">접속자 1님의 시간</p><p id="접속자1">안녕하세요!!!</p><p id="접속자 2">접속자2님의 시간</p><p id="접속자2">오냐</p>', SYSDATE);
+-- 시퀀스 반환 함수 생성
+CREATE FUNCTION GET_CONTENT_SEQ RETURN NUMBER IS
+BEGIN RETURN LPCHATCONTENT_SEQ.NEXTVAL; END;
 
 -- 1. 세션에 접속한 사용자 리스트 출력 =================================================================================================
-SELECT * FROM LPCHATLIST;
+-- @ chatList_Insert
+INSERT INTO LPCHATLIST VALUES(#{user_nickname});
 
 -- 1. 채팅방 생성 ==========================================================================================================================================			
+-- @ String chatRoom_Make(Map<String, String> map)
+
 -- 1. 기존에 상대방과 채팅방이 있는지 확인
-SELECT CHR_ID FROM LPCHATROOM WHERE (CHR_SENDER, CHR_RECEIVER) IN (('접속자1', '접속자2'),('접속자2','접속자1'));
+-- @ String chatRoom_Check(Map<String, String> map) - sender, receiver
+SELECT CHR_ID FROM LPCHATROOM WHERE (CHR_SENDER, CHR_RECEIVER) IN ((#{sender}, #{receiver}),(#{receiver}, #{sender}));
 
 -- 2.1 만약에 기존에 만들었던 채팅방이 있다면 나의 채팅 목록에서 보이게 만들어줌
-UPDATE LPCHATROOM SET CHR_SOUT='F', CHL_ROUT = 'F' WHERE CHR_ID = '1';
+-- @ int chatRoom_Show(String chr_id) 
+UPDATE LPCHATROOM SET CHR_SOUT='F', CHL_ROUT = 'F' WHERE CHR_ID = #{chr_id};
 
--- 2.2 기존에 채팅방이 없다면 -> 채팅 리스트에 추가
-INSERT INTO LPCHATROOM VALUES(LPCHATROOM_SEQ.NEXTVAL, '접속자1', '접속자2', 'F', 'F', '', SYSDATE);
--- 추가한 채팅 리스트 확인
-SELECT * FROM LPCHATLIST;
+-- 2.1.1 채팅 메시지 가져오기
+-- @ List<ChatContentDto> chatContent_SelectAll(ChatContentDto dto) - chr_id, user_nickname
+SELECT CHC_ID, CHR_ID, USER_NICKNAME, CHC_MESSAGE, CHC_OUT, CHC_REGDATE FROM LPCHATCONTENT WHERE CHR_ID = #{chr_id} AND USER_NICKNAME = #{user_nickname} AND CHC_OUT = 'F';
+
+-- 2.2 기존에 채팅방이 없다면 -> 채팅 리스트에 추가하면서, 채팅방 대화내용 저장 공간을 만들어줌
+-- @ String chatRoom_Insert(Map<String, String> map)
+INSERT INTO LPCHATROOM VALUES(LPCHATROOM_SEQ.NEXTVAL, #{sender},  #{receiver}, 'F', 'F')
+SELECT @@IDENTITY AS CHR_ID
+
+-- 2.2.1 채팅방을 만들면서 대화내용 저장공간도 함께 만들어줌, SENDER와 RECEIVER 각각 하나씩
+-- @ int chatContent_Insert(List<ChatUserDto> dto)
+INSERT INTO LPCHATCONTENT VALUES(LPCHATCONTENT_SEQ.NEXTVAL, #{chr_id}, #{user_nickname}, '', 'F', SYSDATE);
+
+-- 2. 채팅 메시지 저장하기 ==========================================================================================================================================
+
+-- @ int chatContent_InsertMsg(ChatContentDto dto)
+INSERT INTO LPCHATCONTENT VALUES(LPCHATCONTENT_SEQ.NEXTVAL, #{chr_id}, #{user_nickname}, #{chc_message}, 'F', SYSDATE);
+
+
+
 -- ==========================================================================================================================================
 -- 2. 채팅방 삭제(TT이면 다 삭제)
 -- 내가 SENDER인지 RECEIVER인지 확인하고 SENDER일 때와 RECEIVER인지 확인 위함
@@ -84,23 +97,7 @@ UPDATE LPCHATLIST SET CHL_RDEL='T' WHERE CHL_ID = '7' ;
 -- 채팅방 진짜 삭제
 DELETE FROM LPCHATLIST WHERE CHL_SDEL = 'T' AND CHL_RDEL ='T' AND CHL_ID = '7';
 -- ==========================================================================================================================================			
--- 3. 채팅방 메시지 보내기
-DELETE FROM LPCHATROOM;
 
-INSERT INTO LPCHATROOM VALUES(LPCHATROOM_SEQ.NEXTVAL, '1', 'a1@naver.com', 'a1 : 방가링1', 'F', SYSDATE);
-INSERT INTO LPCHATROOM VALUES(LPCHATROOM_SEQ.NEXTVAL, '1', 'b1@naver.com', 'b1 : 방가링2', 'F', SYSDATE);
-INSERT INTO LPCHATROOM VALUES(LPCHATROOM_SEQ.NEXTVAL, '1', 'b1@naver.com', 'b1 : 방가링3', 'F', SYSDATE);
-INSERT INTO LPCHATROOM VALUES(LPCHATROOM_SEQ.NEXTVAL, '1', 'b1@naver.com', 'b1 : 방가링4', 'F', SYSDATE);
-INSERT INTO LPCHATROOM VALUES(LPCHATROOM_SEQ.NEXTVAL, '1', 'a1@naver.com', 'a1 : 방가링5', 'F', SYSDATE);
-INSERT INTO LPCHATROOM VALUES(LPCHATROOM_SEQ.NEXTVAL, '1', 'a1@naver.com', 'a1 : 방가링6', 'F', SYSDATE);
-INSERT INTO LPCHATROOM VALUES(LPCHATROOM_SEQ.NEXTVAL, '1', 'b1@naver.com', 'b1 : 방가링7', 'F', SYSDATE);
-INSERT INTO LPCHATROOM VALUES(LPCHATROOM_SEQ.NEXTVAL, '1', 'a1@naver.com', 'a1 : 방가링8', 'F', SYSDATE);
-INSERT INTO LPCHATROOM VALUES(LPCHATROOM_SEQ.NEXTVAL, '1', 'a1@naver.com', 'a1 : 방가링9', 'F', SYSDATE);
-INSERT INTO LPCHATROOM VALUES(LPCHATROOM_SEQ.NEXTVAL, '1', 'b1@naver.com', 'b1 : 방가링10', 'F', SYSDATE);
-
--- 추가한 채팅방 메시지 확인
-SELECT * FROM LPCHATROOM;
--- ==========================================================================================================================================			
 --4. 채팅방 이미지 보내기
 INSERT INTO LPCHATIMAGE VALUES(LPCHATIMAGE_SEQ.NEXTVAL, '21', 'a1@naver.com', '진짜경로', '상대경로', 1000, 'F', SYSDATE);
 

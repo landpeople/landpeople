@@ -27,4 +27,5 @@ public interface ILPTextService {
 	
 	//자유 캔버스 수정용 insert
 	public int textUpdateInsert(LPTextDto conDto);
+	
 }

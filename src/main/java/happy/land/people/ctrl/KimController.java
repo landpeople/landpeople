@@ -30,6 +30,7 @@ import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.jdo.LocalPersistenceManagerFactoryBean;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -161,14 +162,18 @@ public class KimController {
     }
     
     @RequestMapping(value="detailCanvas.do",method=RequestMethod.GET)
-    public String detailDaysCanvas(HttpServletRequest request) throws IOException{
+    public String detailDaysCanvas(HttpSession session, HttpServletRequest request,String sketch_id) throws IOException{
     	// 스케치북 id에 따른 캔버스의 개수
-    	int canvasCnt = canvasService.canvasCnt("1");
+    	if(sketch_id == null || sketch_id == "")
+    		sketch_id = "1";
+    	int canvasCnt = canvasService.canvasCnt(sketch_id);
+    	//스케치북 번호를 세션에 추가
+    	session.setAttribute("sketch_id", sketch_id);
     	System.out.println("해당 스케치북의 캔버스 개수:"+canvasCnt);
     	
     	// 캔버스 리스트
-    	List<LPCanvasDto> canvasList = canvasService.canvasSelectType("1");
-    	// 일정 캔버스 리스트
+    	List<LPCanvasDto> canvasList = canvasService.canvasSelectType(sketch_id);
+    	// 일정 캔버스 리스트 
     	Map<Integer,List<LPDaysDto>> map = new HashMap<Integer,List<LPDaysDto>>();
     	// 자유 캔버스 리스트
     	Map<Integer,List<LPTextDto>> freeMap = new HashMap<Integer,List<LPTextDto>>();
@@ -188,35 +193,31 @@ public class KimController {
     	System.out.println(map);
     	// 일정 캔버스 화면으로 보내기
     	request.setAttribute("daysList", map);
-    	// 캔버스들 타입을 화면으로 보내기
+    	// 캔버스 타입들
     	request.setAttribute("daysType", canvasList);
     	// 자유 캔버스 화면으로 보내기
-    	request.setAttribute("textList", freeMap);
+    	request.setAttribute("textList", freeMap);  
     	
-    	
-    	
-    	//List<LPDaysDto> daysList1 =  daysService.daysSelectAll("0002");
-    	//request.setAttribute("daysList1", daysList1);
-    	//System.out.println(daysList1.get(0));
-    	//model.addAttribute(attributeValue);
     	return "kim_detailCanvas";
     }
     
     @RequestMapping(value="insertDaysForm.do",method=RequestMethod.POST)
     public String insertDaysFrom(HttpSession session,String nowPageNo){
     	// 페이지 번호 , 캔버스 id     	
-    	LPCanvasDto dto = new LPCanvasDto("0001", "1", "제목은 대충", "내용도 아무거나", "1", nowPageNo);
+    	String sketch_id = (String)session.getAttribute("sketch_id");
+    	LPCanvasDto dto = new LPCanvasDto("0001", sketch_id, "제목은 대충", "내용도 아무거나", "1", nowPageNo);
     	session.setAttribute("canvas", dto);
     	return "kim_insertDaysCanvas";
     }
     // 수정폼으로 이동
     @RequestMapping(value="updateDaysForm.do",method=RequestMethod.POST)
-    public String updateDaysFrom(HttpSession session,String nowPageNo){
+    public String updateDaysFrom(HttpSession session,String nowPageNo, Model model){
         //캔버스 세팅	
     	LPCanvasDto canvasDto = new LPCanvasDto();
     	canvasDto.setCan_pageno(nowPageNo);
     	// 스케치북 세팅
-    	canvasDto.setSketch_id("1");
+    	String sketch_id = (String)session.getAttribute("sketch_id");    	
+    	canvasDto.setSketch_id(sketch_id);
     	// 보고 있는 페이지의 캔버스 id값을 가져옴
     	String id = canvasService.canvasSelectID(canvasDto);
     	// 캔버스 dto 세팅
@@ -227,12 +228,15 @@ public class KimController {
 	    	List<LPDaysDto> daysDto = daysService.daysSelectAll(id);
 	    	session.setAttribute("days", daysDto);
 	    	return "kim_updateDaysCanvas";
+	    	
     	}else if(canvasDto.getCan_type().equalsIgnoreCase("2")){
     		// 자유 캔버스
-    		return "na_detailFreeCanvas1";
+    		List<LPTextDto> list = textService.textSelectOne(id);
+    		model.addAttribute("textList1", list);
+    		return "na_updateFreeCanvas_1";
     	}else {
     		return "error";
-    	}    	
+    	}       	
     }
     
     @RequestMapping(value="deleteDaysForm.do",method=RequestMethod.POST)
@@ -242,7 +246,8 @@ public class KimController {
     	LPCanvasDto canvasDto = new LPCanvasDto();
     	canvasDto.setCan_pageno(nowPageNo);
     	// 스케치북 세팅
-    	canvasDto.setSketch_id("1");
+    	String sketch_id = (String)session.getAttribute("sketch_id");
+    	canvasDto.setSketch_id(sketch_id);
     	// 보고 있는 페이지의 캔버스 id값을 가져옴
     	String id = canvasService.canvasSelectID(canvasDto);
     	// 캔버스 dto 세팅

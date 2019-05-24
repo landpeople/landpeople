@@ -15,7 +15,7 @@
 </head>
 <body id="body">
 
-   채팅 리스트 페이지 : ${ldto.user_email }
+   채팅 리스트 페이지 : ${ldto.user_nickname }
    <%
    	//    	response.setHeader("P3P", "CP='CAO PSA CONi OTR OUR DEM ONL'"); // iframe 세션이 날아가지 않도록 잡아줌
    	String session_name = ""; //session_name은 세션의 이름으로 저장할 변수
@@ -32,16 +32,13 @@
    %>
 
    <span id="timer"></span>
-   <a href="javascript:refreshTimer();">
-      <img src="/images_std/kor/btn/btn_time_extension.gif" align="top">
-   </a>
-
-   <div style="width: 100%; height: 45px; background-color: black; color: white;">접속한 사용자 정보</div>
+   <a href="javascript:refreshTimer();"></a>
+   
    <c:choose>
       <c:when test="${ldto ne null}">
          <div id="userlist" style="width: 100%; height: 100%; overflow: auto;">
             <c:forEach items="${users}" var="user">
-               <c:if test="${ldto.user_email ne user}">
+               <c:if test="${ldto.user_nickname ne user}">
                   <!-- 내가 아닌 상대방만 접속한 사용자정보에 출력됨 -->
                   <a href="#">${user}</a>
                </c:if>
@@ -64,15 +61,13 @@
 
 		function click() { // 내부함수로 사용되며, this.innerHTML은 채팅을 하고 싶은 상대방의 닉네임을 가져옴
 		    alert("● chatList.jsp / 상대 : " + this.innerHTML);
-		    alert("● chatList.jsp / 나 : ${ldto.user_email}");
-		    window.open(
-			    "./socketOpen.do?sender=${ldto.user_email}&receiver="
+		    alert("● chatList.jsp / 나 : ${ldto.user_nickname}");
+		    window.open("./socketOpen.do?sender=${ldto.user_nickname}&receiver="
 				    + this.innerHTML, '_blank', 'width=600px,height=600px');
 		}
 
 		var as = document.getElementById("userlist");
 		var a = as.getElementsByTagName("a");
-		//       alert("● chatList.jsp / 세션에 접속한 인원(나를 제외) : " + as.length);
 
 		[].forEach.call(a, function(e) {
 		    e.addEventListener("click", click); // 접속한 회원마다 이벤트를 붙여줌

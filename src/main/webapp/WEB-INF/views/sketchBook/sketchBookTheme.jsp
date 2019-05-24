@@ -40,7 +40,7 @@
 				<div class="content">
 					<% for(int i = 0 ; i <  sketchList.size() ; i++){ %>
 					
-						<div><a href="./kim.do?sketch_id=<%=sketchList.get(i).getSketch_id()%>"><%=sketchList.get(i).getSketch_id()%> &nbsp <%=sketchList.get(i).getSketch_title()%> &nbsp <%=sketchList.get(i).getSketch_spath()%></a></div>
+						<div><a href="./detailCanvas.do?sketch_id=<%=sketchList.get(i).getSketch_id()%>"><%=sketchList.get(i).getSketch_id()%> &nbsp <%=sketchList.get(i).getSketch_title()%> &nbsp <%=sketchList.get(i).getSketch_spath()%></a></div>
 					<%}%>
 					
 				</div>
@@ -77,7 +77,7 @@
 					for(var i = 0 ; i < msg.addSketchBook.length; i++){
 						
 						var div = document.createElement('div');
-						div.innerHTML = "<a href='./kim.do?sketch_id="+msg.addSketchBook[i].sketch_id+"'>"+
+						div.innerHTML = "<a href='./detailCanvas.do?sketch_id="+msg.addSketchBook[i].sketch_id+"'>"+
 										msg.addSketchBook[i].sketch_id+
 										msg.addSketchBook[i].sketch_title+
 										msg.addSketchBook[i].sketch_spath+"</a>";
