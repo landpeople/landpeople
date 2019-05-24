@@ -31,140 +31,6 @@
   firebase.initializeApp(config);
 </script>
 
-<style type="text/css">
-@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
-/*    @font-face{
-      font-family: "the120";
-      src: url('font/The120.ttf');
-   } */
-body {
-	padding: 0px;
-	font-family: 'Jeju Gothic', sans-serif;
-}
-
-table {
-	border: 1px solid #B4B4B4;
-	border-collapse: collapse;
-}
-
-.sender_img { /* 본인 메시지 css */
-	border: 1px solid;
-	background-color: #69B55B;
-	background-clip: padding-box;
-	-webkit-border-image: url(images/sender_bubble.png) 25 25 round;
-	-o-border-image: url(images/sender_bubble.png) 25 25 round;
-	border-image: url(images/sender_bubble.png) 25 25 round;
-	padding-top: 3px;
-	padding-bottom: 3px;
-	padding-left: 3px;
-	padding-right: 11px;
-	float: right;
-	font-size: 12px;
-	text-align: justify;
-}
-
-.receiver_img { /* 상대방 메시지 css */
-	border: 1px solid;
-	background-color: #E6F4B5;
-	background-clip: padding-box;
-	-webkit-border-image: url(images/receiver_bubble.png) 25 25 round;
-	-o-border-image: url(images/receiver_bubble.png) 25 25 round;
-	border-image: url(images/receiver_bubble.png) 25 25 round;
-	padding-top: 3px;
-	padding-bottom: 3px;
-	padding-right: 3px;
-	padding-left: 11px;
-	float: left;
-	font-size: 12px;
-	text-align: justify;
-}
-
-.receive_msg {
-	padding: 3px;
-	width: 350px;
-	height: 400px;
-	overflow: auto;
-	overflow-x: hidden;
-	background: #F3F3F3;
-}
-
-.chat {
-	width: 340px;
-	height: 20px;
-	padding: 5px;
-	float: left;
-	margin-top: 4px;
-	margin-left: 2px;
-	resize: none;
-	border: 0.5px solid #F3F3F3;
-}
-
-.chat:focus {
-	outline: none;
-}
-
-/*    .chat_btn{ */
-/*       margin-top: 0px; */
-/*       margin-left: 5px; */
-/*       width: 52px; */
-/*       height: 31px; */
-/*       background-image: url('images/btn_send.png'); */
-/*       background-size: 100% 100%; */
-/*       display: inline-block; */
-/*    } */
-.memListBox {
-	text-align: center;
-	vertical-align: text-top;
-	padding: 10px;
-	overflow: auto;
-	/* background: #D8D8D8; */
-}
-
-.listTitle {
-	height: 50px;
-	vertical-align: top;
-	font-size: 12px;
-	font-weight: bold;
-}
-
-.mem_icon {
-	padding: 0px;
-	display: inline-block;
-	float: left;
-}
-
-.memList {
-	vertical-align: top;
-}
-
-.noticeTxt {
-	clear: both;
-	margin: 10px;
-}
-
-.noticeTxt font {
-	padding-top: 5px;
-	padding-bottom: 5px;
-	padding-left: 20px;
-	padding-right: 20px;
-	background: white;
-	border-radius: 3px;
-}
-
-.sendTxt {
-	width: 172px;
-	float: right;
-	margin: 2px;
-	word-break: break-word;
-}
-
-.receiveTxt {
-	width: 172px;
-	float: left;
-	margin: 2px;
-	word-break: break-word;
-}
-</style>
 
 	<% 
     String chr_id = (String)session.getAttribute("chr_id"); 
@@ -186,7 +52,7 @@ table {
           $(".chat_div").show();
           $(".chat").focus(); /* 텍스트 박스에 focus를 주어 입력할 수 있는 상태로 만들어 줌 */
           
-          ws = new WebSocket("ws://192.168.219.102:8091/LandPeople/wsChat.do");
+          ws = new WebSocket("ws://192.168.4.31:8091/LandPeople/wsChat.do");
           
           ws.onopen = function() {
           	alert("● groupChat.jsp ws.onopen");
@@ -381,6 +247,7 @@ table {
     
 </script>
 </head>
+<link rel="stylesheet" href="./css/chat/chatroom.css">
 <body>
    <table id="contentsss">
       <tr>
