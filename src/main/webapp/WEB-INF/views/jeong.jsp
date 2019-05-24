@@ -29,49 +29,25 @@
 			<div class="lpcontents">
 				<div class="content">
 					<div>
-				 		<a href="#" onclick="like()"><img id="likeState" alt="likeEmpty" src="./img/LikeBefore.png"></a>
-				 		<a href="#"><!-- <img id="likeAfter" alt="likeHeart" src="./img/LikeAfter.png"> --></a>
-				 		<a href="#" onclick="scrape()"> <img alt="scrape" src="./img/scrape.png"> </a>
+				 		<a href="#" onclick="like('${ldto.user_email}')"><img id="likeState" alt="likeEmpty" src="./img/LikeBefore.png"></a>
+				 		
+				 		<a href="#" onclick="scrape('${ldto.user_email}')"> <img alt="scrape" src="./img/scrape.png"> </a>
 	 				</div>	
-					<input type="button" value="내 스크랩  목록 보기" onclick="scrapeSelectMine()">
+					<input type="button" value="내 스크랩  목록 보기" onclick="scrapeSelectMine('${ldto.user_email}')">
+					
 					<form action="#" method="post" id="scrapDiv" name="scrapeDiv" onsubmit="return chkBox()">
 					<input type="submit" value="스크랩 취소">
 					<div id="scrapeSel" style="width: 500px;">
-					
 					</div>
-					
-					
 					</form>
 					<br>
 					<input type="button" value="내 스케치북 보기" onclick="sketchSelectMine()">
+					<input type="hidden" value="${ldto.user_email}" id="user_email">
 					
-					<form action="#" method="post" id="sketchDel" name="sketchDel" onsubmit="return DelchkBox()"> 
-					<input type="submit" value="스케치북 삭제">
-					<div id="sketchSel" style="width: 500px;">
-					
-					</div>
-					</form>
-					
+										
 					<input type="button" value="테마 조회" onclick="sketchSelectTheme()">
 					<input type="hidden" value="나홀로" id="themeType"> 
 					
-				<!-- 스케치북 수정 Modal -->
-					<div class="modal fade" id="sketchModiForm" role="dialog">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal">&times;</button>
-									<h4 class="modal-title">스케치북 수정</h4>
-								</div>
-								<div class="modal-body">
-									<form action="#" role="form" method="post" id="modiSketchBook"></form>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- 여기까지 스케치북 생성 Modal -->
-				
-				
 				
 				
 				</div>
@@ -89,13 +65,13 @@
 <script type="text/javascript">
 
 //---------------------- 좋아요 등록 및 수정 --------------------
-function like(){
+function like(user){
 //	alert("좋아요 취소");
-	LpLike();
+	LpLike(user);
 }
 
-var LpLike = function(){
-    var user_email = "130@happy.com";
+var LpLike = function(user){
+    var user_email = user;
     var sketch_id = "0004";
 	$.ajax({
 		url: "LPLike.do",
@@ -121,19 +97,20 @@ var LpLike = function(){
 
 
 //---------------------- 스크랩 등록 및 수정 --------------------
-function scrape() {
+function scrape(user) {
 	//alert("스크랩");
-	LpScrape();
+	LpScrape(user);
+	alert(user);
 }
 
-var LpScrape = function(){
-	var user_email = "128@happy.com";
+var LpScrape = function(user){
+//	var user_email = "128@happy.com";
 	var sketch_id = "0007";
 //	alert("스크랩 등록");	
 	$.ajax({
 		url : "Scrape.do",
 		type : "get",
-		data :  "user_email="+user_email+"&sketch_id="+sketch_id,
+		data :  "user_email="+user+"&sketch_id="+sketch_id,
 		success : function(sresult){
 			alert(sresult.sresult);
 		}, error : function() {
@@ -149,9 +126,10 @@ var LpScrape = function(){
 
 //---------------------- 스크랩한 스케치북 보기 ---------------------- 
 
-function scrapeSelectMine() {
+function scrapeSelectMine(email) {
 //	alert("스크랩 보기");
-	var user_email ="128@happy.com";
+	var user_email = email;
+	alert(user_email);
 	$.ajax({
 		url : "ScrapeSelect.do",
 		type : "get",
@@ -161,6 +139,8 @@ function scrapeSelectMine() {
 			//alert(scrapeCnt);
 			
 			//alert(scrape.size());
+			
+			
 			if(scrape== "" ||scrape==null){
 				alert("스크랩한 스케치북이 없습니다.");
 			}else{		
@@ -235,7 +215,16 @@ function chkBox(){
 
 //--------------------- 작성한 스케치북 조회 -----------------------
 
-function sketchSelectMine() {
+function sketchSelectMine(){
+	var email = $("#user_email").val();
+	alert(email);
+	location.href = "./sketchSelMine.do?user_email="+email;
+	
+}
+
+
+
+/* function sketchSelectMine() {
 //	alert("작성 스케치북 보기");
 	var user_email ="124@happy.com";
 	$.ajax({
@@ -264,7 +253,7 @@ function sketchSelectMine() {
 			alert("실패");
 		}
 	});
-}
+} */
 
 //--------------------- 작성한 스케치북 조회 -----------------------
 
@@ -298,6 +287,7 @@ function sketchBookModify() {
 			alert(modiModal.sdto.user_email);
 			alert(modiModal.sdto.sketch_theme);
 			alert(modiModal.sdto.sketch_spath);
+			alert(modiModal.sdto.sketch_share);
 			var modiFormHTML =	"<input type='hidden' name='user_email' value='"+modiModal.sdto.user_email+"'>"+
 							  	"<input type='hidden' name='sketch_id' value='"+modiModal.sdto.sketch_id+"'>"+
 						
@@ -319,6 +309,15 @@ function sketchBookModify() {
 						+
 			
 						"<div class='form-group'>"
+						+"<label>스케치북 공유여부</label>"
+						+"<div class='themeradio'>"
+						+"<input type='radio' id='sketchShareY' name='sketch_share' value='Y'><label for='sketchShareY'>Y</label>"
+						+"<input type='radio' id='sketchShareN' name='sketch_share' value='N'><label for='sketchShareN'>N</label>"
+						+"</div>"
+						+"</div>"
+						+
+						
+						"<div class='form-group'>"
 						+ "<label>스케치북 커버이미지</label>"
 						+ "<input type='text' class='form-control' id='cover' name='sketch_spath' value='"+modiModal.sdto.sketch_spath+"' style='width : 400px;'>"
 						+ "</div>"
@@ -332,6 +331,7 @@ function sketchBookModify() {
 					
 					
 					$('input:radio[name=sketch_theme]:input[value='+modiModal.sdto.sketch_theme+']').attr("checked", true);
+					//$("input:radio[name='sketch_share'][value="+ modiModal.sdto.sketch_share +"]").prop('checked', true);
 					//$("input:radio[name='sketch_theme'][value="+ modiModal.sdto.sketch_theme +"]").prop('checked', true);
 
 					
@@ -426,11 +426,6 @@ function DelchkBox(){
 		return false;
 	}
 }
-
-
-
-
-
 
 
 

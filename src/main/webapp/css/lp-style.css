@@ -120,13 +120,13 @@ iframe {
 }
 
 
-.moSketchBookCover{
+#moSketchBookCover{
 	width: 300px;
 	height: 100px;
 }
 
 
-.modalImg{
+#modalIMG1{
 	border: 1px solid black;
 	width: 200px;
 	height: 100px;
@@ -157,7 +157,7 @@ iframe {
 	text-align: center; 
 }
 /* 선택한 라디오버튼 배경색 변경 */
-.themeradio input[type=radio]:checked + label {  
+.themeradio>input[type=radio]:checked + label {  
 	background-image: none;
 	background-color:#3598dc;
 	color:#fff; 

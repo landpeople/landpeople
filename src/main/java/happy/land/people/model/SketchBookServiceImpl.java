@@ -97,17 +97,23 @@ public class SketchBookServiceImpl implements ISketchBookService {
 
 	@Override
 	public List<LPSketchbookDto> sketchSelectMine(Map<String, String> map) {
-		logger.info("service sketchSelectMine 작성한 스케치북 조회 실행 {}", map);
+		logger.info("service sketchSelectMine 페이징 처리된 작성한 스케치북 조회 실행 {}", map);
 		return iSketchBookDao.sketchSelectMine(map);
 	}
 
+	@Override
+	public int sketchCntMine(String user_email) {
+		logger.info("service sketchCntMine 페이지 처리를 위한 작성 스케치북 카운트 조회 {}", user_email);
+		return iSketchBookDao.sketchCntMine(user_email);
+	}
+	
+	
 	
 	@Override
 	public LPSketchbookDto sketchSelectOne(LPSketchbookDto dto) {
 		logger.info("service sketchSelectOne 작성 스케치북 상세 조회 실행 {}", dto);
 		return iSketchBookDao.sketchSelectOne(dto);
 	}
-	
 	
 	
 	@Override
@@ -135,6 +141,7 @@ public class SketchBookServiceImpl implements ISketchBookService {
 		return iSketchBookDao.sketchCntTheme(theme);
 	}
 
+	
 	
 
 	
