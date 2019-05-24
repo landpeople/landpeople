@@ -19,22 +19,25 @@
 	text-align: center; /*참고 문구용 CSS*/
 }
 
-#LS_IMG_1{
+#IMG1{
 	border: 1px solid black;
 	width: 98%;
 	height: 98%;
 	margin-left: 5px;
 	margin-top: 5px;
+	background-size: contain;
+ 	background-repeat: no-repeat;
+ 	background-position: center;
 }
 
-#RS_Container_1{
+#RS_TContainer{
 /* 	border: 1px solid black; */
 	width: 50%;
 	height: 98%;
 	float: left;
 }
 
-#RS_Container_2{
+#RS_IContainer{
 /* 	border: 1px solid black; */
 	width: 48%;
 	height: 98%;
@@ -42,7 +45,7 @@
 	margin-right: 10px;
 }
 
-#RS_TXT_1{
+#TXT1{
 	border: 1px solid black;
 	height: 27%;
 	width: 80%;
@@ -50,7 +53,7 @@
 	margin-top: 90px;
 }
 
-#RS_TXT_2{
+#TXT2{
 	border: 1px solid black;
 	height : 55%;
 	width: 80%;
@@ -58,22 +61,28 @@
 	margin-top: 20px;
 }
 
-#RS_IMG_1{
+#IMG2{
 	border: 1px solid black;
 	height: 27%;
 	width: 90%;
 	margin: auto;
 	margin-top: 90px;
+	background-size: contain;
+ 	background-repeat: no-repeat;
+ 	background-position: center;
 }
 
-#RS_IMG_2{
+#IMG3{
 	border: 1px solid black;
 	height: 25%;
 	width: 60%;
 	margin: 20px;
+	background-size: contain;
+ 	background-repeat: no-repeat;
+ 	background-position: center;
 }
 
-#RS_TXT_3{
+#TXT3{
 	border: 1px solid black;
 	height: 25%;
 	width: 60%;

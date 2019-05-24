@@ -117,6 +117,13 @@ public class SketchBookServiceImpl implements ISketchBookService {
 	}
 
 	@Override
+	public boolean sketchRealDeleteMulti(Map<String, String[]> map) {
+		logger.info("service sketchRealDeleteMulti 작성한 스케치북 완전 다중 삭제 실행 {}", map);
+		return iSketchBookDao.sketchRealDeleteMulti(map);
+	}
+	
+	
+	@Override
 	public List<LPSketchbookDto> sketchSelectTheme(Map<String, String> map) {
 		// TODO Auto-generated method stub
 		return iSketchBookDao.sketchSelectTheme(map);
@@ -127,6 +134,8 @@ public class SketchBookServiceImpl implements ISketchBookService {
 		// TODO Auto-generated method stub
 		return iSketchBookDao.sketchCntTheme(theme);
 	}
+
+	
 
 	
 
