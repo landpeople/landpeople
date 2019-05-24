@@ -13,9 +13,9 @@
    </select>
 
 	<!-- 로그인 시 세션에 접속한 사용자의 닉네임을 채팅 가능한 사용자 테이블에 입력 -->
-   <select id="chatList_Insert" parameterType="java.lang.String">
+   <insert id="chatList_Insert" parameterType="java.lang.String">
       INSERT INTO LPCHATLIST VALUES(#{user_nickname})
-   </select>
+   </insert>
 
 	<!-- 세션 만료시 세션에 없는 사용자의 닉네임을 채팅 리스트에서 제거함 -->
    <delete id="chatList_Delete" parameterType="java.util.List">
