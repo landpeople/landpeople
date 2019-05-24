@@ -31,7 +31,6 @@
   firebase.initializeApp(config);
 </script>
 
-
 	<% 
     String chr_id = (String)session.getAttribute("chr_id"); 
     String user = (String) session.getAttribute("user");
@@ -52,7 +51,7 @@
           $(".chat_div").show();
           $(".chat").focus(); /* 텍스트 박스에 focus를 주어 입력할 수 있는 상태로 만들어 줌 */
           
-          ws = new WebSocket("ws://192.168.4.31:8091/LandPeople/wsChat.do");
+          ws = new WebSocket("ws://192.168.7.36:8091/LandPeople/wsChat.do");
           
           ws.onopen = function() {
           	alert("● groupChat.jsp ws.onopen / 소켓이 열렸습니다.");
@@ -76,7 +75,7 @@
                 alert(image.src);
             }else if(msg.startsWith("<div class = 'noticeTxt'>")){ // 입장, 퇴장 시 이 메시지로 되돌아오게됨
                $(".receive_msg").append(msg);
-           	   viewList(chr_id);
+           	   viewList(chr_id); //
             }else{
 //         		if(msg.startsWith("[${user}]")){ // 대화 내용
 // //                  	 $(".receive_msg").append($("<div class = 'sendTxt'>").append($("<span class ='sender_img'>").text(msg))).append("<br><br>");
@@ -173,9 +172,9 @@
 	    $.ajax({
 		type : "POST",
 		url : "./socketOut.do",
-		data : {
-		    "chc_content" : content.toString()
-		},
+// 		data : { //  (* 제거예젇) 핸들러에서 데이터를 바로 디비에 저장할 수 있도록 함
+// 		    "chc_content" : content.toString()
+// 		},
 	    });
 	}
     }
@@ -187,8 +186,7 @@
 
     function viewList(grId) { /* 접속자 목록 보여주기 위한 함수*/
 	$(".memList").children().remove();
-	$
-		.ajax({
+	$.ajax({
 		    type : "POST",
 		    url : "./viewChatList.do",
 		    data : "user=" + $("#nickName"),
@@ -207,21 +205,23 @@
     }
     
     function sendFile(){
-        var file = document.getElementById('file').files[0];
-// 		ws.send('filename:'+file.name);
-// 		alert('test');
+        var file = document.getElementById('file').files[0]; // 단일 파일 업로드이기 때문에 [0]
+// 		ws.send('filename:'+file.name); // 파일의 이름을 한 번 보내 본다.
+// 		alert(file.webkitRelativePath);
 
 
-		var reader = new FileReader();
-		var rawData = new ArrayBuffer(); 
+		ws.binaryType = "arraybuffer";
+// 		var blob = new Blob(file, {type: 'application/octet-binary'});
+
+// 		var reader = new FileReader();
+// 		var rawData = new ArrayBuffer(1024); 
 
 // 		reader.loadend = function() {
+// 		} // The loadend event is fired when a request has completed, whether successfully (after load) or unsuccessfully (after abort or error).
 
-// 		}
-
-		rawData = reader.readAsArrayBuffer(file);
-		ws.send(file.msToBlob());
-		alert("파일 전송이 완료 되었습니다.")
+// 		rawData = reader.readAsArrayBuffer(file);
+		ws.send(file); // 
+		alert("파일 전송이 완료 되었습니다.");
 // 		ws.send('end'); // 
 
     }

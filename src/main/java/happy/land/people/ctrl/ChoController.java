@@ -36,8 +36,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
 import happy.land.people.dto.cho.ChoDto;
+import happy.land.people.model.chat.ILeeService;
 import happy.land.people.model.cho.IChoService;
-import happy.land.people.model.lee.ILeeService;
 import happy.land.people.naver.NaverLoginBO;
 
 @Controller

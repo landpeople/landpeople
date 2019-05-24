@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSessionListener;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import happy.land.people.model.lee.ILeeService;
+import happy.land.people.model.chat.ILeeService;
 
 public class SessionListner implements HttpSessionListener {
 	

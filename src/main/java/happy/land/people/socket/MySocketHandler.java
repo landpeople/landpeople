@@ -1,5 +1,6 @@
 package happy.land.people.socket;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,7 +19,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import happy.land.people.dto.ChatContentDto;
-import happy.land.people.model.lee.ILeeService;
+import happy.land.people.model.chat.ILeeService;
 
 @Component(value = "wsChat.do")
 public class MySocketHandler extends TextWebSocketHandler {
@@ -114,10 +115,16 @@ public class MySocketHandler extends TextWebSocketHandler {
 	
 	@Override
 	protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) {
-		// TODO Auto-generated method stub
+		logger.info("● MySocketHandler handleBinaryMessage() 실행");
 		
-		System.out.println("이미지 처리하기");
+		System.out.println("● MySocketHandler handleBinaryMessage() 이미지 처리 : " + message );
 		super.handleBinaryMessage(session, message);
+		try {
+			session.sendMessage(new TextMessage("gg"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -143,10 +150,10 @@ public class MySocketHandler extends TextWebSocketHandler {
 			String otherGrSession = (String) sessionMap.get("chr_id");
 			
 			String txt = "<div class = 'noticeTxt'><font color='blue' size='1px'>" + myMemSession + "님이 퇴장했습니다 (" + now +")</font><br/></br></div>";
-			System.out.println("● MySocketHandler handleTextMessage() > service.chatConttent_InsertMsg text :" + txt);
+			System.out.println("● MySocketHandler handleTextMessage() > service.chatContent_InsertMsg text :" + txt);
 			ChatContentDto dto = new ChatContentDto(otherGrSession, receiver, txt); // 일단 마이 세션에 넣어주는데 상대방 창에 나와야함.
-			int n = service.chatContent_InsertMsg(dto);
 			if (myGrSession.equals(otherGrSession)) {
+				int n = service.chatContent_InsertMsg(dto);
 				a.sendMessage(new TextMessage(txt));
 			}
 		}
