@@ -66,17 +66,18 @@ var ajaxSketchMake = function(user_email){
 								+
 								
 								"<div class='form-group'>"+
-								"<form method='post' enctype='multipart/form-data' name='sketchCover' id='sketchCover'>"+
+// 								"<form method='post' enctype='multipart/form-data' name='sketchCover' id='sketchCover'>"+
 								"<label>스케치북 커버이미지</label>"+
 									"<div id='moSketchBookCover'>"+
 											"<div id='modalIMG1'>"+
 													"<label for='C_IMG1'><img src='./img/folder.png'></label>"+
-													"<input id='C_IMG1' class='form-control-file'  name='file' type='file' multiple='multiple' style='display: none;'>"+
+													"<input id='C_IMG1' class='file'  name='sketch_spath' type='file' multiple='multiple' style='display: none;'>"+
+// 													"<button onclick='fileUpload()'>등록</button>"
 											"</div>"+
-											"<input type='hidden' name='list[0].img_spath' class='img_spath0'>"+
-											"<input type='hidden' name='list[0].text_no' value='0'>"+
+// 											"<input type='hidden' name='list[0].img_spath' class='img_spath0'>"+
+// 											"<input type='hidden' name='list[0].text_no' value='0'>"+
 									"</div>"+
-								"</form>"+
+// 								"</form>"+
 								"</div>"+
 								
 								"<div class='modal-footer'>"+
@@ -85,6 +86,10 @@ var ajaxSketchMake = function(user_email){
 								"</div>";
 				
 				$("#makeSketchBook").html(htmlModal);
+				
+				$("input[id=C_IMG1]").change(function(){
+					fileUpload();				
+				});
 			}
 			
 		}, error : function() {
@@ -93,7 +98,7 @@ var ajaxSketchMake = function(user_email){
 	}); 
 }
 
-function sketchInsert(){
+/* function sketchInsert(){
 	var sketch= document.getElementById("makeSketchBook");
 	var sketch_theme = $("input[name=sketch_theme]:checked").val();
 	sketch.action ="./writeSketch.do";
@@ -112,7 +117,7 @@ function sketchInsert(){
 	}
 	
 	
-}
+} */
   
   
 </script>
@@ -124,6 +129,7 @@ function sketchInsert(){
 
 </head>
 <body>
+
 	${ldto.user_email}
 	<!--젤로 레이아웃- 전체 영역 감싸는 div-->
 	<div class="main-wrapper">
@@ -164,7 +170,7 @@ function sketchInsert(){
 				      	  </div>
 						  <div class="modal-body">
 						  	
-								 <form action="#" role="form" method="post" id="makeSketchBook"></form>
+								 <form action="#" role="form" method="post" id="makeSketchBook" enctype='multipart/form-data'></form>
 						      
 						  
 						  </div>
@@ -228,26 +234,27 @@ function sketchInsert(){
 </body>
 
 <script type="text/javascript">
-var imgs =$("div[id*='modalIMG1']");
-var subImgClass;
+// var imgs =$("div[id*='modalIMG1']");
+// var subImgClass;
+
+
 
 $(document).ready(function() {
-	
+
+
 	//이미지 업로드
-	$(".form-control-file").on("change", function(){
-		var imgClass = $(this).attr("id");
-		subImgClass = imgClass.substring(imgClass.indexOf('_')+1);
-		fileUpload(subImgClass);
-	});
+	//alert("이미지 업로드");
+	
+	
+	
 });
 
-function fileUpload(subImgClass) {
-	
-	var frmEle = document.forms[1];
+
+
+function fileUpload() {
+	var frmEle = document.forms[0];
 	var formData = new FormData(frmEle);
-	for (var i = 0; i < imgs.length; i++) {
-		formData.append("file",$(".form-control-file")[i]);
-	}
+	
 		/* formData.append("text_no",subImgClass); */
 
 	//파일 업로드 확장자 확인
@@ -272,16 +279,12 @@ $.ajax({
 		processData : false,
 		contentType : false,
 		success : function(result) {
-			var imgDiv = subImgClass;
-			for (var i = 0; i < imgs.length; i++) {
-				
-				if (imgs.eq(i).attr("id") == imgDiv) {
-					$("div[id="+imgDiv+"]").css("background-image", "url('" + result+ "')");
-					var img_spath = $("input[class=img_spath"+i+"]");
+			alert("아작스 결과"+result);
+					$("div[id=modalIMG1]").css("background-image", "url('" + result+ "')");
+					var img_spath = $("input[id=C_IMG1]");
 					img_spath.val(result);
-				}//if
-			
-			}//for
+		},error : function(){
+			alert("실패");
 		}
 	});
 }

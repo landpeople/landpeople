@@ -50,11 +50,21 @@ function sketchBookMake(user) {
 									+ "</div>"
 									+
 
-									"<div class='form-group'>"
-									+ "<label>스케치북 커버이미지</label>"
-									+ "<input type='text' class='form-control' id='cover' name='sketch_spath' style='width : 400px;'>"
-									+ "</div>"
-									+
+									"<div class='form-group'>"+
+//	 								"<form method='post' enctype='multipart/form-data' name='sketchCover' id='sketchCover'>"+
+									"<label>스케치북 커버이미지</label>"+
+										"<div id='moSketchBookCover'>"+
+												"<div id='modalIMG1'>"+
+												"<input type='hidden' name='sketch_spath' class='img_spath0'>"+
+														"<label for='C_IMG1'><img src='./img/folder.png'></label>"+
+														"<input id='C_IMG1' class='file'  name='file' type='file' multiple='multiple' style='display: none;'>"+
+	 													
+												"</div>"+
+	 											
+//	 											"<input type='hidden' name='list[0].text_no' value='0'>"+
+										"</div>"+
+//	 								"</form>"+
+									"</div>"+
 
 									"<div class='modal-footer'>"
 									+ "<input class='btn btn-success' type='button' value='작성완료 ' onclick='sketchInsert()'>"
@@ -62,6 +72,11 @@ function sketchBookMake(user) {
 									+ "</div>";
 
 							$("#makeSketchBook").html(htmlModal);
+							
+							$("input[id=C_IMG1]").change(function(){
+								fileUpload();				
+							});
+							
 						}
 					},
 					error : function() {
@@ -91,3 +106,53 @@ function sketchBookMake(user) {
 			alert("스케치북 작성완료");
 		}
 	}
+	
+	
+	
+	
+	
+	
+	function fileUpload() {
+		var frmEle = document.forms[0];
+		var formData = new FormData(frmEle);
+		
+			/* formData.append("text_no",subImgClass); */
+
+		//파일 업로드 확장자 확인
+		// 		var file = form.file; 여기 부분이 아직 불확실
+		// 		var fileExt = file.substring(file.lastIndex(".")+1);
+		// 		var reg = /gif|jpg|png|jpeg/i;
+		// 		if(reg.test(fileExt)==false){
+		// 			alert("이미지는 gifm jpg, png 파일만 올릴 수 있습니다.");
+
+		// 			return;
+		// 		}
+
+		//파일 사이즈 확인
+
+		//파일 업로드 확장자 및 사이즈 확인을 메소드로 만들어서 true가 되면 아작스 실행
+
+	$.ajax({
+			url : './uploadSketchBook.do',
+			type : 'post',
+			data : formData,
+			enctype : 'multipart/form-data',
+			processData : false,
+			contentType : false,
+			success : function(result) {
+				alert("아작스 결과"+result);
+						$("div[id=modalIMG1]").css("background-image", "url('" + result+ "')");
+						var img_spath = $("input[class=img_spath0]");
+						img_spath.val(result);
+			},error : function(){
+				alert("실패");
+			}
+		});
+	}
+	
+	
+	
+	
+	
+	
+	

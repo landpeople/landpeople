@@ -77,7 +77,7 @@ $(document).ready(function() {
 								<input type="checkbox" name="chkVal" value="${dto.sketch_id}"></td>
 								<td>${dto.sketch_id}</td>
 								<td><a href="./kim.do?sketch_id=${dto.sketch_id}">${dto.sketch_title}</a></td>
-								<td>${dto.sketch_spath}</td>
+								<td style="background-image:url(${dto.sketch_spath})">${dto.sketch_spath}</td>
 								<td>${sketchLike[dto.sketch_id]}</td>
 								<td>
 								<a href="#" onclick="sketchBookModify('<%=ldto.getUser_email()%>','${dto.sketch_id}')"><img alt="modi" src="img/sketchBookImg/modifyIcon.png"></a>
@@ -88,6 +88,18 @@ $(document).ready(function() {
 						
 						</table>
 					</form>
+					
+					
+					<c:forEach  var="imgDto" items="${mySketchBookLists}">
+					<div id="modalIMG1" style="background-image: url('${imgDto.sketch_spath}')">
+					
+					
+					</div>
+					</c:forEach>
+					
+					
+					
+					
 					</div>
 					
 					
