@@ -3,7 +3,8 @@ package happy.land.people.ctrl;
 import java.io.IOException;
 
 import java.io.PrintWriter;
-
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -125,8 +126,10 @@ public class ChoController {
 		dto.setUser_nickname(user_name[0]);
 		dto.setUser_auth("N");
 		boolean isc = iChoService.signUp(dto);
+		System.out.println("isc===="+isc);
+		System.out.println("dto===="+dto);
 		session.setAttribute("ldto", dto);
-        return isc?"redirect:./index.jsp":"404";
+        return isc?"foward:./index.jsp":"404";
     }
  
     //구글 로그인 성공시 콜백
@@ -159,6 +162,55 @@ public class ChoController {
 		//boolean isc = iChoService.signUp(dto);
 		//session.setAttribute("ldto", dto);
     	
+    	
+    	OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
+    	AccessGrant accessGrant = oauthOperations.exchangeForAccess(code, googleOAuth2Parameters.getRedirectUri(), null);
+    	String accessToken = accessGrant.getAccessToken();
+    	Long expireTime = accessGrant.getExpireTime();
+    	
+    	System.out.println("exp"+expireTime);
+    	
+    	boolean isc = expireTime < System.currentTimeMillis();
+    	
+    	System.out.println("isc:-----"+isc);
+    
+    	System.out.println("accessToken:-----"+accessToken);
+    	
+    	if (expireTime != null && expireTime < System.currentTimeMillis()) { 
+    	accessToken = accessGrant.getRefreshToken();
+    	
+    	logger.info("accessToken is expired. refresh token = {}" , accessToken); 
+    	
+    	} 
+    	
+    	
+    	System.out.println("accessGrant:+========"+accessGrant);
+    	Connection<Google>connection = googleConnectionFactory.createConnection(accessGrant);
+    	System.out.println("connection:-----"+connection);
+
+    	Google google = connection == null ? new GoogleTemplate(accessToken) : connection.getApi();
+    	
+    	System.out.println(google);
+    	
+    	/*
+    	Connection<Google>connection = googleConnectionFactory.createConnection(accessGrant);
+    	Google google = connection == null ? new GoogleTemplate(accessToken) : connection.getApi();
+    	PlusOperations plusOperations = google.plusOperations(); 
+    	Person person = plusOperations.getGoogleProfile();
+
+    	String gemail =  person.getAccountEmail();
+    	Map<String, String> map	= person.getEmails();
+    	Set<String> set = person.getEmailAddresses();
+    	
+    	
+    	System.out.println("Acemai"+gemail);
+    	System.out.println("map"+map);
+    	System.out.println("set"+set);
+    	
+    	dto.setUser_email(gemail);
+    	
+    	
+    	*/
 		return "forward:./index.jsp";
 	}
 
@@ -166,6 +218,16 @@ public class ChoController {
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	public String login(ChoDto dto, HttpSession session,HttpServletResponse response, HttpServletRequest request) throws IOException {
 
+		// 이메일 일치없으면 ㅗㅗㅗ
+		
+		if(false) {
+			iChoService.emailDupChk(dto.getUser_email());
+			System.out.println("이메일 없음");
+			
+			
+		}else {// 이건 일치하는거겠지?
+		
+		}
 		
 		//여기서 막아버리자 로그인시 확인하는거 api인지 일반인지  api면 api가입자라고 보여주자
 		System.out.println("login쿼리 실행전");
@@ -173,16 +235,6 @@ public class ChoController {
 		System.out.println("login쿼리 실행후");
 		
 		
-	/*	
-		String user_email = ldto.getUser_email();
-		PrintWriter out = response.getWriter();
-			
-		if(user_email == null) {
-			out.print("<script type='text/javascript'>");
-			out.print("alert('가입안함')");
-			out.print("</script>");
-		}*/
-		//이제 여기서
 
 		System.out.println(ldto);
 		
@@ -217,12 +269,16 @@ public class ChoController {
 			
 			}
 		}
-
+		
+		
+		
 		int n = iLeeService.chatList_SelectOne(ldto.getUser_nickname());
 		if (n == 0) {
 			iLeeService.chatList_Insert(ldto.getUser_nickname());
 		}
 		session.setAttribute("ldto", ldto);
+		
+		
 		
 		return "forward:./index.jsp";
 	}
@@ -246,6 +302,7 @@ public class ChoController {
 		return "users/sign/regiForm";
 	}
 
+	
 	// 회원가입(db에저장하기 헤헤) 일반유저
 	@RequestMapping(value = "/signUp.do", method = RequestMethod.POST)
 	public String signUp(HttpServletRequest req, ChoDto dto) {
