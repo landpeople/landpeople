@@ -30,6 +30,7 @@
 			<!-- 네비게이션 메뉴 -->
 			<div class="main-navigation">
 				<ul class="navigation">
+                <li><a href='#' onclick='history.back(-1);'>뒤로가기 </a></li>
 					<c:if test="${empty ldto}">
 						<li><a href="./loginPage.do">로그인 </a></li>
 					</c:if>	
