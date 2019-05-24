@@ -81,12 +81,16 @@ public class LeeController implements ServletConfigAware {
 		session.setAttribute("test", "이거는 고조 테스트 용도지 말입니데");
 		session.setAttribute("chr_id", chr_id); // setAttribute 하면 handler에서 이 내용을 가지고 활용 가능
 		session.setAttribute("user", sender); // 현재 나의 닉네임이 보내는 사람이므로 현재 나의 session을 등록하여줌
+		session.setAttribute("receiver", receiver);
 		
-		String messageList = null;
+		String messageList = "";
 		
-		for(int i = 0 ; i < contentList.size() ; i++) {
+		for(int i = 2 ; i < contentList.size() ; i++) {
 			messageList += contentList.get(i).getChc_message();
 		}
+		
+		messageList = messageList.replaceAll("null", "");
+		System.out.println("●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●●"+messageList);
 		
 		model.addAttribute("messageList", messageList); // 접속과 동시에 화면에 이전 대화내용을 모두 가져감
 		

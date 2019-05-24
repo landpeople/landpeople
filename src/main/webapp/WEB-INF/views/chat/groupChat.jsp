@@ -47,7 +47,7 @@
       $(document).ready(function() {
 	  
           nick = $("#nickName").val();
-          alert("● groupChat.jsp var nick : " + nick);
+//           alert("● groupChat.jsp var nick : " + nick);
           $(".receive_msg").html('');
           $(".chat_div").show();
           $(".chat").focus(); /* 텍스트 박스에 focus를 주어 입력할 수 있는 상태로 만들어 줌 */
@@ -55,8 +55,8 @@
           ws = new WebSocket("ws://192.168.4.31:8091/LandPeople/wsChat.do");
           
           ws.onopen = function() {
-          	alert("● groupChat.jsp ws.onopen");
-            alert("${messageList}");
+          	alert("● groupChat.jsp ws.onopen / 소켓이 열렸습니다.");
+//             alert("${messageList}");
             ws.send("#$nick_"+nick); // 소켓이 열렸을 때 사용자가 입장하면 입장 메시지를 화면에 띄워 줄 수있도록 이벤트를 발생하여 핸들러를 호출
             $(".receive_msg").append("${messageList}");
           };
@@ -65,7 +65,7 @@
            	var msg = event.data; // 이벤트 핸들러에서 처리해서 다시 되돌아온 data
             var chr_id = "<%=chr_id%>";
             
-            alert(event);
+//             alert(event); // 메시지 이벤트가 도착하면 실행되는 alert
             if(msg instanceof Blob){
 //             	var destinationCan
 //                 image.onload = function () {
@@ -74,17 +74,19 @@
 //                 }
                 image.src = URL.createObjectURL(event.data);
                 alert(image.src);
-            }else if(msg.startsWith("<font color=")){ // 입장, 퇴장 시 이 메시지로 되돌아오게됨
-               $(".receive_msg").append($("<div class = 'noticeTxt'>").append(msg+"<br/>"));
+            }else if(msg.startsWith("<div class = 'noticeTxt'>")){ // 입장, 퇴장 시 이 메시지로 되돌아오게됨
+               $(".receive_msg").append(msg);
            	   viewList(chr_id);
             }else{
-        		if(msg.startsWith("[${user}]")){ // 대화 내용
-                 	 $(".receive_msg").append($("<div class = 'sendTxt'>").append($("<span class ='sender_img'>").text(msg))).append("<br><br>");
-                         content.push("<div class = 'sendTxt'><span class ='sender_img'>"+msg + "</span></div><br><br>"); // 받은 메시지 content에 저장
-        		}else{
-               		 $(".receive_msg").append($("<div class = 'receiveTxt'>").append($("<span class = 'receiver_img'>").text(msg))).append("<br><br>");
-                         content.push("<div class = 'receiveTxt'><span class = 'receiver_img'>" + msg + "</span></div><br><br>"); // 받은 메시지 content에 저장
-        		}
+//         		if(msg.startsWith("[${user}]")){ // 대화 내용
+// //                  	 $(".receive_msg").append($("<div class = 'sendTxt'>").append($("<span class ='sender_img'>").text(msg))).append("<br><br>");
+//                  	 	$(".receive_msg").append(msg);
+// //                          content.push("<div class = 'sendTxt'><span class ='sender_img'>"+msg + "</span></div><br><br>"); // 받은 메시지 content에 저장
+//         		}else{
+//                		 $(".receive_msg").append($("<div class = 'receiveTxt'>").append($("<span class = 'receiver_img'>").text(msg))).append("<br><br>");
+//                          content.push("<div class = 'receiveTxt'><span class = 'receiver_img'>" + msg + "</span></div><br><br>"); // 받은 메시지 content에 저장
+                    	 $(".receive_msg").append(msg);
+//         		}
              		$(".receive_msg").scrollTop($(".receive_msg")[0].scrollHeight);              
           		}
           }
@@ -207,7 +209,7 @@
     function sendFile(){
         var file = document.getElementById('file').files[0];
 // 		ws.send('filename:'+file.name);
-		alert('test');
+// 		alert('test');
 
 
 		var reader = new FileReader();

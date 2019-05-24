@@ -35,7 +35,7 @@
                      <input type="text" id="pageTitle">
                   </div>
                   <div>
-                     <a href="./loadMap.do">아아아</a>
+                     <!-- <a href="./loadMap.do">아아아</a> -->
                      <button onclick="showFood()">음식점</button>
                      <button onclick="showTrip()">관광지</button>
                      <button onclick="showRest()">숙소</button>
@@ -386,7 +386,7 @@
 		}
  	}
  	
- 	// 관광지보기
+ 	 // 관광지보기
 	 function showTrip(){
 		 for(var i = 0; i < markers.length; i++)
 			 markers[i].setMap(null);

@@ -54,7 +54,7 @@
             <div class="content">
                <input type="button" id="downloadExcel">
                <a href="./canvasDownloadExcel.do">테스트용 엑셀 다운로드</a>
-               <a href="./canvasDownloadImage.do">테스트용 이미지 다운로드</a>
+               <!-- <a href="./canvasDownloadImage.do">테스트용 이미지 다운로드</a> -->
                <div id="mybook" style="border: 1px solid black;">
                   <div>입력된 캔버스가 없습니다.</div>
                   <div>입력된 캔버스가 없습니다.</div>
