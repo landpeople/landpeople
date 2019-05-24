@@ -14,13 +14,18 @@
 <meta charset="UTF-8">
 <title>테마별 스케치북 조회 페이지</title>
 </head>
-<script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-<!-- <script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<script src="./js/jquery-3.3.1.js"></script>
+<script src="./js/sketchbook/sketchbook.js"></script>
+<link rel="stylesheet" href="./css/lp-style.css">
+<link rel="stylesheet" href="./css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
+
+
+
+
 
 	<body>
 	${pagingDto}

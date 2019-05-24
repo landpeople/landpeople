@@ -8,15 +8,16 @@
 <title>Insert title here</title>
 
 <script src="./js/jquery-3.3.1.js"></script>
+<script src="./js/sketchbook/sketchbook.js"></script>
 <link rel="stylesheet" href="./css/lp-style.css">
 <link rel="stylesheet" href="./css/bootstrap.min.css">
-<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
   
   
-function sketchBookMake(){
-var user_email="124@happy.com"
+function sketchBookMake(user){
+var user_email= user;
 	//	alert();
 	ajaxSketchMake(user_email);
 	
@@ -55,18 +56,27 @@ var ajaxSketchMake = function(user_email){
 								"<input type='radio' id='friendtheme' name='sketch_theme' value='친구와 함께'><label for='friendtheme'>친구와 함께</label></div>"+
 								"</div>"+
 								
+								"<div class='form-group'>"
+								+ "<label>스케치북 공유여부</label>"
+								+ "<div class='themeradio'>"
+								+ "<input type='radio' id='sketchShareY' name='sketch_share' value='Y'><label for='sketchShareY'>Y</label>"
+								+ "<input type='radio' id='sketchShareN' name='sketch_share' value='N'><label for='sketchShareN'>N</label>"
+								+"</div>"
+								+ "</div>"
+								+
+								
 								"<div class='form-group'>"+
+								"<form method='post' enctype='multipart/form-data' name='sketchCover' id='sketchCover'>"+
 								"<label>스케치북 커버이미지</label>"+
-									"<div class='moSketchBookCover'>"+
-										"<div>"+
-											"<div class='modalImg'>"+
-												"<label for='C_IMG2'><img src='./img/folder.png'></label>"+
-												"<input id='C_IMG2' class='file' name='file' type='file' multiple='multiple' style='display: none;'>"+
+									"<div id='moSketchBookCover'>"+
+											"<div id='modalIMG1'>"+
+													"<label for='C_IMG1'><img src='./img/folder.png'></label>"+
+													"<input id='C_IMG1' class='form-control-file'  name='file' type='file' multiple='multiple' style='display: none;'>"+
 											"</div>"+
-												"<input type='hidden' name='list[5].img_spath' class='img_spath1'>"+
-												"<input type='hidden' name='list[5].text_no' value='5'>"+
-										"</div>"+
+											"<input type='hidden' name='list[0].img_spath' class='img_spath0'>"+
+											"<input type='hidden' name='list[0].text_no' value='0'>"+
 									"</div>"+
+								"</form>"+
 								"</div>"+
 								
 								"<div class='modal-footer'>"+
@@ -114,6 +124,7 @@ function sketchInsert(){
 
 </head>
 <body>
+	${ldto.user_email}
 	<!--젤로 레이아웃- 전체 영역 감싸는 div-->
 	<div class="main-wrapper">
 
@@ -129,7 +140,7 @@ function sketchInsert(){
 			<div class="main-navigation">
 				<ul class="navigation">
 					<li><a href="#">로그인/로그아웃</a></li>
-					<li><a href="#" onclick="sketchBookMake()">여행일정 작성</a></li>
+					<li><a href="#" onclick="sketchBookMake('${ldto.user_email}')">여행일정 작성</a></li>
 					<li><a href="#">마이페이지/관리자 페이지</a></li>
 				</ul>
 			</div>
@@ -152,9 +163,10 @@ function sketchInsert(){
 					        <h4 class="modal-title">스케치북 작성</h4>
 				      	  </div>
 						  <div class="modal-body">
-						<!--   <form method="post" enctype="multipart/form-data" name="frm" id="frm">	 -->
-						       <form action="#" role="form" method="post" enctype="multipart/form-data" id="makeSketchBook" name="makeSketchBook"></form>
+						  	
+								 <form action="#" role="form" method="post" id="makeSketchBook"></form>
 						      
+						  
 						  </div>
 				    </div>
 				  </div>
@@ -182,19 +194,19 @@ function sketchInsert(){
 						href="./lee.do">이연지 페이지로 이동</a><br> <a href="./jang.do">장석영
 						페이지로 이동</a><br> <a href="./jung.do">정희태 페이지로 이동</a> 
 				
-		<form method="post" enctype="multipart/form-data" name="frm" id="frm">		
+		<!-- <form method="post" enctype="multipart/form-data" name="frm" id="frm">		
 			<div class="moSketchBookCover">
 				<div>
-					<div class="modalImg">
-						<label for="C_IMG2"><img src="./img/folder.png"></label> 
-						<input id="C_IMG2" class="file" name="file" type="file" multiple="multiple" style="display: none;">
+					<div id="modalIMG1">
+						<label for="C_IMG1"><img src="./img/folder.png"></label> 
+						<input id="C_IMG1" class="file" name="file" type="file" multiple="multiple" style="display: none;">
 					</div>
 						<input type="hidden" name="list[5].img_spath" class="img_spath1">
 						<input type="hidden" name="list[5].text_no" value="5"> 
 				</div>
 			</div>
 		</form>		
-				<a href="./imgupload.do">업로드</a>
+				<a href="./imgupload.do">업로드</a> -->
 				
 				
 			
@@ -216,13 +228,13 @@ function sketchInsert(){
 </body>
 
 <script type="text/javascript">
-var imgs =$("div[id*='IMG']");
+var imgs =$("div[id*='modalIMG1']");
 var subImgClass;
 
 $(document).ready(function() {
 	
 	//이미지 업로드
-	$(".file").on("change", function(){
+	$(".form-control-file").on("change", function(){
 		var imgClass = $(this).attr("id");
 		subImgClass = imgClass.substring(imgClass.indexOf('_')+1);
 		fileUpload(subImgClass);
@@ -231,12 +243,12 @@ $(document).ready(function() {
 
 function fileUpload(subImgClass) {
 	
-	var frmEle = document.forms[0];
+	var frmEle = document.forms[1];
 	var formData = new FormData(frmEle);
 	for (var i = 0; i < imgs.length; i++) {
-		formData.append("file",$(".file")[i]);
+		formData.append("file",$(".form-control-file")[i]);
 	}
-		formData.append("text_no",subImgClass);
+		/* formData.append("text_no",subImgClass); */
 
 	//파일 업로드 확장자 확인
 	// 		var file = form.file; 여기 부분이 아직 불확실
@@ -253,7 +265,7 @@ function fileUpload(subImgClass) {
 	//파일 업로드 확장자 및 사이즈 확인을 메소드로 만들어서 true가 되면 아작스 실행
 
 $.ajax({
-		url : './uploadFile.do',
+		url : './uploadSketchBook.do',
 		type : 'post',
 		data : formData,
 		enctype : 'multipart/form-data',
