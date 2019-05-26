@@ -16,10 +16,12 @@
 	<div class="main-wrapper">
 		<%@include file="./common/Sidebar.jsp"%>
 		<div class="content-wrapper">
-			
+
 			<!-- 메인 컨텐츠   -->
 			<div class="lpcontents">
 				<div class="content">
+					<div class='receiveTxt'>
+						<div class = 'receiver_img' style="background-image: url('./chatThumbnail/S_bba59949-2016-4385-9126-f0aeaa340ebb.png'); height:50px;")>[file]/chatThumbnail/S_bba59949-2016-4385-9126-f0aeaa340ebb.png</div></div><br><br>
 				</div>
 			</div>
 			<!-- </div> 여기까지 메인 컨텐츠  -->

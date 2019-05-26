@@ -15,8 +15,8 @@ import happy.land.people.dto.ChatContentDto;
 import happy.land.people.dto.ChatUserDto;
 
 @Repository
-public class LeeDaoImpl implements ILeeDao {
-	private Logger logger = LoggerFactory.getLogger(LeeDaoImpl.class);
+public class ChatDaoImpl implements IChatDao {
+	private Logger logger = LoggerFactory.getLogger(ChatDaoImpl.class);
 
 	@Autowired
 	private SqlSessionTemplate sqlSession;

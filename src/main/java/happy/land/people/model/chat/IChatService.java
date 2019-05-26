@@ -5,7 +5,7 @@ import java.util.Map;
 
 import happy.land.people.dto.ChatContentDto;
 
-public interface ILeeService {
+public interface IChatService {
 	public List<String> chatList_SelectAll();
 	public int chatList_SelectOne(String user_nickname);
 	public int chatList_Insert(String user_nickname);

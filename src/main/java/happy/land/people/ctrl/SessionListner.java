@@ -8,14 +8,14 @@ import javax.servlet.http.HttpSessionListener;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import happy.land.people.model.chat.ILeeService;
+import happy.land.people.model.chat.IChatService;
 
 public class SessionListner implements HttpSessionListener {
 	
 	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 	
 	@Autowired
-	ILeeService service;
+	IChatService service;
 		
 	@Override
 	public void sessionCreated(HttpSessionEvent arg0) {

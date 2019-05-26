@@ -5,7 +5,7 @@ import java.util.Map;
 
 import happy.land.people.dto.ChatContentDto;
 
-public interface ILeeDao {
+public interface IChatDao {
 	
 	public List<String> chatList_SelectAll(); //채팅 리스트 테이블의 모든 사용자를 데려옴
 	public int chatList_SelectOne(String user_nickname); //채팅 리스트에 추가할지 안할 지 선택하기 위함

@@ -11,12 +11,12 @@ import org.springframework.stereotype.Service;
 import happy.land.people.dto.ChatContentDto;
 
 @Service
-public class LeeServiceImpl implements ILeeService {
+public class ChatServiceImpl implements IChatService {
 
-	private Logger logger = LoggerFactory.getLogger(LeeServiceImpl.class);
+	private Logger logger = LoggerFactory.getLogger(ChatServiceImpl.class);
 
 	@Autowired
-	private ILeeDao dao;
+	private IChatDao dao;
 	
 	@Override
 	public List<String> chatList_SelectAll() {
