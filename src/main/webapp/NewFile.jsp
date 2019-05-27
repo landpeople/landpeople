@@ -13,127 +13,175 @@
 <link rel="stylesheet" href="./css/lp-style.css">
 <link rel="stylesheet" href="./css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<style type="text/css">
+body {
+  background: #F1F3FA;
+}
 
+/* Profile container */
+.profile {
+  margin: 20px 0;
+}
+
+/* Profile sidebar */
+.profile-sidebar {
+  padding: 20px 0 10px 0;
+  background: #fff;
+  height : 930px;
+}
+
+.profile-userpic img {
+  float: none;
+  margin: 0 auto;
+  width: 100px;
+  height: 100px;
+  -webkit-border-radius: 50% !important;
+  -moz-border-radius: 50% !important;
+  border-radius: 50% !important;
+}
+
+.profile-usertitle {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.profile-usertitle-name {
+  color: #5a7391;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+
+.profile-usertitle-job {
+  text-transform: uppercase;
+  color: #5b9bd1;
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.profile-userbuttons {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.profile-userbuttons .btn {
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 15px;
+  margin-right: 5px;
+}
+
+.profile-userbuttons .btn:last-child {
+  margin-right: 0px;
+}
+    
+.profile-usermenu {
+  margin-top: 30px;
+}
+
+.profile-usermenu ul li {
+  border-bottom: 1px solid #f0f4f7;
+}
+
+.profile-usermenu ul li:last-child {
+  border-bottom: none;
+}
+
+.profile-usermenu ul li a {
+  color: #93a3b5;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.profile-usermenu ul li a i {
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+.profile-usermenu ul li a:hover {
+  background-color: #fafcfd;
+  color: #5b9bd1;
+}
+
+.profile-usermenu ul li.active {
+  border-bottom: none;
+}
+
+.profile-usermenu ul li.active a {
+  color: #5b9bd1;
+  background-color: #f6f9fb;
+  border-left: 2px solid #5b9bd1;
+  margin-left: -2px;
+}
+
+/* Profile Content */
+.profile-content {
+  padding: 20px;
+  background: #fff;
+  min-height: 460px;
+}
+
+</style>
 </head>
 <body>
-   <!--젤로 레이아웃- 전체 영역 감싸는 div-->
-   <div class="main-wrapper">
+ <div class="container">
+    <div class="row profile">
+		<div class="col-md-3">
+			<div class="profile-sidebar">
+				<!-- SIDEBAR USERPIC -->
+				<div class="profile-userpic">
+					<img src="./img/doldam.png" class="img-responsive" alt="">
+				</div>
+				<!-- END SIDEBAR USERPIC -->
+				<!-- SIDEBAR USER TITLE -->
+				<div class="profile-usertitle">
+					<div class="profile-usertitle-name">
+						Marcus Doe
+					</div>
+					<div class="profile-usertitle-job">
+						Developer
+					</div>
+				</div>
+				<!-- END SIDEBAR USER TITLE -->
+				<!-- SIDEBAR BUTTONS -->
+				<div class="profile-userbuttons">
+					<button type="button" class="btn btn-success btn-sm">Follow</button>
+					<button type="button" class="btn btn-danger btn-sm">Message</button>
+				</div>
+				<!-- END SIDEBAR BUTTONS -->
+				<!-- SIDEBAR MENU -->
+				<div class="profile-usermenu">
+					<ul class="nav">
+						<li class="active">
+							<a href="#">
+							<i class="glyphicon glyphicon-home"></i>
+							Overview </a>
+						</li>
+						<li>
+							<a href="#">
+							<i class="glyphicon glyphicon-user"></i>
+							Account Settings </a>
+						</li>
+						<li>
+							<a href="#" target="_blank">
+							<i class="glyphicon glyphicon-ok"></i>
+							Tasks </a>
+						</li>
+						<li>
+							<a href="#">
+							<i class="glyphicon glyphicon-flag"></i>
+							Help </a>
+						</li>
+					</ul>
+				</div>
+				<!-- END MENU -->
+			</div>
+		</div>
+	
+	</div>
+</div>
 
-      <!-- SIDEBAR -->
-      <div class="sidebar-menu">
-
-         <div class="top-section">
-            <!-- 프로필 사진 영역 전체 감싸는  div -->
-            <div class="profile-image"></div>
-         </div>
-         <!-- 여기까지 프로필 사진 영역 전체 감싸는 div -->
-         <!-- 사이드 바 메뉴-->
-         <!-- 패널 타이틀1 -->
-         <div class="panel panel-info">
-            <div class="panel-heading">
-               <h3 class="panel-title">Panel Title</h3>
-            </div>
-            <!-- 사이드바 메뉴목록1 -->
-            <ul class="list-group">
-               <li class="list-group-item"><a href="#">HTML</a></li>
-               <li class="list-group-item"><a href="#">CSS</a></li>
-               <li class="list-group-item"><a href="#">ECMAScript5</a></li>
-            </ul>
-         </div>
-         <!-- 패널 타이틀2 -->
-         <div class="panel panel-default">
-            <div class="panel-heading">
-               <h3 class="panel-title">Panel Title</h3>
-            </div>
-            <!-- 사이드바 메뉴목록2 -->
-            <ul class="list-group">
-               <li class="list-group-item"><a href="#">jQuery</a></li>
-               <li class="list-group-item"><a href="#">BootStrap</a></li>
-            </ul>
-         </div>
-         <!-- 패널 타이틀3 -->
-         <div class="panel panel-info">
-            <div class="panel-heading">
-               <h3 class="panel-title">Panel Title</h3>
-            </div>
-            <!-- 사이드바 메뉴목록3 -->
-            <ul class="list-group">
-               <li class="list-group-item"><a href="#">About</a></li>
-               <li class="list-group-item"><a href="#">Help</a></li>
-            </ul>
-         </div>
-
-
-         <!-- 네비게이션 메뉴 -->
-         <div class="main-navigation">
-            <ul class="navigation">
-               <li><a href='#' onclick='history.back(-1);'>뒤로가기 </a></li>
-               <c:if test="${empty ldto}">
-                  <li><a href="./loginPage.do">로그인 </a></li>
-               </c:if>
-               <c:if test="${not empty ldto}">
-                  <li><a href="./logout.do">로그아웃</a></li>
-                  <li><a href="#" onclick="sketchBookMake('${ldto.user_email}')">여행일정 작성</a></li>
-                  <li><a href="./mypage.do">마이페이지</a></li>
-               </c:if>
-               <li><a href="./jang.do">관리자 페이지</a></li>
-            </ul>
-         </div>
-         <!-- .main-navigation 여기까지 네비게이션 메뉴 -->
-
-         <!-- 채팅 -->
-         <div class="chatting">
-            <!-- 	<iframe src="http://www.daum.net"></iframe> -->
-         </div>
-         <!-- 채팅 -->
-      </div>
-      <!-- .sidebar-menu 여기까지 사이드 바 -->
-
-      <div class="content-wrapper">
-         <!-- 헤더 그림 -->
-         <div class="banner-bg" id="top">
-            <div class="banner-overlay"></div>
-            <div class="welcome-text"></div>
-         </div>
-         <!-- 메인 컨텐츠   -->
-         <div class="main-lpcontents">
-            <div class="content">
-               <a href="./test.do">테스트 페이지로 이동</a>
-               <br>
-               <a href="./kim.do">김태우 페이지로 이동</a>
-               <br>
-               <a href="./na.do">나원서 페이지로 이동</a>
-               <br>
-               <a href="./lee.do">이연지 페이지로 이동</a>
-               <br>
-               <a href="./jang.do">장석영 페이지로 이동</a>
-               <br>
-               <a href="./jeong.do">정희태 페이지로 이동</a>
-               <br>
-               <a href="./cho.do">조태규 페이지로 이동</a>
-               <br>
-               <!-- 스케치북 생성 Modal -->
-               <div class="modal fade" id="sketchForm" role="dialog">
-                  <div class="modal-dialog">
-                     <div class="modal-content">
-                        <div class="modal-header">
-                           <button type="button" class="close" data-dismiss="modal">&times;</button>
-                           <h4 class="modal-title">스케치북 작성</h4>
-                        </div>
-                        <div class="modal-body">
-                           <form action="#" role="form" method="post" id="makeSketchBook"></form>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-               <!-- 여기까지 스케치북 생성 Modal -->
-            </div>
-         </div>
-         <!--  여기까지 메인 컨텐츠  -->
-
-
-         <div class="footer">landpeople</div>
-      </div>
-   </div>
 </body>
 </html>

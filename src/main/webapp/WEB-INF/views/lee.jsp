@@ -11,29 +11,6 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<script type="text/javascript">
-    var m = document.querySelector("main");
-    var h = document.querySelector("header")
-    var hHeight;
-
-    function setTopPadding() {
-	hHeight = h.offsetHeight;
-	m.style.paddingTop = hHeight + "px";
-    }
-
-    function onScroll() {
-	window.addEventListener("scroll", callbackFunc);
-	function callbackFunc() {
-	    var y = window.pageYOffset;
-	    if (y > 150) {
-		h.classList.add("scroll");
-	    } else {
-		h.classList.remove("scroll");
-	    }
-	}
-    }
-</script>
-
 <style type="text/css">
 html, body {
 	width: 100%;
@@ -71,7 +48,7 @@ html, body {
 .profile-image {
 	height: 180px;
 	width: 180px;
-	background: url("./img/제주배경임.png");
+	background: url("./img/doldam.png");
 	background-repeat: no-repeat;
 	background-position: center;
 	background-size: cover;
@@ -112,10 +89,10 @@ html, body {
 }
 /*헤더 그림 스타일  */
 .banner-bg {
-	background: url("./img/돌담.jpg");
+	background: url("./img/doldam.png");
 	background-repeat: no-repeat;
 	background-position: center;
-	background-size: cover;
+	background-size: contain;
 	width: 100%;
 	height: 400px;
 }
@@ -191,6 +168,7 @@ iframe {
 	width: 80px;
 	text-align: center;
 }
+
 /* 선택한 라디오버튼 배경색 변경 */
 .themeradio>input[type=radio]:checked+label {
 	background-image: none;
@@ -217,87 +195,251 @@ iframe {
 	position: fixed;
 	top: 0;
 }
+
+body {
+	background: #F1F3FA;
+}
+
+/* Profile container */
+.profile {
+	margin: 20px 0;
+}
+
+/* Profile sidebar */
+.profile-sidebar {
+	padding: 20px 0 10px 0;
+	background: #fff;
+	height: 930px;
+}
+
+.profile-userpic img {
+	float: none;
+	margin: 0 auto;
+	width: 100px;
+	height: 100px;
+	-webkit-border-radius: 50% !important;
+	-moz-border-radius: 50% !important;
+	border-radius: 50% !important;
+}
+
+.profile-usertitle {
+	text-align: center;
+	margin-top: 20px;
+}
+
+.profile-usertitle-name {
+	color: #5a7391;
+	font-size: 16px;
+	font-weight: 600;
+	margin-bottom: 7px;
+}
+
+.profile-usertitle-job {
+	text-transform: uppercase;
+	color: #5b9bd1;
+	font-size: 12px;
+	font-weight: 600;
+	margin-bottom: 15px;
+}
+
+.profile-userbuttons {
+	text-align: center;
+	margin-top: 10px;
+}
+
+.profile-userbuttons .btn {
+	text-transform: uppercase;
+	font-size: 11px;
+	font-weight: 600;
+	padding: 6px 15px;
+	margin-right: 5px;
+}
+
+.profile-userbuttons .btn:last-child {
+	margin-right: 0px;
+}
+
+.profile-usermenu {
+	margin-top: 30px;
+}
+
+.profile-usermenu ul li {
+	border-bottom: 1px solid #f0f4f7;
+}
+
+.profile-usermenu ul li:last-child {
+	border-bottom: none;
+}
+
+.profile-usermenu ul li a {
+	color: #93a3b5;
+	font-size: 14px;
+	font-weight: 400;
+}
+
+.profile-usermenu ul li a i {
+	margin-right: 8px;
+	font-size: 14px;
+}
+
+.profile-usermenu ul li a:hover {
+	background-color: #fafcfd;
+	color: #5b9bd1;
+}
+
+.profile-usermenu ul li.active {
+	border-bottom: none;
+}
+
+.profile-usermenu ul li.active a {
+	color: #5b9bd1;
+	background-color: #f6f9fb;
+	border-left: 2px solid #5b9bd1;
+	margin-left: -2px;
+}
+
+/* Profile Content */
+.profile-content {
+	padding: 20px;
+	background: #fff;
+	min-height: 460px;
+}
+
+.header-area{
+	width:1270px;
+	margin:auto;
+}
 </style>
 </head>
 <body>
-   <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container-fluid">
-         <div class="navbar-header">
-            <a class="navbar-brand" href="#">
-               <img alt="Brand" src="...">
-            </a>
-            <ul class="nav navbar-nav navbar-right">
-               <li><a href="#">마이페이지</a></li>
-               <li><a href="#">관리자페이지</a></li>
-               <li><a href="#">여행일정작성</a></li>
-               <li><a href="#">채팅</a></li>
-               <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                     Dropdown <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu" role="menu">
-                     <li><a href="#">Action</a></li>
-                     <li><a href="#">Another action</a></li>
-                     <li><a href="#">Something else here</a></li>
-                     <li class="divider"></li>
-                     <li><a href="#">Separated link</a></li>
-                  </ul></li>
-            </ul>
-         </div>
-      </div>
-   </nav>
-   <!-- 헤더 그림 -->
-   <div class="banner-bg" id="top">
-      <div class="banner-overlay"></div>
-      <div class="welcome-text"></div>
-   </div>
-   <!--젤로 레이아웃- 전체 영역 감싸는 div-->
-   <div class="main-wrapper">
-      <!-- SIDEBAR -->
-      <div class="sidebar-menu">
-         <div class="top-section">
-            <!-- 프로필 사진 영역 전체 감싸는  div -->
-            <div class="profile-image"></div>
-         </div>
-         <!-- 여기까지 프로필 사진 영역 전체 감싸는 div -->
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container-fluid">
+<!-- 			<div class="navbar-header"> -->
+<!-- 				<div class = "header-area"> -->
+				<a class="navbar-brand" href="#">
+					<img alt="Brand" src="...">
+				</a>
+					<ul class="nav navbar-nav navbar-right">
+						<li><a href="#">마이페이지</a></li>
+						<li><a href="#">관리자페이지</a></li>
+						<li><a href="#">여행일정작성</a></li>
+						<li><a href="#">채팅</a></li>
+						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+								Dropdown <span class="caret"></span>
+							</a>
+							<ul class="dropdown-menu" role="menu">
+								<li><a href="#">Action</a></li>
+								<li><a href="#">Another action</a></li>
+								<li><a href="#">Something else here</a></li>
+								<li class="divider"></li>
+								<li><a href="#">Separated link</a></li>
+							</ul></li>
+					</ul>
+<!-- 				</div> -->
+<!-- 			</div> -->
+		</div>
+	</nav>
+	<!-- 헤더 그림 -->
+	<div class="banner-bg" id="top">
+		<div class="banner-overlay"></div>
+		<div class="welcome-text"></div>
+	</div>
+	<!--젤로 레이아웃- 전체 영역 감싸는 div-->
 
-         <!-- 네비게이션 메뉴 -->
-         <div class="main-navigation">
-            <ul class="navigation">
 
-               <!--Facebook-->
+	<div class="container">
+		<div class="row profile">
+			<div class="col-md-3">
+				<div class="profile-sidebar">
+					<!-- SIDEBAR USERPIC -->
+<!-- 					<div class="profile-userpic"> -->
+<!-- 						<img src="./img/doldam.png" class="img-responsive" alt=""> -->
+<!-- 					</div> -->
+					<!-- END SIDEBAR USERPIC -->
+					<!-- SIDEBAR USER TITLE -->
+					<div class="profile-usertitle">
+						<div class="profile-usertitle-name">User Nickname</div>
+						<div class="profile-usertitle-job">User Email</div>
+					</div>
+					<!-- END SIDEBAR USER TITLE -->
+					<!-- SIDEBAR BUTTONS -->
+					<div class="profile-userbuttons">
+						<button type="button" class="btn btn-success btn-sm">Follow</button>
+						<button type="button" class="btn btn-danger btn-sm">Message</button>
+					</div>
+					<!-- END SIDEBAR BUTTONS -->
+					<!-- SIDEBAR MENU -->
+					<div class="profile-usermenu">
+						<ul class="nav">
+							<li class="active"><a href="#">
+									<i class="glyphicon glyphicon-home"></i> Overview
+								</a></li>
+							<li><a href="#">
+									<i class="glyphicon glyphicon-user"></i> Account Settings
+								</a></li>
+							<li><a href="#" target="_blank">
+									<i class="glyphicon glyphicon-ok"></i> Tasks
+								</a></li>
+							<li><a href="#">
+									<i class="glyphicon glyphicon-flag"></i> Help
+								</a></li>
+						</ul>
+					</div>
+					<!-- END MENU -->
+				</div>
+			</div>
 
-               <li><a href='#' onclick='history.back(-1);'>뒤로가기 </a></li>
-               <li><a href="./loginPage.do">로그인 </a></li>
-               <li><a href="./logout.do">로그아웃</a></li>
-               <li><a href="#" onclick="sketchBookMake()">여행일정 작성</a></li>
-               <li><a href="#">마이페이지</a></li>
-               <li><a href="./jang.do">관리자 페이지</a></li>
-            </ul>
-         </div>
-         <!-- .main-navigation 여기까지 네비게이션 메뉴 -->
+		</div>
+	</div>
 
-         <!-- 채팅 -->
-         <div class="chatting">
-            <iframe class="panel" id="lot" frameborder="0"></iframe>
-         </div>
-         <!-- 채팅 -->
-      </div>
-      <!-- .sidebar-menu 여기까지 사이드 바 -->
 
-      <div class="content-wrapper">
-         <div class="lpcontents">
-            <div class="content">
+	<!--    <div class="main-wrapper"> -->
+	<!--       SIDEBAR -->
+	<!--       <div class="sidebar-menu"> -->
+	<!--          <div class="top-section"> -->
+	<!--             프로필 사진 영역 전체 감싸는  div -->
+	<!--             <div class="profile-image"></div> -->
+	<!--          </div> -->
+	<!--          여기까지 프로필 사진 영역 전체 감싸는 div -->
 
-               <button type="button" class="btn btn-lg btn-so">
-                  <i class="fab fa-stack-overflow pr-1"></i> <span>Stack Overflow</span>
-               </button>
-               <span class="counter counter-lg">22</span> <i class="fa fa-camera-retro"></i> fa-camera-retro
+	<!--          네비게이션 메뉴 -->
+	<!--          <div class="main-navigation"> -->
+	<!--             <ul class="navigation"> -->
 
-            </div>
-         </div>
-         <!-- </div> 여기까지 메인 컨텐츠  -->
-         <div class="footer">landpeople</div>
-      </div>
-   </div>
+	<!--                Facebook -->
+
+	<!--                <li><a href='#' onclick='history.back(-1);'>뒤로가기 </a></li> -->
+	<!--                <li><a href="./loginPage.do">로그인 </a></li> -->
+	<!--                <li><a href="./logout.do">로그아웃</a></li> -->
+	<!--                <li><a href="#" onclick="sketchBookMake()">여행일정 작성</a></li> -->
+	<!--                <li><a href="#">마이페이지</a></li> -->
+	<!--                <li><a href="./jang.do">관리자 페이지</a></li> -->
+	<!--             </ul> -->
+	<!--          </div> -->
+	<!--          .main-navigation 여기까지 네비게이션 메뉴 -->
+
+	<!--          채팅 -->
+	<!--          <div class="chatting"> -->
+	<!--             <iframe class="panel" id="lot" frameborder="0"></iframe> -->
+	<!--          </div> -->
+	<!--          채팅 -->
+	<!--       </div> -->
+	<!--       .sidebar-menu 여기까지 사이드 바 -->
+
+	<!--       <div class="content-wrapper"> -->
+	<!--          <div class="lpcontents"> -->
+	<!--             <div class="content"> -->
+
+	<!--                <button type="button" class="btn btn-lg btn-so"> -->
+	<!--                   <i class="fab fa-stack-overflow pr-1"></i> <span>Stack Overflow</span> -->
+	<!--                </button> -->
+	<!--                <span class="counter counter-lg">22</span> <i class="fa fa-camera-retro"></i> fa-camera-retro -->
+
+	<!--             </div> -->
+	<!--          </div> -->
+	<!--          </div> 여기까지 메인 컨텐츠  -->
+	<!--          <div class="footer">landpeople</div> -->
+	<!--       </div> -->
+	<!--    </div> -->
 </body>
 </html>

@@ -11710,38 +11710,38 @@ form.user .btn-user {
   box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5);
 }
 
-.btn-facebook {
+.btn-naver {
   color: #fff;
-  background-color: #3b5998;
+  background-color: #09ce20;
   border-color: #fff;
 }
 
-.btn-facebook:hover {
+.btn-naver:hover {
   color: #fff;
-  background-color: #30497c;
+  background-color: #07b41d;
   border-color: #e6e6e6;
 }
 
-.btn-facebook:focus, .btn-facebook.focus {
+.btn-naver:focus, .btn-naver.focus {
   -webkit-box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5);
   box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5);
 }
 
-.btn-facebook.disabled, .btn-facebook:disabled {
+.btn-naver.disabled, .btn-naver:disabled {
   color: #fff;
-  background-color: #3b5998;
+  background-color: #07b41d;
   border-color: #fff;
 }
 
-.btn-facebook:not(:disabled):not(.disabled):active, .btn-facebook:not(:disabled):not(.disabled).active,
-.show > .btn-facebook.dropdown-toggle {
+.btn-naver:not(:disabled):not(.disabled):active, .btn-naver:not(:disabled):not(.disabled).active,
+.show > .btn-naver.dropdown-toggle {
   color: #fff;
-  background-color: #2d4373;
+  background-color: #07b41d;
   border-color: #dfdfdf;
 }
 
-.btn-facebook:not(:disabled):not(.disabled):active:focus, .btn-facebook:not(:disabled):not(.disabled).active:focus,
-.show > .btn-facebook.dropdown-toggle:focus {
+.btn-naver:not(:disabled):not(.disabled):active:focus, .btn-naver:not(:disabled):not(.disabled).active:focus,
+.show > .btn-naver.dropdown-toggle:focus {
   -webkit-box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5);
   box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5);
 }
