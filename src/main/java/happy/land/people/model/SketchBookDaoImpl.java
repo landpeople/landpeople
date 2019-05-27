@@ -117,6 +117,10 @@ public class SketchBookDaoImpl implements ISketchBookDao {
 		return sqlsession.selectList(NS+"sketch_SelectMine", map);
 	}
 
+	
+	
+	
+	
 	@Override
 	public int sketchCntMine(String user_email) {
 		System.out.println("페이지 처리를 위한 작성한 스케치북 카운팅"+user_email);
@@ -155,14 +159,23 @@ public class SketchBookDaoImpl implements ISketchBookDao {
 	
 	@Override
 	public List<LPSketchbookDto> sketchSelectTheme(Map<String, String> map) {
-		
+		System.out.println("페이지 처리된 테마별 스케치북 조회"+map);
 		return sqlsession.selectList(NS+"sketch_SelectTheme", map);
 	}
 
+
+	@Override
+	public List<LPSketchbookDto> sketchSelectLikeTheme(Map<String, String> map) {
+		System.out.println("좋아요 카운팅이 가장 높은 3개 순으로 페이지 처리된 테마별 스케치북 조회"+map);
+		return sqlsession.selectList(NS+"sketch_SelectLikeTheme", map);
+	}
+	
+
 	@Override
 	public int sketchCntTheme(String theme) {
-		// TODO Auto-generated method stub
+		System.out.println("페이징 처리를 위한 스케치북 카운트 조회"+"="+theme);
 		return sqlsession.selectOne(NS+"sketch_CntTheme", theme);
+		
 	}
 
 	

@@ -131,15 +131,25 @@ public class SketchBookServiceImpl implements ISketchBookService {
 	
 	@Override
 	public List<LPSketchbookDto> sketchSelectTheme(Map<String, String> map) {
-		// TODO Auto-generated method stub
+		logger.info("service sketchSelectTheme 페이지 처리된 스케치북 테마별 조회 실행 {}", map);
 		return iSketchBookDao.sketchSelectTheme(map);
 	}
 
+	
+	@Override
+	public List<LPSketchbookDto> sketchSelectLikeTheme(Map<String, String> map) {
+		logger.info("service sketchSelectLikeTheme 좋아요 카운팅이 가장 높은 3개 순으로 페이지 처리된 테마별 스케치북 조회 실행 {}", map);
+		return iSketchBookDao.sketchSelectLikeTheme(map);
+	}
+	
+	
 	@Override
 	public int sketchCntTheme(String theme) {
-		// TODO Auto-generated method stub
+		logger.info("service sketchCntTheme 페이징 처리를 위한 스케치북 카운트 조회 {}", theme);
 		return iSketchBookDao.sketchCntTheme(theme);
 	}
+
+
 
 	
 	

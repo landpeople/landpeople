@@ -212,7 +212,7 @@ var ajaxSketchMake = function(user_email){
 				</div>
 			</div>
 		</form>		
-				<a href="./imgupload.do">업로드</a> -->
+				 -->
 				
 				
 			

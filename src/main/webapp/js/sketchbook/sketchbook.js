@@ -1,3 +1,4 @@
+// 스케치북 작성 모달
 function sketchBookMake(user) {
 		var user_email = user;
 		//	alert();
@@ -51,7 +52,6 @@ function sketchBookMake(user) {
 									+
 
 									"<div class='form-group'>"+
-//	 								"<form method='post' enctype='multipart/form-data' name='sketchCover' id='sketchCover'>"+
 									"<label>스케치북 커버이미지</label>"+
 										"<div id='moSketchBookCover'>"+
 												"<div id='modalIMG1'>"+
@@ -61,9 +61,7 @@ function sketchBookMake(user) {
 	 													
 												"</div>"+
 	 											
-//	 											"<input type='hidden' name='list[0].text_no' value='0'>"+
 										"</div>"+
-//	 								"</form>"+
 									"</div>"+
 
 									"<div class='modal-footer'>"
@@ -85,6 +83,7 @@ function sketchBookMake(user) {
 				});
 	}
 
+	// 스케치북 작성 모달 value를 DB에 저장
 	function sketchInsert() {
 		var sketch = document.getElementById("makeSketchBook");
 		var sketch_theme = $("input[name=sketch_theme]:checked").val();

@@ -10,13 +10,13 @@
   	<!-- 스케치북 생성 -->
 	<insert id="sketch_Insert" parameterType="happy.land.people.dto.LPSketchbookDto">
 		INSERT INTO LPSKETCHBOOK(SKETCH_ID, USER_EMAIL, SKETCH_TITLE, SKETCH_THEME, SKETCH_SHARE, SKETCH_DELFLAG, SKETCH_SPATH, SKETCH_BLOCK)
-		VALUES('0037', #{user_email}, #{sketch_title}, #{sketch_theme}, #{sketch_share}, 'F', #{sketch_spath}, 'F')	
+		VALUES(LPSKETCHBOOK_SEQ.NEXTVAL, #{user_email}, #{sketch_title}, #{sketch_theme}, #{sketch_share}, 'F', #{sketch_spath}, 'F')	
 	</insert>
 	
 	<!-- 스크랩, 좋아요 최초 등록 -->
 	<insert id="collect_Insert" parameterType="happy.land.people.dto.LPCollectDto">
 		 INSERT INTO LPCOLLECT(COL_ID, USER_EMAIL, SKETCH_ID, COL_SCRAPE, COL_LIKE)
-		     SELECT '004',#{user_email}, #{sketch_id}, 'F', 'F' 
+		     SELECT LPCOLLECT_SEQ.NEXTVAL,#{user_email}, #{sketch_id}, 'F', 'F' 
 		     FROM DUAL WHERE NOT EXISTS(SELECT * FROM LPCOLLECT WHERE USER_EMAIL=#{user_email} AND SKETCH_ID =#{sketch_id})
 	</insert>
 	
@@ -120,6 +120,21 @@
 					AND SKETCH_SHARE='Y' AND SKETCH_DELFLAG='F' AND SKETCH_BLOCK='F'      
 				ORDER BY SKETCH_ID DESC)        )        WHERE RNUM BETWEEN #{first} AND #{last}
 	</select>
+ 	
+ 	
+ 	<!-- 좋아요 카운팅이 가장 높은 3개 순으로  페이징 처리된 테마별 스케치북 조회 -->
+ 	<select id="sketch_SelectLikeTheme" parameterType="java.util.Map" resultType="happy.land.people.dto.LPSketchbookDto">
+ 		SELECT SKETCH_ID, SKETCH_TITLE, SKETCH_SPATH
+		 FROM (SELECT ROWNUM RNUM, SKETCH_ID, SKETCH_TITLE, SKETCH_SPATH
+			FROM (SELECT SKETCH_ID, SKETCH_TITLE, SKETCH_SPATH
+				FROM LPSKETCHBOOK WHERE SKETCH_THEME=#{theme} 
+					AND SKETCH_SHARE='Y' AND SKETCH_DELFLAG='F'AND SKETCH_BLOCK='F'  
+				ORDER BY (SELECT COUNT(*) CNT FROM LPCOLLECT WHERE SKETCH_ID=#{sketch_id} AND COL_LIKE='T') DESC)
+				)
+			WHERE RNUM BETWEEN #{first} AND #{last}
+ 	</select>
+ 	
+ 	
  	
  	
  	<!--   스케치북 테마별 카운팅 -->

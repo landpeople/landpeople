@@ -48,8 +48,7 @@
 					<input type="button" value="테마 조회" onclick="sketchSelectTheme()">
 					<input type="hidden" value="나홀로" id="themeType"> 
 					
-				
-				
+					
 				</div>
 			
 			
@@ -223,38 +222,6 @@ function sketchSelectMine(){
 }
 
 
-
-/* function sketchSelectMine() {
-//	alert("작성 스케치북 보기");
-	var user_email ="124@happy.com";
-	$.ajax({
-		url : "sketchSelMine.do",
-		type : "post",
-		data : {"user_email" : user_email},
-		dataType : "json",
-		success : function(sketchBook){
-			//var mySketchBookSize = sketchBook.mySketchBook.size();
-			alert(sketchBook);
-			//alert(mySketchBookSize);
-			htmlTable = "";
-			htmlTable +="<table class='table table-bordered'>"+
-					"<tr>"+
-					"<th><input type='checkbox' onclick='checkAllSketch(this.checked)'></th>"+
-					"<th>스케치북 타이틀</th>"+
-					"<th>스케치북 커버이미지</th>"+
-					"<th>좋아요 Cnt</th>"+
-					"<th>스케치북 수정</th>"+
-					"</tr>";
-			htmlTable += sketchBook.mySketchBook;		
-			$("#sketchSel").html(htmlTable);
-			
-			
-		}, error : function() {
-			alert("실패");
-		}
-	});
-} */
-
 //--------------------- 작성한 스케치북 조회 -----------------------
 
 
@@ -317,11 +284,18 @@ function sketchBookModify() {
 						+"</div>"
 						+
 						
-						"<div class='form-group'>"
-						+ "<label>스케치북 커버이미지</label>"
-						+ "<input type='text' class='form-control' id='cover' name='sketch_spath' value='"+modiModal.sdto.sketch_spath+"' style='width : 400px;'>"
-						+ "</div>"
-						+
+						"<div class='form-group'>"+
+						"<label>스케치북 커버이미지</label>"+
+										"<div id='moSketchBookCover'>"+
+												"<div id='modalIMG1'>"+
+												"<input type='hidden' name='sketch_spath' class='img_spath0'>"+
+														"<label for='C_IMG1'><img src='./img/folder.png'></label>"+
+														"<input id='C_IMG1' class='file'  name='file' type='file' multiple='multiple' style='display: none;'>"+
+	 													
+												"</div>"+
+	 											
+										"</div>"+
+						+ "</div>"+
 			
 						"<div class='modal-footer'>"
 						+ "<input class='btn btn-success' type='button' value='수정완료 ' onclick='sketchModify()'>"
