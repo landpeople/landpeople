@@ -74,6 +74,19 @@ $(function() {
 <% String pwno = (String)request.getAttribute("no"); 
 	String eChk = (String)request.getAttribute("eChk");
 	
+	String eno = (String)request.getAttribute("eno");
+	
+	if(eno != null){
+		%>
+		<script type="text/javascript">
+			alert("이메일을 확인해주세요");
+			location.href="./loginPage.do";
+		</script>
+		<%
+	}
+	
+	
+	
 	if(pwno !=null){
 		%>
 		<script type="text/javascript">

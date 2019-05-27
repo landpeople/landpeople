@@ -220,14 +220,24 @@ public class ChoController {
 
 		// 이메일 일치없으면 ㅗㅗㅗ
 		
-		if(false) {
-			iChoService.emailDupChk(dto.getUser_email());
-			System.out.println("이메일 없음");
-			
-			
-		}else {// 이건 일치하는거겠지?
 		
+		
+		
+		
+		int n2 = iChoService.emailDupChk(dto.getUser_email());
+		
+		if(n2 == 0 ) {
+			System.out.println("가입안한사람임");
+			
+			String emailno = "emailno";
+			request.setAttribute("eno", emailno);
+			return "users/loginPage";
 		}
+
+		
+		
+		
+		
 		
 		//여기서 막아버리자 로그인시 확인하는거 api인지 일반인지  api면 api가입자라고 보여주자
 		System.out.println("login쿼리 실행전");
@@ -464,8 +474,14 @@ public class ChoController {
 	
 	// 회원탈퇴
 	@RequestMapping(value="/delflag.do" , method=RequestMethod.GET)
-	public String delflag(ChoDto dto ,String user_email) {
-		iChoService.deleteUser(user_email);
+	public String delflag(ChoDto dto ,HttpSession session) {
+		ChoDto ldto =(ChoDto) session.getAttribute("ldto");
+		
+		System.out.println(ldto);
+		
+		
+		iChoService.deleteUser(ldto.getUser_email());
+		session.invalidate();
 		return "forward:./index.jsp";
 	}
 	

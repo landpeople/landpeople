@@ -10,23 +10,32 @@
 <head>
 <meta charset="UTF-8">
 <title>마이 페이지 회원정보 수정 가능</title>
+<link rel="stylesheet" type="text/css" href="./css/sweetalert.css">
+<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="./css/bootstrap-theme.min.css">
 <script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="./js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./js/sweetalert.min.js"></script>
 <script type="text/javascript">
-	function regicheck() {
+	function modify() {
 		// email 중복 + 유효값
-		var emailchk = document.getElementById("emailchkVal").value;
 		var pwchk = document.getElementById("pwchkVal").value;
 		var nicknamechk = document.getElementById("nicknamechkVal").value;
 
 		var pw = document.getElementById("pw").value;
 		var passOK = document.getElementById("passOK").value;
 
-		if (emailchk == "1" && pwchk == "1" && nicknamechk == "1"
+		if (pwchk == "1" 
 				&& pw == passOK) {
-			swal("회원가입 완료", "이메일 인증 후 로그인 해주세요");
+			swal("회원수정 완료", "회원 정보가 수정 되었씁니다");
 			return true;
-		} else {
-			swal("회원가입 실패", "입력 정보를 확인해주세요");
+		}else if(nicknamechk == "1"){
+			swal("회원수정 완료", "회원 정보가 수정 되었씁니다");
+			return true;
+		} 
+		
+		else {
+			swal("회원수정 실패", "회원 정보를 확인해주세요");
 			$("#passOK").val("");
 			$("#pwresult").html("");
 			$("#pwchk").html("");
@@ -158,8 +167,15 @@
 					메인페이지 : ${ldto} 세션 : ${session} <br> ldto :${ldto}<br>
 					<div>
 						<input type="hidden" value="0" id="emailchkVal"> <input type="hidden" value="0" id="pwchkVal"> <input type="hidden" value="0" id="nicknamechkVal">
-						<form action="./modifyMypage.do" method="post" onsubmit="return regicheck()">
-							이메일 : <input type="text" name="user_email" value="${ldto.user_email}" readonly="readonly"><br> <input type="text" name="user_password" id="pw" placeholder="비밀번호" maxlength="12"> <br>&nbsp;<span id="pwresult">4~10자리의 영문+숫자</span><br> <input type="text" id="passOK" placeholder="비밀번호 확인" maxlength="12"> <br>&nbsp;<span id="pwchk"></span><br> <input type="text" name="user_nickname" id="nickname" placeholder="닉네임" value="${ldto.user_nickname}" maxlength="10"> <br>&nbsp;<span id="nicknameresult">2~10자리의 닉네임을 입력</span><br> <input type="submit" value="수정">
+						<form action="./modifyMypage.do" method="post" onsubmit="return modify()">
+							이메일 : <input type="text" name="user_email" value="${ldto.user_email}" readonly="readonly"><br> 
+							<input type="text" name="user_password" id="pw" placeholder="비밀번호" maxlength="12"> <br>
+							&nbsp;<span id="pwresult">4~10자리의 영문+숫자</span><br> 
+							<input type="text" id="passOK" placeholder="비밀번호 확인" maxlength="12"> <br>
+							&nbsp;<span id="pwchk"></span><br> 
+							<input type="text" name="user_nickname" id="nickname" placeholder="닉네임" value="${ldto.user_nickname}" maxlength="10"> <br>
+							&nbsp;<span id="nicknameresult">2~10자리의 닉네임을 입력</span><br> 
+							<input type="submit" value="수정">
 						</form>
 
 					</div>
