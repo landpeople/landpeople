@@ -49,47 +49,37 @@
       var nick = null ; 
       var content = [];
       
+      var img = $(".img");
+	        
+
       $(document).ready(function() {
 	  
           nick = $("#nickName").val();
 //           alert("● groupChat.jsp var nick : " + nick);
-          var messageArea = $(".receive_msg");
+          var messageArea = $(".message_area");
           messageArea.html('');
           messageArea.scrollTop = messageArea.scrollHeight;
           $(".chat_div").show();
           $(".chat").focus(); /* 텍스트 박스에 focus를 주어 입력할 수 있는 상태로 만들어 줌 */
           
-          ws = new WebSocket("ws://192.168.219.101:8091/LandPeople/wsChat.do");
+          ws = new WebSocket("ws://<%=request.getRemoteAddr()%>:8091/LandPeople/wsChat.do");
           
           ws.onopen = function() {
           	alert("● groupChat.jsp ws.onopen / 소켓이 열렸습니다.");
 //             alert("${messageList}");
             ws.send("#$nick_" + nick); // 소켓이 열렸을 때 사용자가 입장하면 입장 메시지를 화면에 띄워 줄 수있도록 이벤트를 발생하여 핸들러를 호출
-            $(".receive_msg").append("${messageList}");
+            $(".message_area").append("${messageList}");
           };
           
           ws.onmessage = function(event){
+              alert("왔니?ㄴ"+event.data);
            	var msg = event.data; // 이벤트 핸들러에서 처리해서 다시 되돌아온 data
             var chr_id = "<%=chr_id%>";
-            if(msg.startsWith("<div class = 'noticeTxt'>")){ // 입장, 퇴장 시 이 메시지로 되돌아오게됨
-               $(".receive_msg").append(msg);
+               $(".message_area").append(msg);
            	   viewList(chr_id); //
-            }else if(msg.starsWith("<div class = 'recieveTxt'>") || msg.startsWith("<div class = 'recieveTxt'>")){
-//         		if(msg.startsWith("[${user}]")){ // 대화 내용
-// //                  	 $(".receive_msg").append($("<div class = 'sendTxt'>").append($("<span class ='sender_img'>").text(msg))).append("<br><br>");
-//                  	 	$(".receive_msg").append(msg);
-// //                          content.push("<div class = 'sendTxt'><span class ='sender_img'>"+msg + "</span></div><br><br>"); // 받은 메시지 content에 저장
-//         		}else{
-//                		 $(".receive_msg").append($("<div class = 'receiveTxt'>").append($("<span class = 'receiver_img'>").text(msg))).append("<br><br>");
-//                          content.push("<div class = 'receiveTxt'><span class = 'receiver_img'>" + msg + "</span></div><br><br>"); // 받은 메시지 content에 저장
-                    	 $(".receive_msg").append(msg);
-//         		}
-             		$(".receive_msg").scrollTop($(".receive_msg")[0].scrollHeight);              
-          		}
+             		$(".message_area").scrollTop($(".message_area")[0].scrollHeight);              
           }
         	  
-      
-         
           ws.onclose = function(event) {
              alert("● groupChat.jsp ws.close / 웹소켓 닫힘");
              ws.send("#$nick_"+nick);
@@ -122,7 +112,7 @@
 						alert(실패);
 					}
 				});
-	         }        	 
+	         }else{       	 
 	          var canWrite;
 	          $.ajax({
 	                 type: "POST",
@@ -154,7 +144,7 @@
 	// 				$.ajax({
 	// 				  type: "POST",
 	// 				  url : "./insertMessage.do",
-	// 				  data: {"chc_content" : "<div class = 'sendTxt'><span class ='sender_img'>['${user}']"+$(".chat").val()+"</span></div><br><br>"}
+	// 				  data: {"chc_content" : "<div class = 'sendTxt'><span class ='sender_msg'>['${user}']"+$(".chat").val()+"</span></div><br><br>"}
 	// 				  success : function(){
 	// 				      alert("성고옹");
 	// 				  }
@@ -165,6 +155,7 @@
 					$(".chat").focus();
 // 				    }
 	         }
+         }
 		}); /* 전송 버튼 눌렀을 때 이벤트 */
 	    });
       
@@ -227,10 +218,10 @@
 </head>
 <link rel="stylesheet" href="./css/chat/chatroom.css">
 <body>
-	<table id="contentsss">
+	<table id="content">
 		<tr>
 			<td width="360x" height="390px" align="center">
-				<div class="receive_msg" style="border: 1px">
+				<div class="message_area" style="border: 1px">
 					<input type="text" id="nickName" value=<%=user%> />
 				</div>
 			</td>

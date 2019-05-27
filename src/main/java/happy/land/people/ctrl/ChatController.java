@@ -187,16 +187,15 @@ public class ChatController implements ServletConfigAware {
 	@RequestMapping(value = "/uploadChatImageFile.do", method = RequestMethod.POST, produces = "application/text; charset-utf-8;")
 	@ResponseBody
 	// 바이너리로 파일 전송이 안돼서 파일을 db에 저장 후 경로를 화면에 보내주고 ws.send 해서 경로만 보내주는 형태로 구현 진행
-	public String fileUpload(HttpServletRequest request, MultipartHttpServletRequest multi_req, HttpSession session)
-			throws IOException {
+	public String fileUpload(HttpServletRequest request, MultipartHttpServletRequest multi_req, HttpSession session) throws IOException {
 
 		logger.info("● ChatController uploadChatImageFile.do 실행");
 		MultipartFile uploadfile = (MultipartFile) multi_req.getFile("file");
 
 		String chr_id = (String) session.getAttribute("chr_id");
-		
+
 		logger.info("● ChatController uploadChatImageFile.do / chr_id : " + chr_id);
-		
+
 		// 원래 파일명
 		String filename = uploadfile.getOriginalFilename();
 		StringBuffer sb = new StringBuffer();
@@ -220,8 +219,7 @@ public class ChatController implements ServletConfigAware {
 			}
 
 			// 파일 저장 이름(랜덤 이름 + 확장자)
-			String saveName = sb.append(UUID.randomUUID().toString())
-					.append(filename.substring(filename.lastIndexOf("."))).toString();
+			String saveName = sb.append(UUID.randomUUID().toString()).append(filename.substring(filename.lastIndexOf("."))).toString();
 			System.out.println("saveName : " + saveName);
 
 			// 파일 객체 생성
@@ -242,71 +240,78 @@ public class ChatController implements ServletConfigAware {
 
 			// 파일 상대 경로
 			realPath = request.getContextPath() + "/chatTemp/" + saveName;
-			
+
 			thumbnailRealPath = makeTumbnail(realPath, request);
-			
-			
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		return thumbnailRealPath;
 	}
-	
-	//썸네일 생성 메소드
-		private String makeTumbnail(String originalImgPath, HttpServletRequest request) {
-			String thumbnailRealPath = null;
-			try {
-				
-				if(!originalImgPath.contains("S_")) {
-					System.out.println("------------------썸네일이 아닌 사진");
-					String path = WebUtils.getRealPath(request.getSession().getServletContext(), "/chatTemp"); //원본 이미지 상대 경로
-					String originalImgName = originalImgPath.substring(originalImgPath.lastIndexOf("/") + 1); //원본 파일 이름(확장자 포함)
-					File file = new File(path + "/" + originalImgName);
-					
-					//원본 이미지 메모리상에 로딩
-					BufferedImage originalImg = ImageIO.read(file);
-					
-					//썸네일 생성 (300*450)
-					BufferedImage thumbnailImg = Scalr.resize(originalImg, Scalr.Mode.AUTOMATIC, 300, 450);
-					
-					//썸네일 업로드 경로
-					String thumbnailPath = WebUtils.getRealPath(request.getSession().getServletContext(), "/chatThumbnail"); //썸네일 상대 경로
-					System.out.println("===========실제 썸네일 업로드 경로 : "+thumbnailPath);
-					
-					//썸네일 폴더 생성
-					File folder = new File(WebUtils.getRealPath(request.getSession().getServletContext(), "/chatThumbnail"));
-					if(!folder.exists()) {
-						folder.mkdirs();
-					}
-					
-					//썸네일 이름 
-					String thumbnailSaveName = "S_"+originalImgName;
-					
-					//썸네일 파일 객체 생성
-					File thumbnailFile = new File(thumbnailPath +"/"+thumbnailSaveName);
-					
-					//썸네일 파일 출력
-					ImageIO.write(thumbnailImg, originalImgName.substring(originalImgName.lastIndexOf(".")+1), thumbnailFile);
-					
-					//썸네일 상대 경로
-					thumbnailRealPath = request.getContextPath()+"/chatThumbnail/"+thumbnailSaveName;
-					System.out.println("썸네일 상대 경로 : "+thumbnailRealPath);
-				
-				}else {
-					System.out.println("------------------썸네일인 사진");
-					String path = request.getContextPath()+"/chatThumbnail/"+originalImgPath;
-					System.out.println("변경 되지 않은 썸네일 경로 : "+path);
-					return path;
-				}
-				
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-					
-			return thumbnailRealPath;
-		}
-	
 
+	// 썸네일 생성 메소드
+	private String makeTumbnail(String originalImgPath, HttpServletRequest request) {
+		String thumbnailRealPath = null;
+		System.out.println("● ChatController makeTumbnail() 실행");
+		try {
+			if (!originalImgPath.contains("S_")) {
+				String path = WebUtils.getRealPath(request.getSession().getServletContext(), "/chatTemp"); // 원본 이미지 상대 경로
+				String originalImgName = originalImgPath.substring(originalImgPath.lastIndexOf("/") + 1); // 원본 파일 이름(확장자 포함)
+				File file = new File(path + "/" + originalImgName);
+
+				// 원본 이미지 메모리상에 로딩
+				BufferedImage originalImg = ImageIO.read(file);
+
+				int width = originalImg.getWidth();
+				int height = originalImg.getHeight();
+
+				BufferedImage thumbnailImg;
+				
+				// 썸네일 생성 (300*450)
+				if (width > 300 || height > 300 && width > height) {
+					System.out.println("가로가 더 크다아아아아아아아");
+					thumbnailImg = Scalr.resize(originalImg, Scalr.Mode.AUTOMATIC, 450, 300);
+				} else if(width > 300 || height > 300 && width == height) {
+					thumbnailImg = Scalr.resize(originalImg, Scalr.Mode.AUTOMATIC, 300, 300);
+				} else if (width > 300 || height > 300 && width < height){
+					thumbnailImg = Scalr.resize(originalImg, Scalr.Mode.AUTOMATIC, 300, 450);
+				} else {
+					System.out.println("그냥 오리지널 이미지다아ㅏ아ㅏ아앙아");
+					thumbnailImg = originalImg;	
+				}
+
+				// 썸네일 업로드 경로
+				String thumbnailPath = WebUtils.getRealPath(request.getSession().getServletContext(), "/chatThumbnail"); // 썸네일 상대 경로
+				System.out.println("● ChatController makeTumbnail() / thumbnail real path : " + thumbnailPath);
+
+				// 썸네일 폴더 생성
+				File folder = new File(WebUtils.getRealPath(request.getSession().getServletContext(), "/chatThumbnail"));
+				if (!folder.exists()) {
+					folder.mkdirs();
+				}
+
+				// 썸네일 이름
+				String thumbnailSaveName = "S_" + originalImgName;
+
+				// 썸네일 파일 객체 생성
+				File thumbnailFile = new File(thumbnailPath + "/" + thumbnailSaveName);
+
+				// 썸네일 파일 출력
+				ImageIO.write(thumbnailImg, originalImgName.substring(originalImgName.lastIndexOf(".") + 1), thumbnailFile);
+
+				// 썸네일 상대 경로
+				thumbnailRealPath = request.getContextPath() + "/chatThumbnail/" + thumbnailSaveName;
+				System.out.println("● ChatController makeTumbnail() / thumbnail relative path : " + thumbnailRealPath);
+			} else {
+				String path = request.getContextPath() + "/chatThumbnail/" + originalImgPath;
+				return path;
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return thumbnailRealPath;
+	}
 }

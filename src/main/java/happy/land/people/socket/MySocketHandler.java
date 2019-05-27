@@ -36,11 +36,12 @@ public class MySocketHandler extends TextWebSocketHandler {
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
 		logger.info("● MySocketHandler afterConnectionEstablished() 실행");
 		super.afterConnectionEstablished(session);
-
-		list.add(session); // 전체 접속자 리스트에 새로운 접속자 추가
-		// 현 세션에 들어온 사용자의 수
+		
+		 /* 전체 접속자 리스트에 새로운 접속자 추가 */
+		list.add(session);
+		/*  현 세션에 들어온 사용자의 수 */
 		System.out.println("● MySocketHandler afterConnectionEstablished / client session cnt : " + list.size());
-		// 지금 들어온 세션의 고유 아이디
+		/*  지금 들어온 세션의 고유 아이디  */
 		System.out.println("● MySocketHandler afterConnectionEstablished / session connected : " + session.getId());
 	}
 
@@ -50,8 +51,8 @@ public class MySocketHandler extends TextWebSocketHandler {
 		String msg = message.getPayload();
 		String txt = "";
 
-		Map<String, Object> mySession = session.getHandshakeAttributes(); // WebsocketSession의 session값을 httpSesssion값으로
-																			// 변경
+		/* WebsocketSession의 session값을 httpSesssion값으로 변경 */
+		Map<String, Object> mySession = session.getHandshakeAttributes(); 
 		String myGrSession = (String) mySession.get("chr_id"); // 접속자의 채팅방 아이디
 		String myMemSession = (String) mySession.get("user"); // 접속자 아이디
 		String test = (String) mySession.get("test");
@@ -68,12 +69,10 @@ public class MySocketHandler extends TextWebSocketHandler {
 					String otherGrSession = (String) sessionMap.get("chr_id"); // 같은 그룹끼리 묶어 주는 거 같은데??
 					String otherMemSession = (String) sessionMap.get("user");
 
-//					ArrayList<String> grMemList = new ArrayList<String>();
 					System.out.println("● MySocketHandler 접속자 other chr_id : " + myGrSession);
 					System.out.println("● MySocketHandler 접속자 other nickname : " + otherMemSession);
 
-					txt = "<div class = 'noticeTxt'><font color='red' size='1px'>" + myMemSession + " 님이 입장했습니다 (" + now
-							+ ")</font><br/></br></div>";
+					txt = "<div class = 'noticeTxt'><font color='red' size='1px'>" + myMemSession + " 님이 입장했습니다 (" + now + ")</font><br/></br></div>";
 					if (myGrSession.equals(otherGrSession)) { // 같은 그룹 소속일 때 대화가 가능하도록 처리
 						System.out.println("● MySocketHandler handleTextMessage() 접속 했을 때 메시지 처리 :" + txt);
 						ChatContentDto dto = new ChatContentDto(otherGrSession, otherMemSession, txt);
@@ -81,7 +80,7 @@ public class MySocketHandler extends TextWebSocketHandler {
 						s.sendMessage(new TextMessage(txt));
 					}
 				}
-			} else if(msg.indexOf(myMemSession) == 0){
+			} else if (msg.indexOf(myMemSession) == 0) {
 				String msg2 = msg.substring(0, msg.indexOf(":")).trim(); // 소켓이 열린 상태에서 메시지 주고받을 수 있도록
 				for (WebSocketSession s : list) {
 					Map<String, Object> sessionMap = s.getHandshakeAttributes();
@@ -89,34 +88,30 @@ public class MySocketHandler extends TextWebSocketHandler {
 					String otherMemSession = (String) sessionMap.get("user");
 					if (myGrSession.equals(otherGrSession)) {
 						if (msg2.equals(myMemSession)) { // 나의 메시지
-							String newMsg = "<div class = 'sendTxt'><span class ='sender_img'>[" + otherMemSession + "]"
-									+ msg.replace(msg.substring(0, msg.trim().indexOf(":") + 1), "")
-									+ "</span></div><br><br>";
+							String newMsg = "<div class = 'sendTxt'><span class ='sender_msg'>[" + otherMemSession + "]" + msg.replace(msg.substring(0, msg.trim().indexOf(":") + 1), "") + "</span></div><br><br>";
 							System.out.println("● MySocketHandler handleTextMessage() newMsg :" + newMsg);
 
-//							"<div class = 'sendTxt'><span class ='sender_img'>"+msg + "</span></div><br><br>"
+//							"<div class = 'sendTxt'><span class ='sender_msg'>"+msg + "</span></div><br><br>"
 							txt = newMsg;
 						} else { // 상대가 메시지 보냈을 때,
 							String part1 = msg.substring(0, msg.trim().indexOf(":")).trim();
-							String part2 = "<div class = 'receiveTxt'><span class = 'receiver_img'>[" + part1 + "]"
-									+ msg.substring(msg.trim().indexOf(":") + 1) + "</span></div><br><br>";
+							String part2 = "<div class = 'receiveTxt'><span class = 'receiver_msg'>[" + part1 + "]" + msg.substring(msg.trim().indexOf(":") + 1) + "</span></div><br><br>";
 							System.out.println("● MySocketHandler handleTextMessage() part2 :" + part2);
 
-//							"<div class = 'receiveTxt'><span class = 'receiver_img'>" + msg + "</span></div><br><br>"
+//							"<div class = 'receiveTxt'><span class = 'receiver_msg'>" + msg + "</span></div><br><br>"
 							txt = part2;
 						}
 
-						System.out.println(
-								"● MySocketHandler handleTextMessage() > service.chatConttent_InsertMsg text :" + txt);
+						System.out.println("● MySocketHandler handleTextMessage() > service.chatConttent_InsertMsg text :" + txt);
 						ChatContentDto dto = new ChatContentDto(otherGrSession, otherMemSession, txt);
 						int n = service.chatContent_InsertMsg(dto);
 						s.sendMessage(new TextMessage(txt));
 					}
 				}
-			}else {
-				System.out.println("★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ 파일이군.. 파일이다...");
-				String msg2 = msg.substring(msg.indexOf(":")+1).trim(); // 파일까지 자르고
-				String location = msg.substring(msg.indexOf(">")+1).trim(); // 파일까지 자르고
+			} else {
+				System.out.println("● MySocketHandler handleTextMessage() > 파일 handle 실행");
+				String msg2 = msg.substring(msg.indexOf(":") + 1, msg.indexOf(">")).trim(); // 파일까지 자르고
+				String location = msg.substring(msg.indexOf("/chatThumbnail") + 1).trim(); // 파일까지 자르고
 				System.out.println("★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ 파일이군.. 파일이다...msg2 : " + msg2);
 				System.out.println("★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ 파일이군.. 파일이다...location : " + location);
 				for (WebSocketSession s : list) {
@@ -125,36 +120,34 @@ public class MySocketHandler extends TextWebSocketHandler {
 					String otherMemSession = (String) sessionMap.get("user");
 					if (myGrSession.equals(otherGrSession)) {
 						if (msg2.equals(myMemSession)) { // 나의 메시지
-							String newMsg = "<div class = 'receiveTxt'><span class = 'receiver_img'"
-									+ " style='background-image: url(" + msg.substring(msg.trim().indexOf(">") + 1)
-									+ ">[" + otherMemSession + "]"+ msg.substring(msg.trim().indexOf(">") + 1) + "</span></div><br><br>";
+							String newMsg = "<div class = 'sendTxt' class ='contain_img'><img class = 'sender_img'"
+											+ " src='./" + location
+											+ "'></div></div><br><br>";
 							System.out.println("● MySocketHandler handleTextMessage() newMsg :" + newMsg);
 							txt = newMsg;
 						} else { // 상대가 메시지 보냈을 때,
 							String part1 = msg.substring(0, msg.trim().indexOf(":")).trim();
-									+ " style='background-image: url(" + msg.substring(msg.trim().indexOf(">") + 1)
-									+ "'>[" + part1 + "]"+ msg.substring(msg.trim().indexOf(">") + 
-							String part2 = "<div class = 'receiveTxt'><div class = 'receiver_img'"1) + "</div></div><br><br>";
-							
+
+							String part2 = "<div class = 'receiveTxt' class ='contain_img'><img class = 'receiver_img'"
+											+ " src='./" + location
+											+ "'/></div><br><br>";
 							System.out.println("● MySocketHandler handleTextMessage() part2 :" + part2);
 							txt = part2;
 						}
-						System.out.println(
-								"● MySocketHandler handleTextMessage() > service.chatConttent_InsertMsg text :" + txt);
+						System.out.println("● MySocketHandler handleTextMessage() > service.chatConttent_InsertMsg text :" + txt);
 						ChatContentDto dto = new ChatContentDto(otherGrSession, otherMemSession, txt);
 						int n = service.chatContent_InsertMsg(dto);
 						s.sendMessage(new TextMessage(txt));
 					}
 				}
-				
-				
+
 			}
 		}
 	}
 
 //	@Override
 //	protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) {
-	
+
 //	Map<WebSocketSession, FileUploadInFlight> sessionToFileMap = new WeakHashMap<WebSocketSession, FileUploadInFlight>();
 
 //		logger.info("● MySocketHandler handleBinaryMessage() 실행");
@@ -238,8 +231,7 @@ public class MySocketHandler extends TextWebSocketHandler {
 			Map<String, Object> sessionMap = a.getHandshakeAttributes();
 			String otherGrSession = (String) sessionMap.get("chr_id");
 
-			String txt = "<div class = 'noticeTxt'><font color='blue' size='1px'>" + myMemSession + "님이 퇴장했습니다 (" + now
-					+ ")</font><br/></br></div>";
+			String txt = "<div class = 'noticeTxt'><font color='blue' size='1px'>" + myMemSession + "님이 퇴장했습니다 (" + now + ")</font><br/></br></div>";
 			System.out.println("● MySocketHandler handleTextMessage() > service.chatContent_InsertMsg text :" + txt);
 			ChatContentDto dto = new ChatContentDto(otherGrSession, receiver, txt); // 일단 마이 세션에 넣어주는데 상대방 창에 나와야함.
 			if (myGrSession.equals(otherGrSession)) {
