@@ -33,10 +33,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.util.WebUtils;
 
-import happy.land.people.dto.kim.LPCanvasDto;
-import happy.land.people.dto.kim.LPTextDto;
-import happy.land.people.model.kim.ILPCanvasService;
-import happy.land.people.model.kim.ILPTextService;
+import happy.land.people.dto.LPCanvasDto;
+import happy.land.people.dto.LPTextDto;
+import happy.land.people.model.canvas.ILPCanvasService;
+import happy.land.people.model.canvas.ILPTextService;
 
 
 @Controller
@@ -55,7 +55,7 @@ public class NaController {
     	String sketch_id = (String)session.getAttribute("sketch_id");
     	LPCanvasDto dto = new LPCanvasDto("0001", sketch_id, "제목은 대충", "내용도 아무거나", selectType, nowPageNo);
     	session.setAttribute("canvas", dto);    	
-		return "na_insertFreeCanvas_"+(Integer.parseInt(selectType)-1);
+		return "insertFreeCanvas_"+(Integer.parseInt(selectType)-1);
 	}
 	
 	@RequestMapping(value="/uploadFile.do", method=RequestMethod.POST, produces="application/text;charset=UTF-8")
