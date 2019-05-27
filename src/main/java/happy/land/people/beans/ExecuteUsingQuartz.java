@@ -21,8 +21,6 @@ public class ExecuteUsingQuartz {
 	
 	private SqlSessionTemplate sqlSession;
 	private Logger logger = LoggerFactory.getLogger(ExecuteUsingQuartz.class);
-	private final String NS = "jang_test.";
-	private JangController jang;
 	
 	private IManagerService iManagerService;
 	
@@ -50,10 +48,5 @@ public class ExecuteUsingQuartz {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public void test() {
-		System.out.println("스케줄러 실행!!!**********************");
-		jang.test();
 	}
 }
