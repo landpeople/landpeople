@@ -24,7 +24,7 @@
 				<label for="C_IMG1"><img src="./img/folder.png"></label> 
 				<input id="C_IMG1" class="file" name="file" type="file" multiple="multiple" style="display: none;">
 			</div>
-				<input type="text" name="list[0].img_spath" class="img_spath0">				
+				<input type="hidden" name="list[0].img_spath" class="img_spath0">				
 				<input type="hidden" name="list[0].text_no" value="0"> 
 			<div id="LS_Container">
 				<div id="TXT1">
@@ -102,7 +102,10 @@
 					alert("잘못된 확장자입니다.\n★jpg/png/gif★ 파일만 업로드 가능합니다.");
 				}
 			});
+			
 		});
+		
+
 
 		//에디터
 		function setEditor(id, i) {
@@ -155,10 +158,6 @@
 			return reg.test(file);
 		}
 		
-		function fileSize(){
-			alert("파일 크기 확인");
-		}
-		
 		//DB 저장
 		function insert() {
 			//editor 텍스트를 서버에 넘기기 위한 변수에 저장
@@ -166,9 +165,6 @@
 				var text_content = $("input[class=text_content"+i+"]");
 				text_content.val(editor[i].getHtml());
 			}
-			
-			var img = $("input[id=C_IMG1]").val();
-			alert("하나의 파일명 :"+img);
 			
 			var frm = document.getElementById("frm");
 			frm.action = './insertData.do';

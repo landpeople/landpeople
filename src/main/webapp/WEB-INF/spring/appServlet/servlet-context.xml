@@ -30,12 +30,23 @@
 
    <!-- 파일업로드는 여기다가 걸어둠 / 멀티파트 리졸브 -->
 	<bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">
-	<!-- 최대 업로드 사이즈 -->
-		<property value="20971520" name="maxUploadSize"/>
-		<!-- 20MB -->
+		<!-- 최대 업로드 사이즈 -->
+		<property value="20971520" name="maxUploadSize"/><!-- 20MB -->
 		<!-- 최대 메모리 사이즈 -->
-		<property value="1048576" name="maxInMemorySize"/>
-	<!-- 1MB -->
+		<property value="1048576" name="maxInMemorySize"/><!-- 1MB -->
+	</bean>
+	
+	<!-- 파일 업로드 업로드 용량 제한시 Exception 제어하는  exceptionResolver -->
+	<!-- MaxUploadSizeExceededExcepton 발생시 해당 에러 내용이 controller까지 전달되 못하기 때문에 
+	context.xml에서 에러 사항을 제어-->
+	<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> 
+		<property name="exceptionMappings">
+			<props>
+				<prop key="org.springframwork.web.multipart.MaxUploadSizeExceededException">
+					fileOverSizeError
+				</prop>
+			</props>
+		</property>
 	</bean>
 	
    <!-- 추가 기능으로 interceptor -->
