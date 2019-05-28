@@ -1,10 +1,7 @@
 @charset "UTF-8";
 
 @import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
-/*    @font-face{
-      font-family: "the120";
-      src: url('font/The120.ttf');
-   } */
+
 body {
 	padding: 0px;
 	font-family: 'Jeju Gothic', sans-serif;
@@ -15,9 +12,32 @@ table {
 	border-collapse: collapse;
 }
 
-.sender_img { /* 본인 메시지 css */
+.message_area { /* 메시지 전송창 전체 div*/
+	padding: 3px;
+	width: 350px;
+	height: 400px;
+	overflow: auto;
+	overflow-x: hidden;
+	background: #F3F3F3;
+}
+
+.noticeTxt {
+	clear: both;
+	margin: 10px;
+}
+
+.noticeTxt font {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 20px;
+	padding-right: 20px;
+	background: white;
+	border-radius: 3px;
+}
+
+.sender_msg { /* 본인 메시지 css */
 	border: 1px solid;
-	background-color: #69B55B;
+	background-color: #febd12;
 	background-clip: padding-box;
 	-webkit-border-image: url(images/sender_bubble.png) 25 25 round;
 	-o-border-image: url(images/sender_bubble.png) 25 25 round;
@@ -31,7 +51,17 @@ table {
 	text-align: justify;
 }
 
-.receiver_img { /* 상대방 메시지 css */
+.sender_img { /* 본인 메시지 css */
+	border: 1px solid;
+	background-clip: border-box;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 3px;
+	padding-right: 11px;
+	float: right;
+}
+
+.receiver_msg { /* 상대방 메시지 css */
 	border: 1px solid;
 	background-color: #E6F4B5;
 	background-clip: padding-box;
@@ -47,13 +77,16 @@ table {
 	text-align: justify;
 }
 
-.receive_msg {
-	padding: 3px;
-	width: 350px;
-	height: 400px;
-	overflow: auto;
-	overflow-x: hidden;
-	background: #F3F3F3;
+.receiver_img { /* 상대방 메시지 css */
+	width: 200px;
+	height: 200px;
+	border: 1px solid;
+	background-clip: border-box;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-right: 3px;
+	padding-left: 11px;
+	float: left;
 }
 
 .chat {
@@ -71,21 +104,21 @@ table {
 	outline: none;
 }
 
-/*    .chat_btn{ */
-/*       margin-top: 0px; */
-/*       margin-left: 5px; */
-/*       width: 52px; */
-/*       height: 31px; */
-/*       background-image: url('images/btn_send.png'); */
-/*       background-size: 100% 100%; */
-/*       display: inline-block; */
-/*    } */
+.chat_btn {
+	margin-top: 0px;
+	margin-left: 5px;
+	width: 52px;
+	height: 31px;
+	background-image: url('images/btn_send.png');
+	background-size: 100% 100%;
+	display: inline-block;
+}
+
 .memListBox {
 	text-align: center;
 	vertical-align: text-top;
 	padding: 10px;
 	overflow: auto;
-	/* background: #D8D8D8; */
 }
 
 .listTitle {
@@ -103,20 +136,6 @@ table {
 
 .memList {
 	vertical-align: top;
-}
-
-.noticeTxt {
-	clear: both;
-	margin: 10px;
-}
-
-.noticeTxt font {
-	padding-top: 5px;
-	padding-bottom: 5px;
-	padding-left: 20px;
-	padding-right: 20px;
-	background: white;
-	border-radius: 3px;
 }
 
 .sendTxt {

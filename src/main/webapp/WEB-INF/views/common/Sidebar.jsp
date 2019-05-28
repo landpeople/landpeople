@@ -12,6 +12,9 @@
    <img src="/images_std/kor/btn/btn_time_extension.gif" align="top">
 </a>
 
+<div class="header">
+
+</div>
 <!-- SIDEBAR -->
 <div class="sidebar-menu">
 	<div class="top-section">

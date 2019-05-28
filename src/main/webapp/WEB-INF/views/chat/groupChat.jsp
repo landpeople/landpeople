@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,10 +11,14 @@
 
 <!-- Add additional services that you want to use -->
 <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-database.js"></script>
-<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-firestore.js"></script>
-<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-messaging.js"></script>
-<script src="https://www.gstatic.com/firebasejs/5.9.1/firebase-functions.js"></script>
+<script
+	src="https://www.gstatic.com/firebasejs/5.9.1/firebase-database.js"></script>
+<script
+	src="https://www.gstatic.com/firebasejs/5.9.1/firebase-firestore.js"></script>
+<script
+	src="https://www.gstatic.com/firebasejs/5.9.1/firebase-messaging.js"></script>
+<script
+	src="https://www.gstatic.com/firebasejs/5.9.1/firebase-functions.js"></script>
 <!-- Comment out (or don't include) services that you don't want to use -->
 <!-- <script src="https://www.gstatic.com/firebasejs/5.9.1/firebase.js"></script> -->
 <script>
@@ -31,125 +36,129 @@
   firebase.initializeApp(config);
 </script>
 
+<%
+	String chr_id = (String) session.getAttribute("chr_id");
+	String user = (String) session.getAttribute("user");
+%>
 
-	<% 
-    String chr_id = (String)session.getAttribute("chr_id"); 
-    String user = (String) session.getAttribute("user");
-    %>
-
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script type="text/javascript">
       var ws = null ;
       var url = null ;
       var nick = null ; 
       var content = [];
       
+      var img = $(".img");
+	        
+
       $(document).ready(function() {
 	  
           nick = $("#nickName").val();
 //           alert("● groupChat.jsp var nick : " + nick);
-          $(".receive_msg").html('');
+          var messageArea = $(".message_area");
+          messageArea.html('');
+          messageArea.scrollTop = messageArea.scrollHeight;
           $(".chat_div").show();
           $(".chat").focus(); /* 텍스트 박스에 focus를 주어 입력할 수 있는 상태로 만들어 줌 */
           
-          ws = new WebSocket("ws://192.168.4.31:8091/LandPeople/wsChat.do");
+          ws = new WebSocket("ws://<%=request.getRemoteAddr()%>:8091/LandPeople/wsChat.do");
           
           ws.onopen = function() {
           	alert("● groupChat.jsp ws.onopen / 소켓이 열렸습니다.");
 //             alert("${messageList}");
-            ws.send("#$nick_"+nick); // 소켓이 열렸을 때 사용자가 입장하면 입장 메시지를 화면에 띄워 줄 수있도록 이벤트를 발생하여 핸들러를 호출
-            $(".receive_msg").append("${messageList}");
+            ws.send("#$nick_" + nick); // 소켓이 열렸을 때 사용자가 입장하면 입장 메시지를 화면에 띄워 줄 수있도록 이벤트를 발생하여 핸들러를 호출
+            $(".message_area").append("${messageList}");
           };
           
           ws.onmessage = function(event){
+              alert("왔니?ㄴ"+event.data);
            	var msg = event.data; // 이벤트 핸들러에서 처리해서 다시 되돌아온 data
             var chr_id = "<%=chr_id%>";
-            
-//             alert(event); // 메시지 이벤트가 도착하면 실행되는 alert
-            if(msg instanceof Blob){
-//             	var destinationCan
-//                 image.onload = function () {
-//                    destinationContext.clearRect(0, 0, destinationCanvas.width, destinationCanvas.height);
-//                    destinationContext.drawImage(image, 0, 0);
-//                 }
-                image.src = URL.createObjectURL(event.data);
-                alert(image.src);
-            }else if(msg.startsWith("<div class = 'noticeTxt'>")){ // 입장, 퇴장 시 이 메시지로 되돌아오게됨
-               $(".receive_msg").append(msg);
-           	   viewList(chr_id);
-            }else{
-//         		if(msg.startsWith("[${user}]")){ // 대화 내용
-// //                  	 $(".receive_msg").append($("<div class = 'sendTxt'>").append($("<span class ='sender_img'>").text(msg))).append("<br><br>");
-//                  	 	$(".receive_msg").append(msg);
-// //                          content.push("<div class = 'sendTxt'><span class ='sender_img'>"+msg + "</span></div><br><br>"); // 받은 메시지 content에 저장
-//         		}else{
-//                		 $(".receive_msg").append($("<div class = 'receiveTxt'>").append($("<span class = 'receiver_img'>").text(msg))).append("<br><br>");
-//                          content.push("<div class = 'receiveTxt'><span class = 'receiver_img'>" + msg + "</span></div><br><br>"); // 받은 메시지 content에 저장
-                    	 $(".receive_msg").append(msg);
-//         		}
-             		$(".receive_msg").scrollTop($(".receive_msg")[0].scrollHeight);              
-          		}
+               $(".message_area").append(msg);
+           	   viewList(chr_id); //
+             		$(".message_area").scrollTop($(".message_area")[0].scrollHeight);              
           }
-         
+        	  
           ws.onclose = function(event) {
              alert("● groupChat.jsp ws.close / 웹소켓 닫힘");
              ws.send("#$nick_"+nick);
           }
-      
-         $(".chat_btn").bind("click",function() { /* 전송 버튼 눌렀을 때 이벤트 */
-          var canWrite;
-          $.ajax({
-                 type: "POST",
-                 url: "./chkChatMember.do",
-                 data: { chr_id: "${chr_id}"},
-				 dataType : "json",
-				 async : false,
-				 success : function(result) {
-				    canWrite = result.result;
-				},
-				error : function() {
-				    alert("실패");
-				}
-			    });
-          
-			    if ($(".chat").val().trim() == ''
-				    || $(".chat").val() == '\n') { /*공백이나 개행문자만 입력 했을 시 전송 안되도록 함*/
-				alert("● groupChat.jsp / 내용을 입력하세요. ");
-				return;
-			    }
-			    else if (canWrite == 'cantChat') {
-				alert("● 대화 상대가 없습니다. *채팅 불가*");
-				return;
-				}
-			    else {
-				ws.send(nick + " : " + $(".chat").val());
-				// content.push(nick+" : "+$(".chat").val()); // 보내는 메시지 content에 저장
-				
-// 				$.ajax({
-// 				  type: "POST",
-// 				  url : "./insertMessage.do",
-// 				  data: {"chc_content" : "<div class = 'sendTxt'><span class ='sender_img'>['${user}']"+$(".chat").val()+"</span></div><br><br>"}
-// 				  success : function(){
-// 				      alert("성고옹");
-// 				  }
-// 				});
-				
-				$(".chat").val('');
-				$(".chat").empty();
-				$(".chat").focus();
-			    }
-			}); /* 전송 버튼 눌렀을 때 이벤트 */
-
-// 		$(window).bind("beforeunload", function() {
-// 		    //실행할 함수를 리턴해야한다.
-// 		    return fn_removeLocalStorage("openchatwait");
-// 		});
+          /* 전송 버튼 눌렀을 때 이벤트 */
+         $(".chat_btn").bind("click",function() { 
+        	 var file = document.getElementById('file').files[0];
+         	
+        	 /* 파일을 전송할 때 이벤트 */
+         	alert(file);
+	         if(file != undefined){
+	        	 
+	         	alert("파일 전송 : " + file);
+	         	var frmEle = document.forms[0];
+	         	var formData = new FormData(frmEle);
+	         	formData.append("file",$(".file"));
+	         	
+	         	$.ajax({
+					url : './uploadChatImageFile.do',
+					type : 'post',
+					data : formData,
+					enctype : 'multipart/form-data',
+					processData : false,
+					contentType : false,
+					success : function(result) {
+						alert(result);
+						ws.send("file : " + nick + " > "  + result);
+					},
+					error : function(result){
+						alert(실패);
+					}
+				});
+	         }else{       	 
+	          var canWrite;
+	          $.ajax({
+	                 type: "POST",
+	                 url: "./chkChatMember.do",
+	                 data: { chr_id: "${chr_id}"},
+					 dataType : "json",
+					 async : false,
+					 success : function(result) {
+					    canWrite = result.result;
+					},
+					error : function() {
+					    alert("실패");
+					}
+				    });
+	          
+				    if ($(".chat").val().trim() == ''
+					    || $(".chat").val() == '\n') { /*공백이나 개행문자만 입력 했을 시 전송 안되도록 함*/
+					alert("● groupChat.jsp / 내용을 입력하세요. ");
+					return;
+				    }
+				    else if (canWrite == 'cantChat') {
+					alert("● 대화 상대가 없습니다. *채팅 불가*");
+					return;
+					}
+				    else {
+					ws.send(nick + " : " + $(".chat").val());
+					// content.push(nick+" : "+$(".chat").val()); // 보내는 메시지 content에 저장
+					
+	// 				$.ajax({
+	// 				  type: "POST",
+	// 				  url : "./insertMessage.do",
+	// 				  data: {"chc_content" : "<div class = 'sendTxt'><span class ='sender_msg'>['${user}']"+$(".chat").val()+"</span></div><br><br>"}
+	// 				  success : function(){
+	// 				      alert("성고옹");
+	// 				  }
+	// 				});
+					
+					$(".chat").val('');
+					$(".chat").empty();
+					$(".chat").focus();
+// 				    }
+	         }
+         }
+		}); /* 전송 버튼 눌렀을 때 이벤트 */
 	    });
-
-    function fn_removeLocalStorage(x) {
-		alert(x);
-    }
-
+      
     var isCheck = true; /* 나중에 저장하기 버튼이나, 그런거,, 비밀채팅 하고싶을 때 써먹을려고 혹~시나 만들어둠 */
 
     window.addEventListener("unload", function(e) { /* 새로고침이나 닫기 버튼 클릭시의 이벤트 */
@@ -173,9 +182,9 @@
 	    $.ajax({
 		type : "POST",
 		url : "./socketOut.do",
-		data : {
-		    "chc_content" : content.toString()
-		},
+// 		data : { //  (* 제거예젇) 핸들러에서 데이터를 바로 디비에 저장할 수 있도록 함
+// 		    "chc_content" : content.toString()
+// 		},
 	    });
 	}
     }
@@ -187,12 +196,11 @@
 
     function viewList(grId) { /* 접속자 목록 보여주기 위한 함수*/
 	$(".memList").children().remove();
-	$
-		.ajax({
+	$.ajax({
 		    type : "POST",
 		    url : "./viewChatList.do",
 		    data : "user=" + $("#nickName"),
-		    async : false, /* 동기식으로 전달 */
+// 		    async : false, /* 동기식으로 전달 */
 		    success : function(result) {
 			for ( var k in result.list) {
 			    if (result.list[k] == grId) {
@@ -205,79 +213,38 @@
 		    }
 		});
     }
-    
-    function sendFile(){
-        var file = document.getElementById('file').files[0];
-// 		ws.send('filename:'+file.name);
-// 		alert('test');
 
-
-		var reader = new FileReader();
-		var rawData = new ArrayBuffer(); 
-
-// 		reader.loadend = function() {
-
-// 		}
-
-		rawData = reader.readAsArrayBuffer(file);
-		ws.send(file.msToBlob());
-		alert("파일 전송이 완료 되었습니다.")
-// 		ws.send('end'); // 
-
-    }
-
-    function addEvent(){
-        document.getElementById("send").addEventListener("click", sendFile, false);
-    }
-    
-    window.addEventListener("load", addEvent, false);
-    
-    function LoadImg(value) 
-	{
-		if(value.files && value.files[0]) 
-		{
-			var reader = new FileReader();
-
-			reader.onload = function (e) {
-				$('#LoadImg').attr('src', e.target.result);
-			}
-		
-			reader.readAsDataURL(value.files[0]);
-		}
-	}
-	
-    
 </script>
 </head>
 <link rel="stylesheet" href="./css/chat/chatroom.css">
 <body>
-   <table id="contentsss">
-      <tr>
-         <td width="360x" height="390px" align="center">
-            <div class="receive_msg" style="border: 1px">
-               <input type="text" id="nickName" value=<%=user%> />
-            </div>
-         </td>
-         <td width="130px" class="memListBox">
-            <div class="listTitle">접속자 목록</div>
-            <div class="memList"></div>
-         </td>
-      </tr>
-   </table>
+	<table id="content">
+		<tr>
+			<td width="360x" height="390px" align="center">
+				<div class="message_area" style="border: 1px">
+					<input type="text" id="nickName" value=<%=user%> />
+				</div>
+			</td>
+			<td width="130px" class="memListBox">
+				<div class="listTitle">접속자 목록</div>
+				<div class="memList"></div>
+			</td>
+		</tr>
+	</table>
 
-   <div class="chat_div" style="display: none; margin-top: 10px;">
-      <input type="text" id="txtarea" class="chat" onKeypress="if(event.keyCode==13) $('.chat_btn').click();" />
-      <input type="button" class="chat_btn" value="전송" />
-      <input type="button" class="exit_btn" value="나가기" />
-      <input type="image" id="destination"/>
-      <input id="file" type="file" name="file" accept="image/*">
-      <input id="send" type="button" value="send">
-      <br>
-   </div>
-   그룹아이디 :
-   <%=chr_id%>
-   나의아이디 :
-   <%=user%>
+	<div class="chat_div" style="display: none; margin-top: 10px;">
+		<input type="text" id="txtarea" class="chat" onKeypress="if(event.keyCode==13) $('.chat_btn').click();" />
+		<input type="button" class="chat_btn" value="전송" />
+		<input type="button" class="exit_btn" value="나가기" />
+		<input type="image" id="destination" />
+		<form id="fileForm">
+			<input id="file" type="file" name="file" accept="image/*"> 
+		</form>
+	</div>
+	그룹아이디 :
+	<%=chr_id%>
+	나의아이디 :
+	<%=user%>
 </body>
 <script type="text/javascript">
 document.getElementById("file").onchange = function (){
@@ -289,6 +256,7 @@ document.getElementById("file").onchange = function (){
 			return;
 			}
 		}
+	$(".chat").focus(); // 파일 전송 후 커서를 입력창으로 
 	};
 
 	
