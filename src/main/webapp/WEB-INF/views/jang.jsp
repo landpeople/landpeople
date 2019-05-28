@@ -23,7 +23,8 @@
 				<a href="./push.do">푸쉬 서버</a><br>
 				<a href="./push2.do">푸쉬 서버2</a><br>
 				<a href="./scheduler.do">스케줄러</a><br>
-				<a href="./selectChatList.do">채팅방 목록 조회</a>
+				<a href="./selectChatList.do">채팅방 목록 조회</a><br>
+				<a href="./deleteChatroom.do">채팅방 삭제 테스트</a>
 				</div>
 			</div>
 			<!-- </div> 여기까지 메인 컨텐츠  -->

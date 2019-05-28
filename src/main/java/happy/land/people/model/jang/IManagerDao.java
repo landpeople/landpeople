@@ -20,7 +20,7 @@ public interface IManagerDao {
 	
 	public boolean modifyBlock(String id);
 	
-	public void deleteChatroom();
+	public List<Map<String, Object>> selectChr();
 	
-	public void selectChr();
+	public boolean deleteChatroom(String chrId, String id);
 }
