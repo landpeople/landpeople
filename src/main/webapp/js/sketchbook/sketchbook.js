@@ -1,3 +1,4 @@
+// 스케치북 작성 모달
 function sketchBookMake(user) {
 		var user_email = user;
 		//	alert();
@@ -34,7 +35,7 @@ function sketchBookMake(user) {
 									+ "<label>스케치북 테마</label>"
 									+ "<div class='themeradio'>"
 									+ "<input type='radio' id='familytheme' name='sketch_theme' value='가족여행'><label for='familytheme'>가족여행</label>"
-									+ "<input type='radio' id='solotheme' name='sketch_theme' value='나홀로여행'><label for='solotheme'>나홀로여행</label>"
+									+ "<input type='radio' id='solotheme' name='sketch_theme' value='나홀로'><label for='solotheme'>나홀로여행</label>"
 									+ "<input type='radio' id='coupletheme' name='sketch_theme' value='연인과함께'><label for='coupletheme'>연인과함께</label>"
 									+ "<input type='radio' id='friendtheme' name='sketch_theme' value='친구와함께'><label for='friendtheme'>친구와함께</label>"
 									+ "</div>"
@@ -51,7 +52,6 @@ function sketchBookMake(user) {
 									+
 
 									"<div class='form-group'>"+
-//	 								"<form method='post' enctype='multipart/form-data' name='sketchCover' id='sketchCover'>"+
 									"<label>스케치북 커버이미지</label>"+
 										"<div id='moSketchBookCover'>"+
 												"<div id='modalIMG1'>"+
@@ -61,9 +61,7 @@ function sketchBookMake(user) {
 	 													
 												"</div>"+
 	 											
-//	 											"<input type='hidden' name='list[0].text_no' value='0'>"+
 										"</div>"+
-//	 								"</form>"+
 									"</div>"+
 
 									"<div class='modal-footer'>"
@@ -85,6 +83,7 @@ function sketchBookMake(user) {
 				});
 	}
 
+	// 스케치북 작성 모달 value를 DB에 저장
 	function sketchInsert() {
 		var sketch = document.getElementById("makeSketchBook");
 		var sketch_theme = $("input[name=sketch_theme]:checked").val();

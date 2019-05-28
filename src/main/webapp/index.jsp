@@ -61,7 +61,7 @@
 			<!-- 메인 컨텐츠   -->
 			<div class="main-lpcontents">
 				<div class="content">
-					<a href="./test.do">테스트 페이지로 이동</a>
+				<!-- 	<a href="./test.do">테스트 페이지로 이동</a>
 					<br>
 					<a href="./kim.do">김태우 페이지로 이동</a>
 					<br>
@@ -74,7 +74,7 @@
 					<a href="./jeong.do">정희태 페이지로 이동</a>
 					<br>
 					<a href="./cho.do">조태규 페이지로 이동</a>
-					<br>
+					<br> -->
 					<!-- 스케치북 생성 Modal -->
 					<div class="modal fade" id="sketchForm" role="dialog">
 						<div class="modal-dialog">
@@ -90,6 +90,51 @@
 						</div>
 					</div>
 					<!-- 여기까지 스케치북 생성 Modal -->
+					
+					<!-- 스케치북 테마별 조회  -->
+					<div class="mainSketchTheme">
+					
+						<div class="halfMainSketchTheme">
+							<div class="sketchTheme" style="margin-right: 10px;">
+									<div class="sketchTheme_hover" onclick="sketchSelectTheme('나홀로')">
+										<div class="hover_inside">
+											<h5>나홀로</h5>
+										</div>
+									</div>
+							
+							</div>
+							<div class="sketchTheme">
+								<div class="sketchTheme_hover" onclick="sketchSelectTheme('가족여행')">
+										<div class="hover_inside">
+											<h5>가족여행</h5>
+										</div>
+									</div>
+											
+							</div>
+						</div>	
+						
+						<div class="halfMainSketchTheme">
+							<div class="sketchTheme" style="margin-right: 10px;">
+									<div class="sketchTheme_hover" onclick="sketchSelectTheme('친구와함께')">
+										<div class="hover_inside">
+											<h5>친구와 함께</h5>
+										</div>
+									</div>
+							</div>
+							<div class="sketchTheme">
+									<div class="sketchTheme_hover" onclick="sketchSelectTheme('연인과함께')">
+										<div class="hover_inside">
+											<h5>연인과 함께</h5>
+										</div>
+									</div>
+							</div>
+						 </div>
+					
+					</div><!-- 여기까지 스케치북 테마별 조회  -->	
+					
+						
+				
+				
 				</div>
 			</div>
 			<!--  여기까지 메인 컨텐츠  -->
@@ -99,4 +144,17 @@
 		</div>
 	</div>
 </body>
+
+<script type="text/javascript">
+function sketchSelectTheme(theme){
+	alert(theme);
+	var themeType= theme;
+	
+	location.href="./sketchBookTheme.do?type="+themeType;
+}
+</script>
+
+
+
+
 </html>

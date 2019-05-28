@@ -60,6 +60,9 @@ public interface ISketchBookDao {
 	// 페이징 처리된 테마별 스케치북 조회
 	public List<LPSketchbookDto> sketchSelectTheme(Map<String,String> map);
 	
+	// 좋아요 카운팅이 가장 높은 3개 순으로  페이징 처리된 테마별 스케치북 조회 
+	public List<LPSketchbookDto> sketchSelectLikeTheme(Map<String, String> map);
+	
 	// 페이징 처리를 위한 스케치북 카운트 조회
 	public int sketchCntTheme(String theme);
 }
