@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<script type="text/javascript">
+	var message = 
+</script>
 <body>
 <table>
 	<tr>
