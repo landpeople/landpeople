@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 
 <script src="./js/jquery-3.3.1.js"></script>
+<script src="./js/chat/chat.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -27,7 +28,6 @@ html, body {
 }
 
 .sidebar-menu { /*사이드바 레이아웃 div*/
-	box-shadow: 12px 12px 11px #aaaaaa;
 	position: absolute;
 	background-color: #f4f4f4;
 	color: black;
@@ -54,8 +54,6 @@ html, body {
 	background-size: cover;
 	-webkit-border-radius: 125px;
 	border-radius: 125px;
-	background-position: center;
-	background-size: cover;
 }
 
 .menu-navigation {
@@ -92,7 +90,7 @@ html, body {
 	background: url("./img/doldam.png");
 	background-repeat: no-repeat;
 	background-position: center;
-	background-size: contain;
+	background-size: cover;
 	width: 100%;
 	height: 400px;
 }
@@ -212,16 +210,6 @@ body {
 	height: 930px;
 }
 
-.profile-userpic img {
-	float: none;
-	margin: 0 auto;
-	width: 100px;
-	height: 100px;
-	-webkit-border-radius: 50% !important;
-	-moz-border-radius: 50% !important;
-	border-radius: 50% !important;
-}
-
 .profile-usertitle {
 	text-align: center;
 	margin-top: 20px;
@@ -235,7 +223,6 @@ body {
 }
 
 .profile-usertitle-job {
-	text-transform: uppercase;
 	color: #5b9bd1;
 	font-size: 12px;
 	font-weight: 600;
@@ -248,7 +235,6 @@ body {
 }
 
 .profile-userbuttons .btn {
-	text-transform: uppercase;
 	font-size: 11px;
 	font-weight: 600;
 	padding: 6px 15px;
@@ -305,141 +291,97 @@ body {
 	min-height: 460px;
 }
 
-.header-area{
-	width:1270px;
-	margin:auto;
+.header-area {
+	width: 1270px;
+	margin: auto;
 }
 </style>
 </head>
 <body>
-	<nav class="navbar navbar-default navbar-fixed-top">
-		<div class="container-fluid">
-<!-- 			<div class="navbar-header"> -->
-<!-- 				<div class = "header-area"> -->
-				<a class="navbar-brand" href="#">
-					<img alt="Brand" src="...">
-				</a>
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href="#">마이페이지</a></li>
-						<li><a href="#">관리자페이지</a></li>
-						<li><a href="#">여행일정작성</a></li>
-						<li><a href="#">채팅</a></li>
-						<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-								Dropdown <span class="caret"></span>
-							</a>
-							<ul class="dropdown-menu" role="menu">
-								<li><a href="#">Action</a></li>
-								<li><a href="#">Another action</a></li>
-								<li><a href="#">Something else here</a></li>
-								<li class="divider"></li>
-								<li><a href="#">Separated link</a></li>
-							</ul></li>
-					</ul>
-<!-- 				</div> -->
-<!-- 			</div> -->
-		</div>
-	</nav>
-	<!-- 헤더 그림 -->
-	<div class="banner-bg" id="top">
-		<div class="banner-overlay"></div>
-		<div class="welcome-text"></div>
-	</div>
-	<!--젤로 레이아웃- 전체 영역 감싸는 div-->
+   <nav class="navbar navbar-default navbar-fixed-top">
+      <div style="width: 1270px">
+         <div class="container-fluid">
+            <!-- 			<div class="navbar-header"> -->
+            <!-- 				<div class = "header-area"> -->
+            <a class="navbar-brand" href="#">
+               <img alt="Brand" src="...">
+            </a>
+            <ul class="nav navbar-nav navbar-right">
+               <li><a href="#">마이페이지</a></li>
+               <li><a href="#">관리자페이지</a></li>
+               <li><a href="#">여행일정작성</a></li>
+               <li><a href="#">채팅</a></li>
+               <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                     Dropdown <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu" role="menu">
+                     <li><a href="#">Action</a></li>
+                     <li><a href="#">Another action</a></li>
+                     <li><a href="#">Something else here</a></li>
+                     <li class="divider"></li>
+                     <li><a href="#">Separated link</a></li>
+                  </ul></li>
+            </ul>
+            <!-- 				</div> -->
+            <!-- 			</div> -->
+         </div>
+      </div>
+   </nav>
+   <!-- 헤더 그림 -->
+   <div class="banner-bg" id="top">
+      <div class="banner-overlay"></div>
+      <div class="welcome-text"></div>
+   </div>
+   <!--젤로 레이아웃- 전체 영역 감싸는 div-->
 
 
-	<div class="container">
-		<div class="row profile">
-			<div class="col-md-3">
-				<div class="profile-sidebar">
-					<!-- SIDEBAR USERPIC -->
-<!-- 					<div class="profile-userpic"> -->
-<!-- 						<img src="./img/doldam.png" class="img-responsive" alt=""> -->
-<!-- 					</div> -->
-					<!-- END SIDEBAR USERPIC -->
-					<!-- SIDEBAR USER TITLE -->
-					<div class="profile-usertitle">
-						<div class="profile-usertitle-name">User Nickname</div>
-						<div class="profile-usertitle-job">User Email</div>
-					</div>
-					<!-- END SIDEBAR USER TITLE -->
-					<!-- SIDEBAR BUTTONS -->
-					<div class="profile-userbuttons">
-						<button type="button" class="btn btn-success btn-sm">Follow</button>
-						<button type="button" class="btn btn-danger btn-sm">Message</button>
-					</div>
-					<!-- END SIDEBAR BUTTONS -->
-					<!-- SIDEBAR MENU -->
-					<div class="profile-usermenu">
-						<ul class="nav">
-							<li class="active"><a href="#">
-									<i class="glyphicon glyphicon-home"></i> Overview
-								</a></li>
-							<li><a href="#">
-									<i class="glyphicon glyphicon-user"></i> Account Settings
-								</a></li>
-							<li><a href="#" target="_blank">
-									<i class="glyphicon glyphicon-ok"></i> Tasks
-								</a></li>
-							<li><a href="#">
-									<i class="glyphicon glyphicon-flag"></i> Help
-								</a></li>
-						</ul>
-					</div>
-					<!-- END MENU -->
-				</div>
-			</div>
+   <div class="container">
+      <div class="row profile">
+         <div class="col-md-3">
+            <div class="profile-sidebar">
+               <!-- SIDEBAR USERPIC -->
+               <!-- 					<div class="profile-userpic"> -->
+               <!-- 						<img src="./img/doldam.png" class="img-responsive" alt=""> -->
+               <!-- 					</div> -->
+               <!-- END SIDEBAR USERPIC -->
+               <!-- SIDEBAR USER TITLE -->
+               <div class="profile-usertitle">
+                  <div class="profile-usertitle-name">User Nickname</div>
+                  <div class="profile-usertitle-job">User Email</div>
+               </div>
+               <!-- END SIDEBAR USER TITLE -->
+               <!-- SIDEBAR BUTTONS -->
+               <div class="profile-userbuttons">
+                  <button type="button" class="btn btn-success btn-sm">Follow</button>
+                  <button type="button" class="btn btn-danger btn-sm">Message</button>
+               </div>
+               <!-- END SIDEBAR BUTTONS -->
+               <!-- SIDEBAR MENU -->
+               <div class="profile-usermenu">
+                  <ul class="nav">
+                     <li class="active"><a href="#">
+                           <i class="glyphicon glyphicon-home"></i> Overview
+                        </a></li>
+                     <li><a href="#">
+                           <i class="glyphicon glyphicon-user"></i> Account Settings
+                        </a></li>
+                     <li><a href="#" target="_blank">
+                           <i class="glyphicon glyphicon-ok"></i> Tasks
+                        </a></li>
+                     <li><a href="#">
+                           <i class="glyphicon glyphicon-flag"></i> Help
+                        </a></li>
+                  </ul>
+               </div>
+               <!-- END MENU -->
 
-		</div>
-	</div>
+               <div class="chatting">
+                  <iframe class="panel" id="lot" frameborder="0"></iframe>
+               </div>
+            </div>
+         </div>
 
-
-	<!--    <div class="main-wrapper"> -->
-	<!--       SIDEBAR -->
-	<!--       <div class="sidebar-menu"> -->
-	<!--          <div class="top-section"> -->
-	<!--             프로필 사진 영역 전체 감싸는  div -->
-	<!--             <div class="profile-image"></div> -->
-	<!--          </div> -->
-	<!--          여기까지 프로필 사진 영역 전체 감싸는 div -->
-
-	<!--          네비게이션 메뉴 -->
-	<!--          <div class="main-navigation"> -->
-	<!--             <ul class="navigation"> -->
-
-	<!--                Facebook -->
-
-	<!--                <li><a href='#' onclick='history.back(-1);'>뒤로가기 </a></li> -->
-	<!--                <li><a href="./loginPage.do">로그인 </a></li> -->
-	<!--                <li><a href="./logout.do">로그아웃</a></li> -->
-	<!--                <li><a href="#" onclick="sketchBookMake()">여행일정 작성</a></li> -->
-	<!--                <li><a href="#">마이페이지</a></li> -->
-	<!--                <li><a href="./jang.do">관리자 페이지</a></li> -->
-	<!--             </ul> -->
-	<!--          </div> -->
-	<!--          .main-navigation 여기까지 네비게이션 메뉴 -->
-
-	<!--          채팅 -->
-	<!--          <div class="chatting"> -->
-	<!--             <iframe class="panel" id="lot" frameborder="0"></iframe> -->
-	<!--          </div> -->
-	<!--          채팅 -->
-	<!--       </div> -->
-	<!--       .sidebar-menu 여기까지 사이드 바 -->
-
-	<!--       <div class="content-wrapper"> -->
-	<!--          <div class="lpcontents"> -->
-	<!--             <div class="content"> -->
-
-	<!--                <button type="button" class="btn btn-lg btn-so"> -->
-	<!--                   <i class="fab fa-stack-overflow pr-1"></i> <span>Stack Overflow</span> -->
-	<!--                </button> -->
-	<!--                <span class="counter counter-lg">22</span> <i class="fa fa-camera-retro"></i> fa-camera-retro -->
-
-	<!--             </div> -->
-	<!--          </div> -->
-	<!--          </div> 여기까지 메인 컨텐츠  -->
-	<!--          <div class="footer">landpeople</div> -->
-	<!--       </div> -->
-	<!--    </div> -->
+      </div>
+   </div>
 </body>
 </html>
