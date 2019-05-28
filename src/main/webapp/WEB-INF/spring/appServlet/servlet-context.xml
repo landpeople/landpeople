@@ -102,7 +102,7 @@
    
    <!-- 17*번 -->
    <aop:config><!-- 접근제어자 * com에서 별 -->
-      <aop:advisor advice-ref="txAdvice" pointcut="execution(* happy.land.people.model.*Service*.*(..))"/>
+      <aop:advisor advice-ref="txAdvice" pointcut="execution(* happy.land.people.model.*.*Service*.*(..))"/>
    </aop:config>
 
    <tx:annotation-driven transaction-manager="transactionManager"/>
