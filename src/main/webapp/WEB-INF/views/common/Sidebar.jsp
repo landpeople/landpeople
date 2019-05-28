@@ -29,7 +29,7 @@
             <li><a href='#' onclick='history.back(-1);'>뒤로가기 </a></li>
 			<li><a href="./loginPage.do">로그인 </a></li>
 			<li><a href="./logout.do">로그아웃</a></li>
-			<li><a href="#" onclick="sketchBookMake()">여행일정 작성</a></li>
+			<li><a href="#" onclick="sketchBookMake('${ldto.user_email}')">여행일정 작성</a></li>
 			<li><a href="#">마이페이지</a></li>
 			<li><a href="./jang.do">관리자 페이지</a></li>
 		</ul>
@@ -41,5 +41,30 @@
 		<iframe class="panel" id="lot" frameborder="0"></iframe>
 	</div>
 	<!-- 채팅 -->
+
+	<!-- 스케치북 생성 Modal -->
+					<div class="modal fade" id="sketchForm" role="dialog">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h4 class="modal-title">스케치북 작성</h4>
+								</div>
+								<div class="modal-body">
+									<form action="#" role="form" method="post" id="makeSketchBook"></form>
+								</div>
+							</div>
+						</div>
+					</div>
+	<!-- 여기까지 스케치북 생성 Modal -->
+
+
+
+
+
 </div>
 <!-- .sidebar-menu 여기까지 사이드 바 -->
+
+
+
+

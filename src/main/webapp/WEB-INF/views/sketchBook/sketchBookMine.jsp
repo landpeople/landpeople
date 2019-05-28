@@ -1,12 +1,16 @@
+<%@page import="happy.land.people.dto.LPSketchbookDto"%>
+<%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
 <%@page import="happy.land.people.dto.cho.ChoDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> 
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%		ChoDto ldto = (ChoDto) session.getAttribute("ldto");
 	    Map<String,Integer> sketchLike = ( Map<String,Integer> )request.getAttribute("sketchLike");
 	    Map<String,Integer> sketchLikes = ( Map<String,Integer> )request.getAttribute("sketchLikes");
+	    List<LPSketchbookDto> mySketchBookLists = (List<LPSketchbookDto>)request.getAttribute("mySketchBookLists");
+	    
 %> 
     
 <!DOCTYPE html>
@@ -35,10 +39,11 @@ $(document).ready(function() {
 	}
 	});
 });
+
+
+	
+
 </script>
-
-
-
 
 
 
@@ -47,7 +52,7 @@ $(document).ready(function() {
 	${pagingDto}
 	${mySketchBookLists}
 	${likeCnt}
-	${sketchLikes}
+	${sketchLike}
 <!--젤로 레이아웃- 전체 영역 감싸는 div-->
 	<div class="main-wrapper">
 		<%@include file="../common/Sidebar.jsp"%>
@@ -56,9 +61,81 @@ $(document).ready(function() {
 			<!-- 메인 컨텐츠   -->
 			<div class="lpcontents">
 				<div class="content">
-							
+					<div class="sketchBookContent">
+					<% 
+					for(int i =0; i < mySketchBookLists.size()/3 ; i++ ) { 
+					%>
+						<div class="sketchBookContainer">
 					
-					<div id="sketchSel" style="width: 500px;">
+					<% 
+						for(int j = 0 ; j <  3 ; j++){ 
+						
+						String sketch_id =	mySketchBookLists.get(i*3+j).getSketch_id();	
+					%>
+							<div class="selectTheme" style="background: url('<%=mySketchBookLists.get(i*3+j).getSketch_spath()%>');">
+								<div class="sketchTheme_hover" style="position: absolute; cursor: pointer;" onclick="location.href='./kim.do?sketch_id=<%=mySketchBookLists.get(i*3+j).getSketch_id()%>'"><%-- onclick="location.href='./kim.do?sketch_id=<%=mySketchBookLists.get(i*3+j).getSketch_id()%>' --%>
+									
+									<div class="hover_inside">
+										<div><a href="#" style="position: relative; z-index: 100;" onclick="return sketchBookModify('<%=mySketchBookLists.get(i*3+j).getSketch_id()%>')"><img alt="modi" src="img/sketchBookImg/modifyIcon.png"></a></div>
+										<span><%=mySketchBookLists.get(i*3+j).getSketch_title()%> </span>
+										<h5><img alt="likeIcon" src="./img/sketchBookImg/likeIcon.png">
+										<%=sketchLike.get(sketch_id) %></h5>
+										</div>
+										
+								</div>
+								<%-- <a href="./kim.do?sketch_id=<%=mySketchBookLists.get(i*3+j).getSketch_id()%>"><%=mySketchBookLists.get(i*3+j).getSketch_id()%> &nbsp <%=mySketchBookLists.get(i*3+j).getSketch_title()%> &nbsp <%=mySketchBookLists.get(i*3+j).getSketch_spath()%></a> --%>
+							</div>
+							
+					<%
+						}
+					%>
+						</div>
+					
+					<%
+						}
+					%>
+					
+					
+					<% 
+						if(mySketchBookLists.size()%3 !=0){ 
+						
+					%>
+						<div class="sketchBookContainer">
+					
+					<% for(int i = 0 ; i < mySketchBookLists.size()%3 ; i++){
+						String sketch_id = mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_id();	
+					%>
+							<div class="selectTheme" style="background: url('<%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_spath()%>');">
+								<div class="sketchTheme_hover"  style="position: absolute; cursor: pointer;" onclick="location.href='./kim.do?sketch_id=<%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_id()%>'">
+									<div class="hover_inside">
+										<div><a href="#" style="position: relative; z-index: 100;" onclick="return sketchBookModify('<%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_id()%>')"><img alt="modi" src="img/sketchBookImg/modifyIcon.png"></a></div> 
+										<span><%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_title()%></span>
+										<h5><img alt="likeIcon" src="./img/sketchBookImg/likeIcon.png">
+										<%=sketchLike.get(sketch_id)%></h5>
+									</div>
+								</div>
+								<a href="./kim.do?sketch_id=<%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_id()%>"><%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_id()%> &nbsp <%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_title()%> &nbsp <%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_spath()%></a>
+							</div>
+							
+					<%
+						}
+					%>
+						</div>
+					
+					<%
+						}
+					%>
+					
+					
+					
+
+					
+					
+					
+					
+					</div>			
+					
+					<%-- <div id="sketchSel" style="width: 500px;">
 					<form action="#" method="post" id="sketchDel" name="sketchDel" onsubmit="return DelchkBox()">
 						<input type="submit" value="스케치북 삭제">
 						<table class='table table-bordered'>
@@ -100,7 +177,8 @@ $(document).ready(function() {
 					
 					
 					
-					</div>
+					</div> --%>
+					
 					
 					
 					<!-- 스케치북 수정 Modal -->
@@ -132,6 +210,7 @@ $(document).ready(function() {
 	var pageCnt = ${pagingDto.getNowPageNo()} 
 	
 	$(window).scroll(function(){
+		//var temp_height= $(document).height()-$(window).height();
 		if($(window).scrollTop() >= $(document).height()-$(window).height()){
 			if(pageCnt >= ${pagingDto.getEndPageNo()}){
 				alert("마지막페이지 입니다.");
@@ -145,7 +224,7 @@ $(document).ready(function() {
 	
 	function getMySketchBook(pageNo){		
 		var user_email = "${ldto.user_email}"
-		
+		var sketchLikes = "${sketchLikes}"
 			$.ajax({
 				url: "mysketchBookPaging.do",
 				type: "get",
@@ -154,7 +233,7 @@ $(document).ready(function() {
 				success: function(msg){
 					alert(msg.addMySketchBook);		
 					alert(msg.addMySketchBook.length);
-					var sketchLike= '<c:out value="${sketchLike}"/>';
+					
 					
 					
 					var htmlTable = "";
@@ -175,8 +254,8 @@ $(document).ready(function() {
 								"</td>"+
 								"</tr>";
 						}	
-						$(".addMySketchBookTr").after(htmlTable);
-						
+						//$(".addMySketchBookTr").after(htmlTable);
+						$(htmlTable).appendTo("#table table-bordered");
 						
 				}, error : function() {
 					alert("실패");
@@ -188,8 +267,8 @@ $(document).ready(function() {
 	
 	//-------------------- 작성 스케치북 수정 모달 생성 --------------------
 
-	function sketchBookModify(user, sketch) {
-		var user_email = user;
+	function sketchBookModify(sketch) {
+		var user_email = "${ldto.user_email}"
 		var sketch_id = sketch;
 		alert(user_email);
 		alert(sketch_id);
@@ -247,11 +326,16 @@ $(document).ready(function() {
 							+
 							
 							
-							"<div class='form-group'>"
-							+ "<label>스케치북 커버이미지</label>"
-							+ "<input type='text' class='form-control' id='cover' name='sketch_spath' value='"+modiModal.sdto.sketch_spath+"' style='width : 400px;'>"
-							+ "</div>"
-							+
+							"<div class='form-group'>"+
+							"<label>스케치북 커버이미지</label>"+
+											"<div id='moSketchBookCover'>"+
+													"<div id='modalIMG1'>"+
+													"<input type='hidden' name='sketch_spath' class='img_spath0'>"+
+															"<label for='C_IMG1'><img src='./img/folder.png'></label>"+
+															"<input id='C_IMG1' class='file'  name='file' type='file' multiple='multiple' style='display: none;'>"+
+													"</div>"+
+											"</div>"+
+							+ "</div>"+
 				
 							"<div class='modal-footer'>"
 							+ "<input class='btn btn-success' type='button' value='수정완료 ' onclick='sketchModify()'>"

@@ -85,7 +85,7 @@ public class JungController {
 	@ResponseBody
 	@RequestMapping(value="/LPLike.do",method=RequestMethod.GET)
 	public Map<String, String> LikeChange(String user_email, String sketch_id, LPCollectDto dto){
-		logger.info("JungController LikeChange 실행");
+	
 		
 		//스케치북 좋아요 최초 등록 
 		boolean isc = iSketchBookService.collectInsert(dto);
@@ -152,10 +152,7 @@ public class JungController {
 		return sresult;
 	}
 	
-	@RequestMapping(value="/imgupload.do", method=RequestMethod.GET)
-	public String imguploading() {
-		return null;
-	}
+	
 	
 	
 	@RequestMapping(value="ScrapeSelect.do", method=RequestMethod.GET)
@@ -257,7 +254,6 @@ public class JungController {
 			String sketch_id = mySketchBookLists.get(i).getSketch_id();
 			int likeCnt = iSketchBookService.likeCnt(sketch_id);
 			sketchLike.put(sketch_id, likeCnt);
-		
 			//model.addAttribute("likeCnt", likeCnt);	
 		}
 		
@@ -321,6 +317,7 @@ public class JungController {
 	@RequestMapping(value="/mysketchBookPaging.do" ,method = RequestMethod.GET)
 	public Map<String,List<LPSketchbookDto>> mysketchBookPaging(String user_email, String pageNo,String type,Model model) {
 		
+		// 페이지 처리를 위한 작성 스케치북 카운트 조회
 		int cnt = iSketchBookService.sketchCntMine(user_email);
 		SketchPagingDto pagingDto = new SketchPagingDto(9, Integer.parseInt(pageNo), cnt, 9);
 		Map<String,String> map = new HashMap<String,String>();
@@ -328,6 +325,7 @@ public class JungController {
 		map.put("first", String.valueOf(pagingDto.getFirstBoardNo()));
 		map.put("last", String.valueOf(pagingDto.getEndBoardNo()));
 					
+		// 스케치북 id에 따른 카운트 저장할 변수 
 		List<LPSketchbookDto> MySketchBookList= iSketchBookService.sketchSelectMine(map);
 		Map<String,Integer> sketchLikes = new HashMap<String,Integer>();
 		for (int i = 0; i < MySketchBookList.size(); i++) {
@@ -505,41 +503,96 @@ public class JungController {
 			return thumbnailRealPath;
 		}
 	
-		// 테마별 스케치북 조회
-		@RequestMapping(value="/sketchBookTheme.do" ,method = RequestMethod.GET)
-		public String sketchBookTheme(String type,HttpServletRequest request) {
+	// 테마별 스케치북 조회
+	@RequestMapping(value="/sketchBookTheme.do" ,method = RequestMethod.GET)
+	public String sketchBookTheme(String type,HttpServletRequest request) {
 			
-			int cnt = iSketchBookService.sketchCntTheme(type);			
-			SketchPagingDto pagingDto = new SketchPagingDto(9, 1, cnt, 9);
-			Map<String,String> map = new HashMap<String,String>();
-			map.put("theme", type);
-			map.put("first", String.valueOf(pagingDto.getFirstBoardNo()));
-			map.put("last", String.valueOf(pagingDto.getEndBoardNo()));			
-			List<LPSketchbookDto> sketchBookList= iSketchBookService.sketchSelectTheme(map);
-			request.setAttribute("pagingDto", pagingDto);
-			request.setAttribute("sketchBook", sketchBookList);
-			return "/sketchBook/sketchBookTheme";
-		}
+		int cnt = iSketchBookService.sketchCntTheme(type);			
+		System.out.println("선택한 테마의 종류 = "+type);
+		SketchPagingDto pagingDto = new SketchPagingDto(9, 1, cnt, 9);
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("theme", type);
+		map.put("first", String.valueOf(pagingDto.getFirstBoardNo()));
+		map.put("last", String.valueOf(pagingDto.getEndBoardNo()));			
+		List<LPSketchbookDto> sketchBookList= iSketchBookService.sketchSelectTheme(map);
+		
+		// 스케치북 id에 따른 카운트 저장할 변수 
+		
+			Map<String,Integer> sketchLike = new HashMap<String,Integer>();
+			for (int i = 0; i < sketchBookList.size(); i++) {
+				String sketch_id = sketchBookList.get(i).getSketch_id();
+				int likeCnt = iSketchBookService.likeCnt(sketch_id);
+				sketchLike.put(sketch_id, likeCnt);
+			
+				//model.addAttribute("likeCnt", likeCnt);	
+			}
+			
+			System.out.println(sketchLike);
+		
+		
+		// 좋아요 카운팅이 가장 높은 스케치북 3개 순으로 조회
+		/*SketchPagingDto PagingLikeDto = new SketchPagingDto(3, 1, cnt, 3);
+		Map<String, String> likeMap = new HashMap<String, String>();
+			for (int i = 0; i < 3; i++) {
+				String sketch_id = sketchBookList.get(i).getSketch_id();
+				System.out.println(sketch_id);
+				likeMap.put("sketch_id", sketch_id);
+				
+			}
+		likeMap.put("theme", type);	
+		likeMap.put("first", String.valueOf(PagingLikeDto.getFirstBoardNo()));
+		likeMap.put("last", String.valueOf(PagingLikeDto.getEndBoardNo()));
+		
+		
+		List<LPSketchbookDto> sketchBookLikeList = iSketchBookService.sketchSelectLikeTheme(likeMap);*/
+		
+		request.setAttribute("sketchLike", sketchLike);
+		request.setAttribute("type", type);
+		request.setAttribute("pagingDto", pagingDto);
+//		request.setAttribute("PagingLikeDto", PagingLikeDto);
+		request.setAttribute("sketchBook", sketchBookList);
+//		request.setAttribute("sketchBookLike", sketchBookLikeList);
+		return "/sketchBook/sketchBookTheme";
+	}
 		
 		// 테마별 스케치북 조회 페이징 처리
 		
-		@ResponseBody
-		@RequestMapping(value="/sketchBookPaging.do" ,method = RequestMethod.GET)
-		public Map<String,List<LPSketchbookDto>> sketchBookPaging(String pageNo,String type,Model model) {
+	@ResponseBody
+	@RequestMapping(value="/sketchBookPaging.do" ,method = RequestMethod.GET)
+	public Map<String,Object> sketchBookPaging(String pageNo,String type,Model model) {
 			
-			int cnt = iSketchBookService.sketchCntTheme(type);
-			SketchPagingDto pagingDto = new SketchPagingDto(9, Integer.parseInt(pageNo), cnt, 9);
-			Map<String,String> map = new HashMap<String,String>();
-			map.put("theme", type);
-			map.put("first", String.valueOf(pagingDto.getFirstBoardNo()));
-			map.put("last", String.valueOf(pagingDto.getEndBoardNo()));
-						
-			List<LPSketchbookDto> sketchBookList= iSketchBookService.sketchSelectTheme(map);
-			Map<String,List<LPSketchbookDto>> resultMap = new HashMap<String,List<LPSketchbookDto>>();
-			resultMap.put("addSketchBook", sketchBookList);		
-			
-			return resultMap;
+		int cnt = iSketchBookService.sketchCntTheme(type);
+		SketchPagingDto pagingDto = new SketchPagingDto(9, Integer.parseInt(pageNo), cnt, 9);
+		Map<String,String> map = new HashMap<String,String>();
+		map.put("theme", type);
+		map.put("first", String.valueOf(pagingDto.getFirstBoardNo()));
+		map.put("last", String.valueOf(pagingDto.getEndBoardNo()));
+		
+		List<LPSketchbookDto> sketchBookList= iSketchBookService.sketchSelectTheme(map);
+
+		// 스케치북 id에 따른 카운트 저장할 변수 
+		
+		Map<String,Integer> sketchLikes = new HashMap<String,Integer>();
+		for (int i = 0; i < sketchBookList.size(); i++) {
+			String sketch_id = sketchBookList.get(i).getSketch_id();
+			int likeCnt = iSketchBookService.likeCnt(sketch_id);
+			sketchLikes.put(sketch_id, likeCnt);
+		
+			//model.addAttribute("likeCnt", likeCnt);	
 		}
+		
+		System.out.println("무한스크롤 처리된 스케치북 조회 좋아요 카운트 = "+sketchLikes);
+		model.addAttribute("sketchLikes", sketchLikes);
+		
+		
+		Map<String,Object> resultMap = new HashMap<String,Object>();
+		resultMap.put("addSketchBook", sketchBookList);	
+		resultMap.put("like", sketchLikes);
+		
+		return resultMap;
+	}
+
+
 }
 	
 
