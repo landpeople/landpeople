@@ -57,9 +57,9 @@ public class ManagerServiceImpl implements IManagerService {
 	}
 
 	@Override
-	public List<Map<String, Object>> selectChr() {
+	public List<List<Map<String, String>>> selectChr(String id) {
 		logger.info("ManagerServiceImpl selectChr");	
-		return iManagerDao.selectChr();
+		return iManagerDao.selectChr(id);
 	}
 
 	@Override

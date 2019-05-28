@@ -23,7 +23,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 
-		var cnames = [ '이메일', '닉네임', '등급', '삭제 여부', '메일 인증 여부', '권한' ];
+		var cnames = [ '이메일', '닉네임', '등급', '삭제 여부', '메일 인증 여부', '권한*' ];
 
 		$("#jqGrid").jqGrid({
 
@@ -113,17 +113,17 @@
 			<div class="lpcontents">
 				<div class="content">
 					<div id="jqGridDiv">
-						<a href="./jang.do">뒤로가기</a>
-							<button onclick="location.href='./jqgrid.do'" id="memBtn">전체 회원 보기</button>
-							<button onclick="location.href='./jqgrid2.do'" id="sketBtn" style="background: gray;">전체 스케치북 보기</button>
-								<br>
-							<select id="selectId" id="selectId">
-							<option value="" selected="selected">전체</option>
-							<option value="user_email">이메일</option>
-							<option value="user_nickname">닉네임</option>
-							</select> 
-							<span><input id="input" type="text" placeholder="검색어를 입력하세요" value=""></span> 
-							<span><input id="inputBtn" type="button" value="search" onclick="search()"> </span>
+						<button onclick="location.href='./jqgrid.do'" id="memBtn"><img alt="전체 회원 보기" src="./img/manager/selectMember.png"><br>전체 회원 보기</button>
+						<button onclick="location.href='./jqgrid2.do'" id="sketBtn" style="background: gray;"><img alt="전체 스케치북 조회" src="./img/manager/selectSketch.png"><br>전체 스케치북 보기</button>
+							<br>
+						<select id="selectId" id="selectId">
+						<option value="" selected="selected">전체</option>
+						<option value="user_email">이메일</option>
+						<option value="user_nickname">닉네임</option>
+						</select> 
+						<span><input id="input" type="text" placeholder="검색어를 입력하세요" value=""></span> 
+						<span><input id="inputBtn" type="button" value="search" onclick="search()"></span>
+						<span><input id="inputBtn" type="button" value="search" onclick="search()"></span>
 						<table id="jqGrid"></table>
 						<div id="jqGridPager"></div>
 					</div>

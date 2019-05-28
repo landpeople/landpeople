@@ -77,20 +77,19 @@ public class ManagerDaoImpl implements IManagerDao {
 	}
 	
 	@Override
-	public List<Map<String, Object>> selectChr() {
+	public List<List<Map<String, String>>> selectChr(String id) {
 		logger.info("ManagerDaoImpl selectChr");
 		Map<String, Object> resultMap = new HashMap<String, Object>();
-		String id = "jang";
-		List<Map<String, Object>> resultLists = new ArrayList<Map<String, Object>>();
+		List<List<Map<String, String>>> resultLists = new ArrayList<List<Map<String, String>>>();
 		List<Map<String, String>> lists = sqlSession.selectList(NS+"selectChr", id);
 		System.out.println("*********lists = "+lists);
-//			System.out.println("****** RECEIVER : "+lists.get(i).get("CHR_RECEIVER"));
 			for (int i = 0; i < lists.size(); i++) {
 				if (lists.get(i).get("CHR_SENDER").equals(id)) { // SENDER가 나인 방의 채팅 상대, 최근 메시지, 날짜 조회
 					Map<String, String> map = new HashMap<String, String>();
 					map.put("id", id);
 					map.put("chr_id", lists.get(i).get("CHR_ID"));
 					resultMap.put("result"+i, sqlSession.selectList(NS+"selectChrListR", map));
+					resultLists.add(sqlSession.selectList(NS+"selectChrListR", map));
 //					System.out.println(resultMap+"**********"+i);
 				} 
 				else if(lists.get(i).get("CHR_RECEIVER").equals(id)) { // RECEIVER가 나인 방의 채팅 상대, 최근 메시지, 날짜 조회
@@ -98,10 +97,12 @@ public class ManagerDaoImpl implements IManagerDao {
 					map.put("id", id);
 					map.put("chr_id", lists.get(i).get("CHR_ID"));
 					resultMap.put("result"+i, sqlSession.selectList(NS+"selectChrListS", map));
+					resultLists.add(sqlSession.selectList(NS+"selectChrListS", map));
 //					System.out.println(resultMap+"**********"+i);
 				}
 			}
-			resultLists.add(resultMap);
+//			resultLists.add(resultMap);
+			System.out.println(resultLists.get(0).get(0).get("CHR_RECEIVER"));
 			System.out.println(resultLists);
 			return resultLists;
 	}
