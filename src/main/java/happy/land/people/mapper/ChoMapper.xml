@@ -45,7 +45,6 @@ SELECT #{user_email}, #{user_password}, #{user_nickname}, 'U', '' FROM DUAL WHER
 
 
 
-
 <!-- 로그인 -->
 <select id="login" parameterType="ChoDto" resultType="ChoDto">
 	SELECT USER_EMAIL, USER_PASSWORD, USER_NICKNAME, USER_AUTH, USER_EMAILCHK

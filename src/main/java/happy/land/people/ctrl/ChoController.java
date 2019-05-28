@@ -218,7 +218,7 @@ public class ChoController {
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	public String login(ChoDto dto, HttpSession session,HttpServletResponse response, HttpServletRequest request) throws IOException {
 
-		// 이메일 일치없으면 ㅗㅗㅗ
+		// 
 		
 		
 		
