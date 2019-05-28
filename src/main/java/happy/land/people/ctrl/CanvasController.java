@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import happy.land.people.dto.LPCanvasDto;
@@ -107,8 +108,8 @@ public class CanvasController {
 	    }
 	    
 	    @ResponseBody
-	    @RequestMapping(value="deleteCanvas.do",method=RequestMethod.POST)
-	    public Map<String,String> deleteDaysFrom(HttpSession session,String nowPageNo){
+	    @RequestMapping(value="deleteCanvas.do",method=RequestMethod.POST, produces="text/json; charset=utf-8")
+	    public Map<String,String> deleteDaysFrom(HttpSession session,@RequestParam("nowPageNo") String nowPageNo){
 	    	// 페이지 번호 , 캔버스 id     	
 	    	System.out.println("페이지번호:"+nowPageNo);
 	    	LPCanvasDto canvasDto = new LPCanvasDto();

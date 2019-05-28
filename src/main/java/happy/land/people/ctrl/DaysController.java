@@ -250,7 +250,6 @@ public class DaysController {
 	    public Map<String, String> insertDaysCanvas(HttpSession session,@RequestBody Map<String, Object> val) throws ParseException{
 	    	// 캔버스 생성 부분 
 	    	LPCanvasDto canvasDto =  (LPCanvasDto)session.getAttribute("canvas");
-	    	
 	    	daysService.daysInsert(val, canvasDto);
 	    	
 	    	Map<String,String> result = new HashMap<String,String>();

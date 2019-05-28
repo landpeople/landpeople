@@ -35,11 +35,12 @@
 <link rel="stylesheet" href="css/Layout_1.css">
 
 <style type="text/css">
-.insertForms{
-	margin-right: 50px;
+.insertForms{	
 	margin-bottom: 30px;
 	margin-top: 30px;
-	width : 180px;
+	margin-left : 15px;
+	margin-right : 15px;
+	width : 240px;
 	height: 180px;
 }
 </style>
@@ -53,8 +54,7 @@
          <div class="lpcontents">
             <div class="content">
                <input type="button" id="downloadExcel">
-               <a href="./canvasDownloadExcel.do">테스트용 엑셀 다운로드</a>
-               <!-- <a href="./canvasDownloadImage.do">테스트용 이미지 다운로드</a> -->
+                <a href="./canvasDownloadExcel.do">엑셀 다운로드</a>        
                <div id="custom-menu"></div>
                <div id="mybook" style="border: 1px solid black;">
                   <div>입력된 캔버스가 없습니다.</div>
@@ -80,12 +80,11 @@
     
       <!-- Modal content-->
       <div class="modal-content" style="width:1000px; height:800px;">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <div class="modal-header">          
           <h4 class="modal-title" style="text-align: center;">페이지 입력</h4>
         </div>
-        <div class="modal-body" style="padding: 50px;">
-          <p><img src="./img/days.png" class="insertForms" title="1번스타일"></img>
+        <div class="modal-body" style="padding: 30px 30px 30px 30px;">
+          <p><img src="./img/days.jpg" class="insertForms" title="1번스타일"></img>
           	 <img src="./img/free2.png" class="insertForms" title="2번스타일"></img>
           	 <img src="./img/free2.png" class="insertForms" title="3번스타일"></img><br>
           	 <img src="./img/free3.png" class="insertForms" title="4번스타일"></img>
@@ -94,7 +93,7 @@
           </p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="closeModal">Close</button>
           <button type="button" class="btn btn-default" id="canvasInsertFrom">ok</button>
         </div>
       </div>
@@ -111,7 +110,7 @@
  	            shadow: false,
  	            arrows: true,
  	            change: function(event, data) { 
- 	  			  $('#nowPageNo').val(data.index/2+1);
+ 	  			  $('#nowPageNo').val(data.index/2+1); 	  			
  	  		    },
  	  		    menu: '#custom-menu',
  	  		    pageSelector: true
@@ -231,6 +230,10 @@
 	    		var daysMarker = [];
 	    		// 일정 마커들의 인포윈도우
 	    		var daysInfo = [];	
+	    		// 일정 마커 시작시간
+	    		var daysStart = [];
+	    		// 일정 마커 종료시간
+	    		var daysEnd = [];
 	    		
 	    		// 일정 마커들 정보 가져오기
 	    		<%
@@ -243,8 +246,33 @@
 	    		});
 	    		daysInfo[<%=j%>] = '<%=daysList.get(i).get(j).getDays_title()%>';
 	    		
+	    		// 시작 시간 설정
+	    		var startHour = '<%=daysList.get(i).get(j).getDays_sdate().getHours()%>';
+	    		var startMin = '<%=daysList.get(i).get(j).getDays_sdate().getMinutes()%>';
+	    		var startHalf = "AM";
+	    		if(parseInt(startHour) >= 12){ 
+	    			startHalf = "PM";
+	    			startHour = parseInt(startHour)-12;
+	    		}
+	    		if(parseInt(startHour) < 10)		{ 	startHour = "0"+startHour;   }
+	    		if(parseInt(startMin) < 10)			{	startMin = "0"+startMin; 	}	    		
+	    		daysStart[<%=j%>] = startHalf+" "+startHour+":"+startMin;    		
+	    		
+	    		// 종료 시간 설정
+	    		var endHour = '<%=daysList.get(i).get(j).getDays_edate().getHours()%>';
+	    		var endMin = '<%=daysList.get(i).get(j).getDays_edate().getMinutes()%>';
+	    		var endHalf = "AM";
+	    		if(parseInt(endHour) >= 12){ 
+	    			endHalf = "PM";
+	    			endHour = parseInt(endHour)-12;
+	    		}
+	    		if(parseInt(endHour) < 10)		{ 	endHour = "0"+endHour;   }
+	    		if(parseInt(endMin) < 10)			{	endMin = "0"+endMin; 	}	    		
+	    		daysEnd[<%=j%>] = endHalf+" "+endHour+":"+endMin;	    	
+	    		
+	    		// 인포윈도우에 표시할 내용
 	    		var infowindow = new daum.maps.InfoWindow({
-    		        content: '<div><%=daysList.get(i).get(j).getDays_title()%></div>', // 인포윈도우에 표시할 내용
+	    			content: '<div><%=daysList.get(i).get(j).getDays_title()%></div>',     		        
     		        removable : true
 	    		});
 
@@ -281,8 +309,9 @@
 	    			
 	    			// 일정 페이지 정보 가져오기
 	    			var daysPage = document.getElementById("page"+<%=i+1%>);				
-	    			
-	    			for(var i = 0 ; i < daysMarker.length ; i++){
+	    			daysPage.innerHTML ="<div style='text-align : center;'><h4><%=canvasList.get(i).getCan_title()%></h4></div>";
+	    			for(var i = 0 ; i < daysMarker.length ; i++){ 				
+	    				
 	    				var div = document.createElement('div');
 	    				div.style.width="460px";
 	    				div.style.height = "40px";
@@ -296,7 +325,8 @@
 	    							+ " onclick='window.open(this.href, \"_경로보기\", \"width=1000px,height=800px;\"); return false;'"
 	    							+ ">최단경로보기</a><br>";
 	    				}				
-	    				div.innerHTML += "<div style='font-size:20px; width:450px; height:38px; border:1px solid black;'>"+(i+1)+"번째 일정:"+daysInfo[i]+"</div>";
+	    				div.innerHTML += "<div style='font-size:20px; width:450px; height:38px; border:1px solid black;'>"+(i+1)+"번째 일정:"+daysInfo[i]
+	    							  + "<div style='font-size:12px; float:right; margin-right:50px;'>"+daysStart[i]+"~"+daysEnd[i]+"</div></div>";	
 	    				daysPage.appendChild(div);	
 	    			}	
 	    			
@@ -426,6 +456,13 @@
 		        infowindow.close();
 		    };
 		} 
+		
+		// 모달 초기화
+		$("#closeModal").click(function(){	
+			// 모든 캔버스 투명도 및 배경색(나중에 이미지로 바뀔예정) 조절
+			$(".insertForms").css('opacity','1.0');
+			$(".insertForms").css('background-color','');
+		});
 	});		
 	</script> 	
 	

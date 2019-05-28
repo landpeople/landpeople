@@ -19,6 +19,7 @@
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=559fa9d8ea227159941f35acba720d2b&libraries=services"></script>
 
+
 </head>
 <body>
    <!--젤로 레이아웃- 전체 영역 감싸는 div-->
@@ -30,7 +31,7 @@
          <div class="lpcontents">
             <div class="content">
                <div id="mybook" style="border: 1px solid black;">
-                  <div id="page3" style="width: 470px; height: 630px; overflow: auto; background-color: lime;">
+                  <div id="page3" style="width: 470px; height: 630px; overflow: auto;">
                      페이지 제목:
                      <input type="text" id="pageTitle">
                   </div>
@@ -118,10 +119,14 @@
 					marker.setDraggable(true);
 					// 입력 윈도우를 생성합니다
 					infoWindow = new daum.maps.InfoWindow({
-						    content : '<div style="width:200px; height:140px;">일정제목 &nbsp;<input style="width:100px; height=30px;" type="text" id="daysTitle">'
-							    + '<br>시작시간:&nbsp;<input id="startDays" style="width:120px; height=40px; text-align:center;" type="time">'
-							    + '<br>종료시간:&nbsp;<input id="endDays" style="width:120px; height=40px; text-align:center;" type="time">'
-							    + '<br><br><button style="width:100px; height=30px;" onclick="daysMake()">일정등록</button><button style="width:100px; height=30px;" onclick="closeInfo()">취소</button></div>'
+						  content : '<div style="width:200px; height:140px;">일정제목 &nbsp;<input style="width:100px; height=30px;" type="text" id="daysTitle">'
+							    +'<br>시작:&nbsp;<select id="startHalf" style="font-size:14px"><option>AM</option><option>PM</option></select>'
+							    +'&nbsp;<select id="startHH"><option>00</option><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option></select>'
+							    +'&nbsp;<select id="startMM"><option>00</option><option>30</option></select>'					   
+							    +'<br>종료:&nbsp;<select id="endHalf" style="font-size:14px"><option>AM</option><option>PM</option></select>'
+							    +'&nbsp;<select id="endHH"><option>00</option><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option></select>'
+							    +'&nbsp;<select id="endMM"><option>00</option><option>30</option></select>'	
+							    +'<br><br><button style="width:100px; height=30px;" onclick="daysMake()">일정등록</button><button style="width:100px; height=30px;" onclick="closeInfo()">취소</button></div>',
 						});
 					infoWindow.open(map, marker);
 					isInsertOpen = true;
@@ -134,23 +139,65 @@
 		// 일정 만들기
 		function daysMake() {
 		    var title = document.getElementById('daysTitle').value;
-		    var startDays = $('#startDays').val();
-		    var endDays = $('#endDays').val();
-		    if (title == "" || title == null) {
-		    	alert("일정 제목을 입력해주세요.");		    
-		    } 
-		    else if (startDays == "" || startDays == null) {
-				alert("시작 시간을 입력해주세요.");
-		    } 
-		    else if (endDays == "" || endDays == null) {
-				alert("종료 시간을 입력해주세요.");
-		    } else {
+		  
+		    var hour=0;
+			// 시작 시간
+			var startHalf = $("#startHalf").val();
+			var startHour = $("#startHH").val();
+			var startMin = $("#startMM").val();	
+			if(startHalf == "PM")		{ hour = (12+parseInt(startHour)); }
+			else						{ hour = parseInt(startHour); }
+			var startTime = hour*60+parseInt(startMin);
+			// 종료 시간
+			var endHalf = $("#endHalf").val();
+			var endHour = $("#endHH").val();
+			var endMin = $("#endMM").val();
+			if(endHalf == "PM")			{ hour = (12+parseInt(endHour)); }
+			else						{ hour = parseInt(endHour); }
+			var endTime = hour*60+parseInt(endMin);
+			var inputChk = true;
+			
+			// 이전 시간중 일정이 겹치는 시간이 있는지 확인
+			for(var i=0; i < daysStart.length ; i++){
+				var beforeStartTime = daysStart[i].split(":");
+				var beforEndTime = daysEnd[i].split(":");
+				
+				var chkStartTime = parseInt(beforeStartTime[0])*60+parseInt(beforeStartTime[1]);
+				var chkEndTime = parseInt(beforEndTime[0])*60+parseInt(beforEndTime[1]);
+				if(startTime >= chkStartTime && startTime < chkEndTime ){
+					inputChk = false;
+				}
+				if(endTime > chkStartTime && endTime <= chkEndTime){
+					inputChk = false;
+				}					
+			}
+		    
+		    if(title == "" || title == null){
+				alert("일정 제목을 입력해주세요.");
+			}
+			else if(startTime >= endTime){
+				alert("시작시간이 종료시간보다 같거나 늦습니다.\n 시작시간이 종료시간보다 먼저 시작되게 해주세요.");
+			}
+			else if(inputChk == false){
+				alert("시간이 겹치는 일정이 있습니다. 다시 입력해주세요.");
+			} 
+			else {
 			// 완성이 되면 넣고 아니면 넣지 않는다.
 			daysMarker.push(marker);
+			marker.setMap(null);
+		    daysMarker[daysMarker.length-1].setMap(map);
 			// 내용에 넣기
 			daysInfo.push(title);
-			daysStart.push($('#startDays').val());
-			daysEnd.push($('#endDays').val());
+			// 시작 시간					
+			var hour = $("#startHH").val();
+			var min = $("#startMM").val();	
+			if(startHalf == "PM"){ hour = (12+parseInt(hour)); }
+			daysStart.push(hour+":"+min);
+			// 종료 시간
+			hour = $("#endHH").val();
+			min = $("#endMM").val();
+			if(endHalf == "PM"){ hour = (12+parseInt(hour)); }
+			daysEnd.push(hour+":"+min);	
 
 			// 클릭 이벤트 설정
 			var addwindow = new daum.maps.InfoWindow({
@@ -173,7 +220,9 @@
 				var endCoord =  new daum.maps.LatLng(daysMarker[daysMarker.length-1].getPosition().getLat(), daysMarker[daysMarker.length-1].getPosition().getLng());
 				div.innerHTML += "<a style='float:right; margin-right:30px;' href='https://map.kakao.com/?sX="+startCoord.toCoords().getX()+"&sY="+startCoord.toCoords().getY()+"&sName=출발점&eX="+endCoord.toCoords().getX()+"&eY="+endCoord.toCoords().getY()+"&eName=도착점' onclick='window.open(this.href, \"_경로보기\", \"width=1000px,height=800px;\"); return false;'>최단경로보기</a><br>";
 			}
-				div.innerHTML += "<div style='font-size:20px; width:450px; height:38px; border:1px solid black;'>"+daysMarker.length+"번째 일정:"+title+"<img src='./img/canvas/normalClose.png' style='float:right;' class='deleteDays' onclick='deleteDay(this.title)' title='"+(daysMarker.length-1)+"' width='38' height='38'></div>";
+			div.innerHTML += "<div style='font-size:20px; width:450px; height:38px; border:1px solid black;'>"+daysMarker.length+"번째 일정:"+title								 
+			 		      + "<div style='float:right;'><img src='./img/canvas/normalClose.png' class='deleteDays' title='"+(daysMarker.length-1)+"' width='38' height='38' onclick='deleteDay("+(daysMarker.length-1)+")'></div>"
+			 			  + "<div style='font-size:12px; float:right; margin-right:50px;'>"+startHalf+" "+startHour+":"+startMin+"~"+endHalf+" "+endHour+":"+endMin+"</div></div>";	
 				daysPage.appendChild(div);
 				infoWindow.close();
 				isInsertOpen = false;
@@ -227,6 +276,7 @@
 
 		    //alert(daysMarker[0].getPosition().getLat());		
 		    var jsonObj = {};
+		    jsonObj["canvasTitle"] = $("#pageTitle").val();
 		    for (var i = 0; i < daysMarker.length; i++) {
 				var testVal = {
 				    'title' : String(daysInfo[i]),
@@ -351,14 +401,12 @@
 	 	}
 	
 	
- 	function deleteDay(number){ 		
- 		
+ 	function deleteDay(number){ 			
 		// 지울려는 배열 번호
 		//var number = $(this).attr("title");		
 		if(daysMarker.length == 1){
 			alert("일정을 한개이상 입력하셔야 합니다.");
 		}else{		 				// 해당 일정의 데이터들 지우기
-		
 		 daysMarker[number].setMap(null);
 		 daysMarker.splice(number,1);				 
 		 daysInfo.splice(number,1);	
@@ -375,14 +423,14 @@
 			if(diffNum > parseInt(number)){						
 				diffDays[i].title = --diffNum;
 			}else if(diffNum == parseInt(number)){		
-				$('.deleteDays:eq('+i+')').parent().parent().remove();
+				$('.deleteDays:eq('+i+')').parent().parent().parent().remove();
 			}
 		 }					
 			if(number =="0"){
 				// 0일경우 다음 일정에 있는 최단경로보기 찍어준 링크 찾아서 지워주기						
-				$('.deleteDays:eq(0)').parent().parent().children('a').remove();
-				$('.deleteDays:eq(0)').parent().parent().children('span').remove();
-				$('.deleteDays:eq(0)').parent().parent().children('br').remove();
+				$('.deleteDays:eq(0)').parent().parent().parent().children('a').remove();
+				$('.deleteDays:eq(0)').parent().parent().parent().children('span').remove();
+				$('.deleteDays:eq(0)').parent().parent().parent().children('br').remove();
 			}
 		}
  	}

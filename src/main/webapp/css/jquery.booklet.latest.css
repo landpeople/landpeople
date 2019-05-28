@@ -37,9 +37,9 @@
 	.booklet .b-page-cover h3  {color:#fff; text-shadow:0 1px 3px #222;}
    
    	/* Page Numbers */
-	.booklet .b-counter {bottom:10px; position:absolute; display:block; width:25px; height:20px; background:#ccc; color:#444; text-align:center; font-family:Georgia, "Times New Roman", Times, serif; font-size:10px; padding:5px 0 0;}
-	.booklet .b-wrap-left  .b-counter  {left:10px;}
-	.booklet .b-wrap-right .b-counter {right:10px;}
+	.booklet .b-counter {bottom:10px; position:absolute; display:block; width:25px; height:20px; background:#ccc; color:#444; text-align:center; font-family:Georgia, "Times New Roman", Times, serif; font-size:10px; padding: 5px 0 0;}
+	.booklet .b-wrap-left  .b-counter  {left:5px; top:5px;}
+	.booklet .b-wrap-right .b-counter {right:5px; top:5px;}
    
    	/* Page Shadows */
 	.booklet .b-shadow-f  {right:0; top:0; position:absolute; opacity:0; background-image:url("../img/canvas/shadow-top-forward.png"); background-repeat:repeat-y; background-position:100% 0;}
