@@ -13,8 +13,9 @@
 
 <!-- 회원가입 (이메일) OK-->
 <insert id="signUpU" parameterType="ChoDto">
-	INSERT INTO LPUSER (USER_EMAIL, USER_PASSWORD, USER_NICKNAME, USER_AUTH, USER_EMAILKEY) 
-	VALUES(#{user_email}, #{user_password}, #{user_nickname}, 'U', '')
+	INSERT INTO LPUSER (USER_EMAIL, USER_PASSWORD, USER_NICKNAME, USER_AUTH,USER_EMAILKEY) 
+SELECT #{user_email}, #{user_password}, #{user_nickname}, 'U', '' FROM DUAL WHERE NOT EXISTS(SELECT* FROM LPUSER WHERE USER_EMAIL =#{user_email})
+	
 </insert>
 
 <!-- 회원가입 (네이버)  OK-->
@@ -37,7 +38,6 @@
 <select id="nicknameDupChk" parameterType="java.lang.String" resultType="java.lang.Integer">
 	SELECT COUNT(USER_NICKNAME) FROM LPUSER WHERE USER_NICKNAME = #{user_nickname}
 </select>
-
 
 
 
@@ -95,6 +95,12 @@ UPDATE LPUSER SET USER_DELFLAG = 'T' WHERE USER_EMAIL = #{user_email}
 
 
 
+<!-- /////////////////////////비밀번호 찾기////////////////////////// -->
+<select id="emailAuthChk" parameterType="java.lang.String" resultType="ChoDto">
+SELECT USER_EMAIL, USER_AUTH 
+	FROM LPUSER 
+		WHERE USER_EMAIL = #{user_email}
+</select>
 
 
 

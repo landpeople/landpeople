@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +15,7 @@
 
 </head>
 <body>
-	${ldto.user_email }
+	${ldto.user_email}
 	<!--젤로 레이아웃- 전체 영역 감싸는 div-->
 	<div class="main-wrapper">
 
@@ -29,10 +30,15 @@
 			<!-- 네비게이션 메뉴 -->
 			<div class="main-navigation">
 				<ul class="navigation">
-					<li><a href="./loginPage.do">로그인 </a></li>
-					<li><a href="./logout.do">로그아웃</a></li>
-					<li><a href="#" onclick="sketchBookMake('${ldto.user_email}')">여행일정 작성</a></li>
-					<li><a href="./mypage.do">마이페이지</a></li>
+                <li><a href='#' onclick='history.back(-1);'>뒤로가기 </a></li>
+					<c:if test="${empty ldto}">
+						<li><a href="./loginPage.do">로그인 </a></li>
+					</c:if>	
+					<c:if test="${not empty ldto}">
+						<li><a href="./logout.do">로그아웃</a></li>
+						<li><a href="#" onclick="sketchBookMake('${ldto.user_email}')">여행일정 작성</a></li>
+						<li><a href="./mypage.do">마이페이지</a></li>
+					</c:if>					
 					<li><a href="./jang.do">관리자 페이지</a></li>
 				</ul>
 			</div>
@@ -87,6 +93,8 @@
 				</div>
 			</div>
 			<!--  여기까지 메인 컨텐츠  -->
+			
+			
 			<div class="footer">landpeople</div>
 		</div>
 	</div>

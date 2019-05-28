@@ -22,7 +22,7 @@
 			<!-- 메인 컨텐츠   -->
 			<div class="lpcontents">
 				<div class="content">
-					<input id="detailCanvas" type="button" value="저장된 내용 가져오기"></input>
+					<input id="detailCanvas" type="button" value="저장된 내용 가져오기"></input>					
 				</div>
 			</div>
 			<!-- </div> 여기까지 메인 컨텐츠  -->
@@ -34,7 +34,7 @@
 	<!-- templatemo-style.css에 보면 이안에 들어가는 div 클래스가 있음. 아니면 css를 temp -->
 	<script type="text/javascript">
 		$("#detailCanvas").click(function() {
-			location.href = "./detailCanvas.do";
+			location.href = "./detailCanvas.do?sketch_id=1";
 		});
 	</script>
 

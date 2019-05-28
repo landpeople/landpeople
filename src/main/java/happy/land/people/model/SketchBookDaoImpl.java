@@ -30,6 +30,7 @@ public class SketchBookDaoImpl implements ISketchBookDao {
 	
 	@Override
 	public boolean sketchInsert(LPSketchbookDto dto) {
+		logger.info("sketchInsert 스케치북 생성 입력 값 확인 {}", dto);
 		System.out.println("스케치북 작성 입력값!!!!"+dto);
 		int n = sqlsession.insert(NS+"sketch_Insert", dto);
 		System.out.println("스케치북 작성 성공!!!!"+n);
@@ -111,11 +112,19 @@ public class SketchBookDaoImpl implements ISketchBookDao {
 
 	@Override
 	public List<LPSketchbookDto> sketchSelectMine(Map<String, String> map) {
-		System.out.println("내가 작성한 스케치북 조회"+map);
+		System.out.println("페이징 처리된 내가 작성한 스케치북 조회"+map);
 		
 		return sqlsession.selectList(NS+"sketch_SelectMine", map);
 	}
 
+	@Override
+	public int sketchCntMine(String user_email) {
+		System.out.println("페이지 처리를 위한 작성한 스케치북 카운팅"+user_email);
+		
+		return sqlsession.selectOne(NS+"sketch_CntMine", user_email);
+	}
+	
+	
 	@Override
 	public LPSketchbookDto sketchSelectOne(LPSketchbookDto dto) {
 		System.out.println("작성 스케치북 수정을 위한 스케치북 상세조회"+dto);
@@ -133,6 +142,18 @@ public class SketchBookDaoImpl implements ISketchBookDao {
 	}
 
 	@Override
+	public boolean sketchRealDeleteMulti(Map<String, String[]> map) {
+		System.out.println("작성 스케치북 완전 다중 삭제"+map);
+		int n = sqlsession.delete(NS+"sketch_RealDeleteMulti", map);
+		System.out.println(n+"작성 스케치북 완전 다중 삭제 성공");
+		return n>0?true:false;
+	}
+	
+	
+	
+	
+	
+	@Override
 	public List<LPSketchbookDto> sketchSelectTheme(Map<String, String> map) {
 		
 		return sqlsession.selectList(NS+"sketch_SelectTheme", map);
@@ -143,6 +164,10 @@ public class SketchBookDaoImpl implements ISketchBookDao {
 		// TODO Auto-generated method stub
 		return sqlsession.selectOne(NS+"sketch_CntTheme", theme);
 	}
+
+	
+
+
 
 	
 

@@ -41,14 +41,20 @@ public interface ISketchBookService {
 	// 스크랩한 스케치북 다중 취소
 	public boolean scrapeUpdateMulti(Map<String, String[]> map);
 	
-	// 자신이 작성한 스케치북 조회 (사용자- 마이페이지)
+	// 페이징 처리된 자신이 작성한 스케치북 조회 (사용자- 마이페이지)
 	public List<LPSketchbookDto> sketchSelectMine(Map<String, String> map);
 
+	// 페이징 처리를 위한 자신이 작성한 스케치북 카운트 조회
+	public int sketchCntMine(String user_email);
+	
 	// 작성 스케치북 상세조회(사용자- 마이페이지 정보 수정을 위한 상세 조회)
 	public LPSketchbookDto sketchSelectOne(LPSketchbookDto dto);
 	
 	// 작성 스케치북 정보 수정
 	public boolean sketchUpdate(LPSketchbookDto dto);
+	
+	// 작성 스케치북 완전 다중 삭제
+	public boolean sketchRealDeleteMulti(Map<String, String[]> map);
 	
 	// 페이징 처리된 테마별 스케치북 조회
 	public List<LPSketchbookDto> sketchSelectTheme(Map<String,String> map);
