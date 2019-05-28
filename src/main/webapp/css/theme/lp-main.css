@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+ .lpcontainer {
+    min-width: 1270px !important;
+    width:1270px;
+    margin:auto;
+  }
+  
+/*   @media (min-width: 992px) { */
+/*   .lpcontainer { */
+/*     max-width: 960px; */
+/*   } */
+}
