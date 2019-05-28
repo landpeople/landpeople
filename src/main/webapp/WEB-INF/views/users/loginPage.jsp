@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="./css/lp-style.css">
 <script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
 <script type="text/javascript">
-
+/* 
 
 function login() {
 	// email 중복 + 유효값
@@ -68,11 +68,24 @@ $(function() {
 	});
 });
 
-
+ */
 </script>
 <title>여긴 로그인 페이지</title>
 <% String pwno = (String)request.getAttribute("no"); 
 	String eChk = (String)request.getAttribute("eChk");
+	
+	String eno = (String)request.getAttribute("eno");
+	
+	if(eno != null){
+		%>
+		<script type="text/javascript">
+			alert("이메일을 확인해주세요");
+			location.href="./loginPage.do";
+		</script>
+		<%
+	}
+	
+	
 	
 	if(pwno !=null){
 		%>
