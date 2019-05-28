@@ -5,7 +5,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-
 <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -23,6 +22,57 @@
 
 </head>
 
+<script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
+<% String pwno = (String)request.getAttribute("no"); 
+	String eChk = (String)request.getAttribute("eChk");
+	
+	String eno = (String)request.getAttribute("eno");
+	
+	String delflag = (String)request.getAttribute("delflag");
+	
+	if(eno != null){
+		%>
+		<script type="text/javascript">
+			alert("이메일을 확인해주세요");
+			location.href="./loginPage.do";
+		</script>
+		<%
+	}
+	
+	
+	if(delflag != null){
+		%>
+		<script type="text/javascript">
+			alert("회원탈퇴자입니다 관리자에게 문의하세요");
+			location.href="./loginPage.do";
+		</script>
+		<%
+	}
+	
+	if(pwno !=null){
+		%>
+		<script type="text/javascript">
+			alert("패스워드가 일치하지않습니다");
+			location.href="./loginPage.do";
+		</script>
+		<%
+	}
+	
+	if(eChk != null){
+		%>
+		<script type="text/javascript">
+			alert("이메일인증후 로그인 가능합니다");
+			location.href="./loginPage.do";
+		</script>
+		<%
+	}
+	
+	
+%>
+
+
+
+
 <body class="bg-gradient-primary"><!-- 배경색을 결정하는 클래스 -->
   <div class="container">
     <!-- Outer Row -->
@@ -35,30 +85,45 @@
                   <div class="text-center">
                     <h1 class="h4 text-gray-900 mb-4">반갑수다!</h1>
                   </div>
-                  <form class="user">
+                 
+                 
+                 
+                 
+                 
+                  <form class="user" action="./login.do" method="post" onsubmit="return login()">
                     <div class="form-group">
-                      <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                      <input type="email" class="form-control form-control-user" name="user_email" id="email" aria-describedby="emailHelp" placeholder="Enter Email Address..." required="required">
                     </div>
                     <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                      <input type="password" class="form-control form-control-user" name="user_password" placeholder="Password" required="required">
                     </div>
-                    <a href="index.html" class="btn btn-primary btn-user btn-block">
-                      Login
-                    </a>
+                    <input type="submit" class="btn btn-primary btn-user btn-block" value="Login">
+                  </form>
+                
+                
+                
+                
+                
+                
                     <hr>
-                    <a href="index.html" class="btn btn-google btn-user btn-block">
+                    
+                    <form class="user">
+                    <a href="${google_url}" id="google_id_login" class="btn btn-google btn-user btn-block">
                       <i class="fab fa-google fa-fw"></i> Login with Google
                     </a>
-                    <a href="index.html" class="btn btn-naver btn-user btn-block">
+                    <a href="${url}" id="naver_id_login" class="btn btn-naver btn-user btn-block">
                       <i class="fab fa-neos fa-fw"></i> Login with Naver
                     </a>
-                  </form>
+                 	</form>
+                 
+                 
+                 
                   <hr>
                   <div class="text-center">
-                    <a class="small" href="forgot-password.html">Forgot Password?</a>
+                    <a class="small" href="./inputemail.do">Forgot Password?</a>
                   </div>
                   <div class="text-center">
-                    <a class="small" href="register.html">Create an Account!</a>
+                    <a class="small" href="./regiForm.do">Create an Account!</a>
                   </div>
             </div>
           </div>
