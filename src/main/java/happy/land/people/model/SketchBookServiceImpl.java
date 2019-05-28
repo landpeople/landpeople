@@ -97,10 +97,17 @@ public class SketchBookServiceImpl implements ISketchBookService {
 
 	@Override
 	public List<LPSketchbookDto> sketchSelectMine(Map<String, String> map) {
-		logger.info("service sketchSelectMine 작성한 스케치북 조회 실행 {}", map);
+		logger.info("service sketchSelectMine 페이징 처리된 작성한 스케치북 조회 실행 {}", map);
 		return iSketchBookDao.sketchSelectMine(map);
 	}
 
+	@Override
+	public int sketchCntMine(String user_email) {
+		logger.info("service sketchCntMine 페이지 처리를 위한 작성 스케치북 카운트 조회 {}", user_email);
+		return iSketchBookDao.sketchCntMine(user_email);
+	}
+	
+	
 	
 	@Override
 	public LPSketchbookDto sketchSelectOne(LPSketchbookDto dto) {
@@ -109,13 +116,19 @@ public class SketchBookServiceImpl implements ISketchBookService {
 	}
 	
 	
-	
 	@Override
 	public boolean sketchUpdate(LPSketchbookDto dto) {
 		logger.info("service sketchUpdate 작성한 스케치북 정보 수정 실행 {}", dto);
 		return iSketchBookDao.sketchUpdate(dto);
 	}
 
+	@Override
+	public boolean sketchRealDeleteMulti(Map<String, String[]> map) {
+		logger.info("service sketchRealDeleteMulti 작성한 스케치북 완전 다중 삭제 실행 {}", map);
+		return iSketchBookDao.sketchRealDeleteMulti(map);
+	}
+	
+	
 	@Override
 	public List<LPSketchbookDto> sketchSelectTheme(Map<String, String> map) {
 		// TODO Auto-generated method stub
@@ -127,6 +140,9 @@ public class SketchBookServiceImpl implements ISketchBookService {
 		// TODO Auto-generated method stub
 		return iSketchBookDao.sketchCntTheme(theme);
 	}
+
+	
+	
 
 	
 

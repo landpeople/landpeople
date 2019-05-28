@@ -15,7 +15,7 @@
 
 </head>
 <body>
-	${ldto.user_email }
+	${ldto.user_email}
 	<!--젤로 레이아웃- 전체 영역 감싸는 div-->
 	<div class="main-wrapper">
 
@@ -30,6 +30,7 @@
 			<!-- 네비게이션 메뉴 -->
 			<div class="main-navigation">
 				<ul class="navigation">
+                <li><a href='#' onclick='history.back(-1);'>뒤로가기 </a></li>
 					<c:if test="${empty ldto}">
 						<li><a href="./loginPage.do">로그인 </a></li>
 					</c:if>	
@@ -92,6 +93,8 @@
 				</div>
 			</div>
 			<!--  여기까지 메인 컨텐츠  -->
+			
+			
 			<div class="footer">landpeople</div>
 		</div>
 	</div>

@@ -7,14 +7,14 @@
 <link rel="stylesheet" href="./css/bootstrap.min.css">
 <link rel="stylesheet" href="./css/lp-style.css">
 
-
-
-아아아
 <span id="timer"></span>
 <a href="javascript:refreshTimer();">
    <img src="/images_std/kor/btn/btn_time_extension.gif" align="top">
 </a>
 
+<div class="header">
+
+</div>
 <!-- SIDEBAR -->
 <div class="sidebar-menu">
 	<div class="top-section">
@@ -26,6 +26,7 @@
 	<!-- 네비게이션 메뉴 -->
 	<div class="main-navigation">
 		<ul class="navigation">
+            <li><a href='#' onclick='history.back(-1);'>뒤로가기 </a></li>
 			<li><a href="./loginPage.do">로그인 </a></li>
 			<li><a href="./logout.do">로그아웃</a></li>
 			<li><a href="#" onclick="sketchBookMake()">여행일정 작성</a></li>

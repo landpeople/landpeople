@@ -8,12 +8,14 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +25,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import happy.land.people.dto.JsonUtil;
 import happy.land.people.dto.LPSketchbookDto;
 import happy.land.people.dto.LPUserDto;
+import happy.land.people.dto.cho.ChoDto;
 import happy.land.people.model.jang.IManagerService;
+import happy.land.people.beans.ExecuteUsingQuartz;
 import happy.land.people.ctrl.JangController;
 
 @Controller
@@ -152,10 +156,25 @@ public class JangController {
 		boolean isc = iManagerService.modifyBlock(id);
 	}
 	
-	@RequestMapping(value="/scheduler.do")
-	@Scheduled(fixedDelay=500)
-	public void scheduler(HttpServletRequest request, HttpServletResponse response) {
-		logger.info("Controller scheduler");
-		iManagerService.scheduler();
+	// 채팅방 목록 조회
+	@RequestMapping(value="/selectChatList.do")
+	public String selectChatList(Model model) {
+		logger.info("Controller selectChatList");
+		List<Map<String, Object>> lists = iManagerService.selectChr();
+		model.addAttribute("resultLists", lists);
+		return "manager/chatList";
+	}
+	
+	// 채팅방 삭제
+	@RequestMapping(value="/deleteChatroom.do")
+	public String deleteChatroom(HttpSession session) {
+		logger.info("Controller deleteChatroom");
+		String chrId = "8"; // 삭제할 채팅방 ID (테스트용)
+		
+		ChoDto ldto = (ChoDto) session.getAttribute("ldto");
+		String id = ldto.getUser_nickname();
+		
+		iManagerService.deleteChatroom(chrId, id);
+		return "asd";
 	}
 }

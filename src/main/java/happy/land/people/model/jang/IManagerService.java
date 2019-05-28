@@ -20,5 +20,7 @@ public interface IManagerService {
 	
 	public boolean modifyBlock(String id);
 	
-	public void scheduler();
+	public List<Map<String, Object>> selectChr();
+	
+	public boolean deleteChatroom(String chrId, String id);
 }

@@ -57,10 +57,15 @@ public class ManagerServiceImpl implements IManagerService {
 	}
 
 	@Override
-	public void scheduler() {
-		System.out.println("스케줄러 성공!");
-		
+	public List<Map<String, Object>> selectChr() {
+		logger.info("ManagerServiceImpl selectChr");	
+		return iManagerDao.selectChr();
 	}
 
-	
+	@Override
+	public boolean deleteChatroom(String chrId, String id) {
+		logger.info("ManagerServiceImpl deleteChatroom");	
+		return iManagerDao.deleteChatroom(chrId, id);
+	}
+
 }

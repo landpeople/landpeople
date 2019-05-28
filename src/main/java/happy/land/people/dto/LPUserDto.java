@@ -132,6 +132,14 @@ public class LPUserDto {
 	public void setUser_emailkey(String user_emailkey) {
 		this.user_emailkey = user_emailkey;
 	}
+
+	@Override
+	public String toString() {
+		return "LPUserDto [user_email=" + user_email + ", user_password=" + user_password + ", user_nickname="
+				+ user_nickname + ", user_auth=" + user_auth + ", user_delflag=" + user_delflag + ", user_emailchk="
+				+ user_emailchk + ", user_emailkey=" + user_emailkey + ", user_iswrite=" + user_iswrite
+				+ ", serviceImplYn=" + serviceImplYn + ", input=" + input + ", rows=" + rows + ", page=" + page + "]";
+	}
 	
 	
 }

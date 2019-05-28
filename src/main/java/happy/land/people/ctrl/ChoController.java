@@ -37,8 +37,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
 import happy.land.people.dto.cho.ChoDto;
+import happy.land.people.model.chat.IChatService;
 import happy.land.people.model.cho.IChoService;
-import happy.land.people.model.lee.ILeeService;
 import happy.land.people.naver.NaverLoginBO;
 
 @Controller
@@ -65,7 +65,7 @@ public class ChoController {
 	private OAuth2Parameters googleOAuth2Parameters;
 
 	@Autowired
-	ILeeService iLeeService;
+	IChatService iLeeService;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
