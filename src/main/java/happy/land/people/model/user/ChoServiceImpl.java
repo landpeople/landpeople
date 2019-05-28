@@ -1,4 +1,4 @@
-package happy.land.people.model.cho;
+package happy.land.people.model.user;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
@@ -56,7 +56,7 @@ public class ChoServiceImpl implements IChoService {
 		// 메일 내용 담을 변수(email, authkey만 보낼예정)
 		String mailContent = new StringBuffer().append("<h1>[이메일 인증]</h1>")
 				.append("<p>아래 링크를 클릭하시면 이메일 인증이 완료됩니다.</p>")
-				.append("<a href='http://192.168.4.31:8091/LandPeople/mailConfirm.do?user_email=")
+				.append("<a href='http://192.168.10.186:8091/LandPeople/mailConform.do?user_email=")
 				.append(dto.getUser_email())
 				.append("&authkey=").append(dto.getUser_emailkey())
 				.append("' target='_blank' >이메일 인증 확인</a>").toString();

@@ -169,11 +169,11 @@
 						<input type="hidden" value="0" id="emailchkVal"> <input type="hidden" value="0" id="pwchkVal"> <input type="hidden" value="0" id="nicknamechkVal">
 						<form action="./modifyMypage.do" method="post" onsubmit="return modify()">
 							이메일 : <input type="text" name="user_email" value="${ldto.user_email}" readonly="readonly"><br> 
-							<input type="text" name="user_password" id="pw" placeholder="비밀번호" maxlength="12"> <br>
+							비밀번호<input type="text" name="user_password" id="pw" placeholder="비밀번호" maxlength="12"> <br>
 							&nbsp;<span id="pwresult">4~10자리의 영문+숫자</span><br> 
-							<input type="text" id="passOK" placeholder="비밀번호 확인" maxlength="12"> <br>
+							비번확인<input type="text" id="passOK" placeholder="비밀번호 확인" maxlength="12"> <br>
 							&nbsp;<span id="pwchk"></span><br> 
-							<input type="text" name="user_nickname" id="nickname" placeholder="닉네임" value="${ldto.user_nickname}" maxlength="10"> <br>
+							닉네임<input type="text" name="user_nickname" id="nickname" placeholder="닉네임" value="${ldto.user_nickname}" maxlength="10"> <br>
 							&nbsp;<span id="nicknameresult">2~10자리의 닉네임을 입력</span><br> 
 							<input type="submit" value="수정">
 						</form>

@@ -1,4 +1,4 @@
-package happy.land.people.model.cho;
+package happy.land.people.model.user;
 
 import java.util.List;
 import java.util.Map;
@@ -29,13 +29,29 @@ public class ChoDaoImpl implements IChoDao {
 		System.out.println("signUp 다오임플");
 		boolean isc = false;
 		if(dto.getUser_auth().equalsIgnoreCase("U")) {
+			logger.info("daoimpl에 signup메소드에 유저입니다");
 			String passwordEncode = passwordEncoder.encode(dto.getUser_password());
 			dto.setUser_password(passwordEncode);
 			isc = session.insert(NS+"signUpU",dto)>0? true:false;
 		}else if(dto.getUser_auth().equalsIgnoreCase("N")) {
+			
+			String user_email = dto.getUser_email();
+			
+			int n = session.selectOne(NS+"emailDupChk",user_email);
+			
+			if(n>0) {
+				System.out.println("이미 네이버로 가입한사람");
+				return true;
+				
+			}
+			
+			
+			
+			logger.info("daoimpl에 signup메소드에 네이버입니다");
 			isc = session.insert(NS+"signUpN",dto)>0? true:false;
 			
 		}else if(dto.getUser_auth().equalsIgnoreCase("G")) {
+			logger.info("daoimpl에 signup메소드에 구글입니다");
 			isc = session.insert(NS+"signUpG", dto)>0? true : false;
 		}
 		
