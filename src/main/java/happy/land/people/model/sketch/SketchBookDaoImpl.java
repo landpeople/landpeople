@@ -1,4 +1,4 @@
-package happy.land.people.model;
+package happy.land.people.model.sketch;
 
 import java.util.List;
 import java.util.Map;
@@ -16,7 +16,7 @@ import happy.land.people.dto.LPCollectDto;
 public class SketchBookDaoImpl implements ISketchBookDao {
 
 	private Logger logger = LoggerFactory.getLogger(SketchBookDaoImpl.class);
-	private final String NS = "jung_test.";
+	private final String NS = "sketch.";
 	
 	@Autowired
 	private SqlSessionTemplate sqlsession;
@@ -176,6 +176,12 @@ public class SketchBookDaoImpl implements ISketchBookDao {
 		System.out.println("페이징 처리를 위한 스케치북 카운트 조회"+"="+theme);
 		return sqlsession.selectOne(NS+"sketch_CntTheme", theme);
 		
+	}
+
+	@Override
+	public String selectNickname(String sketch_id) {
+		System.out.println("스케치북 작성자 닉네임 조회 = "+sketch_id);
+		return sqlsession.selectOne(NS+"select_Nickname", sketch_id);
 	}
 
 	

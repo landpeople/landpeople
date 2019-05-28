@@ -294,6 +294,9 @@ iframe {
 	overflow: hidden;
 	position: relative;
 	display: inline-block;
+ 	background-size: contain;
+ 	background-repeat: no-repeat;
+ 	background-position: center;
 		
 }
 
@@ -301,7 +304,7 @@ iframe {
 	top: 0;
 	opacity: 1;
 	visibility: visible;
-	background-image: url("");
+
 }
 
 

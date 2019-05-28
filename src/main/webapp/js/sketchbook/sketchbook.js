@@ -150,7 +150,11 @@ function sketchBookMake(user) {
 	}
 	
 	
-	
+	// 테마별, 작성 스케치북 조회 무한스크롤 후 캔버스 조회 페이지로 이동
+	function goCanvas(sketch_id) {
+		//alert(sketch_id);
+		location.href="./kim.do?sketch_id="+sketch_id;
+	}	
 	
 	
 	
