@@ -76,6 +76,8 @@ $(function() {
 	
 	String eno = (String)request.getAttribute("eno");
 	
+	String delflag = (String)request.getAttribute("delflag");
+	
 	if(eno != null){
 		%>
 		<script type="text/javascript">
@@ -86,6 +88,14 @@ $(function() {
 	}
 	
 	
+	if(delflag != null){
+		%>
+		<script type="text/javascript">
+			alert("회원탈퇴자입니다 관리자에게 문의하세요");
+			location.href="./loginPage.do";
+		</script>
+		<%
+	}
 	
 	if(pwno !=null){
 		%>

@@ -245,6 +245,15 @@ public class ChoController {
 		System.out.println("login쿼리 실행후");
 		
 		
+		
+		if(ldto.getUser_delflag().equals("T")) {
+			System.out.println("회원탈퇴자");
+			String delflag = "delflag";
+			request.setAttribute("delflag", delflag);
+			
+			return "users/loginPage";
+		}
+		
 
 		System.out.println(ldto);
 		
