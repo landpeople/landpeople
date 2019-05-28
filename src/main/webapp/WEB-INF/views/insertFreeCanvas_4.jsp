@@ -54,7 +54,14 @@
 			$(".file").on("change", function(){
 				var imgClass = $(this).attr("id");
 				subImgClass = imgClass.substring(imgClass.indexOf('_')+1);
-				fileUpload(subImgClass);
+				//파일 확장자 확인
+				if(extension($("input[id="+imgClass+"]").val())){
+					alert("올바른 확장자입니다.");
+					//파일 업로드 실행
+					fileUpload(subImgClass);
+				}else{
+					alert("잘못된 확장자입니다.\n★jpg/png/gif★ 파일만 업로드 가능합니다.");
+				}
 			});
 		});
 	
@@ -110,6 +117,14 @@
 					}//for
 				}
 			});
+		}
+		
+		//확장자 확인 (업로드할 수 있는 확장자일시 true)
+		function extension(file){
+			alert("파일 이름"+file);
+			var reg = /gif|jpg|png|jpeg/i;
+			
+			return reg.test(file);
 		}
 		
 		function insert() {
