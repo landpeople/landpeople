@@ -31,4 +31,11 @@
 			VALUES(LPTEXT_SEQ.NEXTVAL, #{text_content}, #{text_no}, #{img_spath})
 			WHERE CAN_ID=#{can_id}
 	</insert>
+	
+	<!-- 생성된 캔버스의 ID 값 찾기 -->
+	<select id="canvas_SelectID" parameterType="happy.land.people.dto.LPTextDto" resultType="java.lang.String">
+		SELECT CAN_ID 
+			FROM LPCANVAS 
+			WHERE CAN_PAGENO=#{can_pageno} AND SKETCH_ID=#{sketch_id}
+	</select>
 </mapper>

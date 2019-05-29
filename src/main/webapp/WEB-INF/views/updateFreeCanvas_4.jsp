@@ -59,7 +59,14 @@
 			$(".file").on("change", function(){
 				var imgClass = $(this).attr("id");
 				subImgClass = imgClass.substring(imgClass.indexOf('_')+1);
-				fileUpload(subImgClass);
+				//파일 확장자 확인
+				if(extension($("input[id="+imgClass+"]").val())){
+					alert("올바른 확장자입니다.");
+					//파일 업로드 실행
+					fileUpload(subImgClass);
+				}else{
+					alert("잘못된 확장자입니다.\n★jpg/png/gif★ 파일만 업로드 가능합니다.");
+				}
 			});
 		});
 	
@@ -80,21 +87,7 @@
 				formData.append("file",$(".file")[i]);
 			}
 				formData.append("text_no",subImgClass);
-	
-			//파일 업로드 확장자 확인
-			// 		var file = form.file; 여기 부분이 아직 불확실
-			// 		var fileExt = file.substring(file.lastIndex(".")+1);
-			// 		var reg = /gif|jpg|png|jpeg/i;
-			// 		if(reg.test(fileExt)==false){
-			// 			alert("이미지는 gifm jpg, png 파일만 올릴 수 있습니다.");
-	
-			// 			return;
-			// 		}
-	
-			//파일 사이즈 확인
-	
-			//파일 업로드 확장자 및 사이즈 확인을 메소드로 만들어서 true가 되면 아작스 실행
-	
+				
 		$.ajax({
 				url : './uploadFile.do',
 				type : 'post',
@@ -115,6 +108,14 @@
 					}//for
 				}
 			});
+		}
+		
+		//확장자 확인 (업로드할 수 있는 확장자일시 true)
+		function extension(file){
+			alert("파일 이름"+file);
+			var reg = /gif|jpg|png|jpeg/i;
+			
+			return reg.test(file);
 		}
 		
 		function insert() {
