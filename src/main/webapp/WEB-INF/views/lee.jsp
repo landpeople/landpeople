@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,29 +15,12 @@
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,400|Roboto:300,400,500">
 <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.css">
-<link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="assets/font-awesome/css/font-awesome.min.css">
 <link rel="stylesheet" href="assets/font-awesome/css/font-jeju.css">
 <link rel="stylesheet" href="assets/css/animate.css">
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/template.css">
-
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-        <![endif]-->
-
-<!-- Favicon and touch icons -->
-<link rel="shortcut icon" href="assets/ico/favicon.png">
-<link rel="apple-touch-icon-precomposed" sizes="144x144"
-	href="assets/ico/apple-touch-icon-144-precomposed.png">
-<link rel="apple-touch-icon-precomposed" sizes="114x114"
-	href="assets/ico/apple-touch-icon-114-precomposed.png">
-<link rel="apple-touch-icon-precomposed" sizes="72x72"
-	href="assets/ico/apple-touch-icon-72-precomposed.png">
-<link rel="apple-touch-icon-precomposed"
-	href="assets/ico/apple-touch-icon-57-precomposed.png">
 
 </head>
 
@@ -58,12 +41,6 @@
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="top-navbar-1">
 				<ul class="nav navbar-nav navbar-right">
-<!-- 					<li><a href="#">Home</a></li> -->
-<!-- 					<li><a href="#">Features</a></li> -->
-<!-- 					<li><a href="#">Video</a></li> -->
-<!-- 					<li><a href="#">Clients</a></li> -->
-<!-- 					<li><a href="#">Plans</a></li> -->
-					<li><a href="#">Faq</a></li>
 					<li><a class="btn btn-link-3" href="#">로그인</a></li>
 				</ul>
 			</div>
@@ -73,114 +50,84 @@
 	<!-- Top content -->
 	<div class="top-content">
 		<div class="container">
-			<div class="row">
-				<div class="col-sm-12 text wow fadeInLeft">
-					<h1>혼저옵서양</h1>
-					<div class="description">
-						<p class="medium-paragraph">
-							한글 폰트가 안 먹는다아아안ㄴ
-						</p>
+			<div class="row"></div>
+		</div>
+	</div>
+
+	<style>
+#yyyyjjj::-webkit-scrollbar-track {
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+#yyyyjjj::-webkit-scrollbar {
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+#yyyyjjj::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+	background-color: #D62929;
+}
+</style>
+	<div class="container">
+		<div class="row" style="height: 100%">
+			<div class="col-sm-2 col-md-2 col-lg-2"
+				style="background: yellow; height: 930px; box-sizing: border-box;">
+				<div class="row profile">
+					<div class="col-md-3">
+						<div class="profile-sidebar">
+							<!-- SIDEBAR USER TITLE -->
+							<div class="profile-usertitle">
+								<div class="profile-usertitle-name">User Nickname</div>
+								<div class="profile-usertitle-job">User Email</div>
+							</div>
+							<!-- END SIDEBAR USER TITLE -->
+							<!-- SIDEBAR BUTTONS -->
+							<div class="profile-userbuttons">
+								<button type="button" class="btn btn-success btn-sm">여행
+									일정 작성하기</button>
+							</div>
+							<!-- END SIDEBAR BUTTONS -->
+							<!-- SIDEBAR MENU -->
+							<div class="profile-usermenu">
+								F SS
+								<ul class="nav">
+									<li class="active"><a href="#"> <i
+											class="glyphicon glyphicon-home"></i> Overview
+									</a></li>
+									<li><a href="#"> <i class="glyphicon glyphicon-user"></i>
+											Account Settings
+									</a></li>
+									<li><a href="#" target="_blank"> <i
+											class="glyphicon glyphicon-ok"></i> Tasks
+									</a></li>
+									<li><a href="#"> <i class="glyphicon glyphicon-flag"></i>
+											Help
+									</a></li>
+								</ul>
+							</div>
+							<!-- END MENU -->
+
+							<div class="chatting">
+								<iframe class="panel" id="lot" frameborder="0"></iframe>
+							</div>
+						</div>
 					</div>
 				</div>
+			</div>
+
+			<div id="yyyyjjj" class="col-sm-9 col-md-9 col-lg-9 "
+				style="background: pink; overflow-y: auto; height: 930px; width: 1000px">
+				aaaaaaaaaa<br> aaaaaaaaaa<br> aaaaaaaaaa<br>
+				aaaaaaaaaa<br> aaaaaaaaaa<br>
 			</div>
 		</div>
 	</div>
 
 
-
-<!-- 네비게이션 메뉴 -->
-			<div class="main-navigation">
-				<ul class="navigation">
-                <li><a href='#' onclick='history.back(-1);'>뒤로가기 </a></li>
-					<c:if test="${empty ldto}">
-						<li><a href="./loginPage.do">로그인 </a></li>
-					</c:if>	
-					<c:if test="${not empty ldto}">
-						<li><a href="./logout.do">로그아웃</a></li>
-						<li><a href="#" onclick="sketchBookMake('${ldto.user_email}')">여행일정 작성</a></li>
-						<li><a href="./mypage.do">마이페이지</a></li>
-					</c:if>					
-					<li><a href="./jang.do">관리자 페이지</a></li>
-				</ul>
-			</div>
-<!-- .main-navigation 여기까지 네비게이션 메뉴 -->
-
-
-
-
-	<!-- Features -->
-	<div class="features-container section-container">
-		<div class="container">
-
-			<div class="row">
-				<div class="col-sm-12 features section-description wow fadeIn">
-					<h2>Bootstrap Navbar Menu</h2>
-					<div class="divider-1">
-						<div class="line"></div>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-sm-6 features-box wow fadeInLeft">
-					<div class="row">
-						<div class="col-sm-3 features-box-icon">
-							<i class="fa fa-twitter"></i>
-						</div>
-						<div class="col-sm-9">
-							<h3>Ut wisi enim ad minim</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-								sed do eiusmod tempor incididunt ut labore et. Ut wisi enim ad
-								minim veniam, quis nostrud.</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 features-box wow fadeInLeft">
-					<div class="row">
-						<div class="col-sm-3 features-box-icon">
-							<i class="fa fa-instagram"></i>
-						</div>
-						<div class="col-sm-9">
-							<h3>Sed do eiusmod tempor</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-								sed do eiusmod tempor incididunt ut labore et. Ut wisi enim ad
-								minim veniam, quis nostrud.</p>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-sm-6 features-box wow fadeInLeft">
-					<div class="row">
-						<div class="col-sm-3 features-box-icon">
-							<i class="fa fa-magic"></i>
-						</div>
-						<div class="col-sm-9">
-							<h3>Quis nostrud exerci tat</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-								sed do eiusmod tempor incididunt ut labore et. Ut wisi enim ad
-								minim veniam, quis nostrud.</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-6 features-box wow fadeInLeft">
-					<div class="row">
-						<div class="col-sm-3 features-box-icon">
-							<i class="fa fa-cloud"></i>
-						</div>
-						<div class="col-sm-9">
-							<h3>Minim veniam quis nostrud</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-								sed do eiusmod tempor incididunt ut labore et. Ut wisi enim ad
-								minim veniam, quis nostrud.</p>
-						</div>
-					</div>
-				</div>
-			</div>
-
-		</div>
-	</div>
 
 	<!-- Footer -->
 	<footer>
@@ -202,6 +149,43 @@
 	<script src="assets/js/retina-1.1.0.min.js"></script>
 	<script src="assets/js/waypoints.min.js"></script>
 	<script src="assets/js/scripts.js"></script>
+	<button id="xxxxx">xxxxxxx</button>
+
+	<script>
+		$("document")
+				.ready(
+						function() {
+							$("#xxxxx")
+									.click(
+											function() {
+												$("#yyyyjjj")
+														.append(
+																"<div style='height:50px;'>asdasdsadsadasdasdsadad</div>");
+											});
+
+							$("#xxxxx").scroll(function() {
+								console.log('ss');
+							});
+
+							$("#yyyyjjj").scroll(
+									function(event) {
+
+										var hh = $("#yyyyjjj").height();
+										var ee = $("#yyyyjjj").scrollTop();
+
+										var scHeight = $('#yyyyjjj').prop(
+												'scrollHeight');
+
+										if (scHeight - hh - ee < 1) {
+											$("#xxxxx").trigger("click");
+										}
+										console.log(hh + "----" + ee + "----"
+												+ scHeight);
+
+									});
+
+						});
+	</script>
 
 	<!--[if lt IE 10]>
             <script src="assets/js/placeholder.js"></script>
