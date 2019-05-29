@@ -32,4 +32,7 @@ public interface IChoDao {
 	public int emailAuthChk(String user_email);
 	
 	
+	//api사용자 이메일 중복체크
+	public ChoDto apiEmailDupChk(String user_email);
+	
 }

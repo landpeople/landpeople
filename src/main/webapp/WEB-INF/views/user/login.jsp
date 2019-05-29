@@ -31,6 +31,17 @@
 	
 	String delflag = (String)request.getAttribute("delflag");
 	
+	String apiuser = (String)request.getAttribute("apiuser");
+	
+	if(apiuser != null){
+		%>
+		<script type="text/javascript">
+			alert("네이버or구글 가입자입니다");
+			location.href="./loginPage.do";
+		</script>
+		<%
+	}
+	
 	if(eno != null){
 		%>
 		<script type="text/javascript">
@@ -107,17 +118,18 @@
                 
                 
                     <hr>
-                    
+                    <!-- google -->
                     <form class="user">
                     <a href="${google_url}" id="google_id_login" class="btn btn-google btn-user btn-block">
                       <i class="fab fa-google fa-fw"></i> Login with Google
                     </a>
+                 	</form>
+                 	<!-- naver -->
+                 	<form class="user">
                     <a href="${url}" id="naver_id_login" class="btn btn-naver btn-user btn-block">
                       <i class="fab fa-neos fa-fw"></i> Login with Naver
                     </a>
                  	</form>
-                 
-                 
                  
                   <hr>
                   <div class="text-center">

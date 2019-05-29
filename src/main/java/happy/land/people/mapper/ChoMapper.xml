@@ -5,29 +5,10 @@
 
 <!-- 내DTO에 맞쳐서 수정하셈; -->
 
-
-
-
-
-
-
-<!-- 회원가입 (이메일) OK-->
-<insert id="signUpU" parameterType="ChoDto">
-	INSERT INTO LPUSER (USER_EMAIL, USER_PASSWORD, USER_NICKNAME, USER_AUTH,USER_EMAILKEY) 
-SELECT #{user_email}, #{user_password}, #{user_nickname}, 'U', '' FROM DUAL WHERE NOT EXISTS(SELECT* FROM LPUSER WHERE USER_EMAIL =#{user_email})
-	
-</insert>
-
-<!-- 회원가입 (네이버)  OK-->
-<insert id="signUpN" parameterType="ChoDto">
-	INSERT INTO LPUSER (USER_EMAIL,  USER_NICKNAME,USER_AUTH, USER_EMAILCHK, USER_EMAILKEY) 
-	SELECT #{user_email}, #{user_nickname}, 'N', 'Y' , '' FROM DUAL WHERE NOT EXISTS(SELECT * FROM LPUSER WHERE USER_EMAIL=#{user_email})
-</insert>
-
 <!-- 회원가입 (구글)  OK-->
-<insert id="signUpG" parameterType="ChoDto">
-	INSERT INTO LPUSER (USER_EMAIL, USER_PASSWORD, USER_NICKNAME, USER_AUTH, USER_EMAILKEY) 
-	VALUES(#{user_email}, #{user_password}, #{user_nickname}, 'G', '')
+<insert id="signUp" parameterType="ChoDto">
+	INSERT INTO LPUSER (USER_EMAIL,  USER_NICKNAME,USER_AUTH, USER_EMAILCHK, USER_EMAILKEY) 
+	SELECT #{user_email}, #{user_nickname}, #{user_auth}, 'Y' , '' FROM DUAL WHERE NOT EXISTS(SELECT * FROM LPUSER WHERE USER_EMAIL=#{user_email})
 </insert>
 
 <!-- 이메일 중복체크  -->
@@ -40,8 +21,10 @@ SELECT #{user_email}, #{user_password}, #{user_nickname}, 'U', '' FROM DUAL WHER
 </select>
 
 
-
-
+<!-- api사용자 이메일 중복체크 -->
+<select id="apiEmailDupChk" parameterType="java.lang.String" resultType="ChoDto">
+	SELECT USER_AUTH FROM LPUSER WHERE USER_EMIAL = #{user_email}
+</select>
 
 
 
@@ -49,7 +32,7 @@ SELECT #{user_email}, #{user_password}, #{user_nickname}, 'U', '' FROM DUAL WHER
 <select id="login" parameterType="ChoDto" resultType="ChoDto">
 	SELECT USER_EMAIL, USER_PASSWORD, USER_NICKNAME, USER_AUTH, USER_DELFLAG ,USER_EMAILCHK
 	FROM LPUSER
-	WHERE LOWER(USER_EMAIL) = LOWER(#{user_email}) AND USER_AUTH = 'U'  
+	WHERE LOWER(USER_EMAIL) = LOWER(#{user_email})
 </select>
 
 

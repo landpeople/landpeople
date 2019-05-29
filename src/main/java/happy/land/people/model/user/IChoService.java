@@ -26,4 +26,7 @@ public interface IChoService {
 	
 	//비밀번호 찾기 할때 이메일 무슨가입자인지 구별하는 
 		public int emailAuthChk(String user_email);
+		
+		//api사용자 이메일 중복체크
+		public ChoDto apiEmailDupChk(String user_email);
 }
