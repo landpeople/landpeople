@@ -21,7 +21,6 @@
 				<a href="./jqgrid.do">회원 목록 조회</a><br>
 				<a href="./jqgrid2.do">스케치북 목록 조회</a><br>
 				<a href="./selectChatList.do">채팅방 목록 조회</a><br>
-				<a href="./deleteChatroom.do">채팅방 삭제 테스트</a><br>
 				<a href="./push.do">푸쉬 서버</a><br>
 				<a href="./push2.do">푸쉬 서버2</a>
 				</div>

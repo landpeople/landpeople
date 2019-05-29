@@ -123,7 +123,6 @@
 						</select> 
 						<span><input id="input" type="text" placeholder="검색어를 입력하세요" value=""></span> 
 						<span><input id="inputBtn" type="button" value="search" onclick="search()"></span>
-						<span><input id="inputBtn" type="button" value="search" onclick="search()"></span>
 						<table id="jqGrid"></table>
 						<div id="jqGridPager"></div>
 					</div>
