@@ -154,7 +154,8 @@
 		});
 		//삭제 버튼 클릭시
 		$("#pageDelete").click(function() {			
-			var pageNo = $('#nowPageNo').val();			
+			var pageNo = $('#nowPageNo').val();		
+			alert(pageNo);
 			$.ajax({
 				url : "deleteCanvas.do", //요청 url
 				type : "post", // 전송 처리방식
