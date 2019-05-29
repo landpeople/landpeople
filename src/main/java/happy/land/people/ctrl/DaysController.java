@@ -54,7 +54,7 @@ public class DaysController {
 	        XSSFSheet sheet = workbook.getSheetAt(0);//시트가져오기 0은 첫번째 시트
 	        
 	        int rows = sheet.getPhysicalNumberOfRows();// 총 행 개수
-	        int cols = 7;// 총 열개수
+	        int cols = 6;// 총 열개수
 	        XSSFCell cell;        
 	        String[] result = new String[rows];
 	        for(int i = 0 ; i < rows ; i++) {

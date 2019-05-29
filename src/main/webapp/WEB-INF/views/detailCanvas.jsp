@@ -4,6 +4,7 @@
 <%@page import="happy.land.people.dto.LPDaysDto"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -56,14 +57,26 @@
                <input type="button" id="downloadExcel">
                 <a href="./canvasDownloadExcel.do">엑셀 다운로드</a>        
                <div id="custom-menu"></div>
-               <div id="mybook" style="border: 1px solid black;">
-                  <div>입력된 캔버스가 없습니다.</div>
-                  <div>입력된 캔버스가 없습니다.</div>
+               <div id="mybook" style="border: 1px solid black;">                 
+                  <div>마지막페이지 입니다.</div>
+                  <div>마지막페이지 입니다.</div>                 
                </div>
-               <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">페이지 입력</button>
-               <input type="button" class="btn btn-info btn-lg" id="pageUpdate" value="페이지 수정"></input>
-               <input type="button" class="btn btn-info btn-lg" id="pageDelete" value="페이지 삭제"></input>
+               <c:choose>
+               <c:when test="${user.user_email eq sketch_email}">
+               	<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">페이지 입력</button>
+               	<input type="button" class="btn btn-info btn-lg" id="pageUpdate" value="페이지 수정"></input>
+               	<input type="button" class="btn btn-info btn-lg" id="pageDelete" value="페이지 삭제"></input>
+               </c:when>
+               <c:otherwise>
+	                <div style="float: right; margin-right: 10px; ">
+					 <a href="#" onclick="like('${user.user_email}','${sketch_id}')"><img id="likeState" alt="likeEmpty" src="./img/LikeBefore.png"></a>				 		
+					 <a href="#" onclick="scrape('${user.user_email}','${sketch_id}')"> <img id="scrapState" alt="scrape" src="./img/scrape.png"> </a>
+		 		   </div>	
+	 		   </c:otherwise>
                
+               </c:choose>
+               
+              
 
                <form action="./insertDaysForm.do" onsubmit="return false" method="post">
                   <input type="hidden" value=1  id="nowPageNo" name="nowPageNo">
@@ -157,8 +170,7 @@
 			$.ajax({
 				url : "deleteCanvas.do", //요청 url
 				type : "post", // 전송 처리방식
-				asyn : false, // true 비동기 false 동기
-				contentType : 'application/json',
+				asyn : false, // true 비동기 false 동기				
 				data : {"nowPageNo" : pageNo}, // 서버 전송 파라메터
 				dataType : "json", // 서버에서 받는 데이터 타입
 				success : function(msg) {
@@ -210,7 +222,7 @@
 				var container = document.getElementById("map"+<%=i+1%>);
 	    		var options = {
 	    			center: new daum.maps.LatLng(<%=daysList.get(i).get(0).getDays_x()%>, <%=daysList.get(i).get(0).getDays_y()%>),
-	    			level: 5,
+	    			level: 7,
 	    			disableDoubleClickZoom : true
 	    		};
 	    		
@@ -322,7 +334,7 @@
 	    					var startCoord = new daum.maps.LatLng(daysMarker[i-1].getPosition().getLat(), daysMarker[i-1].getPosition().getLng());
 	    					var endCoord =  new daum.maps.LatLng(daysMarker[i].getPosition().getLat(), daysMarker[i].getPosition().getLng());
 	    					div.innerHTML += "<a style='float:right; margin-right:30px;' href='https://map.kakao.com/?sX="+startCoord.toCoords().getX()+"&sY="+startCoord.toCoords().getY()+"&sName=출발점&eX="+endCoord.toCoords().getX()+"&eY="+endCoord.toCoords().getY()+"&eName=도착점'"
-	    							+ " onclick='window.open(this.href, \"_경로보기\", \"width=1000px,height=800px;\"); return false;'"
+	    							+ " onclick='window.open(this.href, \"_경로보기\", \"width=1280px,height=860px;\"); return false;'"
 	    							+ ">최단경로보기</a><br>";
 	    				}				
 	    				div.innerHTML += "<div style='font-size:20px; width:450px; height:38px; border:1px solid black;'>"+(i+1)+"번째 일정:"+daysInfo[i]
@@ -464,6 +476,56 @@
 			$(".insertForms").css('background-color','');
 		});
 	});		
+	//--------------- 좋아요 등록 및 취소---------------------
+	function like(user,id){		
+		LpLike(user,id);
+	}
+
+	var LpLike = function(user,id){
+	    var user_email = user;
+	    var sketch_id = id;
+		$.ajax({
+			url: "LPLike.do",
+			type: "get",
+			data: {"user_email" : user_email, "sketch_id" : sketch_id },
+			dataType: "Json",
+			success: function(result){					
+				if(result.result == "F")
+					$("#likeState").attr("src","./img/LikeBefore.png");	
+				else
+					$("#likeState").attr("src","./img/LikeAfter.png");	
+			}, error : function() {
+				alert("실패");
+			}			
+		});
+	}
+	
+	//---------------------- 스크랩 등록 및 수정 --------------------
+	function scrape(user,id) {
+		//alert("스크랩");
+		LpScrape(user,id);		
+	}
+
+	var LpScrape = function(user,id){
+//		var user_email = "128@happy.com";
+		var sketch_id = id;
+//		alert("스크랩 등록");	
+		$.ajax({
+			url : "Scrape.do",
+			type : "get",
+			data :  "user_email="+user+"&sketch_id="+sketch_id,
+			success : function(sresult){			
+				if(sresult.sresult == "F")
+					$("#scrapState").attr("src","./img/scrape.png");	
+				else
+					$("#scrapState").attr("src","./img/scrapeT.png");
+			}, error : function() {
+				alert("실패");
+			}
+		});
+		   
+	}
+
 	</script> 	
 	
 	</body>

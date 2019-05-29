@@ -42,6 +42,11 @@
                      <input type="text" id="pageTitle" value="<%=canvasDto.getCan_title()%>">
                   </div>
                   <div>
+                     <button onclick="showFood()">음식점</button>
+                     <button onclick="showTrip()">관광지</button>
+                     <button onclick="showRest()">숙소</button>
+                     <input type="text" id="searchKeyword">
+                     <button onclick="searchKeyword()">검색</button>
                      <div id='map' style='width: 440px; height: 560px;'></div>
                      <input id="updateCanvas" type="button" value="수정완료"></input>
                   </div>
@@ -60,7 +65,8 @@
 	    $('#mybook').booklet({
 	    		width:  960,
 	            height: 650,
-	            shadow: false,	           
+	            shadow: false,	  
+	            pageNumbers : false,
 	    });		   
 	 
 	 // 카카오 지도
@@ -78,8 +84,11 @@
 	// 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
 	 var zoomControl = new daum.maps.ZoomControl();
 	 map.addControl(zoomControl, daum.maps.ControlPosition.RIGHT);
-		
-	 // 일정 마커들
+	// 주소-좌표 변환 객체를 생성합니다
+		var geocoder = new daum.maps.services.Geocoder();		
+		// 관광지/음식점/숙소 마커들
+		var markers = [];
+	// 일정 마커들
 	 var daysMarker = [];
 	 // 일정 마커들의 인포윈도우
 		var daysInfo = [];		
@@ -90,7 +99,8 @@
 		var daysEnd = [];				
 		// 선 정보를 담고있는 변수		
 		var polyline;
-		
+		// 주소
+		var detailAddr;
 		// 일정 마커들 정보 가져오기
 		<%
 			for(int j = 0; j < daysList.size(); j++){
@@ -138,7 +148,7 @@
 					var startCoord = new daum.maps.LatLng(daysMarker[i-1].getPosition().getLat(), daysMarker[i-1].getPosition().getLng());
 					var endCoord =  new daum.maps.LatLng(daysMarker[i].getPosition().getLat(), daysMarker[i].getPosition().getLng());
 					div.innerHTML += "<a style='float:right; margin-right:30px;' href='https://map.kakao.com/?sX="+startCoord.toCoords().getX()+"&sY="+startCoord.toCoords().getY()+"&sName=출발점&eX="+endCoord.toCoords().getX()+"&eY="+endCoord.toCoords().getY()+"&eName=도착점'"
-							+ " onclick='window.open(this.href, \"_경로보기\", \"width=1000px,height=800px;\"); return false;'"
+							+ " onclick='window.open(this.href, \"_경로보기\", \"width=1280px,height=860px;\"); return false;'"
 							+ ">최단경로보기</a><br>";
 				}	
 				// 시작시간 
@@ -220,25 +230,34 @@
 					}); 		
 					marker.setMap(map);
 					marker.setDraggable(true);
+					
+					//주소 가져오기					
+					searchDetailAddrFromCoords(mouseEvent.latLng, function(result, status) {        				
+   						 detailAddr = !!result[0]? result[0].address.address_name:'';
+					
 				 	// 입력 윈도우를 생성합니다
 					infoWindow = new daum.maps.InfoWindow({					
 					    content : '<div style="width:200px; height:140px;">일정제목 &nbsp;<input style="width:100px; height=30px;" type="text" id="daysTitle">'
-					    +'<br>시작:&nbsp;<select id="startHalf" style="font-size:14px"><option>AM</option><option>PM</option></select>'
+					    +'<br><div style="font-size:14px;"><img src="./img/canvas/address.png">'+detailAddr+'</div>'+'<img src="./img/canvas/time.png">&nbsp;<select id="startHalf" style="font-size:14px"><option>AM</option><option>PM</option></select>'
 					    +'&nbsp;<select id="startHH"><option>00</option><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option></select>'
 					    +'&nbsp;<select id="startMM"><option>00</option><option>30</option></select>'					   
 					    +'<br>종료:&nbsp;<select id="endHalf" style="font-size:14px"><option>AM</option><option>PM</option></select>'
 					    +'&nbsp;<select id="endHH"><option>00</option><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option></select>'
 					    +'&nbsp;<select id="endMM"><option>00</option><option>30</option></select>'	
-					    +'<br><br><button style="width:100px; height=30px;" onclick="daysMake()">일정등록</button><button style="width:100px; height=30px;" onclick="closeInfo()">취소</button></div>',
+					    +'<div style="margin-top: 5px;"><button style="width:100px; height=30px;" onclick="daysMake()">일정등록</button><button style="width:100px; height=30px;" onclick="closeInfo()">취소</button></div></div>',
 					});
 				 	infoWindow.open(map,marker);					
 					isInsertOpen = true;
 					map.setDraggable(false);
-					map.setZoomable(false);								
+					map.setZoomable(false);	
+					});
 				}								
 			});
 			
-			
+			 // 주소 가져오기    
+			function searchDetailAddrFromCoords(coords, callback) {   
+	   				 geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+			}
 			
 			/* $(document).ready(function () {
 				$("#startDays").timepicker({
@@ -364,6 +383,7 @@
 			$("#updateCanvas").click(function() {				
 				//alert(daysMarker[0].getPosition().getLat());		
 				var jsonObj = {};
+				jsonObj["canvasTitle"] = $("#pageTitle").val();
 				for(var i = 0 ; i < daysMarker.length ; i++){
 					var testVal = {
 							'title' : String(daysInfo[i]) , 'content' : "내용"+i , 'startDate':"2019-05-14 "+daysStart[i]+":00" , 
@@ -423,7 +443,233 @@
 				}
 			});			
 		
+			function showFood() {		   
+			    for (var i = 0; i < markers.length; i++)
+					markers[i].setMap(null);
+			    for(var i = 0; i < daysMarker.length; i++){		 
+					 daysMarker[i].setMap(null);
+					 daysMarker[i].setMap(map);
+				 }
+
+			    $.ajax({
+					url : "showFood.do", //요청 url
+					type : "post", // 전송 처리방식
+					asyn : false, // true 비동기 false 동기
+					data : {
+					    'type' : "음식점"
+					}, // 서버 전송 파라메터
+					dataType : "json", // 서버에서 받는 데이터 타입
+					success : function(msg) {
+					    alert(msg.result[0].map_id);
+					    for (var i = 0; i < msg.result.length; i++) {
+						var foodMarker = new daum.maps.Marker({
+						    position : new daum.maps.LatLng(
+							    msg.result[i].map_y,
+							    msg.result[i].map_x),
+						    clickable : true
+						});
+
+						// 지도에 마커를 표시합니다
+						foodMarker.setMap(map);
+						markers.push(foodMarker);					
+						
+						var foodMarkerInfo = new daum.maps.InfoWindow(
+							{
+							    content : '<div style="width:200px; height:140px;">일정제목 &nbsp;<input style="width:100px; height=30px;" type="text" id="daysTitle" value="'+msg.result[i].map_title+'">'
+							    +'<br><div style="font-size:14px;"><img src="./img/canvas/address.png">'+msg.result[i].map_content+'<br>시작:&nbsp;<select id="startHalf" style="font-size:14px"><option>AM</option><option>PM</option></select>'
+							    +'&nbsp;<select id="startHH"><option>00</option><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option></select>'
+							    +'&nbsp;<select id="startMM"><option>00</option><option>30</option></select>'					   
+							    +'<br>종료:&nbsp;<select id="endHalf" style="font-size:14px"><option>AM</option><option>PM</option></select>'
+							    +'&nbsp;<select id="endHH"><option>00</option><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option></select>'
+							    +'&nbsp;<select id="endMM"><option>00</option><option>30</option></select>'	
+							    +'<div style="margin-top: 5px;"><button style="width:100px; height=30px;" onclick="daysMake()">일정등록</button></div>',
+							    removable : true
+							});
+						
+						
+						(function(foodMarker, foodMarkerInfo) {
+						    // 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다 
+						    daum.maps.event.addListener( foodMarker,'click',function() {
+									// 마커 위에 인포윈도우를 표시합니다						    
+									foodMarkerInfo.open(map,foodMarker);
+									marker = foodMarker;
+							});
+						})(foodMarker, foodMarkerInfo);
+						
+					    }
+					},
+					error : function() {
+					    alert("실패");
+					}
+				});
+		 	}
+			
+			 // 관광지보기
+			 function showTrip(){
+				 for(var i = 0; i < markers.length; i++)
+					 markers[i].setMap(null);
+				 for(var i = 0; i < daysMarker.length; i++){		 
+					 daysMarker[i].setMap(null);
+					 daysMarker[i].setMap(map);
+				 }
+				 
+				 $.ajax({
+						url: "showTrip.do", //요청 url
+						type: "post", // 전송 처리방식
+						asyn: false, // true 비동기 false 동기
+						data: { 'type' : "관광"}, // 서버 전송 파라메터
+						dataType: "json", // 서버에서 받는 데이터 타입
+						success: function(msg){	
+							alert(msg.result[0].map_id);	
+							for(var i = 0; i < msg.result.length ; i++){
+								var foodMarker  = 	new daum.maps.Marker({ 			    
+								    position: new daum.maps.LatLng(msg.result[i].map_y, msg.result[i].map_x),
+								    clickable: true				   
+							    }); 		
+								
+								// 지도에 마커를 표시합니다
+								foodMarker.setMap(map);	
+								markers.push(foodMarker);
+								var foodMarkerInfo = new daum.maps.InfoWindow({
+								    content :  '<div style="width:200px; height:140px;">일정제목 &nbsp;<input style="width:100px; height=30px;" type="text" id="daysTitle" value="'+msg.result[i].map_title+'">'
+								    +'<br><div style="font-size:14px;"><img src="./img/canvas/address.png">'+msg.result[i].map_content+'<br>시작:&nbsp;<select id="startHalf" style="font-size:14px"><option>AM</option><option>PM</option></select>'
+								    +'&nbsp;<select id="startHH"><option>00</option><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option></select>'
+								    +'&nbsp;<select id="startMM"><option>00</option><option>30</option></select>'					   
+								    +'<br>종료:&nbsp;<select id="endHalf" style="font-size:14px"><option>AM</option><option>PM</option></select>'
+								    +'&nbsp;<select id="endHH"><option>00</option><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option></select>'
+								    +'&nbsp;<select id="endMM"><option>00</option><option>30</option></select>'	
+								    +'<div style="margin-top: 5px;"><button style="width:100px; height=30px;" onclick="daysMake()">일정등록</button></div>',
+								    removable : true
+								});						
+								
+								(function(foodMarker, foodMarkerInfo) {
+							        // 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다 
+							       daum.maps.event.addListener(foodMarker, 'click', function() {
+								     // 마커 위에 인포윈도우를 표시합니다						          
+								    	 foodMarkerInfo.open(map, foodMarker); 	
+								     	 marker = foodMarker;
+									});						       
+							    })(foodMarker, foodMarkerInfo);
+								
+							}
+						}, error : function() {
+							alert("실패");
+						}
+					});	
+			 }
 			 
+			 // 숙소 보기
+			function showRest(){
+				 for(var i = 0; i < markers.length; i++)
+					 markers[i].setMap(null);
+				 for(var i = 0; i < daysMarker.length; i++){		 
+					 daysMarker[i].setMap(null);
+					 daysMarker[i].setMap(map);
+				 }
+				 
+				 
+				$.ajax({
+					url: "showRest.do", //요청 url
+					type: "post", // 전송 처리방식
+					asyn: false, // true 비동기 false 동기
+					data: { 'type' : "숙박"}, // 서버 전송 파라메터
+					dataType: "json", // 서버에서 받는 데이터 타입
+					success: function(msg){	
+						alert(msg.result[0].map_id);	
+						for(var i = 0; i < msg.result.length ; i++){
+							var foodMarker  = 	new daum.maps.Marker({ 			    
+							    position: new daum.maps.LatLng(msg.result[i].map_y, msg.result[i].map_x),
+							    clickable: true				   
+						    }); 		
+							
+							// 지도에 마커를 표시합니다
+							foodMarker.setMap(map);	
+							markers.push(foodMarker);
+							var foodMarkerInfo = new daum.maps.InfoWindow({
+							    content : '<div style="width:200px; height:140px;">일정제목 &nbsp;<input style="width:100px; height=30px;" type="text" id="daysTitle" value="'+msg.result[i].map_title+'">'
+							    +'<br><div style="font-size:14px;"><img src="./img/canvas/address.png">'+msg.result[i].map_content+'<br>시작:&nbsp;<select id="startHalf" style="font-size:14px"><option>AM</option><option>PM</option></select>'
+							    +'&nbsp;<select id="startHH"><option>00</option><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option></select>'
+							    +'&nbsp;<select id="startMM"><option>00</option><option>30</option></select>'					   
+							    +'<br>종료:&nbsp;<select id="endHalf" style="font-size:14px"><option>AM</option><option>PM</option></select>'
+							    +'&nbsp;<select id="endHH"><option>00</option><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option></select>'
+							    +'&nbsp;<select id="endMM"><option>00</option><option>30</option></select>'	
+							    +'<div style="margin-top: 5px;"><button style="width:100px; height=30px;" onclick="daysMake()">일정등록</button></div>',
+							    removable : true
+							});						
+							
+							(function(foodMarker, foodMarkerInfo) {
+						        // 마커에 mouseover 이벤트를 등록하고 마우스 오버 시 인포윈도우를 표시합니다 
+						       daum.maps.event.addListener(foodMarker, 'click', function() {
+							     // 마커 위에 인포윈도우를 표시합니다						    
+							    	 foodMarkerInfo.open(map, foodMarker); 	
+							         marker = foodMarker;
+								});						       
+						    })(foodMarker, foodMarkerInfo);
+							
+						}
+					}, error : function() {
+						alert("실패");
+					}
+				});
+			 }
+			 
+			 
+			// ------- 검색 ------ // 
+			// 장소 검색 객체를 생성합니다
+			function searchKeyword() {
+				var ps = new daum.maps.services.Places(); 
+				var value = $("#searchKeyword").val();
+				// 키워드로 장소를 검색합니다
+				ps.keywordSearch(value, placesSearchCB); 
+
+				// 키워드 검색 완료 시 호출되는 콜백함수 입니다
+				function placesSearchCB (data, status, pagination) {
+								
+				    if (status === daum.maps.services.Status.OK) {
+					
+				        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+				        // LatLngBounds 객체에 좌표를 추가합니다
+				        var bounds = new daum.maps.LatLngBounds();
+
+				        for (var i=0; i<data.length; i++) {
+				            displayMarker(data[i]);    
+				            bounds.extend(new daum.maps.LatLng(data[i].y, data[i].x));
+				        }       
+				        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+				        map.setBounds(bounds);
+				    } 
+				}
+
+				// 지도에 마커를 표시하는 함수입니다
+				function displayMarker(place) {
+				    
+				    // 마커를 생성하고 지도에 표시합니다
+				    var keywordMarker = new daum.maps.Marker({
+				        map: map,
+				        position: new daum.maps.LatLng(place.y, place.x) 
+				    });
+				    
+				    var keywordInfo = new daum.maps.InfoWindow({
+					    content : '<div style="width:200px; height:140px;">일정제목 &nbsp;<input style="width:100px; height=30px;" type="text" id="daysTitle" value="'+place.place_name+'">'
+					    +'<br><div style="font-size:14px;"><img src="./img/canvas/address.png">'+place.address_name+'<br>시작:&nbsp;<select id="startHalf" style="font-size:14px"><option>AM</option><option>PM</option></select>'
+					    +'&nbsp;<select id="startHH"><option>00</option><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option></select>'
+					    +'&nbsp;<select id="startMM"><option>00</option><option>30</option></select>'					   
+					    +'<br>종료:&nbsp;<select id="endHalf" style="font-size:14px"><option>AM</option><option>PM</option></select>'
+					    +'&nbsp;<select id="endHH"><option>00</option><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option></select>'
+					    +'&nbsp;<select id="endMM"><option>00</option><option>30</option></select>'	
+					    +'<div style="margin-top: 5px;"><button style="width:100px; height=30px;" onclick="daysMake()">일정등록</button></div>',
+					    removable : true
+					});
+
+				    // 마커에 클릭이벤트를 등록합니다
+				    daum.maps.event.addListener(keywordMarker, 'click', function() {
+				        // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
+				        //keywordInfo.setContent('<div style="padding:5px;font-size:12px;">' + place.place_name + '</div>');
+				        keywordInfo.open(map, keywordMarker);
+				        marker = keywordMarker;
+				    });
+				}
+			}
 			
 	</script>
 	

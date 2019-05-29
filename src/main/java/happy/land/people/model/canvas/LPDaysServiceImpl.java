@@ -67,9 +67,17 @@ public class LPDaysServiceImpl implements ILPDaysService{
 	public int daysUpdate(Map<String,Object> val,String can_id) throws ParseException {
 		int cnt = 0;
 		// 해당 캔버스의 일정내용 싹 지우기
-		cnt = daysDao.daysDelete(can_id);	
-    	
-    	for(int i = 0; i < val.size() ; i++) {
+		cnt = daysDao.daysDelete(can_id);			
+		// 변경된 제목	
+		String can_content = (String)val.get("canvasTitle");		
+		// 캔버스 제목 변경
+		Map<String,String> updateCanvas = new HashMap<String,String>();
+		updateCanvas.put("title", can_content);
+		updateCanvas.put("id", can_id);
+    	canvasDao.canvasUpdate(updateCanvas);
+		
+		
+    	for(int i = 0; i < val.size()-1 ; i++) {
     		Map<String,String> map = (Map<String,String>)val.get("days"+i);
     	//System.out.println(map);   
     		SimpleDateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

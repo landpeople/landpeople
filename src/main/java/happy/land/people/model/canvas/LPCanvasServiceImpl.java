@@ -78,7 +78,7 @@ public class LPCanvasServiceImpl implements ILPCanvasService{
 		delMap.put("pageNo",map.get("pageNo"));
 		delMap.put("sketch_id", map.get("sketch_id"));
 		canvasDao.canvasDecreasePage(delMap);				
-		return canvasDao.canvasDelete(map.get("can_id"));
+		return delChk;
 	}
 
 }
