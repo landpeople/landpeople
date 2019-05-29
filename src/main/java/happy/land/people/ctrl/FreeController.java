@@ -55,8 +55,14 @@ public class FreeController {
 	@ResponseBody
 	public String upload(MultipartHttpServletRequest mr, String text_no, HttpServletRequest request, Model model) {
 		List<MultipartFile> tt = (List<MultipartFile>) mr.getFiles("file");
-				
-		MultipartFile uploadfile = tt.get(Integer.parseInt(text_no.substring(3))-1);
+		
+		MultipartFile uploadfile = null;
+		
+		if(text_no.length()==4) {
+			uploadfile = tt.get(Integer.parseInt(text_no.substring(3))-1);
+		}else {
+			uploadfile = tt.get(Integer.parseInt(text_no.substring(4))-1);
+		}
 		
 		//원래 파일명
 		String filename = uploadfile.getOriginalFilename();
