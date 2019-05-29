@@ -21,7 +21,7 @@
 </head>
 
 <script src="./js/jquery-3.3.1.js"></script>
-<script src="./js/sketchbook/sketchbook.js"></script>
+<script src="./js/sketch/sketchbook.js"></script>
 <link rel="stylesheet" href="./css/lp-style.css">
 <link rel="stylesheet" href="./css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -77,10 +77,10 @@ $(document).ready(function() {
 								<div class="sketchTheme_hover" style=" cursor: pointer;" onclick="location.href='./kim.do?sketch_id=<%=mySketchBookLists.get(i*3+j).getSketch_id()%>'"><%-- onclick="location.href='./kim.do?sketch_id=<%=mySketchBookLists.get(i*3+j).getSketch_id()%>' --%>
 									
 									<div class="hover_inside">
-										<div><a href="#" onclick="return sketchBookModify('<%=mySketchBookLists.get(i*3+j).getSketch_id()%>')"><img alt="modi" src="img/sketchBookImg/modifyIcon.png"></a></div>
+										<div><a href="#" onclick="return sketchBookModify('<%=mySketchBookLists.get(i*3+j).getSketch_id()%>')"><img alt="modi" src="img/sketch/modifyIcon.png"></a></div>
 										<span><%=mySketchBookLists.get(i*3+j).getSketch_title()%> </span>
-										<h5><img alt="likeIcon" src="./img/sketchBookImg/likeIcon.png">
-										<%=sketchLike.get(sketch_id) %> <%=mySketchNickname.get(sketch_id) %> </h5>
+										<h5><img alt="likeIcon" src="./img/sketch/likeIcon.png">
+										<%=sketchLike.get(sketch_id) %> <%=mySketchBookLists.get(i*3+j).getSketch_theme()%> <%=mySketchNickname.get(sketch_id) %> </h5>
 										</div>
 										
 								</div>
@@ -109,10 +109,10 @@ $(document).ready(function() {
 							<div class="selectTheme" style="background-image: url('<%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_spath()%>');">
 								<div class="sketchTheme_hover"  style="cursor: pointer;" onclick="location.href='./kim.do?sketch_id=<%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_id()%>'">
 									<div class="hover_inside">
-										<div><a href="#" onclick="return sketchBookModify('<%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_id()%>')"><img alt="modi" src="img/sketchBookImg/modifyIcon.png"></a></div> 
+										<div><a href="#" onclick="return sketchBookModify('<%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_id()%>')"><img alt="modi" src="img/sketch/modifyIcon.png"></a></div> 
 										<span><%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_title()%></span>
-										<h5><img alt="likeIcon" src="./img/sketchBookImg/likeIcon.png">
-										<%=sketchLike.get(sketch_id)%> <%=mySketchNickname.get(sketch_id) %></h5>
+										<h5><img alt="likeIcon" src="./img/sketch/likeIcon.png">
+										<%=sketchLike.get(sketch_id)%> <%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_theme()%> <%=mySketchNickname.get(sketch_id) %></h5>
 									</div>
 								</div>
 								<a href="./kim.do?sketch_id=<%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_id()%>"><%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_id()%> &nbsp <%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_title()%> &nbsp <%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_spath()%></a>
@@ -163,6 +163,8 @@ $(document).ready(function() {
 	<script type="text/javascript">
 	var pageCnt = ${pagingDto.getNowPageNo()} 
 	
+	//var chkModify = false;
+	
 	$(window).scroll(function(){
 		//var temp_height= $(document).height()-$(window).height();
 		if($(window).scrollTop() >= $(document).height()-$(window).height()){
@@ -207,9 +209,9 @@ $(document).ready(function() {
 								sketchBookContainer.innerHTML += "<div class='selectTheme' style='background-image: url("+msg.addMySketchBook[i*3+j].sketch_spath+")'>"+
 																"<div class='sketchTheme_hover' onclick='goCanvas("+msg.addMySketchBook[i*3+j].sketch_id+")'>"+
 																"<div class='hover_inside'>"+
-																"<div>"+"<a href='#' onclick='return sketchBookModify("+msg.addMySketchBook[i*3+j].sketch_id+")'><img alt='modi' src='img/sketchBookImg/modifyIcon.png'></a>"+"</div>"+
-																"<span>"+msg.addMySketchBook[i*3+j].sketch_title+"</span>"+"<h5>"+"<img alt='likeIcon' src='./img/sketchBookImg/likeIcon.png'>"+
-																sketchLikes[(sketch_id)]+"</h5>"+"<h5>"+mySketchNickname[(sketch_id)]+"</h5>"+
+																"<div>"+"<a href='#' onclick='return sketchBookModify("+msg.addMySketchBook[i*3+j].sketch_id+")'><img alt='modi' src='img/sketch/modifyIcon.png'></a>"+"</div>"+
+																"<span>"+msg.addMySketchBook[i*3+j].sketch_title+"</span>"+"<h5>"+"<img alt='likeIcon' src='./img/sketch/likeIcon.png'>"+
+																sketchLikes[(sketch_id)]+"</h5>"+"<h5>"+msg.addMySketchBook[i*3+j].sketch_theme+""+mySketchNickname[(sketch_id)]+"</h5>"+
 																"</div></div></div>"; 
 								}
 							$(".sketchBookContent").append(sketchBookContainer);
@@ -229,9 +231,9 @@ $(document).ready(function() {
 								sketchBookContainer.innerHTML += "<div class='selectTheme'  style='background-image: url(\""+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_spath+"\")'>"+
 															"<div class='sketchTheme_hover' onclick='goCanvas("+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_id+")'>"+
 															"<div class='hover_inside'>"+
-															"<div>"+"<a href='#' onclick='return sketchBookModify("+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_id+")'><img alt='modi' src='img/sketchBookImg/modifyIcon.png'></a>"+"</div>"+
-															"<span>"+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_title+"</span>"+"<h5>"+"<img alt='likeIcon' src='./img/sketchBookImg/likeIcon.png'>"+
-															sketchLikes[(sketch_id)]+"</h5>"+"<h5>"+mySketchNickname[(sketch_id)]+"</h5>"+
+															"<div>"+"<a href='#' onclick='return sketchBookModify("+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_id+")'><img alt='modi' src='img/sketch/modifyIcon.png'></a>"+"</div>"+
+															"<span>"+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_title+"</span>"+"<h5>"+"<img alt='likeIcon' src='./img/sketch/likeIcon.png'>"+
+															sketchLikes[(sketch_id)]+"</h5>"+"<h5>"+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_theme+""+mySketchNickname[(sketch_id)]+"</h5>"+
 															"</div></div></div>";												
 							}
 	
@@ -344,6 +346,7 @@ $(document).ready(function() {
 
 
 	function sketchModify(){
+		//chkModify = true;
 		var sketchModiModal = document.getElementById("modiSketchBook");
 		var sketch_theme = $("input[name=sketch_theme]:checked").val();
 		var sketch_share = $("input[name=sketch_share]:checked").val();
@@ -363,6 +366,7 @@ $(document).ready(function() {
 		} else {
 			sketchModiModal.submit();
 			alert("스케치북 수정완료");
+			//chkModify = false;
 		}
 	}
 

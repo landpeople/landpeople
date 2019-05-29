@@ -128,7 +128,8 @@ var LpScrape = function(user){
 
 function goScrapeMine(email){
 	alert(email);
-	location.href ="./";
+	var user_email = email;
+	location.href ="./SelectScrapeSketch.do?user_email="+user_email;
 }
 
 

@@ -48,8 +48,9 @@ public class SketchController {
 	@Autowired
 	private ISketchBookService iSketchBookService;
 	
-	@ResponseBody
+	
 	@RequestMapping(value="/sketchMakeForm.do", method=RequestMethod.GET)
+	@ResponseBody
 	public Map<String, String> sketchIsWrite(String user_email) {
 		
 		Map<String, String> map = new HashMap<String, String>();
@@ -190,8 +191,9 @@ public class SketchController {
 	
 	
 	
-	@ResponseBody
+	
 	@RequestMapping(value="/LPLike.do",method=RequestMethod.GET)
+	@ResponseBody
 	public Map<String, String> LikeChange(String user_email, String sketch_id, LPCollectDto dto){
 	
 		
@@ -227,8 +229,9 @@ public class SketchController {
 		return result;
 	}
 	
-	@ResponseBody
+	
 	@RequestMapping(value="Scrape.do", method=RequestMethod.GET)
+	@ResponseBody
 	public Map<String, String> scrapeState(String user_email, String sketch_id, LPCollectDto dto ) {
 		// 스케치북 스크랩 최초 등록
 		boolean isc = iSketchBookService.collectInsert(dto);
@@ -263,10 +266,9 @@ public class SketchController {
 	
 	
 	//내 스크랩 목록 보기
-	@RequestMapping(value="ScrapeSelect.do", method=RequestMethod.GET)
-	@ResponseBody
-	public Map<String, String> scrapeListMine(String user_email, Model model){
-		
+	@RequestMapping(value="SelectScrapeSketch.do", method=RequestMethod.GET)
+	public String scrapeListMine(String user_email, Model model){
+		System.out.println("스크랩한 유저 이메일 ="+user_email);
 		// 페이지 처리를 위한 스크랩한 스케치북 카운트 조회
 		int cnt = iSketchBookService.scrapeCnt(user_email);
 		// 스크랩한 스케치북 페이징 처리
@@ -345,20 +347,20 @@ public class SketchController {
 		
 		return scrapeResult;
 		}*/
-		return null;
+		return "/sketch/selectScrapSketch";
 	}
 	
 	
 	
 	// 스크랩한 스케치북 페이징 처리
-	@RequestMapping(value="ScrapeSelect.do", method=RequestMethod.GET)
+	@RequestMapping(value="scrapeSketchBookPaging.do", method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String, Object> scrapeSketchPaging(String user_email, String pageNo, Model model){
 		
 		// 페이지 처리를 위한 스크랩한 스케치북 카운트 조회
 		int cnt = iSketchBookService.scrapeCnt(user_email);
 		// 스크랩한 스케치북 페이징 처리
-		SketchPagingDto pagingDto = new SketchPagingDto(9, 1, cnt, 9);
+		SketchPagingDto pagingDto = new SketchPagingDto(9, Integer.parseInt(pageNo), cnt, 9);
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("user_email", user_email);
 		map.put("first", String.valueOf(pagingDto.getFirstBoardNo()));
@@ -366,10 +368,10 @@ public class SketchController {
 		// 스크랩한 스케치북 조회
 		List<LPSketchbookDto> myScrapeListPaging = iSketchBookService.scrapeSelectMine(map);
 		System.out.println(myScrapeListPaging);
-		model.addAttribute(myScrapeListPaging);
+		//model.addAttribute(myScrapeListPaging);
 
 		// 스케치북 id에 따른 카운트 저장할 변수 
-		Map<String,Integer> sketchLikes = new HashMap<String,Integer>();
+		Map<String,Integer> sketchLike = new HashMap<String,Integer>();
 		Map<String, String> sketchNickname = new HashMap<String, String>();
 		for (int i = 0; i < myScrapeListPaging.size(); i++) {
 					
@@ -377,19 +379,19 @@ public class SketchController {
 			String sketch_id = myScrapeListPaging.get(i).getSketch_id();
 			// 스케치북 좋아요 갯수 조회
 			int likeCnt = iSketchBookService.likeCnt(sketch_id);
-			sketchLikes.put(sketch_id, likeCnt);
+			sketchLike.put(sketch_id, likeCnt);
 			// 스케치북 작성자 닉네임 조회
 			String nickname = iSketchBookService.selectNickname(sketch_id);
 			sketchNickname.put(sketch_id, nickname);
 					
 			}
 		
-		System.out.println("무한스크롤 처리된 스크랩한 스케치북 조회 좋아요 카운트 = "+sketchLikes);
+		System.out.println("무한스크롤 처리된 스크랩한 스케치북 조회 좋아요 카운트 = "+sketchLike);
 		System.out.println("무한스크롤 처리된 스크랩한 스케치북 닉네임 조회 = "+sketchNickname);
 		Map<String,Object> resultMap = new HashMap<String,Object>();
-		resultMap.put("addMySketchBook", myScrapeListPaging);		
-		resultMap.put("likeMine", sketchLikes);
-		resultMap.put("mySketchNicknames", sketchNickname);
+		resultMap.put("addScrapeSketchBook", myScrapeListPaging);		
+		resultMap.put("likeScrape", sketchLike);
+		resultMap.put("scrapeSketchNickname", sketchNickname);
 		
 		return resultMap;
 		
@@ -457,15 +459,15 @@ public class SketchController {
 		model.addAttribute("sketchLike", sketchLike);
 		model.addAttribute("mySketchNickname",sketchNickname);
 		
-		return "/sketchBook/selectMySketch";
+		return "/sketch/selectMySketch";
 		
 		
 		
 	}
 	
 	// 작성 스케치북 페이징 처리
-	@ResponseBody
 	@RequestMapping(value="/mysketchBookPaging.do" ,method = RequestMethod.GET)
+	@ResponseBody
 	public Map<String, Object> mysketchBookPaging(String user_email, String pageNo,String type,Model model) {
 		
 		// 페이지 처리를 위한 작성 스케치북 카운트 조회
@@ -604,13 +606,13 @@ public class SketchController {
 //		request.setAttribute("PagingLikeDto", PagingLikeDto);
 		request.setAttribute("sketchBook", themeSketchBookList);
 //		request.setAttribute("sketchBookLike", sketchBookLikeList);
-		return "/sketchBook/selectThemeSketch";
+		return "/sketch/selectThemeSketch";
 	}
 		
-		// 테마별 스케치북 조회 페이징 처리
-		
-	@ResponseBody
+	
+	// 테마별 스케치북 조회 페이징 처리
 	@RequestMapping(value="/sketchBookPaging.do" ,method = RequestMethod.GET)
+	@ResponseBody
 	public Map<String,Object> themeSketchBookPaging(String pageNo,String type,Model model) {
 			
 		int cnt = iSketchBookService.sketchCntTheme(type);
@@ -646,7 +648,7 @@ public class SketchController {
 		
 		Map<String,Object> resultMap = new HashMap<String,Object>();
 		resultMap.put("addSketchBook", themeSketchBookListPaging);	
-		resultMap.put("like", sketchLikes);
+		resultMap.put("likeTheme", sketchLikes);
 		resultMap.put("sketchNicknames", sketchNickname);
 		
 		

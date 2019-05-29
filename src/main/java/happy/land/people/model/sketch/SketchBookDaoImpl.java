@@ -90,7 +90,7 @@ public class SketchBookDaoImpl implements ISketchBookDao {
 	@Override
 	public int scrapeCnt(String user_email) {
 		System.out.println("스케치북 스크랩 갯수 조회"+user_email);
-		return sqlsession.selectOne(NS+"scrape_Cnt"+user_email);
+		return sqlsession.selectOne(NS+"scrape_Cnt", user_email);
 	}
 	
 	
