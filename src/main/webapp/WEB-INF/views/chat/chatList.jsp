@@ -6,9 +6,12 @@
 <html id="html">
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="./fonts/stylesheet.css">
 <style>
 #html,#body {
  width: 236px; height: 131px; margin: 0px;
+ 	overflow-x: hidden;
+ 	overflow-y:auto;
 }
 </style>
 <title>Insert title here</title>
