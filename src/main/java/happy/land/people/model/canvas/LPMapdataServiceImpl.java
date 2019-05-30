@@ -21,7 +21,7 @@ public class LPMapdataServiceImpl implements ILPMapdataService{
 		int cnt = 0;
 		for(int i = 1; i < result.length; i++) {
 			String[] value = result[i].split("/");    	
-			LPMapdataDto mapDto = new LPMapdataDto(value[0], value[1], value[2], value[3], value[4]," ");        
+			LPMapdataDto mapDto = new LPMapdataDto(value[0], value[1], value[2], value[3], value[4],value[5]);        
 			cnt += mapDao.mapInsert(mapDto);
 		}
 		return cnt;

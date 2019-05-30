@@ -9,7 +9,7 @@
 	
 	<!-- 해당 스케치북의 id와 type 가져오기 -->
 	<select id="canvas_SelectType" parameterType="java.lang.String" resultType="happy.land.people.dto.LPCanvasDto">
-		SELECT CAN_ID,CAN_TYPE FROM LPCANVAS WHERE SKETCH_ID=#{id} ORDER BY CAN_PAGENO
+		SELECT CAN_ID,CAN_TYPE,CAN_TITLE FROM LPCANVAS WHERE SKETCH_ID=#{id} ORDER BY CAN_PAGENO
 	</select>
 	
 	<!-- 캔버스 페이지 번호 증가 -->
@@ -43,4 +43,9 @@
 	<select id="days_SelectOne" parameterType="java.lang.String" resultType="happy.land.people.dto.LPDaysDto">
 		SELECT * FROM LPDAYS WHERE CAN_ID=#{id}
 	</select>
+	
+	<!-- 캔버스 제목 변경 -->
+	<update id="canvas_Update" parameterType="java.util.Map">
+		UPDATE LPCANVAS SET CAN_TITLE=#{title} WHERE CAN_ID=#{id}
+	</update>
 </mapper>

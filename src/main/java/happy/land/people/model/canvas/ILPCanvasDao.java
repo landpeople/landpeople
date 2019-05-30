@@ -22,4 +22,6 @@ public interface ILPCanvasDao {
 	public LPCanvasDto canvasSelectOne(String id);
 	
 	public int canvasDelete(String can_id);	
+	
+	public int canvasUpdate(Map<String,String> map);
 }

@@ -13,11 +13,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import happy.land.people.dto.LPCanvasDto;
 import happy.land.people.dto.LPDaysDto;
 import happy.land.people.dto.LPTextDto;
+import happy.land.people.dto.LPUserDto;
 import happy.land.people.model.canvas.ILPCanvasService;
 import happy.land.people.model.canvas.ILPDaysService;
 import happy.land.people.model.canvas.ILPMapdataService;
@@ -46,6 +48,13 @@ public class CanvasController {
 	    	int canvasCnt = canvasService.canvasCnt(sketch_id);
 	    	//스케치북 번호를 세션에 추가
 	    	session.setAttribute("sketch_id", sketch_id);
+	    	//접속한 유저의 정보(나중에 로그인 다 구현되면 바꿀것)
+	    	LPUserDto userDto = new LPUserDto();
+	    	userDto.setUser_email("kim@kim.com");
+	    	session.setAttribute("user", userDto);
+	    	//스케치북 작성자의 정보(나중에 스케치북 연동 끝나면 바꿀것)
+	    	session.setAttribute("sketch_email", "kim@kim.com");
+	    	
 	    	System.out.println("해당 스케치북의 캔버스 개수:"+canvasCnt);
 	    	
 	    	// 캔버스 리스트
@@ -108,7 +117,7 @@ public class CanvasController {
 	    
 	    @ResponseBody
 	    @RequestMapping(value="deleteCanvas.do",method=RequestMethod.POST)
-	    public Map<String,String> deleteDaysFrom(HttpSession session,String nowPageNo){
+	    public Map<String,String> deleteDaysFrom(HttpSession session,@RequestParam("nowPageNo") String nowPageNo){
 	    	// 페이지 번호 , 캔버스 id     	
 	    	System.out.println("페이지번호:"+nowPageNo);
 	    	LPCanvasDto canvasDto = new LPCanvasDto();
@@ -116,6 +125,7 @@ public class CanvasController {
 	    	// 스케치북 세팅
 	    	String sketch_id = (String)session.getAttribute("sketch_id");
 	    	canvasDto.setSketch_id(sketch_id);
+	    	System.out.println("스케치북 번호:"+sketch_id);
 	    	// 보고 있는 페이지의 캔버스 id값을 가져옴
 	    	String id = canvasService.canvasSelectID(canvasDto);
 	    	// 캔버스 dto 세팅
@@ -127,6 +137,7 @@ public class CanvasController {
 	    	delMap.put("can_type", canvasDto.getCan_type());
 	    	delMap.put("sketch_id", canvasDto.getSketch_id());
 	    	delMap.put("pageNo", canvasDto.getCan_pageno());
+	    	System.out.println(delMap);
 	    	// 삭제
 	    	canvasService.canvasDelete(delMap);
 	    	Map<String,String> result = new HashMap<String,String>();
