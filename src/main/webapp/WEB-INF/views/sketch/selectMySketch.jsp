@@ -10,7 +10,7 @@
 	    Map<String,Integer> sketchLike = ( Map<String,Integer> )request.getAttribute("sketchLike");
 	    Map<String,Integer> sketchLikes = ( Map<String,Integer> )request.getAttribute("sketchLikes");
 	    List<LPSketchbookDto> mySketchBookLists = (List<LPSketchbookDto>)request.getAttribute("mySketchBookLists");
-	    
+	    Map<String,String> mySketchNickname = (Map<String,String>)request.getAttribute("mySketchNickname");
 %> 
     
 <!DOCTYPE html>
@@ -21,7 +21,7 @@
 </head>
 
 <script src="./js/jquery-3.3.1.js"></script>
-<script src="./js/sketchbook/sketchbook.js"></script>
+<script src="./js/sketch/sketchbook.js"></script>
 <link rel="stylesheet" href="./css/lp-style.css">
 <link rel="stylesheet" href="./css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -53,6 +53,7 @@ $(document).ready(function() {
 	${mySketchBookLists}
 	${likeCnt}
 	${sketchLike}
+	${sketchNickname}
 <!--젤로 레이아웃- 전체 영역 감싸는 div-->
 	<div class="main-wrapper">
 		<%@include file="../common/Sidebar.jsp"%>
@@ -72,18 +73,18 @@ $(document).ready(function() {
 						
 						String sketch_id =	mySketchBookLists.get(i*3+j).getSketch_id();	
 					%>
-							<div class="selectTheme" style="background: url('<%=mySketchBookLists.get(i*3+j).getSketch_spath()%>');">
-								<div class="sketchTheme_hover" style="position: absolute; cursor: pointer;" onclick="location.href='./kim.do?sketch_id=<%=mySketchBookLists.get(i*3+j).getSketch_id()%>'"><%-- onclick="location.href='./kim.do?sketch_id=<%=mySketchBookLists.get(i*3+j).getSketch_id()%>' --%>
+							<div class="selectTheme" style="background-image: url('<%=mySketchBookLists.get(i*3+j).getSketch_spath()%>');">
+								<div class="sketchTheme_hover" style=" cursor: pointer;" onclick="location.href='./kim.do?sketch_id=<%=mySketchBookLists.get(i*3+j).getSketch_id()%>'"><%-- onclick="location.href='./kim.do?sketch_id=<%=mySketchBookLists.get(i*3+j).getSketch_id()%>' --%>
 									
 									<div class="hover_inside">
-										<div><a href="#" style="position: relative; z-index: 100;" onclick="return sketchBookModify('<%=mySketchBookLists.get(i*3+j).getSketch_id()%>')"><img alt="modi" src="img/sketchBookImg/modifyIcon.png"></a></div>
+										<div><a href="#" onclick="return sketchBookModify('<%=mySketchBookLists.get(i*3+j).getSketch_id()%>')"><img alt="modi" src="img/sketch/modifyIcon.png"></a></div>
 										<span><%=mySketchBookLists.get(i*3+j).getSketch_title()%> </span>
-										<h5><img alt="likeIcon" src="./img/sketchBookImg/likeIcon.png">
-										<%=sketchLike.get(sketch_id) %></h5>
+										<h5><img alt="likeIcon" src="./img/sketch/likeIcon.png">
+										<%=sketchLike.get(sketch_id) %> <%=mySketchBookLists.get(i*3+j).getSketch_theme()%> <%=mySketchNickname.get(sketch_id) %> </h5>
 										</div>
 										
 								</div>
-								<%-- <a href="./kim.do?sketch_id=<%=mySketchBookLists.get(i*3+j).getSketch_id()%>"><%=mySketchBookLists.get(i*3+j).getSketch_id()%> &nbsp <%=mySketchBookLists.get(i*3+j).getSketch_title()%> &nbsp <%=mySketchBookLists.get(i*3+j).getSketch_spath()%></a> --%>
+								
 							</div>
 							
 					<%
@@ -105,13 +106,13 @@ $(document).ready(function() {
 					<% for(int i = 0 ; i < mySketchBookLists.size()%3 ; i++){
 						String sketch_id = mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_id();	
 					%>
-							<div class="selectTheme" style="background: url('<%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_spath()%>');">
-								<div class="sketchTheme_hover"  style="position: absolute; cursor: pointer;" onclick="location.href='./kim.do?sketch_id=<%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_id()%>'">
+							<div class="selectTheme" style="background-image: url('<%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_spath()%>');">
+								<div class="sketchTheme_hover"  style="cursor: pointer;" onclick="location.href='./kim.do?sketch_id=<%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_id()%>'">
 									<div class="hover_inside">
-										<div><a href="#" style="position: relative; z-index: 100;" onclick="return sketchBookModify('<%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_id()%>')"><img alt="modi" src="img/sketchBookImg/modifyIcon.png"></a></div> 
+										<div><a href="#" onclick="return sketchBookModify('<%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_id()%>')"><img alt="modi" src="img/sketch/modifyIcon.png"></a></div> 
 										<span><%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_title()%></span>
-										<h5><img alt="likeIcon" src="./img/sketchBookImg/likeIcon.png">
-										<%=sketchLike.get(sketch_id)%></h5>
+										<h5><img alt="likeIcon" src="./img/sketch/likeIcon.png">
+										<%=sketchLike.get(sketch_id)%> <%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_theme()%> <%=mySketchNickname.get(sketch_id) %></h5>
 									</div>
 								</div>
 								<a href="./kim.do?sketch_id=<%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_id()%>"><%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_id()%> &nbsp <%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_title()%> &nbsp <%=mySketchBookLists.get((mySketchBookLists.size()/3)*3+i).getSketch_spath()%></a>
@@ -126,58 +127,11 @@ $(document).ready(function() {
 						}
 					%>
 					
-					
-					
-
-					
-					
-					
+				
 					
 					</div>			
 					
-					<%-- <div id="sketchSel" style="width: 500px;">
-					<form action="#" method="post" id="sketchDel" name="sketchDel" onsubmit="return DelchkBox()">
-						<input type="submit" value="스케치북 삭제">
-						<table class='table table-bordered'>
-							<tr>
-								<th><input type='checkbox' id="checkAll"></th>
-								<th>스케치북 아이디</th>
-								<th>스케치북 타이틀</th>
-								<th>스케치북 커버이미지</th>
-								<th>좋아요 Cnt</th>
-								<th>스케치북 수정</th>
-							</tr>
-							
-							<c:forEach  var="dto" items="${mySketchBookLists}">
-							<tr class="firstMysketchBook">
-								<td>
-								<input type="checkbox" name="chkVal" value="${dto.sketch_id}"></td>
-								<td>${dto.sketch_id}</td>
-								<td><a href="./kim.do?sketch_id=${dto.sketch_id}">${dto.sketch_title}</a></td>
-								<td style="background-image:url(${dto.sketch_spath})">${dto.sketch_spath}</td>
-								<td>${sketchLike[dto.sketch_id]}</td>
-								<td>
-								<a href="#" onclick="sketchBookModify('<%=ldto.getUser_email()%>','${dto.sketch_id}')"><img alt="modi" src="img/sketchBookImg/modifyIcon.png"></a>
-								</td>
-							</tr>
-							</c:forEach>
-							<tr class="addMySketchBookTr">
-						
-						</table>
-					</form>
 					
-					
-					<c:forEach  var="imgDto" items="${mySketchBookLists}">
-					<div id="modalIMG1" style="background-image: url('${imgDto.sketch_spath}')">
-					
-					
-					</div>
-					</c:forEach>
-					
-					
-					
-					
-					</div> --%>
 					
 					
 					
@@ -209,6 +163,8 @@ $(document).ready(function() {
 	<script type="text/javascript">
 	var pageCnt = ${pagingDto.getNowPageNo()} 
 	
+	//var chkModify = false;
+	
 	$(window).scroll(function(){
 		//var temp_height= $(document).height()-$(window).height();
 		if($(window).scrollTop() >= $(document).height()-$(window).height()){
@@ -233,29 +189,58 @@ $(document).ready(function() {
 				success: function(msg){
 					alert(msg.addMySketchBook);		
 					alert(msg.addMySketchBook.length);
+					alert(msg.likeMine);
+					alert(msg.mySketchNicknames);
+					var sketchLikes = msg.likeMine;
+					var mySketchNickname = msg.mySketchNicknames;
 					
-					
-					
-					var htmlTable = "";
 				
 						
-						for(var i = 0 ; i < msg.addMySketchBook.length; i++){
-							 htmlTable +="<tr>"+
-								"<td>"+
-								"<input type='checkbox' name='chkVal' value='"+msg.addMySketchBook[i].sketch_id+"'></td>"+
-								"<td>"+msg.addMySketchBook[i].sketch_id+"</td>"+
-								"<td>"+
-								"<a href='./kim.do?sketch_id="+msg.addMySketchBook[i].sketch_id+"'>"+
-								msg.addMySketchBook[i].sketch_title+"</a></td>"+
-								"<td>"+msg.addMySketchBook[i].sketch_spath+"</td>"+
-								"<td></td>"+
-								"<td>"+
-								"<a href='#' onclick='sketchBookModify('"+msg.addMySketchBook[i].sketch_id+"')'><img alt='modi' src='img/sketchBookImg/modifyIcon.png'></a>"+
-								"</td>"+
-								"</tr>";
-						}	
-						//$(".addMySketchBookTr").after(htmlTable);
-						$(htmlTable).appendTo("#table table-bordered");
+						for(var i = 0 ; i <  parseInt(msg.addMySketchBook.length/3); i++){
+							
+							var sketchBookContainer = document.createElement('div');
+							sketchBookContainer.className = 'sketchBookContainer';
+							
+							for(var j = 0; j < 3; j++){
+								
+								 var sketch_id=	msg.addMySketchBook[i*3+j].sketch_id;
+								 //alert(sketch_id);
+									
+								sketchBookContainer.innerHTML += "<div class='selectTheme' style='background-image: url("+msg.addMySketchBook[i*3+j].sketch_spath+")'>"+
+																"<div class='sketchTheme_hover' onclick='goCanvas("+msg.addMySketchBook[i*3+j].sketch_id+")'>"+
+																"<div class='hover_inside'>"+
+																"<div>"+"<a href='#' onclick='return sketchBookModify("+msg.addMySketchBook[i*3+j].sketch_id+")'><img alt='modi' src='img/sketch/modifyIcon.png'></a>"+"</div>"+
+																"<span>"+msg.addMySketchBook[i*3+j].sketch_title+"</span>"+"<h5>"+"<img alt='likeIcon' src='./img/sketch/likeIcon.png'>"+
+																sketchLikes[(sketch_id)]+"</h5>"+"<h5>"+msg.addMySketchBook[i*3+j].sketch_theme+""+mySketchNickname[(sketch_id)]+"</h5>"+
+																"</div></div></div>"; 
+								}
+							$(".sketchBookContent").append(sketchBookContainer);
+						
+							
+						}									
+								
+						if(msg.addMySketchBook.length%3 !=0){ 
+							var sketchBookContainer = document.createElement('div');
+							sketchBookContainer.className = 'sketchBookContainer';		
+						
+							for(var i = 0; i < msg.addMySketchBook.length%3; i++){							
+										
+								var sketch_id= msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_id;
+									
+										
+								sketchBookContainer.innerHTML += "<div class='selectTheme'  style='background-image: url(\""+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_spath+"\")'>"+
+															"<div class='sketchTheme_hover' onclick='goCanvas("+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_id+")'>"+
+															"<div class='hover_inside'>"+
+															"<div>"+"<a href='#' onclick='return sketchBookModify("+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_id+")'><img alt='modi' src='img/sketch/modifyIcon.png'></a>"+"</div>"+
+															"<span>"+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_title+"</span>"+"<h5>"+"<img alt='likeIcon' src='./img/sketch/likeIcon.png'>"+
+															sketchLikes[(sketch_id)]+"</h5>"+"<h5>"+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_theme+""+mySketchNickname[(sketch_id)]+"</h5>"+
+															"</div></div></div>";												
+							}
+	
+							$(".sketchBookContent").append(sketchBookContainer);
+										
+						}		
+						
 						
 				}, error : function() {
 					alert("실패");
@@ -361,6 +346,7 @@ $(document).ready(function() {
 
 
 	function sketchModify(){
+		//chkModify = true;
 		var sketchModiModal = document.getElementById("modiSketchBook");
 		var sketch_theme = $("input[name=sketch_theme]:checked").val();
 		var sketch_share = $("input[name=sketch_share]:checked").val();
@@ -380,6 +366,7 @@ $(document).ready(function() {
 		} else {
 			sketchModiModal.submit();
 			alert("스케치북 수정완료");
+			//chkModify = false;
 		}
 	}
 
@@ -428,9 +415,7 @@ $(document).ready(function() {
 //------------------- 작성 스케치북 완전 다중 삭제 ----------------- 
 	
 	
-	
-	
-	
+
 	
 	</script>
 	

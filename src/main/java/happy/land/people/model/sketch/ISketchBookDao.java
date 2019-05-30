@@ -1,4 +1,4 @@
-package happy.land.people.model;
+package happy.land.people.model.sketch;
 
 import java.util.List;
 import java.util.Map;
@@ -65,4 +65,8 @@ public interface ISketchBookDao {
 	
 	// 페이징 처리를 위한 스케치북 카운트 조회
 	public int sketchCntTheme(String theme);
+
+	// 스케치북 작성자 닉네임 조회
+	public String selectNickname(String sketch_id);
+	
 }

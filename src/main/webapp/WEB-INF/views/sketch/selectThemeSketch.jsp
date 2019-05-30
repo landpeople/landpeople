@@ -9,6 +9,7 @@
 	List<LPSketchbookDto> sketchList = (List<LPSketchbookDto>)request.getAttribute("sketchBook");
 	Map<String,Integer> sketchLike = ( Map<String,Integer> )request.getAttribute("sketchLike");
 	Map<String,Integer> sketchLikes = ( Map<String,Integer> )request.getAttribute("sketchLike");
+	Map<String, String> sketchNickname = (Map<String, String>)request.getAttribute("sketchNickname");
 	String type = (String)request.getAttribute("type");
 %>
 	
@@ -20,7 +21,7 @@
 </head>
 
 <script src="./js/jquery-3.3.1.js"></script>
-<script src="./js/sketchbook/sketchbook.js"></script>
+<script src="./js/sketch/sketchbook.js"></script>
 <link rel="stylesheet" href="./css/lp-style.css">
 <link rel="stylesheet" href="./css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -58,8 +59,8 @@
 								<div class="sketchTheme_hover" onclick="location.href='./kim.do?sketch_id=<%=sketchList.get(i*3+j).getSketch_id()%>'"><!-- onclick="sketchSelectTheme('나홀로')" -->
 									<div class="hover_inside">
 										<span><%=sketchList.get(i*3+j).getSketch_title()%></span>
-										<h5><img alt="likeIcon" src="./img/sketchBookImg/likeIcon.png"> 
-										<%=sketchLike.get(sketch_id)%></h5>
+										<h5><img alt="likeIcon" src="./img/sketch/likeIcon.png"> 
+										<%=sketchLike.get(sketch_id)%> <%=type%> <%=sketchNickname.get(sketch_id)%></h5>
 									</div>
 								</div>
 								
@@ -87,8 +88,8 @@
 								<div class="sketchTheme_hover" onclick="location.href='./kim.do?sketch_id=<%=sketchList.get((sketchList.size()/3)*3+i).getSketch_id()%>'">
 									<div class="hover_inside">
 										<span><%=sketchList.get((sketchList.size()/3)*3+i).getSketch_title()%></span>
-										<h5><img alt="likeIcon" src="./img/sketchBookImg/likeIcon.png"> 
-										<%=sketchLike.get(sketch_id)%></h5>
+										<h5><img alt="likeIcon" src="./img/sketch/likeIcon.png"> 
+										<%=sketchLike.get(sketch_id)%> <%=type%> <%=sketchNickname.get(sketch_id)%> </h5>
 									</div>
 								</div>
 								
@@ -132,7 +133,7 @@
 	
 	function getSketchBook(pageNo){		
 		var type = "${type}"
-		var sketchLikes = "${sketchLikes}"
+				
 			
 			$.ajax({
 				url: "sketchBookPaging.do",
@@ -141,9 +142,12 @@
 				dataTypes: "json",
 				success: function(msg){
 					alert(msg.addSketchBook.length);		
-					var sketchLikes = msg.like;
+					var sketchLikes = msg.likeTheme;
+					var sketchNicknames = msg.sketchNicknames;
 					
-					alert(sketchLikes);
+
+					alert(sketchNicknames);
+					//alert(sketchLikes);
 					//var content =  document.getElementsByClassName("content")[0];
 					var sketchBookContent= document.getElementsByClassName("sketchBookContent")[0];
 					
@@ -155,9 +159,14 @@
 						
 						for(var j = 0; j < 3; j++){
 						
+						 var sketch_id=	msg.addSketchBook[i*3+j].sketch_id;
+						 //alert(sketch_id);
+							
 						sketchBookContainer.innerHTML += "<div class='selectTheme' style='background-image: url("+msg.addSketchBook[i*3+j].sketch_spath+")'>"+
 														"<div class='sketchTheme_hover' onclick='goCanvas("+msg.addSketchBook[i*3+j].sketch_id+")'>"+
-														"<div class='hover_inside'>"+"<span>"+msg.addSketchBook[0].sketch_title+"</span>"+"<h5>"+"<img alt='likeIcon' src='./img/sketchBookImg/likeIcon.png'></h5>"+
+														"<div class='hover_inside'>"+"<span>"+msg.addSketchBook[i*3+j].sketch_title+"</span>"+"<h5>"+"<img alt='likeIcon' src='./img/sketch/likeIcon.png'>"+
+														sketchLikes[(sketch_id)]+"</h5>"+
+														"<h5>"+type+"</h5>"+"<h5>"+sketchNicknames[(sketch_id)]+"<h5>"+
 														"</div></div></div>"; 
 						}
 						$(".sketchBookContent").append(sketchBookContainer);
@@ -178,7 +187,9 @@
 							 //style='background: url('"+msg.addSketchBook[i].sketch_spath+"');"
 							sketchBookContainer.innerHTML += "<div class='selectTheme'  style='background-image: url(\""+msg.addSketchBook[parseInt(parseInt(msg.addSketchBook.length/3)*3+i)].sketch_spath+"\")'>"+
 															"<div class='sketchTheme_hover' onclick='goCanvas("+msg.addSketchBook[parseInt(parseInt(msg.addSketchBook.length/3)*3+i)].sketch_id+")'>"+
-															"<div class='hover_inside'>"+"<span>"+msg.addSketchBook[parseInt(parseInt(msg.addSketchBook.length/3)*3+i)].sketch_title+"</span>"+"<h5>"+"<img alt='likeIcon' src='./img/sketchBookImg/likeIcon.png'></h5>"+
+															"<div class='hover_inside'>"+"<span>"+msg.addSketchBook[parseInt(parseInt(msg.addSketchBook.length/3)*3+i)].sketch_title+"</span>"+"<h5>"+"<img alt='likeIcon' src='./img/sketch/likeIcon.png'>"+
+															sketchLikes[(sketch_id)]+"</h5>"+
+															"<h5>"+type+"</h5>"+"<h5>"+sketchNicknames[(sketch_id)]+"<h5>"+
 															"</div></div></div>";												
 						}
 						
@@ -195,16 +206,6 @@
 	
 	
 	}
-	
-	
-	// 무한스크롤 후 캔버스 조회 페이지로 이동
-	function goCanvas(sketch_id) {
-		//alert(sketch_id);
-		location.href="./kim.do?sketch_id="+sketch_id;
-	}
-	
-	
-	
 	
 	
 	

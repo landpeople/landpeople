@@ -8,7 +8,7 @@
 <title>index</title>
 
 <script src="./js/jquery-3.3.1.js"></script>
-<script src="./js/sketchbook/sketchbook.js"></script>
+<script src="./js/sketch/sketchbook.js"></script>
 <link rel="stylesheet" href="./css/lp-style.css">
 <link rel="stylesheet" href="./css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>

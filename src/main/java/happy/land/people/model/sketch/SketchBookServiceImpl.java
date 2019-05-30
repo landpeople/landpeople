@@ -1,4 +1,4 @@
-package happy.land.people.model;
+package happy.land.people.model.sketch;
 
 import java.util.List;
 import java.util.Map;
@@ -147,6 +147,12 @@ public class SketchBookServiceImpl implements ISketchBookService {
 	public int sketchCntTheme(String theme) {
 		logger.info("service sketchCntTheme 페이징 처리를 위한 스케치북 카운트 조회 {}", theme);
 		return iSketchBookDao.sketchCntTheme(theme);
+	}
+
+	@Override
+	public String selectNickname(String sketch_id) {
+		logger.info("service selectNickname 스케치북 작성자 닉네임 조회 {}", sketch_id);
+		return iSketchBookDao.selectNickname(sketch_id);
 	}
 
 
