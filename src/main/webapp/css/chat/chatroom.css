@@ -9,7 +9,8 @@ body {
 
 table {
 	border: 1px solid #B4B4B4;
-	border-collapse: collapse;
+/* 	border-collapse: collapse; */
+	border-radius: 15px;
 }
 
 .message_area { /* 메시지 전송창 전체 div*/
@@ -18,7 +19,7 @@ table {
 	height: 400px;
 	overflow: auto;
 	overflow-x: hidden;
-	background: #F3F3F3;
+	background: #656f78;
 }
 
 .noticeTxt {
@@ -31,7 +32,7 @@ table {
 	padding-bottom: 5px;
 	padding-left: 20px;
 	padding-right: 20px;
-	background: white;
+	background: #c0c0c0;
 	border-radius: 3px;
 }
 
@@ -92,13 +93,29 @@ table {
 }
 
 .chat_btn {
-	margin-top: 0px;
-	margin-left: 5px;
-	width: 52px;
-	height: 31px;
+	margin: 0px;
+	width: 60px;
+	height: 60px;
+	padding: 0px;
+	border: 0px;
+	background-color: #495057;
 	background-image: url('images/btn_send.png');
 	background-size: 100% 100%;
 	display: inline-block;
+	cursor: pointer;
+}
+
+.file_btn{
+	margin: 0px;
+	width: 60px;
+	height: 60px;
+	padding: 0px;
+	border: 0px;
+	background-color: #495057;
+	background-image: url('images/btn_send.png');
+	background-size: 100% 100%;
+	display: inline-block;
+	cursor: pointer;
 }
 
 .memListBox {
@@ -140,11 +157,44 @@ table {
 }
 
 .chat_div {
-	background-color: #495057;
 	border:0;
 	border-radius: 15px;
 	color:white;
+	width: 513px;
 	height: 60px;
 	overflow-y: auto;
 	opacity: 1;
+	margin-top: 0px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	display:flex;
+	justify-content: center;
+	align-items: center;
 }
+
+#allContent{
+	background-color: #656f78;
+}
+
+#txtarea{
+	width: 342px;
+	height: 60px;
+	margin: 0px;
+	border-right: 1px solid #808080;
+	border-left: 1px solid #808080;
+	border-top: 0px;
+	border-bottom: 0px;
+	padding: 0px;
+	padding-left: 8px;
+	background-color: #495057;
+	color: white;
+}
+
+#file_btn{
+	border-radius: 15px 0px 0px 15px;
+}
+
+#message_btn{
+	border-radius: 0px 15px 15px 0px;
+}
+

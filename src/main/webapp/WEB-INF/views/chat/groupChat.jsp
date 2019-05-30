@@ -218,6 +218,7 @@
 </head>
 <link rel="stylesheet" href="./css/chat/chatroom.css">
 <body>
+<div id="allContent">
 	<table id="content">
 		<tr>
 			<td width="360x" height="390px" align="center">
@@ -232,24 +233,29 @@
 		</tr>
 	</table>
 
-	<div class="chat_div" style="display: none; margin-top: 10px; display:flex;" >
-		<span>
-			<form id="fileForm" style="display:inline-block;"><label for="file"><button><img alt="" src="./img/sendMessage.png"></button></label>
-			<input id="file" type="file" name="file" accept="image/*" style="display: none;"> </form>
-		</span>	
-		<span style="">
-			<input type="text" id="txtarea" class="chat" onKeypress="if(event.keyCode==13) $('.chat_btn').click();" />
-		</span>
-		<span>	
-			<button class="chat_btn" value="전송"><img alt="" src="./img/sendMessage.png"></button>
-		</span>
-<!-- 			<input type="button" class="exit_btn" value="나가기" /> -->
-<!-- 			<input type="image" id="destination" /> -->
+	<div class="chat_div">
+			<span>
+				<form id="fileForm" style="display:inline-block;">
+					<label for="file">
+						<button id="file_btn" class="file_btn"><img src="./img/sendFile.png"></button>
+					</label>
+					<input id="file" type="file" name="file" accept="image/*" style="display: none;"> 
+				</form>
+			</span>	
+			<span style="">
+				<input type="text" id="txtarea" class="chat" onKeypress="if(event.keyCode==13) $('.chat_btn').click();" />
+			</span>
+			<span>	
+				<button id="message_btn" class="chat_btn" value="전송"><img alt="" src="./img/sendMessage.png"></button>
+			</span>
+	<!-- 			<input type="button" class="exit_btn" value="나가기" /> -->
+	<!-- 			<input type="image" id="destination" /> -->
 	</div>
 	그룹아이디 :
 	<%=chr_id%>
 	나의아이디 :
 	<%=user%>
+</div>
 </body>
 <script type="text/javascript">
 document.getElementById("file").onchange = function (){
