@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -45,6 +46,7 @@ public class FreeController {
 	@RequestMapping(value="/upload.do", method=RequestMethod.POST)
 	public String uploadPage(HttpSession session,String nowPageNo,String selectType){
     	// 페이지 번호 , 캔버스 id  
+		System.out.println("타입 : "+selectType);
     	String sketch_id = (String)session.getAttribute("sketch_id");
     	LPCanvasDto dto = new LPCanvasDto("0001", sketch_id, "제목은 대충", "내용도 아무거나", selectType, nowPageNo);
     	session.setAttribute("canvas", dto);    	
@@ -56,13 +58,7 @@ public class FreeController {
 	public String upload(MultipartHttpServletRequest mr, String text_no, HttpServletRequest request, Model model) {
 		List<MultipartFile> tt = (List<MultipartFile>) mr.getFiles("file");
 		
-		MultipartFile uploadfile = null;
-		
-		if(text_no.length()==4) {
-			uploadfile = tt.get(Integer.parseInt(text_no.substring(3))-1);
-		}else {
-			uploadfile = tt.get(Integer.parseInt(text_no.substring(4))-1);
-		}
+		MultipartFile uploadfile = tt.get(Integer.parseInt(text_no.substring((text_no.length()-1)))-1);
 		
 		//원래 파일명
 		String filename = uploadfile.getOriginalFilename();
@@ -123,7 +119,7 @@ public class FreeController {
 		
 		// 캔버스 생성 부분 
     	LPCanvasDto canvasDto =  (LPCanvasDto)session.getAttribute("canvas"); 
-    	System.out.println(canvasDto);
+    	System.out.println("캔버스 dto :"+canvasDto);
     	int chk = canvasService.canvasInsert(canvasDto);
     	String canvasID = canvasService.canvasSelectID(canvasDto);
     	canvasDto.setCan_id(canvasID);

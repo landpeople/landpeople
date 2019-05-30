@@ -78,7 +78,7 @@
                
               
 
-               <form action="./insertDaysForm.do" onsubmit="return false" method="post">
+               <form action="./insertDaysForm.do" onsubmit="return false" method="post" id="frm">
                   <input type="hidden" value=1  id="nowPageNo" name="nowPageNo">
               	  <input type="hidden" value="0" id="selectType" name="selectType">
                </form>         
@@ -190,12 +190,12 @@
 		$("#canvasInsertFrom").click(function() {
 			if($('#selectType').val() == "1"){				
 				 var pageNo = $('#nowPageNo').val();
-				 document.forms[0].action = "./insertDaysForm.do";
-				 document.forms[0].submit();				
+				 document.getElementById("frm").action = "./insertDaysForm.do";
+				 document.getElementById("frm").submit();				
 			}else{				
 				 var pageNo = $('#nowPageNo').val();
-				 document.forms[0].action = "./upload.do";
-				 document.forms[0].submit();
+				 document.getElementById("frm").action = "./upload.do";
+				 document.getElementById("frm").submit();
 			}
 		});
 		

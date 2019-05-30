@@ -39,13 +39,12 @@ function setEditor(id, i) {
 }
 		
 function fileUpload(subImgClass) {
-	var frmEle = document.forms[0];
+	var frmEle = document.getElementById("frm");
 	var formData = new FormData(frmEle);
 	for (var i = 0; i < imgs.length; i++) {
 			formData.append("file",$(".file")[i]);
 		}
 			formData.append("text_no",subImgClass);
-
 	$.ajax({
 		url : './uploadFile.do',
 		type : 'post',

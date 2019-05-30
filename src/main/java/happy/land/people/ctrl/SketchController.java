@@ -575,7 +575,7 @@ public class SketchController {
 		int cnt = iSketchBookService.sketchCntTheme(type);			
 		System.out.println("선택한 테마의 종류 = "+type);
 		// 테마별 스케치북 페이징 처리
-		SketchPagingDto pagingDto = new SketchPagingDto(9, 1, cnt, 9);
+		SketchPagingDto pagingDto = new SketchPagingDto(9, 1, cnt, 6);
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("theme", type);
 		map.put("first", String.valueOf(pagingDto.getFirstBoardNo()));
@@ -628,7 +628,7 @@ public class SketchController {
 			
 		int cnt = iSketchBookService.sketchCntTheme(type);
 		System.out.println("화면에 뿌려줄 테마별 스케치북의 총 갯수 = "+cnt);
-		SketchPagingDto pagingDto = new SketchPagingDto(9, Integer.parseInt(pageNo), cnt, 9);
+		SketchPagingDto pagingDto = new SketchPagingDto(9, Integer.parseInt(pageNo), cnt, 6);
 		Map<String,String> map = new HashMap<String,String>();
 		map.put("theme", type);
 		map.put("first", String.valueOf(pagingDto.getFirstBoardNo()));
