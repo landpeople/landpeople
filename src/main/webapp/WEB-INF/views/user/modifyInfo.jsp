@@ -27,15 +27,15 @@
 
 		if (pwchk == "1" 
 				&& pw == passOK) {
-			swal("회원수정 완료", "회원 정보가 수정 되었씁니다");
+			alert("회원 정보가 수정 되었씁니다");
 			return true;
 		}else if(nicknamechk == "1"){
-			swal("회원수정 완료", "회원 정보가 수정 되었씁니다");
+			alert( "회원 정보가 수정 되었씁니다");
 			return true;
 		} 
 		
 		else {
-			swal("회원수정 실패", "회원 정보를 확인해주세요");
+			alert( "회원 정보를 확인해주세요");
 			$("#passOK").val("");
 			$("#pwresult").html("");
 			$("#pwchk").html("");
