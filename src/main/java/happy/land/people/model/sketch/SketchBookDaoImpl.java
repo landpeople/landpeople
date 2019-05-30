@@ -165,9 +165,9 @@ public class SketchBookDaoImpl implements ISketchBookDao {
 
 
 	@Override
-	public List<LPSketchbookDto> sketchSelectLikeTheme(Map<String, String> map) {
-		System.out.println("좋아요 카운팅이 가장 높은 3개 순으로 페이지 처리된 테마별 스케치북 조회"+map);
-		return sqlsession.selectList(NS+"sketch_SelectLikeTheme", map);
+	public List<LPSketchbookDto> sketchSelectMaxLike(String type) {
+		System.out.println("좋아요 카운팅이 가장 높은 스케치북 3개 조회"+type);
+		return sqlsession.selectList(NS+"sketch_SelectMaxLike", type);
 	}
 	
 

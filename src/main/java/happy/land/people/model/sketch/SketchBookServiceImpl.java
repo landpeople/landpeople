@@ -80,8 +80,7 @@ public class SketchBookServiceImpl implements ISketchBookService {
 	}
 
 	
-	
-	
+		
 	@Override
 	public int likeCnt(String sketch_id) {
 		logger.info("service likeCnt 스케치북 좋아요 갯수 조회 실행 {}", sketch_id);
@@ -137,9 +136,9 @@ public class SketchBookServiceImpl implements ISketchBookService {
 
 	
 	@Override
-	public List<LPSketchbookDto> sketchSelectLikeTheme(Map<String, String> map) {
-		logger.info("service sketchSelectLikeTheme 좋아요 카운팅이 가장 높은 3개 순으로 페이지 처리된 테마별 스케치북 조회 실행 {}", map);
-		return iSketchBookDao.sketchSelectLikeTheme(map);
+	public List<LPSketchbookDto> sketchSelectMaxLike(String type) {
+		logger.info("service sketchSelectMaxLike 좋아요 카운팅이 가장 높은 스케치북 3개 조회 실행 {}", type);
+		return iSketchBookDao.sketchSelectMaxLike(type);
 	}
 	
 	
