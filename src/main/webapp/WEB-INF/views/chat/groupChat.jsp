@@ -232,14 +232,19 @@
 		</tr>
 	</table>
 
-	<div class="chat_div" style="display: none; margin-top: 10px;">
-		<input type="text" id="txtarea" class="chat" onKeypress="if(event.keyCode==13) $('.chat_btn').click();" />
-		<input type="button" class="chat_btn" value="전송" />
-		<input type="button" class="exit_btn" value="나가기" />
-		<input type="image" id="destination" />
-		<form id="fileForm">
-			<input id="file" type="file" name="file" accept="image/*"> 
-		</form>
+	<div class="chat_div" style="display: none; margin-top: 10px; display:flex;" >
+		<span>
+			<form id="fileForm" style="display:inline-block;"><label for="file"><button><img alt="" src="./img/sendMessage.png"></button></label>
+			<input id="file" type="file" name="file" accept="image/*" style="display: none;"> </form>
+		</span>	
+		<span style="">
+			<input type="text" id="txtarea" class="chat" onKeypress="if(event.keyCode==13) $('.chat_btn').click();" />
+		</span>
+		<span>	
+			<button class="chat_btn" value="전송"><img alt="" src="./img/sendMessage.png"></button>
+		</span>
+<!-- 			<input type="button" class="exit_btn" value="나가기" /> -->
+<!-- 			<input type="image" id="destination" /> -->
 	</div>
 	그룹아이디 :
 	<%=chr_id%>

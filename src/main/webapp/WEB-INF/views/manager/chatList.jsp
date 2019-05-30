@@ -20,7 +20,6 @@
 		   var chksVal = [];
 		   $('input:checkbox[name="chk"]:checked').each(function () {
 			   chksVal.push($(this).val());
-		      
 		   });
 		      location.href="./deleteChatroom.do?chksVal="+chksVal;
 		}
@@ -28,7 +27,7 @@
 </script>
 <body>
 <table>
-	<button onclick="mutidel()">채팅방 나가기</button>
+	<button onclick="mutidel()" >채팅방 나가기</button>
 	<tr>
 		<th><input type="checkbox" onclick="allSel(this.checked)"></th><th>상대방</th><th>최근메시지</th><th>날짜</th>
 	</tr>
