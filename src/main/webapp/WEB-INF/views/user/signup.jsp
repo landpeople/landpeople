@@ -33,10 +33,10 @@
 
 		if (emailchk == "1" && pwchk == "1" && nicknamechk == "1"
 				&& pw == passOK) {
-			swal("회원가입 완료", "이메일 인증 후 로그인 해주세요");
+			alert("이메일 인증 후 로그인 해주세요");
 			return true;
 		} else {
-			swal("회원가입 실패", "입력 정보를 확인해주세요");
+			alert("입력 정보를 확인해주세요");
 			$("#passOK").val("");
 			$("#pwresult").html("");
 			$("#pwchk").html("");

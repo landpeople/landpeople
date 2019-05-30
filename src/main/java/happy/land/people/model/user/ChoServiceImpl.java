@@ -34,6 +34,7 @@ public class ChoServiceImpl implements IChoService {
 		
 		// 만약에 user_auth가 n 이거나 g면 바로 가입 u면 이메일인증 하기
 		String user_auth = dto.getUser_auth();
+		System.out.println(user_auth);
 		if(user_auth.equals("N")) {
 			return isc;
 		}else if(user_auth.equals("G")) {

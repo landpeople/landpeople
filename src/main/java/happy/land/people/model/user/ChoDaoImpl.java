@@ -29,8 +29,28 @@ public class ChoDaoImpl implements IChoDao {
 		
 		String user_email = dto.getUser_email();
 		int n = session.selectOne(NS + "emailDupChk", user_email);
-		if(n > 0) {
+		
+		
+		
+		System.out.println("n의값"+n);
+		System.out.println("dto다오임플에서:"+dto);
+		ChoDto edto =session.selectOne(NS+"emailAuthChk", dto);
+		System.out.println(edto);
+		
+		if(n > 0 && dto.getUser_auth().equalsIgnoreCase("U")) {
 			return false; // 이미 회원 가입된 사람이라면 바로 화면에서 빠져나오도록 함
+		}else if(n>0 && dto.getUser_auth().equalsIgnoreCase("N")) {
+			if(dto.getUser_auth().equalsIgnoreCase(edto.getUser_auth())) {
+				System.out.println("이미 네이버로 가입한사람");
+				return true;
+			}else {
+				System.out.println("이미 다른 가입폼으로 같은 이메일로 가입했는데 네이버 또했을시");
+				return false;
+			}
+			
+		}else if(n>0 && dto.getUser_auth().equalsIgnoreCase("G")) {
+			System.out.println("이미 구글로 가입한사람");
+			return true;
 		}
 		
 		
@@ -42,26 +62,26 @@ public class ChoDaoImpl implements IChoDao {
 			dto.setUser_password(passwordEncode);
 			isc = session.insert(NS + "signUp", dto) > 0 ? true : false;
 		}
-//		else if (dto.getUser_auth().equalsIgnoreCase("N")) {
-//			System.out.println("네이버 로그인");
-//			user_email = dto.getUser_email();
+		else if (dto.getUser_auth().equalsIgnoreCase("N")) {
+			System.out.println("네이버 로그인");
+			user_email = dto.getUser_email();
 //			n = session.selectOne(NS + "emailDupChk", user_email);
 //			if (n > 0) {
-//				System.out.println("이미 네이버/구글로 가입한사람");
+//				System.out.println("이미 네이버로 가입한사람");
 //				return true;
 //			}
-//			logger.info("daoimpl에 signup메소드에 네이버입니다");
-//			isc = session.insert(NS + "signUp", dto) > 0 ? true : false;
-		else {
+			logger.info("daoimpl에 signup메소드에 네이버입니다");
+			isc = session.insert(NS + "signUpN", dto) > 0 ? true : false;
+		}else {
 			System.out.println("구글 로그인");
 			user_email = dto.getUser_email();
-			n = session.selectOne(NS + "emailDupChk", user_email);
-			if (n > 0) {
-				System.out.println("이미 구글로 가입한사람");
-				return true;
-			}
+//			n = session.selectOne(NS + "emailDupChk", user_email);
+//			if (n > 0) {
+//				System.out.println("이미 구글로 가입한사람");
+//				return true;
+//			}
 			logger.info("daoimpl에 signup메소드에 구글입니다");
-			isc = session.insert(NS + "signUp", dto) > 0 ? true : false;
+			isc = session.insert(NS + "signUpG", dto) > 0 ? true : false;
 		}
 		return isc;
 	}

@@ -18,6 +18,8 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
+  <link rel="stylesheet" type="text/css" href="./css/sweetalert.css">
+
   <!-- Custom styles for this template-->
   <link href="./css/theme/sb-admin-2.min.css" rel="stylesheet">
 
@@ -33,10 +35,13 @@
 	
 	String apiuser = (String)request.getAttribute("apiuser");
 	
+	String apiEmailDupN = (String)request.getAttribute("apiEmailDupN");
+	
+	String apiEmailDupG = (String)request.getAttribute("apiEmailDupG");
 	if(apiuser != null){
 		%>
 		<script type="text/javascript">
-			alert("네이버or구글 가입자입니다");
+			alert("네이버 또는 구글 가입자 입니다");
 			location.href="./loginPage.do";
 		</script>
 		<%
@@ -55,7 +60,7 @@
 	if(delflag != null){
 		%>
 		<script type="text/javascript">
-			alert("회원탈퇴자입니다 관리자에게 문의하세요");
+			alert("회원탈퇴자입니다. 관리자에게 문의하세요.");
 			location.href="./loginPage.do";
 		</script>
 		<%
@@ -64,7 +69,7 @@
 	if(pwno !=null){
 		%>
 		<script type="text/javascript">
-			alert("패스워드가 일치하지않습니다");
+			alert("패스워드가 일치하지 않습니다.");
 			location.href="./loginPage.do";
 		</script>
 		<%
@@ -73,12 +78,30 @@
 	if(eChk != null){
 		%>
 		<script type="text/javascript">
-			alert("이메일인증후 로그인 가능합니다");
+			alert("이메일 인증 후 로그인이 가능합니다.");
 			location.href="./loginPage.do";
 		</script>
 		<%
 	}
 	
+	
+	if(apiEmailDupN != null){
+		%>
+		<script type="text/javascript">
+			alert("같은 이메일이 구글로그인으로 가입되있습니다");
+			location.href="./loginPage.do";
+		</script>
+		<%
+	}
+	
+	if(apiEmailDupG != null){
+		%>
+		<script type="text/javascript">
+			alert("같은 이메일이 네이버로그인으로 가입되있습니다");
+			location.href="./loginPage.do";
+		</script>
+		<%
+	}
 	
 %>
 

@@ -108,7 +108,7 @@ public class UserController {
 	// 네이버 로그인 성공시 callback호출 메소드
 	@RequestMapping(value = "/callback.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session,
-			ChoDto dto, HttpServletResponse response) throws Exception {
+			ChoDto dto, HttpServletResponse response,HttpServletRequest request) throws Exception {
 		System.out.println("여기는  네이버 callback");
 		OAuth2AccessToken oauthToken;
 		oauthToken = naverLoginBO.getAccessToken(session, code, state);
@@ -140,22 +140,13 @@ public class UserController {
 
 		boolean isc = iChoService.signUp(dto);
 
-		if (!isc) {
-			response.setCharacterEncoding("UTF-8");
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = response.getWriter();
-
-			out.println("<script>alert('이미 존재하는 아이디 입니다!'); location.href='./index.jsp';</script>");
-
-			out.flush();
-
-		} else {
-			System.out.println("isc====" + isc);
-			System.out.println("dto====" + dto);
-			session.setAttribute("ldto", dto);
-		}
-
-		// 왜 true인데 인덱스로 안가는것인가??????????
+		if (isc ==false) {
+			System.out.println("여기는 네이버콜백컨트롤러 구글이메일이랑 네이버 이메일이 같을시 일로옴");
+			String apiEmailDup = "apiEmailDup";
+			request.setAttribute("apiEmailDupN", apiEmailDup);
+			return "user/login";
+		} 
+		session.setAttribute("ldto", dto);
 		return "forward:./index.jsp";
 	}
 
@@ -216,21 +207,16 @@ public class UserController {
 		System.out.println(dto);
 
 		boolean isc = iChoService.signUp(dto);
-
-		if (!isc) {
-			response.setCharacterEncoding("UTF-8");
-			response.setContentType("text/html; charset=UTF-8");
-			PrintWriter out = response.getWriter();
-
-			out.println("<script>alert('이미 존재하는 아이디 입니다!'); location.href='./index.jsp';</script>");
-
-			out.flush();
-		} else {
-
-			System.out.println("isc====" + isc);
-			System.out.println("dto====" + dto);
-			session.setAttribute("ldto", dto);
-		}
+		System.out.println(isc);
+		
+		if (isc ==false) {
+			System.out.println("여기는 네이버콜백컨트롤러 구글이메일이랑 네이버 이메일이 같을시 일로옴");
+			String apiEmailDup = "apiEmailDup";
+			request.setAttribute("apiEmailDupG", apiEmailDup);
+			return "user/login";
+		} 
+		
+		session.setAttribute("ldto", dto);
 		return "forward:./index.jsp";
 	}
 
