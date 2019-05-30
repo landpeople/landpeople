@@ -25,7 +25,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 
-		var cnames = [ '아이디', '닉네임', '제목', '테마', '공유여부', '삭제여부', '공개여부*' ];
+		var cnames = [ '글번호', '작성자', '제목', '테마', '공유여부', '삭제여부', '공개여부*' ];
 
 		$("#jqGrid").jqGrid({
 

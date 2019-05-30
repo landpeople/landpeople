@@ -177,12 +177,12 @@ public class JangController {
 		ChoDto ldto = (ChoDto) session.getAttribute("ldto");
 		String id = ldto.getUser_nickname();
 		
-		for (int i = 0; i < chrIds.length; i++) {
-			iManagerService.deleteChatroom(chrIds[i], id);
-			System.out.println(chrIds[i]+"번 채팅방 삭제 쿼리 실행!");
-		}
+//		for (int i = 0; i < chrIds.length; i++) {
+//			iManagerService.deleteChatroom(chrIds[i], id);
+//			System.out.println(chrIds[i]+"번 채팅방 삭제 쿼리 실행!");
+//		}
 		
-		return "asd";
+		return "forward:/selectChatList.do";
 	}
 	
 	
