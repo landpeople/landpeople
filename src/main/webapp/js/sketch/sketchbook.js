@@ -54,7 +54,7 @@ function sketchBookMake(user) {
 									"<div class='form-group'>"+
 									"<label>스케치북 커버이미지</label>"+
 										"<div id='moSketchBookCover'>"+
-												"<div id='modalIMG1'>"+
+												"<div id='modalIMG1' style='background-image :url(img/profile.jpg)'>"+
 												"<input type='hidden' name='sketch_spath' class='img_spath0'>"+
 														"<label for='C_IMG1'><img src='./img/folder.png'></label>"+
 														"<input id='C_IMG1' class='file'  name='file' type='file' multiple='multiple' style='display: none;'>"+
@@ -71,9 +71,13 @@ function sketchBookMake(user) {
 
 							$("#makeSketchBook").html(htmlModal);
 							
+														
 							$("input[id=C_IMG1]").change(function(){
+								
 								fileUpload();				
 							});
+								
+		
 							
 						}
 					},

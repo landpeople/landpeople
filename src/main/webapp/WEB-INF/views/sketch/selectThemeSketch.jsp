@@ -5,12 +5,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
+	List<LPSketchbookDto> maxLikeSketchBook = (List<LPSketchbookDto>)request.getAttribute("maxLikeSketchBook");
+	Map<String,Integer> maxLike = (Map<String,Integer>)request.getAttribute("maxLike");
+	Map<String, String> likeSketchNickname = (Map<String, String>)request.getAttribute("likeSketchNickname");
 	SketchPagingDto pagingDto = (SketchPagingDto)request.getAttribute("pagingDto");
 	List<LPSketchbookDto> sketchList = (List<LPSketchbookDto>)request.getAttribute("sketchBook");
 	Map<String,Integer> sketchLike = ( Map<String,Integer> )request.getAttribute("sketchLike");
-	Map<String,Integer> sketchLikes = ( Map<String,Integer> )request.getAttribute("sketchLike");
 	Map<String, String> sketchNickname = (Map<String, String>)request.getAttribute("sketchNickname");
 	String type = (String)request.getAttribute("type");
+	Map<String,Integer> sketchLikes = ( Map<String,Integer> )request.getAttribute("sketchLike");
 %>
 	
 <!DOCTYPE html>
@@ -36,6 +39,7 @@
 	${pagingDto}
 	${sketchBook}
 	${pagingLikeDto}
+	${maxLikeSketchBook}
 <!--젤로 레이아웃- 전체 영역 감싸는 div-->
 	<div class="main-wrapper">
 		<%@include file="../common/Sidebar.jsp"%>
@@ -46,6 +50,74 @@
 				<div class="content">
 					<div class="sketchBookContent">
 					
+					<!-- 좋아요 카운트 top 3 스케치북  -->
+					<% 
+						for(int i =0; i < maxLikeSketchBook.size()/3; i++){
+					%>
+						<div class="sketchBookContainer">
+					<%
+						for(int j = 0; j < 3; j++){
+						String sketch_id = maxLikeSketchBook.get(i*3+j).getSketch_id();
+					%>
+						<div class="selectTheme" style="background-image: url('<%=maxLikeSketchBook.get(i*3+j).getSketch_spath()%>')">
+								<div class="sketchTheme_hover" onclick="location.href='./kim.do?sketch_id=<%=maxLikeSketchBook.get(i*3+j).getSketch_id()%>'">
+									<div class="hover_inside">
+										<span><%=maxLikeSketchBook.get(i*3+j).getSketch_title()%></span>
+										<h5><img alt="likeIcon" src="./img/sketch/likeIcon.png"> 
+										<%=maxLike.get(sketch_id)%> <%=type%> <%=likeSketchNickname.get(sketch_id)%></h5>
+									</div>
+								</div>
+								
+							</div>
+					<%
+						}
+					%>
+						</div>
+						
+					<%
+						}
+					%>	
+					
+											
+					
+					<%
+						if(maxLikeSketchBook.size()%3 !=0){
+					%>
+						<div class="sketchBookContainer">
+					
+					<%
+						for(int i = 0 ; i < maxLikeSketchBook.size()%3 ; i++){
+						String sketch_id = maxLikeSketchBook.get((maxLikeSketchBook.size()/3)*3+i).getSketch_id();	
+					%>
+							<div class="selectTheme" style="background-image: url('<%=maxLikeSketchBook.get((maxLikeSketchBook.size()/3)*3+i).getSketch_spath()%>')">
+								<div class="sketchTheme_hover" onclick="location.href='./kim.do?sketch_id=<%=maxLikeSketchBook.get((maxLikeSketchBook.size()/3)*3+i).getSketch_id()%>'">
+									<div class="hover_inside">
+										<span><%=maxLikeSketchBook.get((maxLikeSketchBook.size()/3)*3+i).getSketch_title()%></span>
+										<h5><img alt="likeIcon" src="./img/sketch/likeIcon.png"> 
+										<%=maxLike.get(sketch_id)%> <%=type%> <%=likeSketchNickname.get(sketch_id)%></h5>
+									</div>
+								</div>
+								
+							</div>
+					<%
+						}
+					%>
+						</div>
+						
+					<%
+						}
+					%>	
+					
+					
+					
+					
+					
+					
+					
+					
+						
+						
+					<!-- 일반 테마별 스케치북 조회 3*2 -->
 					<% 
 						for(int i =0; i < sketchList.size()/3 ; i++ ) { 
 					%>

@@ -160,7 +160,7 @@ iframe {
 	height: 100px;
 	/* float: left; */
 	margin: 0px 20px 30px 20px;
-	background-image :url("../img/profile.jpg");
+	
 	background-size: contain;
  	background-repeat: no-repeat;
  	background-position: center;
