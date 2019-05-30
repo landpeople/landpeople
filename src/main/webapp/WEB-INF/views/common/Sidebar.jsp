@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <script type="text/javascript" charset="utf-8" src="./js/chat/timeoutchk.js"></script>
 <script src="./js/sketchbook/sketchbook.js"></script>
 <script src="./js/chat/chat.js"></script>
@@ -27,10 +27,14 @@
 	<div class="main-navigation">
 		<ul class="navigation">
             <li><a href='#' onclick='history.back(-1);'>뒤로가기 </a></li>
+			<c:if test="${empty ldto}">
 			<li><a href="./loginPage.do">로그인 </a></li>
+			</c:if>	
+			<c:if test="${not empty ldto}">
 			<li><a href="./logout.do">로그아웃</a></li>
 			<li><a href="#" onclick="sketchBookMake('${ldto.user_email}')">여행일정 작성</a></li>
 			<li><a href="#">마이페이지</a></li>
+			</c:if>		
 			<li><a href="./jang.do">관리자 페이지</a></li>
 		</ul>
 	</div>
