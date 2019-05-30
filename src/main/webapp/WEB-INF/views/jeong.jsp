@@ -33,7 +33,7 @@
 				 		
 				 		<a href="#" onclick="scrape('${ldto.user_email}')"> <img alt="scrape" src="./img/scrape.png"> </a>
 	 				</div>	
-					<input type="button" value="내 스크랩  목록 보기" onclick="scrapeSelectMine('${ldto.user_email}')">
+					<input type="button" value="내 스크랩  목록 보기" onclick="goScrapeMine('${ldto.user_email}')">
 					
 					<form action="#" method="post" id="scrapDiv" name="scrapeDiv" onsubmit="return chkBox()">
 					<input type="submit" value="스크랩 취소">
@@ -125,6 +125,21 @@ var LpScrape = function(user){
 
 
 //---------------------- 스크랩한 스케치북 보기 ---------------------- 
+
+function goScrapeMine(email){
+	alert(email);
+	var user_email = email;
+	location.href ="./SelectScrapeSketch.do?user_email="+user_email;
+}
+
+
+
+
+
+
+
+
+
 
 function scrapeSelectMine(email) {
 //	alert("스크랩 보기");

@@ -38,6 +38,19 @@
 	<!-- 1MB -->
 	</bean>
 	
+	<!-- 파일 업로드 업로드 용량 제한시 Exception 제어하는  exceptionResolver -->
+	<!-- MaxUploadSizeExceededExcepton 발생시 해당 에러 내용이 controller까지 전달되 못하기 때문에  context.xml에서 에러 사항을 제어-->
+	<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> 
+		<property name="exceptionMappings">
+			<props>
+				<prop key="org.springframwork.web.multipart.MaxUploadSizeExceededException">
+					fileOverSizeError
+				</prop>
+			</props>
+		</property>
+	</bean>
+	
+	
    <!-- 추가 기능으로 interceptor -->
    <!-- 가로채가지고, 필터의 기능인데 필터를 사용하지 않고 인터셉트를 사용하는 이유는, filter는 url 화면과 화면을 이동할 
       때 잡아주는거고 -->

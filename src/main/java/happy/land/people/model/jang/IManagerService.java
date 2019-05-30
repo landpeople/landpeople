@@ -20,7 +20,7 @@ public interface IManagerService {
 	
 	public boolean modifyBlock(String id);
 	
-	public List<Map<String, Object>> selectChr();
+	public List<List<Map<String, String>>> selectChr(String id);
 	
 	public boolean deleteChatroom(String chrId, String id);
 }

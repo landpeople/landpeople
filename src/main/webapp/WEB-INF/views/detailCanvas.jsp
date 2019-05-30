@@ -33,7 +33,7 @@
 <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=559fa9d8ea227159941f35acba720d2b&libraries=services"></script>
 
 <!-- 자유 캔버스 레이아웃  -->
-<link rel="stylesheet" href="css/Layout_1.css">
+<link rel="stylesheet" href="css/freeCanvasLayout.css">
 
 <style type="text/css">
 .insertForms{	
@@ -166,11 +166,14 @@
 		});
 		//삭제 버튼 클릭시
 		$("#pageDelete").click(function() {			
-			var pageNo = $('#nowPageNo').val();			
+			var pageNo = $('#nowPageNo').val();		
+			alert(pageNo);
 			$.ajax({
 				url : "deleteCanvas.do", //요청 url
 				type : "post", // 전송 처리방식
+
 				asyn : false, // true 비동기 false 동기				
+
 				data : {"nowPageNo" : pageNo}, // 서버 전송 파라메터
 				dataType : "json", // 서버에서 받는 데이터 타입
 				success : function(msg) {

@@ -158,23 +158,32 @@ public class JangController {
 	
 	// 채팅방 목록 조회
 	@RequestMapping(value="/selectChatList.do")
-	public String selectChatList(Model model) {
+	public String selectChatList(Model model, HttpSession session) {
 		logger.info("Controller selectChatList");
-		List<Map<String, Object>> lists = iManagerService.selectChr();
+		ChoDto ldto = (ChoDto) session.getAttribute("ldto");
+		String id = ldto.getUser_nickname();
+		List<List<Map<String, String>>> lists = iManagerService.selectChr(id);
 		model.addAttribute("resultLists", lists);
 		return "manager/chatList";
 	}
 	
 	// 채팅방 삭제
-	@RequestMapping(value="/deleteChatroom.do")
-	public String deleteChatroom(HttpSession session) {
+	@RequestMapping(value="/deleteChatroom.do", method=RequestMethod.GET)
+	public String deleteChatroom(HttpSession session, HttpServletRequest request) {
 		logger.info("Controller deleteChatroom");
-		String chrId = "8"; // 삭제할 채팅방 ID (테스트용)
+		String chrId = (String) request.getParameter("chksVal");
+		String[] chrIds = chrId.split(",");
 		
 		ChoDto ldto = (ChoDto) session.getAttribute("ldto");
 		String id = ldto.getUser_nickname();
 		
-		iManagerService.deleteChatroom(chrId, id);
+		for (int i = 0; i < chrIds.length; i++) {
+			iManagerService.deleteChatroom(chrIds[i], id);
+			System.out.println(chrIds[i]+"번 채팅방 삭제 쿼리 실행!");
+		}
+		
 		return "asd";
 	}
+	
+	
 }

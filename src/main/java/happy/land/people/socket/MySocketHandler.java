@@ -76,7 +76,7 @@ public class MySocketHandler extends TextWebSocketHandler {
 					if (myGrSession.equals(otherGrSession)) { // 같은 그룹 소속일 때 대화가 가능하도록 처리
 						System.out.println("● MySocketHandler handleTextMessage() 접속 했을 때 메시지 처리 :" + txt);
 						ChatContentDto dto = new ChatContentDto(otherGrSession, otherMemSession, txt);
-						int n = service.chatContent_InsertMsg(dto);
+//						int n = service.chatContent_InsertMsg(dto);
 						s.sendMessage(new TextMessage(txt));
 					}
 				}
