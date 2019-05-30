@@ -6,10 +6,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원가입 인증</title>
-<!-- 회원가입됬으니 이제 이메일인증하라고 알려주는 페이지 -->
+<title>이메일 전송</title>
 </head>
 <body>
-
+<h1>이메일은 전송했습니다</h1>
+<p>이메일 인증후 로그인 가능합니다</p>
+<form action="./loginPage.do" method="get">
+	<input type="submit" value="로그인">
+</form>
 </body>
 </html>
