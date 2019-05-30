@@ -77,32 +77,41 @@ public class ManagerDaoImpl implements IManagerDao {
 	}
 	
 	@Override
-	public List<Map<String, Object>> selectChr() {
+	public List<List<Map<String, String>>> selectChr(String id) {
 		logger.info("ManagerDaoImpl selectChr");
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-		String id = "jang";
-		List<Map<String, Object>> resultLists = new ArrayList<Map<String, Object>>();
+		List<List<Map<String, String>>> resultLists = new ArrayList<List<Map<String, String>>>();
 		List<Map<String, String>> lists = sqlSession.selectList(NS+"selectChr", id);
-		System.out.println("*********lists = "+lists);
-//			System.out.println("****** RECEIVER : "+lists.get(i).get("CHR_RECEIVER"));
 			for (int i = 0; i < lists.size(); i++) {
 				if (lists.get(i).get("CHR_SENDER").equals(id)) { // SENDER가 나인 방의 채팅 상대, 최근 메시지, 날짜 조회
+					logger.info("ManagerDaoImpl selectChrListR");
 					Map<String, String> map = new HashMap<String, String>();
 					map.put("id", id);
 					map.put("chr_id", lists.get(i).get("CHR_ID"));
-					resultMap.put("result"+i, sqlSession.selectList(NS+"selectChrListR", map));
-//					System.out.println(resultMap+"**********"+i);
+					resultLists.add(sqlSession.selectList(NS+"selectChrListR", map));
 				} 
 				else if(lists.get(i).get("CHR_RECEIVER").equals(id)) { // RECEIVER가 나인 방의 채팅 상대, 최근 메시지, 날짜 조회
+					logger.info("ManagerDaoImpl selectChrListS");
 					Map<String, String> map = new HashMap<String, String>();
 					map.put("id", id);
 					map.put("chr_id", lists.get(i).get("CHR_ID"));
-					resultMap.put("result"+i, sqlSession.selectList(NS+"selectChrListS", map));
-//					System.out.println(resultMap+"**********"+i);
+					resultLists.add(sqlSession.selectList(NS+"selectChrListS", map));
 				}
 			}
-			resultLists.add(resultMap);
-			System.out.println(resultLists);
+			// resultLists에 값이 없는 빈 방을 삭제 함
+			for (int i = 0; i < resultLists.size(); i++) {
+//				System.out.println(i+" : "+resultLists.get(i)+" == "+resultLists.get(i).isEmpty());
+				if (resultLists.get(i).isEmpty()) {
+					resultLists.remove(i);
+					i--;
+				}
+			}
+			// CHC_CONTENT의 태그들을 지워주고 내용만 잘라 줌 
+			for (int i = 0; i < resultLists.size(); i++) {
+				logger.info("ManagerDaoImpl CHC_CONTENT.substring");
+				int start = resultLists.get(i).get(0).get("CHC_MESSAGE").indexOf("]")+1;
+				int last = resultLists.get(i).get(0).get("CHC_MESSAGE").lastIndexOf("</span>");
+				resultLists.get(i).get(0).replace("CHC_MESSAGE", resultLists.get(i).get(0).get("CHC_MESSAGE").substring(start, last)) ;
+			}
 			return resultLists;
 	}
 
