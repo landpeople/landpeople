@@ -6,7 +6,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title></title>
+<title>비밀번호찾기</title>
+<!-- 비밀번호 찾기 할 때 이메일 입력하라고 알려주는 페이지 -->
 </head>
 <body>
 

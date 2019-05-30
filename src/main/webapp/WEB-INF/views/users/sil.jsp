@@ -6,9 +6,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title></title>
+<title>로그아웃 세션제거됨?</title>
 </head>
 <body>
+
+
+세션: ${dto}
 
 </body>
 </html>

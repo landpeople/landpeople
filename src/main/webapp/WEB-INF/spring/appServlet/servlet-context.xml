@@ -127,31 +127,17 @@
          <bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"></bean>
       </websocket:handshake-interceptors>
    </websocket:handlers>
-
-
-<!-- google login -->
- <!-- Google 소셜 로그인 연결 설정 -->
-    <bean id="googleOAuth2Template"
-        class="org.springframework.social.google.connect.GoogleOAuth2Template">
-        <constructor-arg
-            value="302749873898-fq7tebgkhe04612h4fm02n6c4hlonrno.apps.googleusercontent.com" />
-        <constructor-arg value="S9hUasoYIzVHxozaEYokHHVd" />
-    </bean>
- 
- 
-    <bean id="googleOAuth2Parameters"
-        class="org.springframework.social.oauth2.OAuth2Parameters">
-        <property name="scope" value="email"></property>
-        <property name="redirectUri" value="http://localhost:8091/LandPeople/callbackgoogle.do" />
-    </bean>
- 
-    <bean id="authInfo" class="happy.land.people.dto.AuthInfo">
-        <constructor-arg
-            value="302749873898-fq7tebgkhe04612h4fm02n6c4hlonrno.apps.googleusercontent.com" />
-        <constructor-arg value="S9hUasoYIzVHxozaEYokHHVd" />
- 
-    </bean>
-	
+  
+   <bean id="googleConnectionFactory" class="org.springframework.social.google.connect.GoogleConnectionFactory">
+   	<constructor-arg value="302749873898-fq7tebgkhe04612h4fm02n6c4hlonrno.apps.googleusercontent.com"/>
+   	<constructor-arg value="S9hUasoYIzVHxozaEYokHHVd"/>
+   </bean>
+   
+   <bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
+   	<property name="scope" value="https://www.googleapis.com/auth/plus.login"/>
+   	<property name="redirectUri" value="http://localhost:8091/LandPeople/callbackgoogle.do"/>
+   
+   </bean>
 </beans>
 
 
