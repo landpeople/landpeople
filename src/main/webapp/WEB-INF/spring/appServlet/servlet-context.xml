@@ -38,6 +38,19 @@
 	<!-- 1MB -->
 	</bean>
 	
+	<!-- 파일 업로드 업로드 용량 제한시 Exception 제어하는  exceptionResolver -->
+	<!-- MaxUploadSizeExceededExcepton 발생시 해당 에러 내용이 controller까지 전달되 못하기 때문에  context.xml에서 에러 사항을 제어-->
+	<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> 
+		<property name="exceptionMappings">
+			<props>
+				<prop key="org.springframwork.web.multipart.MaxUploadSizeExceededException">
+					fileOverSizeError
+				</prop>
+			</props>
+		</property>
+	</bean>
+	
+	
    <!-- 추가 기능으로 interceptor -->
    <!-- 가로채가지고, 필터의 기능인데 필터를 사용하지 않고 인터셉트를 사용하는 이유는, filter는 url 화면과 화면을 이동할 
       때 잡아주는거고 -->
@@ -114,17 +127,31 @@
          <bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"></bean>
       </websocket:handshake-interceptors>
    </websocket:handlers>
-  
-   <bean id="googleConnectionFactory" class="org.springframework.social.google.connect.GoogleConnectionFactory">
-   	<constructor-arg value="302749873898-fq7tebgkhe04612h4fm02n6c4hlonrno.apps.googleusercontent.com"/>
-   	<constructor-arg value="S9hUasoYIzVHxozaEYokHHVd"/>
-   </bean>
-   
-   <bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
-   	<property name="scope" value="https://www.googleapis.com/auth/plus.login"/>
-   	<property name="redirectUri" value="http://localhost:8091/LandPeople/callbackgoogle.do"/>
-   
-   </bean>
+
+
+<!-- google login -->
+ <!-- Google 소셜 로그인 연결 설정 -->
+    <bean id="googleOAuth2Template"
+        class="org.springframework.social.google.connect.GoogleOAuth2Template">
+        <constructor-arg
+            value="302749873898-fq7tebgkhe04612h4fm02n6c4hlonrno.apps.googleusercontent.com" />
+        <constructor-arg value="S9hUasoYIzVHxozaEYokHHVd" />
+    </bean>
+ 
+ 
+    <bean id="googleOAuth2Parameters"
+        class="org.springframework.social.oauth2.OAuth2Parameters">
+        <property name="scope" value="email"></property>
+        <property name="redirectUri" value="http://localhost:8091/LandPeople/callbackgoogle.do" />
+    </bean>
+ 
+    <bean id="authInfo" class="happy.land.people.dto.AuthInfo">
+        <constructor-arg
+            value="302749873898-fq7tebgkhe04612h4fm02n6c4hlonrno.apps.googleusercontent.com" />
+        <constructor-arg value="S9hUasoYIzVHxozaEYokHHVd" />
+ 
+    </bean>
+	
 </beans>
 
 

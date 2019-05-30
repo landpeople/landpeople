@@ -132,7 +132,9 @@ public class LPSketchbookDto {
 	public void setPage(String page) {
 		this.page = page;
 	}
-
+	
+	
+	
 	@Override
 	public String toString() {
 		return "LPSketchbookDto [sketch_id=" + sketch_id + ", user_email=" + user_email + ", sketch_title="

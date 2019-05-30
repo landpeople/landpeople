@@ -65,6 +65,21 @@ html, body {
 	height: 131px;
 }
 
+
+/* iframe 스타일 */
+iframe {
+	frameborder: 0;
+	width: 100%;
+	height: 100%;
+	marginwidth: 0px;
+	marginheight: 0px;
+	scrolling: yes;
+}
+
+
+
+/*----------------- index 페이지 -------------- */
+
 /*header*/
 .content-wrapper {
 	position: relative;
@@ -99,18 +114,31 @@ html, body {
 /* 콘텐츠 영역 스타일 */
 .content {
 	background-color: pink;
-	height: 100%;
+	height:100%;
 }
-/* iframe 스타일 */
-iframe {
-	frameborder: 0;
+
+/* index 페이지 테마별 스케치북 div 4개 감싸는 div */
+.mainSketchTheme{
+	width: 960px;
+	height: 540px;
+	margin: 0 20px 0 20px;
+}
+
+/* index 페이지 테마별 스케치북 div 2개 감싸는 div */
+.halfMainSketchTheme{
 	width: 100%;
-	height: 100%;
-	marginwidth: 0px;
-	marginheight: 0px;
-	scrolling: yes;
+	height: 260px;
+	margin: 0 0 20px;
+	
 }
-/* 모달 스타일 */
+
+
+
+/*----------------- index 페이지 -------------- */
+
+
+
+/*---------------- 모달 스타일 ---------------------- */
 .modal-input{
 	/* float: right; */
 }
@@ -119,19 +147,20 @@ iframe {
 	color: black;	
 }
 
-
+/* 스케치북 커버이미지 div */
 #moSketchBookCover{
 	width: 300px;
 	height: 100px;
 }
 
-
+/* 스케치북 커버이미지 div의 이미지 영역 */
 #modalIMG1{
 	border: 1px solid black;
 	width: 200px;
 	height: 100px;
 	/* float: left; */
 	margin: 0px 20px 30px 20px;
+	
 	background-size: contain;
  	background-repeat: no-repeat;
  	background-position: center;
@@ -164,7 +193,132 @@ iframe {
 }
 
 
-/*푸터 스타일  */
+/*---------------- 모달 스타일 ---------------------- */
+
+/* ---------------------스케치북 테마별 div ----------------- */
+
+
+
+
+.sketchTheme{
+	width: 450px;
+	height: 260px;
+	border: 1px solid black;
+	overflow: hidden;
+	position: relative;
+	display: inline-block;
+	background-size: contain;
+ 	background-repeat: no-repeat;
+ 	background-position: center;
+	
+}
+
+
+/* 스케치북 테마별 div hover*/
+.sketchTheme:hover .sketchTheme_hover {
+	top: 0;
+	opacity: 1;
+	visibility: visible;
+}
+
+/* 스케치북 테마별 div hover div의 css*/
+.sketchTheme_hover {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 20px;
+	left: 0;
+	background: rgba(0, 0, 0, 0.6);
+	opacity: 0;
+	visibility: 0;
+	-webkit-transition: all 200ms linear;
+  	-moz-transition: all 200ms linear;
+  	-ms-transition: all 200ms linear;
+ 	 -o-transition: all 200ms linear;
+ 	 transition: all 200ms linear;
+}
+
+/* hover div의  css*/
+.hover_inside{
+	position: absolute;
+    width: 100%;
+    top : 100px;
+    left: 0;
+    bottom: 0;
+    padding: 20px;
+}
+
+.hover_inside h5{
+	color: white;
+}
+
+.hover_inside span{
+	color: white;
+}
+
+
+
+
+/* ---------------------스케치북 테마별 div ----------------- */
+
+
+
+
+
+/*--------- 선택한 테마의 스케치북 조회-------------------  */
+
+/*스케치북 9개 감싸는 div */
+.sketchBookContent{
+	width: 900px; 
+	height: 760px;
+	/* padding: 0 30px; */
+	margin: 0 30px;
+	
+}
+
+/*스케치북 3개 감싸는 div */
+.sketchBookContainer{
+	width: 100%; 
+	height: 230px;
+	margin: 0 0 20px;
+}
+
+
+
+/* 스케치북 1개 감싸는 div */
+.selectTheme{
+	
+	width: 280px;
+	height: 230px; 
+	border: 1px solid black;	
+	margin: 0 0 0 10px;
+	overflow: hidden;
+	position: relative;
+	display: inline-block;
+ 	background-size: contain;
+ 	background-repeat: no-repeat;
+ 	background-position: center;
+		
+}
+
+.selectTheme:hover .sketchTheme_hover {
+	top: 0;
+	opacity: 1;
+	visibility: visible;
+
+}
+
+
+
+
+
+/*--------- 선택한 테마의 스케치북 조회-------------------  */
+
+
+
+
+
+/*-------------푸터 스타일------------------  */
 .footer {
 	box-sizing: border-box;
 	background-color: black;
