@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>레이아웃 1번</title>
-<!-- 토스트 에디터  -->
+<!-- 토스트 에디터 파일 가져오기 -->
 <link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor.css"></link>
 <link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor-contents.css"></link>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.33.0/codemirror.css"></link>
@@ -25,6 +25,9 @@
 <!-- bootstrap -->
 <script src="./js/min/main.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<!-- summernote css/js -->
+<!-- <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet"> -->
+<!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script> -->
 <!-- js -->
 <script src="./js/freeCanvas/freeCanvas.js" defer="defer"></script>
 <!-- font awesome -->
@@ -57,7 +60,7 @@
 					<input type="hidden" name="list[0].img_spath" class="img_spath0">				
 					<input type="hidden" name="list[0].text_no" value="0"> 
 					<div id="TXT1">
-						<textarea style="width: 100%; height: 100%; resize: none;"></textarea>
+						<textarea style="width: 100%; height: 100%; resize: none;" class="text"></textarea>
 					</div>
 						<input type="hidden" name="list[1].text_content" class="text_content0">
 						<input type="hidden" name="list[1].text_no" value="1"> 

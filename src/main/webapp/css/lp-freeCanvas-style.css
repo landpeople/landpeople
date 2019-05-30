@@ -35,9 +35,7 @@ html, body {
 
 .head-title{
 	height: 85px;
-/* 	background-color: aqua; */
 	margin-bottom: 10px;
-/* 	border-bottom: solid 1px #eaeaea; */
 }
 
 .title{
@@ -55,6 +53,7 @@ html, body {
 	width: 64px;
 	height: 64px;
 	float: left;
+	cursor: pointer;
 }
 .imageDown{
 	margin-left: 72px;
@@ -75,13 +74,11 @@ html, body {
 
 .article-canvasContent{
 	height: 650px;
-/* 	background-color: fuchsia; */
 	margin-bottom: 10px;	
 }
 
 .footer-icon{
 	height: 85px;
-/* 	background-color: aqua; */
 }
 
 .insertIcon{
