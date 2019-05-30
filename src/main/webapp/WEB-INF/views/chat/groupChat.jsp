@@ -213,6 +213,14 @@
 		    }
 		});
     }
+    
+    $(".file_btn").click(function() {
+//     	$("#file").click(function() {
+			
+// 		});
+
+alert("클랙!");
+    });
 
 </script>
 </head>
@@ -235,10 +243,8 @@
 
 	<div class="chat_div">
 			<span>
-				<form id="fileForm" style="display:inline-block;">
-					<label for="file">
-						<button id="file_btn" class="file_btn"><img src="./img/sendFile.png"></button>
-					</label>
+				<form id="fileForm" class="file_btn" style="display:inline-block;">
+					<img src="./img/sendFile.png" id="file_img" onclick="$('#file').click();">
 					<input id="file" type="file" name="file" accept="image/*" style="display: none;"> 
 				</form>
 			</span>	

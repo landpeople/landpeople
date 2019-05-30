@@ -190,7 +190,7 @@ table {
 	color: white;
 }
 
-#file_btn{
+#fileForm{
 	border-radius: 15px 0px 0px 15px;
 }
 
@@ -198,3 +198,6 @@ table {
 	border-radius: 0px 15px 15px 0px;
 }
 
+#file_img{
+	margin: 14px;
+}
