@@ -1,14 +1,30 @@
 @charset "UTF-8";
 
-.lp-container {
-	width:1000px;
-	height:650px;
-	min-width:1000px;
-	background:white;
-	margin : auto;
+@font-face {
+  font-family: '../fonts/JejuHallasan';
+  src: url('../fonts/JejuHallasan.eot');
+  src: url('../fonts/JejuHallasan.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/JejuHallasan.svg#./fonts/JejuHallasan') format('svg'),
+       url('../fonts/JejuHallasan.ttf') format('truetype'),
+       url('../fonts/JejuHallasan.woff') format('woff'),
+       url('../fonts/JejuHallasan.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
 }
 
-.lp-chatlist{
-	height:100%;
-	width:100%;
+.sidebar-brand-text{
+	font-family: 'JejuHallasan' important!;
+}
+
+.lp-container {
+	width: 1000px;
+	height: 650px;
+	min-width: 1000px;
+	background: white;
+	
+}
+
+.lp-chatlist {
+	height: 100%;
+	width: 100%;
 }

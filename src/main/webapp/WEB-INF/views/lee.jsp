@@ -22,7 +22,7 @@
 <!-- Custom styles for this template-->
 <link href="./css/theme/sb-admin-2.css" rel="stylesheet">
 <link href="./css/theme/lp-template.css" rel="stylesheet">
-
+	
 </head>
 
 <body id="page-top">
@@ -38,26 +38,24 @@
             <div class="sidebar-brand-icon rotate-n-15">
                <i class="fas fa-laugh-wink"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">
-               육지사람
-            </div>
+            <div class="sidebar-brand-text mx-3">육지사람</div>
          </a>
 
          <!-- Divider -->
          <hr class="sidebar-divider">
 
          <!-- Heading -->
-         <div class="sidebar-heading">Interface</div>
+         <div class="sidebar-heading">메뉴</div>
 
          <!-- Nav Item - Pages Collapse Menu -->
          <li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-               <i class="fas fa-fw fa-cog"></i> <span>Admin Page</span>
+               <i class="fas fa-fw fa-cog"></i><span>Admin Page</span>
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                <div class="bg-white py-2 collapse-inner rounded">
                   <h6 class="collapse-header">Custom Components:</h6>
-                  <a class="collapse-item" href="buttons.html">Buttons</a>
-                  <a class="collapse-item" href="cards.html">Cards</a>
+                  <a class="collapse-item" href="buttons.html">회원 목록 조회</a>
+                  <a class="collapse-item" href="cards.html">스케치북 목록 조회</a>
                </div>
             </div></li>
 
@@ -67,9 +65,8 @@
             </a>
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                <div class="bg-white py-2 collapse-inner rounded">
-                  <h6 class="collapse-header">Custom Utilities:</h6>
-                  <a class="collapse-item" href="utilities-color.html">Colors</a>
-                  <a class="collapse-item" href="utilities-border.html">Borders</a>
+                  <h6 class="collapse-header">Utility</h6>
+                  <a class="collapse-item" href="utilities-color.html">회원 정보 수정</a>
                   <a class="collapse-item" href="utilities-animation.html">Animations</a>
                   <a class="collapse-item" href="utilities-other.html">Other</a>
                </div>
@@ -86,22 +83,17 @@
             <div id="collapseChattings" class="collapse" aria-labelledby="headingChattings" data-parent="#accordionSidebar">
                <div class="bg-white py-2 collapse-inner rounded">
                   <div class="chatting">
-                     <h6 class="collapse-header">Custom Utilities:</h6>
+                     <h6 class="collapse-header">채팅 가능 회원 목록 :</h6>
                      <iframe class="panel lp-chatlist" id="lot" frameborder="0"></iframe>
                      <a class="collapse-item" href="utilities-other.html">Other</a>
                   </div>
                </div>
             </div></li>
 
-
-
          <!-- Sidebar Toggler (Sidebar) -->
          <div class="text-center d-none d-md-inline">
             <button class="rounded-circle border-0" id="sidebarToggle"></button>
          </div>
-
-
-
       </ul>
       <!-- End of Sidebar -->
 
@@ -110,7 +102,7 @@
          <!-- flex 레이아웃 content와 푸터 정렬 -->
 
          <!-- Main Content -->
-         <div id="#content">
+         <div id="content" style="display: flex; flex-direction: column;">
 
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -253,15 +245,13 @@
             <!-- End of Topbar -->
 
             <!-- Begin Page Content -->
-            <div class="container-fluid">
-               <div style="display: flex; justify-content: center; height: 100%;">
+               <div style="flex:1; justify-content: center !important; align-content: center !important;">
                   <!-- LandPeople Content Area -->
                   <div class="lp-container">
                      <!-- Page Heading -->
                      <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
                   </div>
                </div>
-            </div>
             <!-- /.container-fluid -->
 
          </div>
