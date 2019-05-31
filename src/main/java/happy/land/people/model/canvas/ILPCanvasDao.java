@@ -7,7 +7,7 @@ import happy.land.people.dto.LPCanvasDto;
 import happy.land.people.dto.LPDaysDto;
 
 public interface ILPCanvasDao {
-	public int canvasCnt(String id);
+	public int canvasCnt(String id);	
 	
 	public List<LPCanvasDto> canvasSelectType(String id);
 		

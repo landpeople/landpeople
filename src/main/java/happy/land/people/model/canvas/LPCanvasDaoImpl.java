@@ -71,6 +71,5 @@ public class LPCanvasDaoImpl implements ILPCanvasDao{
 	public int canvasUpdate(Map<String,String> map)
 	{		 
 		return sqlSession.update("canvas.canvas_Update", map);
-	}
-	
+	}	
 }
