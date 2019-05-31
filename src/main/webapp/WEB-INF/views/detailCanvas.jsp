@@ -68,7 +68,7 @@
 
          <!-- 메인 컨텐츠   -->
          <div class="lpcontents">
-            <div class="content">   
+            <div class="content">               
                 <input type="button" id="downloadExcel"  class="far fa-edit" style="width:64px; height:64px; border: none; background: url('./img/canvas/excelIcon.png')">               
               	<div style="margin-bottom: -15px;">이곳은 스케치북 제목을 적어봅시다.</div>
                <div><hr></div>
