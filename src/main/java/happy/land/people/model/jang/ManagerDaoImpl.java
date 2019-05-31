@@ -81,15 +81,16 @@ public class ManagerDaoImpl implements IManagerDao {
 		logger.info("ManagerDaoImpl selectChr");
 		List<List<Map<String, String>>> resultLists = new ArrayList<List<Map<String, String>>>();
 		List<Map<String, String>> lists = sqlSession.selectList(NS+"selectChr", id);
+		
 			for (int i = 0; i < lists.size(); i++) {
-				if (lists.get(i).get("CHR_SENDER").equals(id)) { // SENDER가 나인 방의 채팅 상대, 최근 메시지, 날짜 조회
+				if (lists.get(i).get("CHR_SENDER").equals(id)) { // SENDER가 나인 방의 RECEIVER, 최근 메시지, 날짜 조회
 					logger.info("ManagerDaoImpl selectChrListR");
 					Map<String, String> map = new HashMap<String, String>();
 					map.put("id", id);
 					map.put("chr_id", lists.get(i).get("CHR_ID"));
 					resultLists.add(sqlSession.selectList(NS+"selectChrListR", map));
 				} 
-				else if(lists.get(i).get("CHR_RECEIVER").equals(id)) { // RECEIVER가 나인 방의 채팅 상대, 최근 메시지, 날짜 조회
+				else if(lists.get(i).get("CHR_RECEIVER").equals(id)) { // RECEIVER가 나인 방의 SENDER, 최근 메시지, 날짜 조회
 					logger.info("ManagerDaoImpl selectChrListS");
 					Map<String, String> map = new HashMap<String, String>();
 					map.put("id", id);
@@ -97,14 +98,15 @@ public class ManagerDaoImpl implements IManagerDao {
 					resultLists.add(sqlSession.selectList(NS+"selectChrListS", map));
 				}
 			}
-			// resultLists에 값이 없는 빈 방을 삭제 함
+			
+			// resultLists에 값이 없는 빈 방을 삭제 함. 안하면 밑에서 태그 잘라줄 때 문제 생김
 			for (int i = 0; i < resultLists.size(); i++) {
-//				System.out.println(i+" : "+resultLists.get(i)+" == "+resultLists.get(i).isEmpty());
 				if (resultLists.get(i).isEmpty()) {
 					resultLists.remove(i);
-					i--;
+					i--; // 1번방이 비어있어서 삭제하면 그 순간 2번방이 1번방으로 땡겨져서 오기 때문에 i--를 해서 1번방으로 땡겨진 2번방을 체크해줘야함
 				}
 			}
+			
 			// CHC_CONTENT의 태그들을 지워주고 내용만 잘라 줌 
 			for (int i = 0; i < resultLists.size(); i++) {
 				logger.info("ManagerDaoImpl CHC_CONTENT.substring");

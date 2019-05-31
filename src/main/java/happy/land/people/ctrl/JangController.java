@@ -161,8 +161,8 @@ public class JangController {
 	public String selectChatList(Model model, HttpSession session) {
 		logger.info("Controller selectChatList");
 		ChoDto ldto = (ChoDto) session.getAttribute("ldto");
-		String id = ldto.getUser_nickname();
-		List<List<Map<String, String>>> lists = iManagerService.selectChr(id);
+		String id = ldto.getUser_nickname(); // 세션에 담긴 아이디를 가져옴
+		List<List<Map<String, String>>> lists = iManagerService.selectChr(id); // id가 들어가있는 모든 채팅방들의 정보를 조회
 		model.addAttribute("resultLists", lists);
 		return "manager/chatList";
 	}
@@ -177,10 +177,10 @@ public class JangController {
 		ChoDto ldto = (ChoDto) session.getAttribute("ldto");
 		String id = ldto.getUser_nickname();
 		
-//		for (int i = 0; i < chrIds.length; i++) {
-//			iManagerService.deleteChatroom(chrIds[i], id);
-//			System.out.println(chrIds[i]+"번 채팅방 삭제 쿼리 실행!");
-//		}
+		for (int i = 0; i < chrIds.length; i++) {
+			iManagerService.deleteChatroom(chrIds[i], id);
+			System.out.println(chrIds[i]+"번 채팅방 삭제 쿼리 실행!");
+		}
 		
 		return "forward:/selectChatList.do";
 	}

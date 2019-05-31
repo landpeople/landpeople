@@ -43,6 +43,7 @@
 
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 <script type="text/javascript">
       var ws = null ;
       var url = null ;
@@ -229,7 +230,7 @@ alert("클랙!");
 <div id="allContent">
 	<table id="content">
 		<tr>
-			<td width="360x" height="390px" align="center">
+			<td width="360px" height="390px" align="center">
 				<div class="message_area" style="border: 1px">
 					<input type="text" id="nickName" value=<%=user%> />
 				</div>
@@ -242,18 +243,18 @@ alert("클랙!");
 	</table>
 
 	<div class="chat_div">
-			<span>
-				<form id="fileForm" class="file_btn" style="display:inline-block;">
-					<img src="./img/sendFile.png" id="file_img" onclick="$('#file').click();">
+			<div>
+				<form id="fileForm" class="file_btn">
+					<i class="far fa-file-image fa-2x" onclick="$('#file').click();"></i>
 					<input id="file" type="file" name="file" accept="image/*" style="display: none;"> 
 				</form>
-			</span>	
-			<span style="">
+			</div>
+			<div>
 				<input type="text" id="txtarea" class="chat" onKeypress="if(event.keyCode==13) $('.chat_btn').click();" />
-			</span>
-			<span>	
-				<button id="message_btn" class="chat_btn" value="전송"><img alt="" src="./img/sendMessage.png"></button>
-			</span>
+			</div>
+			<div>
+				<button id="message_btn" class="chat_btn" value="전송"><i class="far fa-paper-plane fa-2x"></i></button>
+			</div>
 	<!-- 			<input type="button" class="exit_btn" value="나가기" /> -->
 	<!-- 			<input type="image" id="destination" /> -->
 	</div>
@@ -261,6 +262,7 @@ alert("클랙!");
 	<%=chr_id%>
 	나의아이디 :
 	<%=user%>
+	
 </div>
 </body>
 <script type="text/javascript">

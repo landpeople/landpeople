@@ -11,12 +11,12 @@
 <head>
 <meta charset="UTF-8">
 <title>전체 스케치북 조회</title>
-<link rel="stylesheet" href="./css/BoardList.css">
 <link rel="stylesheet" href="./css/manage.css">
 <link rel="stylesheet" type="text/css" media="screen"
 	href="./css/jquery-ui.css" />
 <link rel="stylesheet" type="text/css" media="screen"
 	href="./css/ui.jqgrid.css" />
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 
 <script type="text/javascript" src="./js/BoardList.js"></script>
 <script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
@@ -25,7 +25,7 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 
-		var cnames = [ '글번호', '작성자', '제목', '테마', '공유여부', '삭제여부', '공개여부*' ];
+		var cnames = [ '글번호', '작성자', '제목', '테마', '공유여부', '공개여부*' ];
 
 		$("#jqGrid").jqGrid({
 
@@ -55,7 +55,7 @@
 			}, {
 				name : 'SKETCH_TITLE',
 				index : 'sketch_title',
-				width : 220,
+				width : 300,
 				align : 'center'
 			}, {
 				name : 'SKETCH_THEME',
@@ -65,11 +65,6 @@
 			}, {
 				name : 'SKETCH_SHARE',
 				index : 'sketch_share',
-				width : 75,
-				align : 'center'
-			}, {
-				name : 'SKETCH_DELFLAG',
-				index : 'sketch_delflag',
 				width : 75,
 				align : 'center'
 			}, {
@@ -153,16 +148,19 @@
 			<div class="lpcontents">
 				<div class="content">
 					<div id="jqGridDiv">
-						<button onclick="location.href='./jqgrid.do'" id="memBtn" style="background: gray;"><img alt="전체 회원 보기" src="./img/manager/selectMember.png"><br>전체 회원 보기</button>
-						<button onclick="location.href='./jqgrid2.do'" id="sketBtn"><img alt="전체 스케치북 조회" src="./img/manager/selectSketch.png"><br>전체 스케치북 보기</button>
-							<br>
-						<select id="selectId">
-						<option value="" selected="selected">전체</option>
-						<option value="user_nickname">작성자</option>
-						<option value="sketch_title">제목</option>
-						</select> 
-						<span><input id="input" type="text" placeholder="검색어를 입력하세요" value=""></span> 
-						<span><input id="inputBtn" type="button" value="search" onclick="search()"> </span>
+						<div id="selectDiv">
+							<button onclick="location.href='./jqgrid.do'" id="memBtn" style="background: gray;"><i class="fas fa-users fa-2x"></i><br>전체 회원 보기</button>
+							<button onclick="location.href='./jqgrid2.do'" id="sketBtn"><i class="fas fa-book-open fa-2x"></i><br>전체 스케치북 보기</button>
+								<br>
+							<select id="selectId">
+								<option value="" selected="selected">전체</option>
+								<option value="user_nickname">작성자</option>
+								<option value="sketch_title">제목</option>
+							</select> 
+							<input id="input" type="text" placeholder="검색어를 입력하세요" value="">
+							<button id="inputBtn" onclick="search()"><i class="fas fa-search"></i></button>
+						</div>
+						<hr>
 						<table id="jqGrid"></table>
 						<div id="jqGridPager"></div>
 					</div>
