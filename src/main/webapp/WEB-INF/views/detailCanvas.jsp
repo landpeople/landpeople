@@ -34,6 +34,8 @@
 
 <!-- 자유 캔버스 레이아웃  -->
 <link rel="stylesheet" href="css/freeCanvasLayout.css">
+<!-- font awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 
 <style type="text/css">
 .insertForms{	
@@ -49,14 +51,13 @@
 	font-size:20px;
 	width:430px; 
 	height:35px; 
-	border:2px solid yellow;
-	border-radius: 5px;
-	background: linear-gradient( to right, yellow 2% ,white 4%);
+	border:1px solid #e3e6f0;
+	border-radius: 4px;
+	background: linear-gradient(to right ,yellow 1%, white 1%);
 	padding-left: 20px;
-	box-shadow: 2px 2px 2px 2px gray;	
-	margin-bottom: 5px;
+	box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,59,.15)!important;
+	margin-bottom: 0px;
 }
-
 
 </style>
 </head>
@@ -67,19 +68,20 @@
 
          <!-- 메인 컨텐츠   -->
          <div class="lpcontents">
-            <div class="content">
-               <input type="button" id="downloadExcel">
-                <a href="./canvasDownloadExcel.do">엑셀 다운로드</a>        
-               <div id="custom-menu"></div>
-               <div id="mybook" style="border: 1px solid black;">                 
+            <div class="content">   
+                <input type="button" id="downloadExcel"  class="far fa-edit" style="width:64px; height:64px; border: none; background: url('./img/canvas/excelIcon.png')">               
+              	<div style="margin-bottom: -15px;">이곳은 스케치북 제목을 적어봅시다.</div>
+               <div><hr></div>
+               <div id="custom-menu"></div>              
+               <div id="mybook" style="border: 1px solid black;">                    	            
                   <div>마지막페이지 입니다.</div>
                   <div>마지막페이지 입니다.</div>                 
                </div>
                <c:choose>
-               <c:when test="${user.user_email eq sketch_email}">
-               	<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">페이지 입력</button>
-               	<input type="button" class="btn btn-info btn-lg" id="pageUpdate" value="페이지 수정"></input>
-               	<input type="button" class="btn btn-info btn-lg" id="pageDelete" value="페이지 삭제"></input>
+               <c:when test="${user.user_email eq sketch_email}">                
+               	<button data-toggle="modal" data-target="#myModal" style="width:64px; height:64px; border: none; background: url('./img/canvas/addPage.png')"></button>
+               	<input type="button" style="width:64px; height:64px; border: none; background: url('./img/canvas/editPage.png')" id="pageUpdate"></input>
+               	<input type="button" style="width:64px; height:64px; border: none; background: url('./img/canvas/removePage.png')" id="pageDelete"></input>
                </c:when>
                <c:otherwise>
 	                <div style="float: right; margin-right: 10px; ">
@@ -128,20 +130,39 @@
    </div>
    
 
- <script>  		
-	$("document").ready(function() {		
+ <script>  		 
+ 	
+ 
+	/*  $(".b-current").mouseover(function() {
+		alert("마우스 오버");
+		$(".b-current ul").css("border","2px solid black");
+	}); */
+	 
+	/*  $("document").on("mouseover",".b-current",function(event){
+		 alert("마우스 오버");
+	 }); */
+ 
+	$("document").ready(function() {	
+		
 		 //책 모양 가져오기
  	    $('#mybook').booklet({
  	    		width:  960,
  	            height: 650,
  	            shadow: false,
  	            arrows: true,
+ 	            pageNumbers : false,
  	            change: function(event, data) { 
- 	  			  $('#nowPageNo').val(data.index/2+1); 	  			
- 	  		    },
+ 	  			  $('#nowPageNo').val(data.index/2+1);  	  				
+ 	  		    }, 	  		  
  	  		    menu: '#custom-menu',
- 	  		    pageSelector: true
+ 	  		    pageSelector: true,
+ 	  		 	tabs:  true,
+ 	        	tabWidth:  180,
+ 	        	tabHeight:  20
  	    });				 
+		 
+ 	   
+ 	   
 		// 캔버스 클릭시
 		$(".insertForms").click(function(){
 			// 모든 캔버스 투명도 및 배경색(나중에 이미지로 바뀔예정) 조절
@@ -157,7 +178,9 @@
 		});		
 		// 엑셀로 다운로드
 		$("#downloadExcel").click(function() {
-			alert("엑셀다운~");
+			if(confirm("해당 스케치북의 일정 페이지를 \nExcel파일로 받으시겠습니까?")){
+				location.href="./canvasDownloadExcel.do";				
+			}
 		});
 		// 수정 버튼 클릭시
 		$("#pageUpdate").click(function() {
@@ -551,10 +574,10 @@
 			}, error : function() {
 				alert("실패");
 			}
-		});
-		   
+		});		   
 	}
-
+	
+	
 	</script> 	
 	
 	</body>

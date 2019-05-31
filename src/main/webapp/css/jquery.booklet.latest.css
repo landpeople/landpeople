@@ -58,11 +58,14 @@
 	.booklet .b-overlay-next {right:0;}
 	
    	/* Tab Controls */
-	.booklet .b-tab        {background:#000; height:40px; width:100%; padding:10px 0 0; text-align:center; color:#ccc; position:absolute; font-size:11px;}
-	.booklet .b-tab-prev   {left:0;}
-	.booklet .b-tab-next   {right:0;}
-	.booklet .b-tab:hover  {background:#aaa; color:#000;}	
-	
+	.booklet .b-tab        {background:#000; height:40px; width:100%; padding:10px 0 0; text-align:center; color:#000000; position:absolute; font-size:11px;}
+	.booklet .b-tab-prev   {left:0; background: linear-gradient( to right, orange 1% ,white 1%); border: 1px solid orange;}
+	.booklet .b-tab-next   {right:0; background: linear-gradient( to right, #62b2f1 1% ,white 1%); border: 1px solid #62b2f1;  }
+	/* .booklet .b-tab:hover  {background:#aaa; color:#000; -webkit-transition:background-color 2s, -webkit-transform 2s;
+    transition: background-color 2s} */
+    .booklet .b-tab-prev:hover  {color:#000; background : linear-gradient( to right, orange 15% ,white 40%); }	    
+    .booklet .b-tab-next:hover  {color:#000; background : linear-gradient( to right, #62b2f1 15% ,white 40%); }	
+    	
    	/* Arrow Controls */
 	.booklet .b-arrow          {display:block; position:absolute; text-indent:-9999px; top:0; height:64px; width:44px;}
 	.booklet .b-arrow div      {display:none; text-indent:-9999px; height:64px; width:44px; position:absolute; left:0; top:300px;}
@@ -84,25 +87,25 @@
     .b-p2             {z-index:20;}
     .b-p3             {z-index:30;}
     .b-p4             {z-index:10;}
-    .b-prev           {z-index:40;}
-    .b-next           {z-index:40;}
+    .b-prev           {z-index:40;  border-radius: 5px; }
+    .b-next           {z-index:40;  border-radius: 5px; }
     .b-counter        {z-index:40;}
 	
 /* @Menu Items
 ----------------------------------------*/
-	.b-menu {height:20px; padding:0 0 10px;}
+	.b-menu {height:0px; padding:0 0 0px; margin-bottom: 50px;}
 	
-	.b-selector             {height:20px; position:relative; float:right; border:none; color:#cecece; cursor:pointer; font:normal 12px "Myriad Pro", Myriad, "DejaVu Sans Condensed","Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;}
-	.b-selector .b-current  {padding:0px 10px 0px; line-height:20px; min-width:18px; height:20px; display:block; background:#000; text-align:center;  border-radius: 10px;}
-	.b-selector-page        {width:auto; margin-left:15px;}
+	.b-selector             {width:100px; height:0px; position:relative; float:right; margin-right : 420px; border:none; color:black; cursor:pointer; font:normal 12px "Myriad Pro", Myriad, "DejaVu Sans Condensed","Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;}
+	.b-selector .b-current  {box-shadow: 0 4px 6px 0 hsla(0,0%,0%,0.2); padding:0px 10px 0px; background-color: gray; line-height:20px; min-width:100px; height:20px; display:block; text-align:center;  border-radius: 2px;}
+	.b-selector-page        {width:auto; margin-left:50px;}
 	.b-selector-chapter     {width:auto;}
 	
-	.b-selector:hover            {color:#fff; background-position:left 0;}
-	.b-selector:hover .b-current {background-position:right 0;}
-	.b-selector ul               { border-radius: 10px; overflow:hidden; margin:0; list-style:none !important; position:absolute; top:20px; right:0; padding:0 0 10px; background:#000; width:60px;}
-	.b-selector li               {border:none;}
-	.b-selector a                {color:#cecece; height:14px; text-decoration:none; display:block; padding:5px 10px;}
-	.b-selector a .b-text        {float:left; clear:none;}
-	.b-selector a .b-num         {float:right; clear:none;}
-	.b-selector a:hover          {color:#fff;}
+	.b-selector:hover            {color:#000; background-position:left 0;}
+	.b-selector:hover .b-current { background-position:right 0;}
+	.b-selector ul               { box-shadow: 0 4px 6px 0 hsla(0,0%,0%,0.2);  border-radius: 2px; overflow:hidden; margin:0; list-style:none !important; position:absolute; top:20px; right:0; padding:0 0 0px; background:white; width:120px;}
+	.b-selector li               { border: none; }	
+	.b-selector a                {color:#000; height:14px; text-decoration:none; display:block; padding:5px 10px;}
+	.b-selector a .b-text        {clear:none;}
+	.b-selector a .b-num         {margin-left:38px; text-align: center; clear:none;}
+	.b-selector a:hover          {color:#0000ff;}
 		

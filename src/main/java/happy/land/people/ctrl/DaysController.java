@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -152,6 +153,9 @@ public class DaysController {
 	        headStyle.setBorderBottom(BorderStyle.THIN);
 	        headStyle.setBorderLeft(BorderStyle.THIN);
 	        headStyle.setBorderRight(BorderStyle.THIN);
+	        
+	        //가운데 정렬
+	        headStyle.setAlignment(HorizontalAlignment.CENTER);	        
 	    	 
 	    	// 데이터 부분 생성	   
 		    int rowNo = 1;
@@ -163,6 +167,10 @@ public class DaysController {
 	    		// 아이디가 같으면 같은 일자이므로
 	    		if(!(canvasList.get(i).getCan_id().equalsIgnoreCase(beforeId))) {    			
 	    			sheet = workbook.createSheet(days+"일차");
+	    			sheet.setColumnWidth(0, 20*256);
+	    			sheet.setColumnWidth(1, 10*256);
+	    			sheet.setColumnWidth(2, 10*256);
+	    			sheet.setColumnWidth(3, 50*256);
 	    			row = sheet.createRow(0);
 	          	 	cell = row.createCell(0);
 	    	       	cell.setCellStyle(headStyle);
