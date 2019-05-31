@@ -11,7 +11,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>SB Admin 2 - Blank</title>
+<title>제주도 여행 일정 공유 커뮤니티 | 육지사람</title>
 
 <!-- Custom fonts for this template-->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -21,6 +21,7 @@
 
 <!-- Custom styles for this template-->
 <link href="./css/theme/sb-admin-2.css" rel="stylesheet">
+<link href="./css/theme/lp-template.css" rel="stylesheet">
 
 </head>
 
@@ -30,7 +31,7 @@
    <div id="wrapper">
 
       <!-- Sidebar -->
-      <ul class="navbar-nav bg-gradient-success sidebar sidebar-dark accordion" id="accordionSidebar">
+      <ul class="navbar-nav bg-gradient-lpmain sidebar sidebar-dark accordion" id="accordionSidebar">
 
          <!-- Sidebar - Brand -->
          <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
@@ -38,7 +39,7 @@
                <i class="fas fa-laugh-wink"></i>
             </div>
             <div class="sidebar-brand-text mx-3">
-               육지사람 <sup>2</sup>
+               육지사람
             </div>
          </a>
 
@@ -50,7 +51,7 @@
 
          <!-- Nav Item - Pages Collapse Menu -->
          <li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-               <i class="fas fa-fw fa-cog"></i> <span>마이페이지</span>
+               <i class="fas fa-fw fa-cog"></i> <span>Admin Page</span>
             </a>
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                <div class="bg-white py-2 collapse-inner rounded">
@@ -62,7 +63,7 @@
 
          <!-- Nav Item - Utilities Collapse Menu -->
          <li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-               <i class="fas fa-fw fa-wrench"></i> <span>Utilities</span>
+               <i class="fas fa-user"></i> <span>My page</span>
             </a>
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                <div class="bg-white py-2 collapse-inner rounded">
@@ -70,22 +71,24 @@
                   <a class="collapse-item" href="utilities-color.html">Colors</a>
                   <a class="collapse-item" href="utilities-border.html">Borders</a>
                   <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                  <a class="collapse-item active" href="utilities-other.html">Other</a>
+                  <a class="collapse-item" href="utilities-other.html">Other</a>
                </div>
             </div></li>
 
          <!-- Divider -->
          <hr class="sidebar-divider d-none d-md-block">
 
-
          <!-- Nav Item - Utilities Collapse Menu -->
-         <li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-               <i class="fas fa-fw fa-wrench"></i> <span>Utilities</span>
+         <!-- chatting iframe 영역 -->
+         <li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseChattings" aria-expanded="true" aria-controls="collapseChattings">
+               <i class="fas fa-comments"></i> <span>Chatting</span>
             </a>
-            <div id="collapseUtilities" class="collapse show" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div id="collapseChattings" class="collapse" aria-labelledby="headingChattings" data-parent="#accordionSidebar">
                <div class="bg-white py-2 collapse-inner rounded">
                   <div class="chatting">
-                     <iframe class="panel" id="lot" frameborder="0"></iframe>
+                     <h6 class="collapse-header">Custom Utilities:</h6>
+                     <iframe class="panel lp-chatlist" id="lot" frameborder="0"></iframe>
+                     <a class="collapse-item" href="utilities-other.html">Other</a>
                   </div>
                </div>
             </div></li>
@@ -104,9 +107,10 @@
 
       <!-- Content Wrapper -->
       <div id="content-wrapper" class="d-flex flex-column">
+         <!-- flex 레이아웃 content와 푸터 정렬 -->
 
          <!-- Main Content -->
-         <div id="content">
+         <div id="#content">
 
             <!-- Topbar -->
             <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -250,14 +254,12 @@
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
-               <!-- LandPeople Content Area -->
-               <div class="lp-container">
-                  <!-- Page Heading -->
-                  <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
-
-
-
-
+               <div style="display: flex; justify-content: center; height: 100%;">
+                  <!-- LandPeople Content Area -->
+                  <div class="lp-container">
+                     <!-- Page Heading -->
+                     <h1 class="h3 mb-4 text-gray-800">Blank Page</h1>
+                  </div>
                </div>
             </div>
             <!-- /.container-fluid -->
@@ -310,12 +312,11 @@
    <script src="./js/theme/bootstrap.bundle.min.js"></script>
 
    <!-- Core plugin JavaScript-->
-   <script src="./js/theme/jquery-easing/jquery.easing.min.js"></script>
+   <script src="./js/theme/jquery.easing.min.js"></script>
 
    <!-- Custom scripts for all pages-->
    <script src="./js/theme/sb-admin-2.min.js"></script>
-   
-   
+
    <script src="./js/chat/chat.js"></script>
 </body>
 </html>
