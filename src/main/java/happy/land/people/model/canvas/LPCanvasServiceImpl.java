@@ -80,5 +80,4 @@ public class LPCanvasServiceImpl implements ILPCanvasService{
 		canvasDao.canvasDecreasePage(delMap);				
 		return delChk;
 	}
-
 }
