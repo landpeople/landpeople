@@ -588,8 +588,9 @@ pre code {
 
 .container-fluid {
   width: 100%;
-  padding-right: 0.75rem;
-  padding-left: 0.75rem;
+  height: 100%;
+/*   padding-right: 0.75rem; */
+/*   padding-left: 0.75rem; */
   margin-right: auto;
   margin-left: auto;
 }
@@ -10683,6 +10684,15 @@ a:focus {
   -webkit-animation-timing-function: opacity cubic-bezier(0, 1, 0.4, 1);
   animation-timing-function: opacity cubic-bezier(0, 1, 0.4, 1);
 }
+
+/*landpeople*/
+.bg-gradient-lpmain {
+  background-color: #62b2f1;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(10%, #62b2f1), to(#bfde9a));
+  background-image: linear-gradient(180deg, #62b2f1 10%, #bfde9a 100%);
+  background-size: cover;
+}
+
 
 .bg-gradient-primary {
   background-color: #f8f9fc;

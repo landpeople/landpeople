@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+.lp-container {
+	width:1000px;
+	height:650px;
+	min-width:1000px;
+	background:white;
+	margin : auto;
+}
+
+.lp-chatlist{
+	height:100%;
+	width:100%;
+}
