@@ -2,21 +2,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html id="html">
-<head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="./fonts/stylesheet.css">
 <style>
-#html,#body {
- width: 236px; height: 131px; margin: 0px;
+#html,#body, #timer {
+ width: inherit; height: inherit; margin: 0px;
  	overflow-x: hidden;
  	overflow-y:auto;
 }
 </style>
+
+
+<!-- Custom styles for this template-->
+<link href="./css/theme/sb-admin-2.css" rel="stylesheet">
 <title>Insert title here</title>
-</head>
-<body id="body">
+
 
    채팅 리스트 페이지 : ${ldto.user_nickname }
    <%
@@ -33,7 +33,7 @@
    		System.out.println("SESSION NAME[ " + session_name + " ] SESSION VALUE [ " + session_value + " ]");
    	}
    %>
-
+<div id="test">
    <span id="timer"></span>
    <a href="javascript:refreshTimer();"></a>
    
@@ -50,10 +50,10 @@
          </div>
       </c:when>
       <c:otherwise>
-         <div>로그인 후 채팅이 가능합니다.</div>
+          <a class="collapse-item" href="#">로그인 후 채팅이 가능합니다.</a>
       </c:otherwise>
    </c:choose>
-
+</div>
    <script type="text/javascript" charset="utf-8" src="./js/chat/timeoutchk.js"></script>
    <script type="text/javascript">
 		var refresh = document.getElementById("refresh");
@@ -76,5 +76,3 @@
 		    e.addEventListener("click", click); // 접속한 회원마다 이벤트를 붙여줌
 		});
 	</script>
-</body>
-</html>

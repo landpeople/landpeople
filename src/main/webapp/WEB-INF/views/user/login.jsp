@@ -108,7 +108,7 @@
 
 
 
-<body class="bg-gradient-primary"><!-- 배경색을 결정하는 클래스 -->
+<body class="  bg-gray-100"><!-- 배경색을 결정하는 클래스 -->
   <div class="container">
     <!-- Outer Row -->
     <div class="row justify-content-center">
