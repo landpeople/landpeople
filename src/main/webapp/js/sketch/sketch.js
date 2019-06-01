@@ -7,3 +7,4 @@ function sketchSelectTheme(theme){
 	
 	location.href="./sketchBookTheme.do?type="+themeType;
 }
+

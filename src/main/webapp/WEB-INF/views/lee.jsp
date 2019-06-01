@@ -40,24 +40,59 @@
 		<div class="lp-container">
 			<!-- LandPeople Content Area -->
 			<div class="lp-content">
-				<div class="lp-content-wrapper">
-					<div class="item1">1</div>
-					<div class="item2">2</div>
-					<div class="item3">3</div>
-					<div class="item4">4</div>
-			</div>
+				<div class="lp-grid-container">
 
+					<article id="" class="location-listing">
+						<a class="location-title" href="#"
+							onclick="sketchSelectTheme('나홀로')">나홀로</a>
+						<div class="location-image">
+							<img class="lp-theme"
+								src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/beijing-768x432.jpg"
+								alt="나홀로">
 
+						</div>
+					</article>
 
+					<article id="" class="location-listing">
+						<a class="location-title" href="#"
+							onclick="sketchSelectTheme('가족여행')">가족여행</a>
+						<div class="location-image">
+							<img class="lp-theme"
+								src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/beijing-768x432.jpg"
+								alt="가족여행">
 
+						</div>
+					</article>
 
+					<article id="" class="location-listing">
+						<a class="location-title" href="#"
+							onclick="sketchSelectTheme('연인과함께')">연인과 함께</a>
+						<div class="location-image">
+							<img class="lp-theme"
+								src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/beijing-768x432.jpg"
+								alt="연인과 함께">
+
+						</div>
+					</article>
+
+					<article id="" class="location-listing">
+						<a class="location-title" href="#"
+							onclick="sketchSelectTheme('친구와함께')">친구와 함께</a>
+						<div class="location-image">
+							<img class="lp-theme"
+								src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/beijing-768x432.jpg"
+								alt="친구와 함께">
+
+						</div>
+					</article>
+				</div>
 			</div>
 		</div>
 		<!-- /.container-fluid -->
+		<%@include file="./common/lp-footer.jsp"%>
 	</div>
 	<!-- End of Main Content -->
 
-	<%@include file="./common/lp-footer.jsp"%>
 </body>
 </html>
 

@@ -15,7 +15,7 @@
 <link href="./css/chat/chatlist.css" rel="stylesheet">
 
 <title>Chatable members</title>
-<body>
+<body id="style-3">
 	<%
 		response.setHeader("P3P", "CP='CAO PSA CONi OTR OUR DEM ONL'"); // iframe 세션이 날아가지 않도록 잡아줌
 		String session_name = ""; // session_name은 세션의 이름으로 저장할 변수
@@ -53,6 +53,8 @@
 						<c:if test="${ldto.user_nickname ne user}">
 							<!-- 내가 아닌 상대방만 접속한 사용자정보에 출력됨 -->
 							<a class="user-list" href="#">${user}</a>
+							<!-- js파일에서 el값을 가져가기 위해 hidden 시켜서 처리 -->
+							<input id='${user}input' type="hidden" value=${ldto.user_nickname}>
 						</c:if>
 					</c:forEach>
 				</div>

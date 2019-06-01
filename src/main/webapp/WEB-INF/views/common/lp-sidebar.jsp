@@ -18,7 +18,7 @@
          <li class="nav-item active">
         	<a class="nav-link" href="index.html">
           	<i class="fas fa-fw fa-tachometer-alt"></i>
-          	<span>Travel Schedule</span></a>
+          	<span>All travel schedule</span></a>
      	</li>
      	
      	<c:if test="${not empty ldto }">
@@ -26,7 +26,7 @@
          <hr class="sidebar-divider">
          
          <div class="lp-nav-btn">
-         <a href="#" class="btn btn-primary btn-icon-split lp-write-btn btn-sl btn-ss"><span class="text">Create Travel Sketchbook</span></a>
+         <a href="#" onclick="sketchBookMake('${ldto.user_email}')" class="btn btn-primary btn-icon-split lp-write-btn btn-sl btn-ss"><span class="text">Create Travel Sketchbook</span></a>
          </div>
 		</c:if>
          <!-- Divider -->
@@ -58,7 +58,7 @@
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                <div class="bg-white py-2 collapse-inner rounded">
                   <h6 class="collapse-header">Components</h6>
-                  <a class="collapse-item" href="utilities-color.html">My information</a>
+                  <a class="collapse-item" href="./mypage.do">My information</a>
                   <a class="collapse-item" href="utilities-animation.html">My sketchbook</a>
                   <a class="collapse-item" href="utilities-animation.html">My chatRoom</a>
                </div>

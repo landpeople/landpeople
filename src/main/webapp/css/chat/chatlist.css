@@ -4,8 +4,10 @@ html, body {
 	width: inherit;
 	height: inherit;
 	margin: 0px;
+	padding: 0px;
 	overflow-x: hidden;
 	overflow-y: auto;
+	overflow-x: hidden
 }
 
 .user-status { /* 로그인 안 했을 때 로그인 필요하다고 알려주는 문구 css*/
@@ -71,4 +73,21 @@ html, body {
 
 .lp-refresh:hover {
 	color: #b7b9cc;
+}
+
+/* 스크롤바 css */
+#style-3::-webkit-scrollbar-track {
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 3px #d2d5dd;
+	background-color: #F5F5F5;
+}
+
+#style-3::-webkit-scrollbar {
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+#style-3::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	background-color: #858796;
 }

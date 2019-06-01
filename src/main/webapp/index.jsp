@@ -117,7 +117,7 @@
 							<div class="sketchTheme" style="margin-right: 10px;">
 									<div class="sketchTheme_hover" onclick="sketchSelectTheme('친구와함께')">
 										<div class="hover_inside">
-											<h5>친구와 함께</h5>
+											<h5>가족여행</h5>
 										</div>
 									</div>
 							</div>

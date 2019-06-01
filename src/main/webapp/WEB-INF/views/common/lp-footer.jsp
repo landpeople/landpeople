@@ -27,7 +27,8 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">로그아웃 하시겠습니까?</h5>
+				<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?
+				</h5>
 				<button class="close" type="button" data-dismiss="modal"
 					aria-label="Close">
 					<span aria-hidden="true">×</span>
@@ -70,3 +71,4 @@
 <script src="./js/theme/sb-admin-2.js"></script>
 <script src="./js/chat/chat.js"></script>
 <script src="./js/sketch/sketch.js"></script>
+<script src="./js/sketch/sketchbook.js"></script>
