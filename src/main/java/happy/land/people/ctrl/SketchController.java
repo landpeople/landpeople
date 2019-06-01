@@ -14,10 +14,8 @@ import java.util.UUID;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.lang3.StringUtils;
 import org.imgscalr.Scalr;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,7 +33,6 @@ import org.springframework.web.util.WebUtils;
 
 import happy.land.people.dto.LPCollectDto;
 import happy.land.people.dto.LPSketchbookDto;
-import happy.land.people.dto.LPUserDto;
 import happy.land.people.dto.SketchPagingDto;
 import happy.land.people.dto.cho.ChoDto;
 import happy.land.people.model.sketch.ISketchBookService;
@@ -48,13 +45,13 @@ public class SketchController {
 	@Autowired
 	private ISketchBookService iSketchBookService;
 	
-	
+	// 스케치북 작성권한 확인
 	@RequestMapping(value="/sketchMakeForm.do", method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String, String> sketchIsWrite(String user_email) {
 		
 		Map<String, String> map = new HashMap<String, String>();
-		// 스케치북 작성권한 확인
+		
 		
 		String user_iswrite = iSketchBookService.sketchSelectWrite(user_email);
 	
@@ -70,14 +67,25 @@ public class SketchController {
 	@RequestMapping(value="/writeSketch.do", method=RequestMethod.POST)
 	public  String makeSketch(LPSketchbookDto dto, HttpServletRequest request) {
 		logger.info("sketchBook 생성 {}", dto);
-		// 스케치북 생성 (제목, 여행테마, 공유 여부)
+		// 스케치북 생성 (제목, 여행테마, 공유 여부, 커버이미지)
 		
 		
 		System.out.println(dto.getSketch_spath());
-		String s_path= makeTumbnail(dto.getSketch_spath(), request);
-		dto.setSketch_spath(s_path);
-		boolean isc = iSketchBookService.sketchInsert(dto);
-		System.out.println(isc);		
+		if(dto.getSketch_spath()==null||dto.getSketch_spath()=="") {
+			
+			dto.setSketch_spath("./img/profile.jpg");
+			boolean isc = iSketchBookService.sketchInsert(dto);
+			System.out.println(isc);	
+		}else {
+			String s_path= makeTumbnail(dto.getSketch_spath(), request);
+			System.out.println("dto에 담기는 s_path 이미지 경로 = "+dto.getSketch_spath());
+			dto.setSketch_spath(s_path);
+			boolean isc = iSketchBookService.sketchInsert(dto);
+			System.out.println(isc);
+		}
+		
+			
+		
 		return "kim";
 	}
 	
@@ -88,8 +96,7 @@ public class SketchController {
 	public String upload(MultipartHttpServletRequest mr, HttpServletRequest request, Model model) {
 		List<MultipartFile> tt = (List<MultipartFile>) mr.getFiles("file");
 		System.out.println("1번 이미지 : "+tt.get(0).getOriginalFilename()); 
-//		System.out.println("2번 이미지 : "+tt.get(1).getOriginalFilename()); 
-//		System.out.println("3번 이미지 : "+tt.get(2).getOriginalFilename()); 
+
 			
 		MultipartFile uploadfile = tt.get(0);
 			
@@ -223,13 +230,13 @@ public class SketchController {
 			result.put("result", "F");
 		}		
 				
-		System.out.println(Lisc+"!!!!!!!!!!!~~!@!@!@!@!@");
-		//logger.info("Controller CancelLike {}", isc);	
+		System.out.println("좋아요 상태 변경 성공 = "+Lisc);
+		
 				
 		return result;
 	}
 	
-	
+	// 스케치북 스크랩
 	@RequestMapping(value="Scrape.do", method=RequestMethod.GET)
 	@ResponseBody
 	public Map<String, String> scrapeState(String user_email, String sketch_id, LPCollectDto dto ) {
@@ -259,7 +266,7 @@ public class SketchController {
 			sresult.put("sresult", "F");
 		}
 		
-		System.out.println(sisc+"!!!!!!!!!!!~~!@!@!@!@!@");
+		System.out.println("스크랩 상태 변경 성공 = "+sisc);
 		return sresult;
 	}
 	
@@ -268,6 +275,7 @@ public class SketchController {
 	//내 스크랩 목록 보기
 	@RequestMapping(value="SelectScrapeSketch.do", method=RequestMethod.GET)
 	public String scrapeListMine(String user_email, Model model){
+		
 		System.out.println("스크랩한 유저 이메일 ="+user_email);
 		// 페이지 처리를 위한 스크랩한 스케치북 카운트 조회
 		int cnt = iSketchBookService.scrapeCnt(user_email);
@@ -293,7 +301,7 @@ public class SketchController {
 			int likeCnt = iSketchBookService.likeCnt(sketch_id);
 			sketchLike.put(sketch_id, likeCnt);
 			// 스케치북 작성자 닉네임 조회
-			String nickname = iSketchBookService.selectNickname(sketch_id);
+			String nickname = iSketchBookService.nicknameSelect(sketch_id);
 			sketchNickname.put(sketch_id, nickname);
 					
 			}
@@ -304,49 +312,7 @@ public class SketchController {
 		model.addAttribute("myScrapeList", myScrapeList);
 		model.addAttribute("sketchLike", sketchLike);
 		model.addAttribute("scrapeSketchNickname", sketchNickname);
-		/*if(lists.size() == 0) {
-			System.out.println(lists.size());
-			String htmlScrape = "";
-			htmlScrape += "<tr>"+
-					"<td colspan='4' style='text-align: center;'>스크랩한 스케치북이 없습니다.</td>"+
-					"</tr>"+
-					"</table>";
-			
-			Map<String, String> scrapeResult = new HashMap<String, String>();
-			scrapeResult.put("scrapeResult", htmlScrape);
-			
-			System.out.println(scrapeResult);
-			
-			return scrapeResult;
-		}else {
-		model.addAttribute(lists);
-		System.out.println(lists.size());
-		//System.out.println(lists.get(0).getSketch_title());
-		//System.out.println(lists.get(0).getSketch_id());
-		String htmlScrape = "";		
-		for (int i = 0; i < lists.size(); i++) {
-			String sketch_id = lists.get(i).getSketch_id();
-		    System.out.println(sketch_id);
-			// 좋아요 갯수 조회
-			int likeCnt = iSketchBookService.likeCnt(sketch_id);
-			System.out.println(likeCnt);
-			
-			htmlScrape += "<tr>"+
-						"<td>"+
-						"<input type='checkbox' name='chkVal' value='"+sketch_id+"'></td>"+
-						"<td>"+lists.get(i).getSketch_title()+"</td>"+
-						"<td>"+lists.get(i).getSketch_spath()+"</td>"+
-						"<td>"+likeCnt+"</td>"+
-						"</tr>"+
-						"</table>";
-		}
 		
-		Map<String, String> scrapeResult = new HashMap<String, String>();
-		scrapeResult.put("scrapeResult", htmlScrape);
-		System.out.println(scrapeResult);
-		
-		return scrapeResult;
-		}*/
 		return "/sketch/selectScrapSketch";
 	}
 	
@@ -368,7 +334,7 @@ public class SketchController {
 		// 스크랩한 스케치북 조회
 		List<LPSketchbookDto> myScrapeListPaging = iSketchBookService.scrapeSelectMine(map);
 		System.out.println(myScrapeListPaging);
-		//model.addAttribute(myScrapeListPaging);
+		
 
 		// 스케치북 id에 따른 카운트 저장할 변수 
 		Map<String,Integer> sketchLike = new HashMap<String,Integer>();
@@ -381,7 +347,7 @@ public class SketchController {
 			int likeCnt = iSketchBookService.likeCnt(sketch_id);
 			sketchLike.put(sketch_id, likeCnt);
 			// 스케치북 작성자 닉네임 조회
-			String nickname = iSketchBookService.selectNickname(sketch_id);
+			String nickname = iSketchBookService.nicknameSelect(sketch_id);
 			sketchNickname.put(sketch_id, nickname);
 					
 			}
@@ -402,6 +368,7 @@ public class SketchController {
 	// 스케치북 스크랩 다중 취소 
 	@RequestMapping(value="multiScrapeUpdate.do", method=RequestMethod.POST)
 	public String scrapeMutilUpdate(String[] chkVal, HttpSession sesseion, Model model) {
+		
 		logger.info("JungController scrapeMutilUpdate {}", Arrays.toString(chkVal));
 		Map<String, String[]>map = new HashMap<String, String[]>();
 		ChoDto ldto = (ChoDto) sesseion.getAttribute("ldto");
@@ -424,6 +391,7 @@ public class SketchController {
 	// 작성 스케치북 조회
 	@RequestMapping(value="sketchSelMine.do", method=RequestMethod.GET)
 	public String selectMySketch(String user_email, Model model) {
+		
 		System.out.println(user_email);
 		// 페이지 처리를 위한 작성 스케치북 카운트 조회
 		int cnt = iSketchBookService.sketchCntMine(user_email);
@@ -446,7 +414,7 @@ public class SketchController {
 			int likeCnt = iSketchBookService.likeCnt(sketch_id);
 			sketchLike.put(sketch_id, likeCnt);
 			// 스케치북 작성자 닉네임 조회
-			String nickname = iSketchBookService.selectNickname(sketch_id);
+			String nickname = iSketchBookService.nicknameSelect(sketch_id);
 			sketchNickname.put(sketch_id, nickname);
 			
 		}
@@ -491,9 +459,9 @@ public class SketchController {
 			int likeCnt = iSketchBookService.likeCnt(sketch_id);
 			sketchLikes.put(sketch_id, likeCnt);
 			// 스케치북 작성자 닉네임 조회
-			String nickname = iSketchBookService.selectNickname(sketch_id);
+			String nickname = iSketchBookService.nicknameSelect(sketch_id);
 			sketchNickname.put(sketch_id, nickname);
-			//model.addAttribute("likeCnt", likeCnt);	
+				
 		}
 		
 		System.out.println("무한스크롤 처리된 작성 스케치북 조회 좋아요 카운트 = "+sketchLikes);
@@ -517,6 +485,7 @@ public class SketchController {
 		Map<String, LPSketchbookDto> map = new HashMap<String, LPSketchbookDto>();
 		map.put("sdto", sdto);
 		System.out.println(sdto.getUser_email());
+		
 		return map;
 	} 
 	
@@ -524,8 +493,12 @@ public class SketchController {
 	@RequestMapping(value="modifySketch.do", method=RequestMethod.POST)
 	public String modifySketchBook(LPSketchbookDto dto) {
 		logger.info("JungController modifySketchBook {}", dto);
-		boolean isc = iSketchBookService.sketchUpdate(dto);
+		System.out.println("수정할 이미지 경로 = "+dto.getSketch_spath().substring(dto.getSketch_spath().indexOf("/LandPeople")));
+		String s_path = dto.getSketch_spath().substring(dto.getSketch_spath().indexOf("/LandPeople"));
+		dto.setSketch_spath(s_path);
 		
+		boolean isc = iSketchBookService.sketchUpdate(dto);
+	
 		System.out.println(isc);
 		return "redirect:/jeong.do";
 	}
@@ -563,7 +536,7 @@ public class SketchController {
 				int likeCnt = iSketchBookService.likeCnt(sketch_id);
 				maxLike.put(sketch_id, likeCnt);
 				// 스케치북 작성자 닉네임 조회
-				String nickname = iSketchBookService.selectNickname(sketch_id);
+				String nickname = iSketchBookService.nicknameSelect(sketch_id);
 				likeSketchNickname.put(sketch_id, nickname);	
 			}
 				
@@ -595,7 +568,7 @@ public class SketchController {
 				int likeCnt = iSketchBookService.likeCnt(sketch_id);
 				sketchLike.put(sketch_id, likeCnt);
 				// 스케치북 작성자 닉네임 조회
-				String nickname = iSketchBookService.selectNickname(sketch_id);
+				String nickname = iSketchBookService.nicknameSelect(sketch_id);
 				sketchNickname.put(sketch_id, nickname);
 			
 			}
@@ -603,8 +576,6 @@ public class SketchController {
 				
 		System.out.println("테마별 스케치북 조회 좋아요 카운팅  = "+sketchLike);
 		System.out.println("테마별 스케치북 조회 닉네임 조회 = "+sketchNickname);	
-		
-		
 		
 		
 		
@@ -648,10 +619,9 @@ public class SketchController {
 			int likeCnt = iSketchBookService.likeCnt(sketch_id);
 			sketchLikes.put(sketch_id, likeCnt);
 			// 스케치북 작성자 닉네임 조회
-			String nickname = iSketchBookService.selectNickname(sketch_id);
+			String nickname = iSketchBookService.nicknameSelect(sketch_id);
 			sketchNickname.put(sketch_id, nickname);
 		
-			//model.addAttribute("likeCnt", likeCnt);	
 		}
 		
 		System.out.println("무한스크롤 처리된 테마별 스케치북 조회 좋아요 카운트 = "+sketchLikes);
@@ -663,6 +633,7 @@ public class SketchController {
 		resultMap.put("likeTheme", sketchLikes);
 		resultMap.put("sketchNicknames", sketchNickname);
 		
+		//themeSketchBookListPaging.get(0).getSketch_block().trim().equalsIgnoreCase("Y");
 		
 		return resultMap;
 	}

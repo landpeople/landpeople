@@ -36,10 +36,10 @@
 
 
 	<body>
-	${pagingDto}
+<%-- 	${pagingDto}
 	${sketchBook}
 	${pagingLikeDto}
-	${maxLikeSketchBook}
+	${maxLikeSketchBook} --%>
 <!--젤로 레이아웃- 전체 영역 감싸는 div-->
 	<div class="main-wrapper">
 		<%@include file="../common/Sidebar.jsp"%>
@@ -47,10 +47,23 @@
 			
 			<!-- 메인 컨텐츠   -->
 			<div class="lpcontents">
-				<div class="content">
-					<div class="sketchBookContent">
+				<div class="content" style="overflow-x: hidden;">
+				<!-- 	<div class="sketchBookContent"> -->
 					
 					<!-- 좋아요 카운트 top 3 스케치북  -->
+					
+					<% 
+						if(maxLikeSketchBook.size() == 0){
+					%>
+						<div class="sketchBookContainer"></div>
+						
+					<%
+						}
+					%>	
+					
+					
+					
+					
 					<% 
 						for(int i =0; i < maxLikeSketchBook.size()/3; i++){
 					%>
@@ -179,8 +192,8 @@
 					
 					
 					
-					</div>	
-					
+				<!-- 	</div>	 -->
+					<button id="infinityScroll" style="width: 100%;">더보기</button>
 				</div>
 			</div>
 			<!-- </div> 여기까지 메인 컨텐츠  -->
@@ -191,17 +204,40 @@
 	// 무한 스크롤 적용된 스케치북 조회
 	var pageCnt = <%=pagingDto.getNowPageNo()%>
 	
-	$(window).scroll(function(){
-		if($(window).scrollTop() >= $(document).height()-$(window).height()){
-			if(pageCnt >= <%=pagingDto.getEndPageNo()%>){
-				alert("마지막페이지 입니다.");
-			}
-			else{
-				pageCnt++;			
-				getSketchBook(pageCnt);		
-			}
-		}
+
+	
+	$("document").ready(
+			function() {
+				$("#infinityScroll").click(
+					function() {
+						$("#infinityScroll").hide();						
+				if(pageCnt >= <%=pagingDto.getEndPageNo()%>){
+					alert("마지막페이지 입니다.");
+				}else{		
+					pageCnt++;			
+					getSketchBook(pageCnt);
+				}
+			});
+				
+				
+				
+		$(".content").scroll(
+				function(event){
+			
+					var hh = $(".content").height();
+					var ee = $(".content").scrollTop();
+					
+					var scHeight = $(".content").prop('scrollHeight');
+					
+					if (scHeight - hh - ee < 1) {
+						$("#infinityScroll").trigger("click");
+					}
+			
+		});
+	
 	});
+	
+
 	
 	function getSketchBook(pageNo){		
 		var type = "${type}"
@@ -218,16 +254,19 @@
 					var sketchNicknames = msg.sketchNicknames;
 					
 
-					alert(sketchNicknames);
-					//alert(sketchLikes);
-					//var content =  document.getElementsByClassName("content")[0];
+					//alert(sketchNicknames);
+					
 					var sketchBookContent= document.getElementsByClassName("sketchBookContent")[0];
+					var content= document.getElementsByClassName("content")[0];
+					/* var sketchBookContent = document.createElement('div');
+					sketchBookContent.className = 'sketchBookContent'; */
 					
 					 
 					for(var i = 0 ; i < parseInt(msg.addSketchBook.length/3) ; i++){
 						
+						
 						var sketchBookContainer = document.createElement('div');
-						sketchBookContainer.className = 'sketchBookContainer';	 //style='background: url('"+msg.addSketchBook[i].sketch_spath+"');"
+						sketchBookContainer.className = 'sketchBookContainer';	 
 						
 						for(var j = 0; j < 3; j++){
 						
@@ -241,7 +280,8 @@
 														"<h5>"+type+"</h5>"+"<h5>"+sketchNicknames[(sketch_id)]+"<h5>"+
 														"</div></div></div>"; 
 						}
-						$(".sketchBookContent").append(sketchBookContainer);
+						//$(".sketchBookContent").append(sketchBookContainer);
+						content.appendChild(sketchBookContainer);
 						//sketchBookContent.appendChild(sketchBookContainer);
 						//		sketchBookContainer.innerHTML = "</div>";
 				
@@ -264,8 +304,8 @@
 															"<h5>"+type+"</h5>"+"<h5>"+sketchNicknames[(sketch_id)]+"<h5>"+
 															"</div></div></div>";												
 						}
-						
-						$(".sketchBookContent").append(sketchBookContainer);
+						content.appendChild(sketchBookContainer);
+						//$(".sketchBookContent").append(sketchBookContainer);
 						//sketchBookContent.appendChild(sketchBookContainer);	
 					}
 						

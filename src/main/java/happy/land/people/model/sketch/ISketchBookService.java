@@ -66,6 +66,6 @@ public interface ISketchBookService {
 	public int sketchCntTheme(String theme);
 	
 	// 스케치북 작성자 닉네임 조회
-	public String selectNickname(String sketch_id);
+	public String nicknameSelect(String sketch_id);
 	
 }

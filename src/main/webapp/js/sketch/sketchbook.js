@@ -73,8 +73,11 @@ function sketchBookMake(user) {
 							
 														
 							$("input[id=C_IMG1]").change(function(){
-								
-								fileUpload();				
+								var imgClass = $(this).attr("id");
+								subImgClass = imgClass.substring(imgClass.indexOf('_')+1);
+								if(extension($("input[id="+imgClass+"]").val())){
+									fileUpload(subImgClass);
+								}
 							});
 								
 		
@@ -87,6 +90,20 @@ function sketchBookMake(user) {
 				});
 	}
 
+	//확장자 확인 (업로드할 수 있는 확장자일시 true)
+	function extension(file){
+		var reg = /gif|jpg|png|jpeg/i;
+		if(reg.test(file)){
+			return true;
+		}else{
+			alert("잘못된 확장자입니다.\n★jpg/png/gif★ 파일만 업로드 가능합니다.");
+			return false;
+		}
+	}
+	
+	
+	
+	
 	// 스케치북 작성 모달 value를 DB에 저장
 	function sketchInsert() {
 		var sketch = document.getElementById("makeSketchBook");
@@ -115,7 +132,7 @@ function sketchBookMake(user) {
 	
 	
 	
-	function fileUpload() {
+	function fileUpload(subImgClass) {
 		var frmEle = document.forms[0];
 		var formData = new FormData(frmEle);
 		

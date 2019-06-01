@@ -179,9 +179,9 @@ public class SketchBookDaoImpl implements ISketchBookDao {
 	}
 
 	@Override
-	public String selectNickname(String sketch_id) {
+	public String nicknameSelect(String sketch_id) {
 		System.out.println("스케치북 작성자 닉네임 조회 = "+sketch_id);
-		return sqlsession.selectOne(NS+"select_Nickname", sketch_id);
+		return sqlsession.selectOne(NS+"nickname_Select", sketch_id);
 	}
 
 	

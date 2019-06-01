@@ -152,16 +152,12 @@
 	<button id="xxxxx">xxxxxxx</button>
 
 	<script>
-		$("document")
-				.ready(
-						function() {
-							$("#xxxxx")
-									.click(
-											function() {
-												$("#yyyyjjj")
-														.append(
-																"<div style='height:50px;'>asdasdsadsadasdasdsadad</div>");
-											});
+		$("document").ready(
+			function() {
+				$("#xxxxx").click(
+					function() {
+						$("#yyyyjjj").append("<div style='height:50px;'>asdasdsadsadasdasdsadad</div>");
+						});
 
 							$("#xxxxx").scroll(function() {
 								console.log('ss');

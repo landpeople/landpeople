@@ -149,9 +149,9 @@ public class SketchBookServiceImpl implements ISketchBookService {
 	}
 
 	@Override
-	public String selectNickname(String sketch_id) {
-		logger.info("service selectNickname 스케치북 작성자 닉네임 조회 {}", sketch_id);
-		return iSketchBookDao.selectNickname(sketch_id);
+	public String nicknameSelect(String sketch_id) {
+		logger.info("service nicknameSelect 스케치북 작성자 닉네임 조회 {}", sketch_id);
+		return iSketchBookDao.nicknameSelect(sketch_id);
 	}
 
 
