@@ -1,30 +1,265 @@
 @charset "UTF-8";
 
 @font-face {
-  font-family: '../fonts/JejuHallasan';
-  src: url('../fonts/JejuHallasan.eot');
-  src: url('../fonts/JejuHallasan.eot?#iefix') format('embedded-opentype'),
-       url('../fonts/JejuHallasan.svg#./fonts/JejuHallasan') format('svg'),
-       url('../fonts/JejuHallasan.ttf') format('truetype'),
-       url('../fonts/JejuHallasan.woff') format('woff'),
-       url('../fonts/JejuHallasan.woff2') format('woff2');
-  font-weight: normal;
-  font-style: normal;
+	font-family: './fonts/JejuHallasan';
+	src: url('./fonts/JejuHallasan.eot');
+	src: url('./fonts/JejuHallasan.eot?#iefix') format('embedded-opentype'),
+		url('./fonts/JejuHallasan.svg#./fonts/JejuHallasan') format('svg'),
+		url('./fonts/JejuHallasan.ttf') format('truetype'),
+		url('./fonts/JejuHallasan.woff') format('woff'),
+		url('./fonts/JejuHallasan.woff2') format('woff2');
+	font-weight: normal;
+	font-style: normal;
 }
 
-.sidebar-brand-text{
-	font-family: 'JejuHallasan' important!;
+.sidebar-brand-text { /* 적용이 안됨 */
+	font-family: 'JejuHallasan' !important;
+}
+
+#content-wrapper {
+	flex: 3;
 }
 
 .lp-container {
+	flex: 1; /* 사이드바의 나머지 영역을 가득 채우기 위함 */
+	display: flex;
+	justify-content: center; /* 자식 요소 정렬 */
+	align-items: center;
+}
+
+.lp-content {
 	width: 1000px;
 	height: 650px;
-	min-width: 1000px;
 	background: white;
-	
+	box-sizing : border-box;
+	padding: 20px;
+	border-radius: 0.4rem !important;
 }
 
 .lp-chatlist {
 	height: 100%;
 	width: 100%;
 }
+
+/* 사이드 바의 버튼 감싸는 div */
+.lp-nav-btn {
+	width: 100%;
+	text-align: center;
+	margin: 0 0 1rem 0;
+	padding: 0 1rem;
+}
+
+.lp-write-btn {
+	width: 100%;
+}
+
+.btn-sl {
+	font-size: 0.85rem !important;
+}
+
+.btn-ss {
+	font-size: 0.65rem;
+}
+
+/* 사이드바의 채팅 div */
+.nav-chat { /**/
+	padding: .5rem 0;
+	/* 	min-width: 10rem; */
+	font-size: 0.85rem;
+	padding-bottom: 0.5rem !important;
+	padding-top: 0.5rem !important;
+	margin: 0 1rem 1rem;
+}
+
+/* 사이드바가 줄어들었을 때 버튼과 채팅 영역 변경 */
+@media ( max-width : 768px) {
+	.nav-chat {
+		display: none;
+	}
+	.btn-ss {
+		font-size: 0.65rem !important;
+	}
+}
+
+/* .lp-content{ */
+/* /* 	display : flex; */
+* /
+	/* /* 	flex-direction: column; */ * /
+	/* /* 	align-items: center; */ * /
+	/* 	padding:20px; */
+	/* /* 	box-sizing: border-box; */ * /
+	/* /* 	justify-content: center; */ * /
+	/* } */    
+
+.lp-content-wrapper {
+	display: grid; /* 하위 요소들은 grid로 정렬 */
+	grid-template-columns: repeat(2, 1fr);
+/* 	grid-gap: 1rem; */
+	/* 	grid-auto-rows: minmax(100px, auto); */
+}
+
+/* /* index 페이지 테마별 스케치북 div 4개 감싸는 div */
+*
+/
+/* .mainSketchTheme{ */
+/* 	width: 960px; */
+/* 	height: 540px; */
+/* 	margin: 0 20px 0 20px; */
+/* } */
+
+/* /* index 페이지 테마별 스케치북 div 2개 감싸는 div */
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+*
+/
+/* .halfMainSketchTheme{ */
+/* 	width: 100%; */
+/* 	height: 260px; */
+/* 	margin: 0 0 20px; */
+
+/* } */
+
+/* /* ---------------------스케치북 테마별 div ----------------- */
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+*
+/
+
+/* .sketchTheme{ */
+/* 	width: 450px; */
+/* 	height: 260px; */
+/* 	border: 1px solid black; */
+/* 	overflow: hidden; */
+/* 	position: relative; */
+/* 	display: inline-block; */
+/* 	background-size: contain; */
+/*  	background-repeat: no-repeat; */
+/*  	background-position: center; */
+
+/* } */
+
+/* /* 스케치북 테마별 div hover*/
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+*
+/
+/* .sketchTheme:hover .sketchTheme_hover { */
+/* 	top: 0; */
+/* 	opacity: 1; */
+/* 	visibility: visible; */
+/* } */
+
+/* /* 스케치북 테마별 div hover div의 css*/
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+*
+/
+/* .sketchTheme_hover { */
+/* 	position: absolute; */
+/* 	width: 100%; */
+/* 	height: 100%; */
+/* 	top: 20px; */
+/* 	left: 0; */
+/* 	background: rgba(0, 0, 0, 0.6); */
+/* 	opacity: 0; */
+/* 	visibility: 0; */
+/* 	-webkit-transition: all 200ms linear; */
+/*   	-moz-transition: all 200ms linear; */
+/*   	-ms-transition: all 200ms linear; */
+/*  	 -o-transition: all 200ms linear; */
+/*  	 transition: all 200ms linear; */
+/* } */
+
+/* /* hover div의  css*/
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+*
+/
+/* .hover_inside{ */
+/* 	position: absolute; */
+/*     width: 100%; */
+/*     top : 100px; */
+/*     left: 0; */
+/*     bottom: 0; */
+/*     padding: 20px; */
+/* } */
+
+/* .hover_inside h5{ */
+/* 	color: white; */
+/* } */
+
+/* .hover_inside span{ */
+/* 	color: white; */
+/* } */
+
+/* /* ---------------------스케치북 테마별 div ----------------- */
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+*
+/
