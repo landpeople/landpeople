@@ -60,7 +60,7 @@
 				</div>
 			</c:when>
 			<c:otherwise>
-				<p class="user-status" href="#">로그인 후 채팅이 가능합니다.</p>
+				<p class="user-status">You can chat after logging in.</p>
 			</c:otherwise>
 		</c:choose>
 	</div>

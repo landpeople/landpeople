@@ -1,19 +1,98 @@
 @charset "UTF-8";
 
-@font-face {
-	font-family: './fonts/JejuHallasan';
-	src: url('./fonts/JejuHallasan.eot');
-	src: url('./fonts/JejuHallasan.eot?#iefix') format('embedded-opentype'),
-		url('./fonts/JejuHallasan.svg#./fonts/JejuHallasan') format('svg'),
-		url('./fonts/JejuHallasan.ttf') format('truetype'),
-		url('./fonts/JejuHallasan.woff') format('woff'),
-		url('./fonts/JejuHallasan.woff2') format('woff2');
-	font-weight: normal;
-	font-style: normal;
+.bg-header {
+	background-color: fff !important;
 }
 
-.sidebar-brand-text { /* 적용이 안됨 */
-	font-family: 'JejuHallasan' !important;
+.text-blue{
+	color : #2057a8;
+}
+
+/* lp custom background */
+.bg-gradient-lp-primary {
+	background-color: #1764ac;
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(10%, #1764ac),
+		to(#155592));
+	background-image: linear-gradient(180deg, #1764ac 10%, #155592 100%);
+	background-size: cover;
+}
+
+/* lp custom btn yellow */
+.btn-lp-primary {
+	color: #fff;
+	background-color: #f8b632;
+	border-color: #f8b632;
+}
+
+.btn-lp-primary:hover {
+	color: #fff;
+	background-color: #f0a720;
+	border-color: #f0a720;
+}
+
+.btn-lp-primary:focus, .btn-primary.focus {
+	-webkit-box-shadow: 0 0 0 0.2rem rgba(254, 216, 0, 0.5);
+	box-shadow: 0 0 0 0.2rem rgba(254, 216, 0, 0.5);
+}
+
+.btn-lp-primary.disabled, .btn-lp-primary:disabled {
+	color: #fff;
+	background-color: #f8b632;
+	border-color: #f8b632;
+}
+
+.btn-lp-primary:not (:disabled ):not (.disabled ):active,
+	.btn-lp-primary:not (:disabled ):not (.disabled ).active, .show>.btn-primary.dropdown-toggle
+	{
+	color: #fff;
+	background-color: #f0a720;
+	border-color: #f0a720;
+}
+
+.btn-lp-primary:not (:disabled ):not (.disabled ):active:focus,
+	.btn-lp-primary:not (:disabled ):not (.disabled ).active:focus, .show>.btn-lp-primary.dropdown-toggle:focus
+	{
+	-webkit-box-shadow: 0 0 0 0.2rem rgba(254, 216, 0, 0.5);
+	box-shadow: 0 0 0 0.2rem rgba(254, 216, 0, 0.5);
+}
+
+/* lp custom btn blue */
+.btn-lp-success {
+	color: #fff;
+	background-color: #2057a8;
+	border-color: #2057a8;
+}
+
+.btn-lp-success:hover {
+	color: #fff;
+	background-color: #1c4c93;
+	border-color: #1c4c93;
+}
+
+.btn-lp-success:focus, .btn-lp-success.focus {
+	-webkit-box-shadow: 0 0 0 0.2rem rgba(40, 111, 215, 0.5);
+	box-shadow: 0 0 0 0.2rem rgba(40, 111, 215, 0.5);
+}
+
+.btn-lp-success.disabled, .btn-lp-success:disabled {
+	color: #fff;
+	background-color: #2057a8;
+	border-color: #2057a8;
+}
+
+.btn-lp-success:not (:disabled ):not (.disabled ):active,
+	.btn-lp-success:not (:disabled ):not (.disabled ).active, .show>.btn-lp-success.dropdown-toggle
+	{
+	color: #fff;
+	background-color: #1c4c93;
+	border-color: #1c4c93;
+}
+
+.btn-lp-success:not (:disabled ):not (.disabled ):active:focus,
+	.btn-lp-success:not (:disabled ):not (.disabled ).active:focus, .show>.btn-lp-success.dropdown-toggle:focus
+	{
+	-webkit-box-shadow: 0 0 0 0.2rem rgba(40, 111, 215, 0.5);
+	box-shadow: 0 0 0 0.2rem rgba(40, 111, 215, 0.5);
 }
 
 #content-wrapper {
@@ -44,38 +123,45 @@
 /* index 페이지 그리드 레이아웃*/
 .lp-grid-container {
 	width: 100%;
+	height: 100%;
 	display: grid; /*하위 요소들은 grid로 정렬*/
 	grid-template-columns: repeat(2, 1fr);
+	grid-auto-rows: 300px;
 	/* 	grid-auto-rows: minmax(3em, auto); background : pink; */
-	grid-gap: 1rem;
+	grid-gap: 0.625rem;
 }
 
-img {
-	width: 100%; /* need to overwrite inline dimensions */
-	height: auto;
-}
-
-h2 {
-	margin-bottom: .5em;
-}
-
+/* h2 { */
+/* 	margin-bottom: .5em; */
+/* } */
 .grid-container {
 	display: grid;
 	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 	grid-gap: 1em;
 }
 
+.lp-theme {
+	width: 100%; /* need to overwrite inline dimensions */
+	height: 100%;
+}
+
 /* hover styles */
 .location-listing {
 	position: relative;
+	width: 100%;
+	height: 100%;
 }
 
 .location-image {
+	width:100%;
+	height:100%;
 	line-height: 0;
 	overflow: hidden;
+	line-height: 0;
 }
 
 .location-image img {
+	
 	filter: blur(0px);
 	transition: filter 0.3s ease-in;
 	transform: scale(1.1);
@@ -103,6 +189,8 @@ h2 {
 
 .location-listing:hover .location-title {
 	opacity: 1;
+	color: white;
+	text-decoration: none;
 }
 
 .location-listing:hover .location-image img {
@@ -159,7 +247,7 @@ h2 {
 	margin: 0 1rem 1rem;
 }
 
-.lp-chatlist { 채팅 리스트 div
+.lp-chatlist { /* 채팅 리스트 div */
 	height: 100%;
 	width: 100%;
 }
@@ -174,55 +262,8 @@ h2 {
 	}
 }
 
-/*---------------- 모달 스타일 ---------------------- */
-.modal-input {
-	/* float: right; */
-	
+/* logo size */
+.lp-icon {
+	width: 3rem;
+	height: auto;
 }
-
-.modal-content {
-	color: black;
-}
-
-/* 스케치북 커버이미지 div */
-#moSketchBookCover {
-	width: 300px;
-	height: 100px;
-}
-
-/* 스케치북 커버이미지 div의 이미지 영역 */
-#modalIMG1 {
-	border: 1px solid black;
-	width: 200px;
-	height: 100px;
-	/* float: left; */
-	margin: 0px 20px 30px 20px;
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: center;
-}
-
-/* 라디오버튼 숨기기 */
-.themeradio input[type=radio] {
-	display: none;
-	margin: 10px;
-}
-/* 라디오버튼 직사각형 버튼 모양 만들기 */
-.themeradio input[type=radio]+label {
-	display: inline-block;
-	margin: -2px;
-	padding: 8px 19px;
-	background-color: #f5f5f5;
-	border: 1px solid #ccc;
-	font-size: 13px !important;
-	width: 80px;
-	text-align: center;
-}
-/* 선택한 라디오버튼 배경색 변경 */
-.themeradio>input[type=radio]:checked+label {
-	background-image: none;
-	background-color: #3598dc;
-	color: #fff;
-}
-
-/*---------------- 모달 스타일 ---------------------- */

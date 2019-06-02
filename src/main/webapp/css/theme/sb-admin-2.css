@@ -10685,15 +10685,6 @@ a:focus {
   animation-timing-function: opacity cubic-bezier(0, 1, 0.4, 1);
 }
 
-/*landpeople*/
-.bg-gradient-lpmain {
-  background-color: #62b2f1;
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(10%, #62b2f1), to(#bfde9a));
-  background-image: linear-gradient(180deg, #62b2f1 10%, #bfde9a 100%);
-  background-size: cover;
-}
-
-
 .bg-gradient-primary {
   background-color: #f8f9fc;
   background-image: -webkit-gradient(linear, left top, left bottom, color-stop(10%, #f8f9fc), to(#dadfef));

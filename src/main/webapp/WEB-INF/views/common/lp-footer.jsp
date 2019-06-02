@@ -10,12 +10,6 @@
 </footer>
 <!-- End of Footer -->
 
-</div>
-<!-- End of Content Wrapper -->
-
-</div>
-<!-- End of Page Wrapper -->
-
 <!-- Scroll to Top Button-->
 <a class="scroll-to-top rounded" href="#page-top"> <i
 	class="fas fa-angle-up"></i>
@@ -49,11 +43,14 @@
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
+				<h5 class="modal-title">스케치북 작성</h5>
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">스케치북 작성</h4>
 			</div>
 			<div class="modal-body">
-				<form action="#" role="form" method="post" id="makeSketchBook"></form>
+				<form action="#" role="form" method="post" id="makeSketchBody"></form>
+			</div>
+			<div class="modal-footer">
+				<form action="#" role="form" method="post" id="makeSketchFooter"></form>
 			</div>
 		</div>
 	</div>
@@ -72,3 +69,13 @@
 <script src="./js/chat/chat.js"></script>
 <script src="./js/sketch/sketch.js"></script>
 <script src="./js/sketch/sketchbook.js"></script>
+
+<script type="text/javascript">
+	var pathname = window.location.pathname;
+
+// 	alert(window.location.pathname );
+	if(pathname == '/LandPeople/lee.do'){
+		var title = 'All themes';
+		$('#lp-header-title').text(title);
+	}	
+</script>
