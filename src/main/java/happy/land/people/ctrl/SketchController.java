@@ -33,6 +33,7 @@ import org.springframework.web.util.WebUtils;
 
 import happy.land.people.dto.LPCollectDto;
 import happy.land.people.dto.LPSketchbookDto;
+import happy.land.people.dto.LPUserDto;
 import happy.land.people.dto.SketchPagingDto;
 import happy.land.people.model.sketch.ISketchBookService;
 
