@@ -69,7 +69,7 @@
          <!-- 메인 컨텐츠   -->
          <div class="lpcontents">
             <div class="content">               
-                <input type="button" id="downloadExcel"  class="far fa-edit" style="width:64px; height:64px; border: none; background: url('./img/canvas/excelIcon.png')">               
+                <input type="button" id="downloadExcel"  class="far fa-edit" style="width:64px; height:64px; border: none; background: url('./img/canvas/excelIcon.png')" title="Excel로 다운로드">               
               	<div style="margin-bottom: -15px;">이곳은 스케치북 제목을 적어봅시다.</div>
                <div><hr></div>
                <div id="custom-menu"></div>              
@@ -78,18 +78,17 @@
                   <div>마지막페이지 입니다.</div>                 
                </div>
                <c:choose>
-               <c:when test="${user.user_email eq sketch_email}">                
-               	<button data-toggle="modal" data-target="#myModal" style="width:64px; height:64px; border: none; background: url('./img/canvas/addPage.png')"></button>
-               	<input type="button" style="width:64px; height:64px; border: none; background: url('./img/canvas/editPage.png')" id="pageUpdate"></input>
-               	<input type="button" style="width:64px; height:64px; border: none; background: url('./img/canvas/removePage.png')" id="pageDelete"></input>
-               </c:when>
-               <c:otherwise>
-	                <div style="float: right; margin-right: 10px; ">
-					 <a href="#" onclick="like('${user.user_email}','${sketch_id}')"><img id="likeState" alt="likeEmpty" src="./img/LikeBefore.png"></a>				 		
-					 <a href="#" onclick="scrape('${user.user_email}','${sketch_id}')"> <img id="scrapState" alt="scrape" src="./img/scrape.png"> </a>
-		 		   </div>	
-	 		   </c:otherwise>
-               
+               <c:when test="${ldto.user_email eq sketch_email}">                
+               	<button data-toggle="modal" data-target="#myModal" style="width:64px; height:64px; border: none; background: url('./img/canvas/addPage.png')" title="페이지 추가"></button>
+               	<input type="button" style="width:64px; height:64px; border: none; background: url('./img/canvas/editPage.png')" id="pageUpdate" title="페이지 수정"></input>
+               	<input type="button" style="width:64px; height:64px; border: none; background: url('./img/canvas/removePage.png')" id="pageDelete" title="페이지 삭제"></input>
+               </c:when>      
+               <c:otherwise>          	   
+               	        <div style="float: right; margin-right: 10px; ">
+						 <a href="#" onclick="like('${ldto.user_email}','${sketch_id}')"><img id="likeState" alt="likeEmpty" src="./img/LikeBefore.png" title="좋아요"></a>				 		
+						 <a href="#" onclick="scrape('${ldto.user_email}','${sketch_id}')"> <img id="scrapState" alt="scrape" src="./img/scrape.png" title="스크랩"> </a>
+			 		    </div>	
+		 	  </c:otherwise>               
                </c:choose>
                
               
@@ -161,8 +160,6 @@
  	        	tabHeight:  20
  	    });				 
 		 
- 	   
- 	   
 		// 캔버스 클릭시
 		$(".insertForms").click(function(){
 			// 모든 캔버스 투명도 및 배경색(나중에 이미지로 바뀔예정) 조절
@@ -178,8 +175,8 @@
 		});		
 		// 엑셀로 다운로드
 		$("#downloadExcel").click(function() {
-			if(confirm("해당 스케치북의 일정 페이지를 \nExcel파일로 받으시겠습니까?")){
-				location.href="./canvasDownloadExcel.do";				
+			if(confirm("해당 스케치북의 일정 페이지를 \nExcel파일로 받으시겠습니까?")){						
+					location.href="./canvasDownloadExcel.do";		
 			}
 		});
 		// 수정 버튼 클릭시
@@ -529,8 +526,13 @@
 		});
 	});		
 	//--------------- 좋아요 등록 및 취소---------------------
-	function like(user,id){		
+	function like(user,id){	
+		if(user == ""){
+			alert("로그인 후 사용가능합니다.");
+		}
+		else{
 		LpLike(user,id);
+		}
 	}
 
 	var LpLike = function(user,id){
@@ -554,8 +556,13 @@
 	
 	//---------------------- 스크랩 등록 및 수정 --------------------
 	function scrape(user,id) {
-		//alert("스크랩");
-		LpScrape(user,id);		
+		//alert("스크랩");		
+		if(user == ""){
+			alert("로그인 후 사용가능합니다.");
+		}
+		else{
+			LpScrape(user,id);		
+		}
 	}
 
 	var LpScrape = function(user,id){

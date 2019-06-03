@@ -9,8 +9,8 @@
 
   	<!-- 스케치북 생성 -->
 	<insert id="sketch_Insert" parameterType="happy.land.people.dto.LPSketchbookDto">
-		INSERT INTO LPSKETCHBOOK(SKETCH_ID, USER_EMAIL, SKETCH_TITLE, SKETCH_THEME, SKETCH_SHARE, SKETCH_DELFLAG, SKETCH_SPATH, SKETCH_BLOCK)
-		VALUES(LPSKETCHBOOK_SEQ.NEXTVAL, #{user_email}, #{sketch_title}, #{sketch_theme}, #{sketch_share}, 'F', #{sketch_spath}, 'F')	
+		INSERT INTO LPSKETCHBOOK(SKETCH_ID, USER_EMAIL, SKETCH_TITLE, SKETCH_THEME, SKETCH_SHARE, SKETCH_SPATH, SKETCH_BLOCK)
+		VALUES(LPSKETCHBOOK_SEQ.NEXTVAL, #{user_email}, #{sketch_title}, #{sketch_theme}, #{sketch_share}, #{sketch_spath}, 'F')	
 	</insert>
 	
 	<!-- 스크랩, 좋아요 최초 등록 -->
