@@ -3,28 +3,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author" content="">
-
-
-
-
+<meta charset="UTF-8">
 <title>마이 페이지 회원정보 수정 가능</title>
-
-<!-- Custom fonts for this template-->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="./css/sweetalert.css">
-<!-- Custom styles for this template-->
-<link href="./css/theme/sb-admin-2.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="./css/bootstrap-theme.min.css">
 <script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
-
-
-
+<script type="text/javascript" src="./js/bootstrap.min.js"></script>
+<script type="text/javascript" src="./js/sweetalert.min.js"></script>
 <script type="text/javascript">
 	function modify() {
 		// email 중복 + 유효값
@@ -149,16 +135,6 @@
 
 	});//제일큰
 </script>
-
-
-<style type="text/css">
-
-span{
-	font-size: .8rem;
-}
-
-</style>
-
 </head>
 <body>
 ${ldto.user_email}
@@ -177,72 +153,7 @@ ${ldto.user_email}
 
 
 
-<div class="bg-gradient-primary">
 
-	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-xl-5 col-md-5 col-lg-5">
-				<div class="card o-hidden border-0 shadow-lg my-5">
-					<div class="card-body p-0">
-						<!-- Nested Row within Card Body -->
-						<!--                <div class="col-lg-7"> -->
-						<div class="p-5">
-							<div class="text-center">
-								<h1 class="h4 text-gray-900 mb-4">My Page!</h1>
-							</div>
-
-							<input type="hidden" value="0" id="emailchkVal"> 
-						<input type="hidden" value="0" id="pwchkVal"> 
-						<input type="hidden" value="0" id="passchkVal"> 
-						<input type="hidden" value="0" id="nicknamechkVal">
-							<form class="user" action="./modifyMypage.do" method="post" onsubmit="return modify()">
-								<div class="form-group">
-									<input type="email" name="user_email"  class="form-control form-control-user" value="${ldto.user_email}" readonly="readonly">
-								</div>
-								
-								<c:if test="${ldto.user_auth eq 'U'}">
-								<div class="form-group">
-									<input type="password" name="user_password" id="pw" class="form-control form-control-user" placeholder="Password" maxlength="10">
-								&nbsp;<span id="pwresult">4~10자리의 영문+숫자</span>
-								</div>
-								<div class="form-group">
-									<input type="password" id="passOK" class="form-control form-control-user" placeholder="Repeat Password" maxlength="10">
-								&nbsp;<span id="pwchk"></span>
-								</div>
-								</c:if>
-								
-								<div class="form-group">
-									<input type="text" name="user_nickname" id="nickname" class="form-control form-control-user" placeholder="Nick Name" value="${ldto.user_nickname}" maxlength="10">
-									&nbsp;<span id="nicknameresult">2~10자리의 닉네임을 입력</span>
-								</div>
-								<div class="form-group">
-									<input type="submit" class="btn btn-primary btn-user btn-block" value="수정">
-								</div>
-							</form>
-							<hr>
-							
-							<form class="user" action="./delpage.do" method="get">
-							<div class="form-group">
-								<input type="submit" class="btn btn-primary btn-user btn-block" value="회원탈퇴" style="background-color: #8B0000; border-color: #8B0000;">
-								</div>
-							</form>
-							
-						</div>
-					</div>
-					<!--          </div> -->
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- Bootstrap core JavaScript-->
-	<script src="./js/theme/jquery.min.js"></script>
-	<script src="./js/theme/bootstrap.bundle.min.js"></script>
-
-
-	<!-- Custom scripts for all pages-->
-	<script src="./js/theme/sb-admin-2.min.js"></script>
-</div>
 
 
 
@@ -253,9 +164,40 @@ ${ldto.user_email}
 					--메인페이지 : ${ldto}<br> 
 					---세션 : ${session} <br>
 					-- ldto :${ldto}<br>
+					<div>
+						<input type="hidden" value="0" id="emailchkVal"> 
+						<input type="hidden" value="0" id="pwchkVal"> 
+						<input type="hidden" value="0" id="passchkVal"> 
+						<input type="hidden" value="0" id="nicknamechkVal">
+						<form action="./modifyMypage.do" method="post" onsubmit="return modify()">
+							이메일 : <input type="text" name="user_email" value="${ldto.user_email}" readonly="readonly"><br>
+							
+							
+						<c:if test="${ldto.user_auth eq 'U'}">
+							비밀번호<input type="text" name="user_password" id="pw" placeholder="비밀번호" maxlength="10"> <br>
+							&nbsp;<span id="pwresult">4~10자리의 영문+숫자</span><br> 
+							비번확인<input type="text" id="passOK" placeholder="비밀번호 확인" maxlength="10"> <br>
+							&nbsp;<span id="pwchk"></span><br> 
+						</c:if>
+							
+							
+							
+							
+							닉네임<input type="text" name="user_nickname" id="nickname" placeholder="닉네임" value="${ldto.user_nickname}" maxlength="10"> <br>
+							&nbsp;<span id="nicknameresult">2~10자리의 닉네임을 입력</span><br> 
+							<input type="submit" value="수정">
+						</form>
+
+					</div>
 
 
 
+
+					<form action="./delpage.do" method="get">
+						<input type="submit" value="회원탈퇴">
+					</form>
+
+					<input type="button" value="돌아가기" onclick="javascript:history.back(-1)">
 
 
 

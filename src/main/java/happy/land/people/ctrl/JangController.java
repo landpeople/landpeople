@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import happy.land.people.dto.JsonUtil;
 import happy.land.people.dto.LPSketchbookDto;
 import happy.land.people.dto.LPUserDto;
-import happy.land.people.dto.cho.ChoDto;
 import happy.land.people.model.jang.IManagerService;
 import happy.land.people.beans.ExecuteUsingQuartz;
 import happy.land.people.ctrl.JangController;
@@ -160,7 +159,7 @@ public class JangController {
 	@RequestMapping(value="/selectChatList.do")
 	public String selectChatList(Model model, HttpSession session) {
 		logger.info("Controller selectChatList");
-		ChoDto ldto = (ChoDto) session.getAttribute("ldto");
+		LPUserDto ldto = (LPUserDto) session.getAttribute("ldto");
 		String id = ldto.getUser_nickname();
 		List<List<Map<String, String>>> lists = iManagerService.selectChr(id);
 		model.addAttribute("resultLists", lists);
@@ -174,7 +173,7 @@ public class JangController {
 		String chrId = (String) request.getParameter("chksVal");
 		String[] chrIds = chrId.split(",");
 		
-		ChoDto ldto = (ChoDto) session.getAttribute("ldto");
+		LPUserDto ldto = (LPUserDto) session.getAttribute("ldto");
 		String id = ldto.getUser_nickname();
 		
 //		for (int i = 0; i < chrIds.length; i++) {

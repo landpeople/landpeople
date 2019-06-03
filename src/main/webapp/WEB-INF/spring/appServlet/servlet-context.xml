@@ -129,6 +129,10 @@
    </websocket:handlers>
 
 
+
+<!-- NaverLoginBO Class에 대한 Bean설정 추가 -->
+<bean id="naverLoginBO" class="happy.land.people.naver.NaverLoginBO" />
+
 <!-- google login -->
  <!-- Google 소셜 로그인 연결 설정 -->
     <bean id="googleOAuth2Template"

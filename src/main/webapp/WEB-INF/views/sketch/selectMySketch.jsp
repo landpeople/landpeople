@@ -1,12 +1,12 @@
 <%@page import="happy.land.people.dto.LPSketchbookDto"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
-<%@page import="happy.land.people.dto.cho.ChoDto"%>
+<%@page import="happy.land.people.dto.LPUserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<%		ChoDto ldto = (ChoDto) session.getAttribute("ldto");
+<%		LPUserDto ldto = (LPUserDto) session.getAttribute("ldto");
 	    Map<String,Integer> sketchLike = ( Map<String,Integer> )request.getAttribute("sketchLike");
 	    Map<String,Integer> sketchLikes = ( Map<String,Integer> )request.getAttribute("sketchLikes");
 	    List<LPSketchbookDto> mySketchBookLists = (List<LPSketchbookDto>)request.getAttribute("mySketchBookLists");
@@ -170,8 +170,7 @@ $(document).ready(function() {
 		if($(window).scrollTop() >= $(document).height()-$(window).height()){
 			if(pageCnt >= ${pagingDto.getEndPageNo()}){
 				alert("마지막페이지 입니다.");
-			}
-	 		else{
+			}else{
 				pageCnt++;			
 				getMySketchBook(pageCnt);		
 			}

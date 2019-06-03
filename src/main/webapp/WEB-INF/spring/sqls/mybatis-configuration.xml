@@ -4,7 +4,7 @@
    <!-- 있어도 되고 없어도 되는 DTO를 선언하여 Alias를 통해 쉽게 사용! -->
    <typeAliases>
       <typeAlias type="happy.land.people.dto.TestDto" alias="testDto"/>
-      <typeAlias type="happy.land.people.dto.cho.ChoDto" alias="ChoDto"/>
+      <typeAlias type="happy.land.people.dto.LPUserDto" alias="UserDto"/>
    </typeAliases>
    
    
@@ -16,8 +16,6 @@
       <mapper resource="happy/land/people/mapper/LeeMapper.xml"/>
       <mapper resource="happy/land/people/mapper/JangMapper.xml"/>
       <mapper resource="happy/land/people/mapper/SketchMapper.xml"/>
-      <mapper resource="happy/land/people/mapper/ChoMapper.xml"/>
-      <mapper resource="happy/land/people/mapper/ChoMapper.xml"/>
       <mapper resource="happy/land/people/mapper/UserMapper.xml"/>
       <mapper resource="happy/land/people/mapper/BoardMapper.xml"/>
       <mapper resource="happy/land/people/mapper/ChatMapper.xml"/>

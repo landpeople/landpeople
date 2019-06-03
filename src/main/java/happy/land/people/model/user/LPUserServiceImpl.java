@@ -13,23 +13,23 @@ import org.springframework.stereotype.Service;
 
 import happy.land.people.cho.mail.MailUtils;
 import happy.land.people.cho.mail.TempKey;
-import happy.land.people.dto.cho.ChoDto;
+import happy.land.people.dto.LPUserDto;
 @Service
-public class ChoServiceImpl implements IChoService {
+public class LPUserServiceImpl implements ILPUserService {
 
 	@Autowired
-	private IChoDao iChoDao;
+	private ILPUserDao iUserDao;
 	
 	@Autowired
 	private JavaMailSender mailSender;
 	
-	private Logger logger = LoggerFactory.getLogger(ChoServiceImpl.class);
+	private Logger logger = LoggerFactory.getLogger(LPUserServiceImpl.class);
 	
 	
 	@Override
-	public boolean signUp(ChoDto dto) {
+	public boolean signUp(LPUserDto dto) {
 		System.out.println("signUp 서비스 임플");
-		boolean isc = iChoDao.signUp(dto);
+		boolean isc = iUserDao.signUp(dto);
 		System.out.println("==============================================================="+isc);
 		
 		// 만약에 user_auth가 n 이거나 g면 바로 가입 u면 이메일인증 하기
@@ -45,7 +45,7 @@ public class ChoServiceImpl implements IChoService {
 		dto.setUser_emailkey(user_emailkey);
 		System.out.println(dto);
 		
-		isc = iChoDao.authkeyUpdate(dto);
+		isc = iUserDao.authkeyUpdate(dto);
 		
 		// 메일 관련
 		// 메일 내용 담을 변수(email, authkey만 보낼예정)
@@ -81,49 +81,49 @@ public class ChoServiceImpl implements IChoService {
 	}
 
 	@Override
-	public ChoDto login(ChoDto dto) {
-		return iChoDao.login(dto);
+	public LPUserDto login(LPUserDto dto) {
+		return iUserDao.login(dto);
 	}
 
 	@Override
 	public boolean deleteUser(String user_email) {
-		return iChoDao.deleteUser(user_email);
+		return iUserDao.deleteUser(user_email);
 	}
 
 	@Override
-	public boolean userInfo(ChoDto dto) {
-		return iChoDao.userInfo(dto);
+	public boolean userInfo(LPUserDto dto) {
+		return iUserDao.userInfo(dto);
 	}
 
 	@Override
 	public int emailDupChk(String user_email) {
 		logger.info("이메일중복체크 서비스임플");
-		return iChoDao.emailDupChk(user_email);
+		return iUserDao.emailDupChk(user_email);
 	}
 
 	@Override
 	public int nicknameDupChk(String user_nickname) {
 		logger.info("닉네임 중복체크 서비스 임플");
-		return iChoDao.nicknameDupChk(user_nickname);
+		return iUserDao.nicknameDupChk(user_nickname);
 	}
 
 	@Override
-	public boolean authkeyUpdate(ChoDto dto) {
+	public boolean authkeyUpdate(LPUserDto dto) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean authStatusUpdate(String user_email) {
-		return iChoDao.authStatusUpdate(user_email);
+		return iUserDao.authStatusUpdate(user_email);
 	}
 
 	
 	// 비빌번호찾기한사람한테 이메일 보내주는 메소드
 	@Override
-	public boolean findPW(ChoDto dto) {
+	public boolean findPW(LPUserDto dto) {
 		System.out.println("findPW 서비스 임플");
-		boolean isc = iChoDao.findPW(dto);
+		boolean isc = iUserDao.findPW(dto);
 		System.out.println("====================================="+isc);
 		
 		//authkey 임시 생성 후 dto 같이 담아줌
@@ -131,7 +131,7 @@ public class ChoServiceImpl implements IChoService {
 		dto.setUser_emailkey(user_emailkey);
 		System.out.println(dto);
 		
-		isc = iChoDao.authkeyUpdate(dto);
+		isc = iUserDao.authkeyUpdate(dto);
 		
 		// 메일 관련
 		// 메일 내용 담을 변수(email, authkey만 보낼예정)
@@ -174,12 +174,12 @@ public class ChoServiceImpl implements IChoService {
 		
 		
 		
-		return iChoDao.emailAuthChk(user_email);
+		return iUserDao.emailAuthChk(user_email);
 	}
 
 	@Override
-	public ChoDto apiEmailDupChk(String user_email) {
-		return iChoDao.apiEmailDupChk(user_email);
+	public LPUserDto apiEmailDupChk(String user_email) {
+		return iUserDao.apiEmailDupChk(user_email);
 	}
 
 }

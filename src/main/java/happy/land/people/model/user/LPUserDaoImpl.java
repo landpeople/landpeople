@@ -1,7 +1,5 @@
 package happy.land.people.model.user;
 
-import java.util.List;
-import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
@@ -10,22 +8,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
-import happy.land.people.dto.cho.ChoDto;
+import happy.land.people.dto.LPUserDto;
+
 
 @Repository
-public class ChoDaoImpl implements IChoDao {
+public class LPUserDaoImpl implements ILPUserDao {
 
-	private Logger logger = LoggerFactory.getLogger(ChoDaoImpl.class);
+	private Logger logger = LoggerFactory.getLogger(LPUserDaoImpl.class);
 
 	@Autowired
 	private SqlSessionTemplate session;
-	private final String NS = "cho_test.";
+	private final String NS = "user.";
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
 	@Override
-	public boolean signUp(ChoDto dto) {
+	public boolean signUp(LPUserDto dto) {
 		
 		String user_email = dto.getUser_email();
 		int n = session.selectOne(NS + "emailDupChk", user_email);
@@ -34,7 +33,7 @@ public class ChoDaoImpl implements IChoDao {
 		
 		System.out.println("n의값"+n);
 		System.out.println("dto다오임플에서:"+dto);
-		ChoDto edto =session.selectOne(NS+"emailAuthChk", dto);
+		LPUserDto edto =session.selectOne(NS+"emailAuthChk", dto);
 		System.out.println(edto);
 		
 		if(n > 0 && dto.getUser_auth().equalsIgnoreCase("U")) {
@@ -87,13 +86,13 @@ public class ChoDaoImpl implements IChoDao {
 	}
 
 	@Override
-	public boolean authkeyUpdate(ChoDto dto) {
+	public boolean authkeyUpdate(LPUserDto dto) {
 		return session.update(NS + "authkeyUpdate", dto) > 0 ? true : false;
 	}
 
 	// 로그인 다오인데 비밀번호 불일치할떄 로그인이 안되게 설정해줘야함....흠....
 	@Override
-	public ChoDto login(ChoDto dto) {
+	public LPUserDto login(LPUserDto dto) {
 		logger.info("login 실행");
 
 		String email = dto.getUser_email();
@@ -101,7 +100,7 @@ public class ChoDaoImpl implements IChoDao {
 		// 이제 여기는 일반 가입자만 오니까 비밀번호 일치하는지 확인해주면됨
 
 		// db의 pw값
-		ChoDto DBPWDto = session.selectOne(NS + "login", dto);
+		LPUserDto DBPWDto = session.selectOne(NS + "login", dto);
 		System.out.println("DBPWDto:" + DBPWDto);
 
 		// api가입자는 비번 널임
@@ -138,19 +137,42 @@ public class ChoDaoImpl implements IChoDao {
 
 	// 회원정보 수정인데
 	@Override
-	public boolean userInfo(ChoDto dto) {
+	public boolean userInfo(LPUserDto dto) {
+		
+		boolean isc = false;
+		
+		System.out.println("여기는 userInfo"+dto);
+		
 		// 여기에다가 비밀번호 닉네임 어케어케?
 		if (dto.getUser_auth().equalsIgnoreCase("U")) {
-			String passwordEncode = passwordEncoder.encode(dto.getUser_password());
-			dto.setUser_password(passwordEncode);
-			session.update(NS + "modifyPassword", dto);
+			System.out.println("유저로들어옴");
+			if (dto.getUser_nickname()==null || dto.getUser_nickname().length()==0) {
+				System.out.println("닉네임 길이가 0");
+				String passwordEncode = passwordEncoder.encode(dto.getUser_password());
+				dto.setUser_password(passwordEncode);
+				session.update(NS + "modifyPassword", dto);
+				return isc = true;
+			}else if(dto.getUser_password().length()==0) {
+				System.out.println("비밀번호 길이가 0");
+				session.update(NS+"modifyNickname",dto);
+				return isc = true;
+			}else {
+				System.out.println("나머지 닉넴 비번둘다바꿀떄");
+				String passwordEncode = passwordEncoder.encode(dto.getUser_password());
+				dto.setUser_password(passwordEncode);
+				session.update(NS + "modifyPassword", dto);
+				session.update(NS+"modifyNickname",dto);
+				return isc = true;
+			}
+		}else {
+			isc = session.update(NS + "modifyNickname", dto) > 0 ? true : false;
 		}
 
-		if (dto.getUser_nickname() == null) {
-			return session.update(NS + "modifyPassword", dto) > 0 ? true : false;
-		}
-
-		boolean isc = session.update(NS + "modifyNickname", dto) > 0 ? true : false;
+		
+//		if (dto.getUser_nickname() == null) {
+//			return session.update(NS + "modifyPassword", dto) > 0 ? true : false;
+//		}
+//		boolean isc = session.update(NS + "modifyNickname", dto) > 0 ? true : false;
 
 		return isc;
 	}
@@ -178,7 +200,7 @@ public class ChoDaoImpl implements IChoDao {
 	}
 
 	@Override
-	public boolean findPW(ChoDto dto) {
+	public boolean findPW(LPUserDto dto) {
 
 		return true;
 	}
@@ -187,7 +209,7 @@ public class ChoDaoImpl implements IChoDao {
 	public int emailAuthChk(String user_email) {
 		logger.info("비밀번호찾기 가입자 확인하고 auth주기");
 
-		ChoDto dto = session.selectOne(NS + "emailAuthChk", user_email);
+		LPUserDto dto = session.selectOne(NS + "emailAuthChk", user_email);
 		System.out.printf("이쿼리가 반환하는거뭔지보기용" + session.selectOne(NS + "emailAuthChk", user_email));
 
 		System.out.println("이메일:" + dto.getUser_email());
@@ -209,7 +231,7 @@ public class ChoDaoImpl implements IChoDao {
 
 
 	@Override
-	public ChoDto apiEmailDupChk(String user_email) {
+	public LPUserDto apiEmailDupChk(String user_email) {
 
 		return session.selectOne(NS+"apiEmailDupChk", user_email);
 	}
