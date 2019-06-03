@@ -56,70 +56,59 @@
          <!-- flex 레이아웃 content와 푸터 정렬 -->
 
          <!-- Main Content -->
-         <div id="content" style="display: flex; flex-direction: column;">
+         <div id="content">
 
             <!-- LandPeople Content Area -->
             <div class="lp-container">
                <div class="lp-content shadow-lg">
                   <div class="lp-content-sketch">
-                  		<h1 class="h3 mb-3 text-gray-800" style="display:block">My Sketchbook <input class="btn btn-danger" type="submit" value="스케치북 삭제"></h1>
+                  		<div class="lp-content-header">
+                  			<h1 class="h2 mb-4 text-gray-800 lp-content-title">My Sketchbook</h1>
+                  			<input class="btn btn-danger mb-4 lp-sketch-del " type="submit" value="Delete selected">
+	                  	</div>
 	                  	<form action="#" method="post" id="sketchDel" name="sketchDel" onsubmit="return DelchkBox()">
                      		<div class="sketchBookContent">
 								<c:forEach var="item" items="${mySketchBookLists}">
-									<div class="sketchBookContainer">
 										<c:choose>
 											<c:when test="${item.sketch_block eq 'T'}">
-						                         <div style="width: 280px; height: 230px; border: 1px solid gray; display: inline-block; margin: 0 0 0 10px; position: relative;">
-						                              <div class="selectTheme" style="background-image: url('${item.sketch_spath}');">
-						                                 <div class="sketchTheme_hover" style="cursor: pointer;">
-						                                    <div class="hover_inside">
-						                                       <h5>관리자에 의해 삭제되었습니다.</h5>
-						                                    </div>
+						                         <div class="single-sketchbook">
+						                                 <div class="single-sketch-img figure"  style='background-image: url(${item.sketch_spath})'>
+															    <div style="color:red"><i class="fas fa-heart"></i>${sketchLike[item.sketch_id]}</div>
+																<div> [ ${item.sketch_theme} ] ${item.sketch_title}</div>
 						                                 </div>
-						                              </div>
-						                              <div style="width: 100%; height: 60px; border: 1px solid black; position: absolute; bottom: 0px;">
+						                              <div class="single-sketch-desc">
 						                                 <input type="checkbox" name="chkVal" value="${item.sketch_id}">
-						                                 	<label>${item.sketch_title}</label><label style="float: right;">${item.sketch_id}</label><br>
+						                                  	<h5>관리자에 의해 삭제되었습니다.</h5>
+						                                 	<label>${item.sketch_title}</label>
 							                                <label>
 							                                 	<a href="#" onclick="return sketchBookModify('${item.sketch_id}')">
-							                                       <img alt="modi" src="img/sketch/modifyIcon.png">스케치북 수정
+							                                       <<i class="fas fa-pen-square"></i>
 							                                    </a>
 						                                	</label>
 						                              </div>
 						                           </div>
 											</c:when>
 											<c:otherwise>
-											    <div style="width: 280px; height: 230px; border: 1px solid gray; display: inline-block; margin: 0 0 0 10px; position: relative;">
-					                              <div class="selectTheme" style="background-image: url('${item.sketch_spath}');">
-					                                 <div class="sketchTheme_hover" style="cursor: pointer;" onclick="location.href='./detailCanvas.do?sketch_id=${item.sketch_id}'">
-					                                    <div class="hover_inside">
-					                                       <h5>
-					                                          <img alt="likeIcon" src="./img/sketch/likeIcon.png">
-					                                          ${sketchLike[item.sketch_id]}
-					                                          ${item.sketch_theme}
-					                                       </h5>
-					                                    </div>
-					                                 </div>
+											    <div class="single-sketchbook">
+					                              <div class="single-sketch-desc">
+					                                 <div><input type="checkbox" name="chkVal" value='${item.sketch_id}'></div>
+														
+						                                <div onclick="return sketchBookModify('${item.sketch_id}')"><i class="fas fa-pen-square"></i>
+						                                </div>
 					                              </div>
-					                              <div style="width: 100%; height: 60px; border: 1px solid black; position: absolute; bottom: 0px;">
-					                                 <input type="checkbox" name="chkVal" value='${item.sketch_id}'>
-						                                 <label>${item.sketch_title}</label>
-						                                 <label style="float: right;">${item.sketch_id}</label><br>
-						                                 <label>
-						                                 	<a href="#" onclick="return sketchBookModify('${item.sketch_id}')">
-						                                       <img alt="modi" src="img/sketch/modifyIcon.png">스케치북 수정
-						                                 	</a>
-					                                 </label>
-					                              </div>
+			                                       <div class="single-sketch-img figure" style='background-image: url(${item.sketch_spath})'>
+																<div class="h5"> [ ${item.sketch_theme} ] ${item.sketch_title}</div>
+																<div style="color:red">${sketchLike[item.sketch_id]} <i class="fas fa-heart"></i></div>
+												   </div>
 					                           </div>
 											</c:otherwise>
 										</c:choose>
-									</div>
 								</c:forEach>
                      		</div>
                     	</form>
+                     
                      <c:if test="${fn:length(mySketchBookLists) eq '9'}">
-		                  <button id="infinityScroll" style="width: 100%;">더보기</button>
+		                  <button id="infinityScroll">View more</button>
                      </c:if>
                    
 
@@ -128,8 +117,8 @@
                      <div class="modal-dialog">
                         <div class="modal-content">
                            <div class="modal-header">
+                              <h4 class="modal-title">Edit sketchbook</h4>
                               <button type="button" class="close" data-dismiss="modal">&times;</button>
-                              <h4 class="modal-title">스케치북 수정</h4>
                            </div>
                            <div class="modal-body">
                               <form action="#" role="form" method="post" id="modiSketchBook"></form>
