@@ -52,9 +52,9 @@ function sketchBookMake(user) {
 									+
 
 									"<div class='form-group'>"+
-									"<label>스케치북 커버이미지</label>"+
+									"<label>스케치북 커버이미지</label>&nbsp;<label style='color: red;'>(커버이미지를 설정하지 않으시면 기본이미지가 입력됩니다)</label>"+
 										"<div id='moSketchBookCover'>"+
-												"<div id='modalIMG1' style='background-image :url(img/profile.jpg)'>"+
+												"<div id='modalIMG1' style='background-image :url(img/sketch/제주배경.jpg)'>"+
 												"<input type='hidden' name='sketch_spath' class='img_spath0'>"+
 														"<label for='C_IMG1'><img src='./img/folder.png'></label>"+
 														"<input id='C_IMG1' class='file'  name='file' type='file' multiple='multiple' style='display: none;'>"+

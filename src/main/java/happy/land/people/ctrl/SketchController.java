@@ -73,7 +73,7 @@ public class SketchController {
 		System.out.println(dto.getSketch_spath());
 		if(dto.getSketch_spath()==null||dto.getSketch_spath()=="") {
 			
-			dto.setSketch_spath("./img/profile.jpg");
+			dto.setSketch_spath("./img/sketch/제주배경.jpg");
 			boolean isc = iSketchBookService.sketchInsert(dto);
 			System.out.println(isc);	
 		}else {
@@ -379,7 +379,7 @@ public class SketchController {
 		map.put("user_email_", user_email);
 		map.put("sketch_id_", chkVal);
 		
-		boolean isc = iSketchBookService.scrapeUpdateMulti(map);
+		boolean isc = iSketchBookService.scrapeMultiUpdate(map);
 		
 		
 		
@@ -505,13 +505,13 @@ public class SketchController {
 	
 	
 	// 작성 스케치북 삭제
-	@RequestMapping(value="sketchRealDeleteMulti.do", method=RequestMethod.POST)
-	public String multiRealDeleteSketch(String[] chkVal, Model model) {
-		logger.info("JungController multiRealDeleteSketch {}", Arrays.toString(chkVal));
+	@RequestMapping(value="sketchMultiDelete.do", method=RequestMethod.POST)
+	public String multiDeleteSketch(String[] chkVal, Model model) {
+		logger.info("JungController multiDeleteSketch {}", Arrays.toString(chkVal));
 		Map<String, String[]>map = new HashMap<String, String[]>();	
 	
 		map.put("sketch_id_", chkVal);		
-		boolean isc = iSketchBookService.sketchRealDeleteMulti(map);
+		boolean isc = iSketchBookService.sketchMultiDelete(map);
 		
 		return "redirect:/jeong.do";
 	}
@@ -633,7 +633,7 @@ public class SketchController {
 		resultMap.put("likeTheme", sketchLikes);
 		resultMap.put("sketchNicknames", sketchNickname);
 		
-		//themeSketchBookListPaging.get(0).getSketch_block().trim().equalsIgnoreCase("Y");
+		
 		
 		return resultMap;
 	}

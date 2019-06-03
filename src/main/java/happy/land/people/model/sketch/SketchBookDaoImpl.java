@@ -103,9 +103,9 @@ public class SketchBookDaoImpl implements ISketchBookDao {
 	}
 
 	@Override
-	public boolean scrapeUpdateMulti(Map<String, String[]> map) {
+	public boolean scrapeMultiUpdate(Map<String, String[]> map) {
 		System.out.println("스크랩한 스케치북 다중 취소"+map);
-		int n = sqlsession.update(NS+"scrape_UpdateMulti", map);
+		int n = sqlsession.update(NS+"scrape_MultiUpdate", map);
 		System.out.println(n+"스크랩 다중 취소 성공");
 		return n>0?true:false;
 	}
@@ -146,9 +146,9 @@ public class SketchBookDaoImpl implements ISketchBookDao {
 	}
 
 	@Override
-	public boolean sketchRealDeleteMulti(Map<String, String[]> map) {
+	public boolean sketchMultiDelete(Map<String, String[]> map) {
 		System.out.println("작성 스케치북 완전 다중 삭제"+map);
-		int n = sqlsession.delete(NS+"sketch_RealDeleteMulti", map);
+		int n = sqlsession.delete(NS+"sketch_MultiDelete", map);
 		System.out.println(n+"작성 스케치북 완전 다중 삭제 성공");
 		return n>0?true:false;
 	}

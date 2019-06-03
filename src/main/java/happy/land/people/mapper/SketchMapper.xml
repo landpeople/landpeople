@@ -63,7 +63,7 @@
 	</select>
 
 	<!-- 스크랩한 스케치북 다중 취소  -->
-	<update id="scrape_UpdateMulti" parameterType="java.util.Map">
+	<update id="scrape_MultiUpdate" parameterType="java.util.Map">
 		UPDATE LPCOLLECT SET COL_SCRAPE='F' 
 		WHERE USER_EMAIL IN 
 		<foreach collection="user_email_" item="user_email" open="(" close=")" separator=",">
@@ -90,7 +90,7 @@
 	
 	<!-- 자신이 작성한 스케치북 카운팅 -->
 	<select id="sketch_CntMine" parameterType="java.lang.String" resultType="java.lang.Integer">
-	SELECT COUNT(*) FROM LPSKETCHBOOK WHERE USER_EMAIL=#{user_email}
+		SELECT COUNT(*) FROM LPSKETCHBOOK WHERE USER_EMAIL=#{user_email}
 	</select>
 	
 	
@@ -106,7 +106,7 @@
 	</update>
 	
 	<!-- 작성 스케치북 완전 다중 삭제 -->
-	<delete id="sketch_RealDeleteMulti" parameterType="java.util.Map">
+	<delete id="sketch_MultiDelete" parameterType="java.util.Map">
 		DELETE FROM LPSKETCHBOOK WHERE SKETCH_ID IN
 		<foreach collection="sketch_id_" item="sketch_id" open="(" close=")" separator=",">
 		#{sketch_id}
