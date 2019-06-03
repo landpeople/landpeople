@@ -52,9 +52,9 @@ function sketchBookMake(user) {
 									+
 
 									"<div class='form-group'>"+
-									"<label>스케치북 커버이미지</label>"+
+									"<label>스케치북 커버이미지</label>&nbsp;<label style='color: red;'>(커버이미지를 설정하지 않으시면 기본이미지가 입력됩니다)</label>"+
 										"<div id='moSketchBookCover'>"+
-												"<div id='modalIMG1' style='background-image :url(img/profile.jpg)'>"+
+												"<div id='modalIMG1' style='background-image :url(img/sketch/제주배경.jpg)'>"+
 												"<input type='hidden' name='sketch_spath' class='img_spath0'>"+
 														"<label for='C_IMG1'><img src='./img/folder.png'></label>"+
 														"<input id='C_IMG1' class='file'  name='file' type='file' multiple='multiple' style='display: none;'>"+
@@ -62,19 +62,20 @@ function sketchBookMake(user) {
 												"</div>"+
 	 											
 										"</div>"+
-									"</div>"+
+									"</div>";
 
-									"<div class='modal-footer'>"
-									+ "<input class='btn btn-success' type='button' value='작성완료 ' onclick='sketchInsert()'>"
-									+ "<button type='button' class='btn btn-default' data-dismiss='modal'>닫기</button>"
-									+ "</div>";
+							var modalfooter = "<button type='button' class='btn btn-secondary' data-dismiss='modal'>닫기</button>"
+								+ "<input class='btn btn-lp-success' type='button' value='작성완료 ' onclick='sketchInsert()'>";
 
-							$("#makeSketchBook").html(htmlModal);
-							
+							$("#makeSketchBody").html(htmlModal);
+							$("#makeSketchFooter").html(modalfooter);
 														
 							$("input[id=C_IMG1]").change(function(){
-								
-								fileUpload();				
+								var imgClass = $(this).attr("id");
+								subImgClass = imgClass.substring(imgClass.indexOf('_')+1);
+								if(extension($("input[id="+imgClass+"]").val())){
+									fileUpload(subImgClass);
+								}
 							});
 								
 		
@@ -87,9 +88,23 @@ function sketchBookMake(user) {
 				});
 	}
 
+	//확장자 확인 (업로드할 수 있는 확장자일시 true)
+	function extension(file){
+		var reg = /gif|jpg|png|jpeg/i;
+		if(reg.test(file)){
+			return true;
+		}else{
+			alert("잘못된 확장자입니다.\n★jpg/png/gif★ 파일만 업로드 가능합니다.");
+			return false;
+		}
+	}
+	
+	
+	
+	
 	// 스케치북 작성 모달 value를 DB에 저장
 	function sketchInsert() {
-		var sketch = document.getElementById("makeSketchBook");
+		var sketch = document.getElementById("makeSketchBody");
 		var sketch_theme = $("input[name=sketch_theme]:checked").val();
 		var sketch_share = $("input[name=sketch_share]:checked").val();
 		sketch.action = "./writeSketch.do";
@@ -115,7 +130,7 @@ function sketchBookMake(user) {
 	
 	
 	
-	function fileUpload() {
+	function fileUpload(subImgClass) {
 		var frmEle = document.forms[0];
 		var formData = new FormData(frmEle);
 		
@@ -160,6 +175,21 @@ function sketchBookMake(user) {
 		location.href="./kim.do?sketch_id="+sketch_id;
 	}	
 	
+	
+	
+/* 작성항 스케치북 조회 페이지로 이동 시켜주는 함수*/
+	function sketchSelectMine(){
+		var email = $("#user_email").val();
+		alert(email);
+		location.href = "./sketchSelMine.do?user_email="+email;
+		
+	}
+	
+	function goScrapMine() {
+	    var user_email = $("#user_email").val();
+	    location.href = "./SelectScrapeSketch.do?user_email="
+		    + user_email;
+	}
 	
 	
 	

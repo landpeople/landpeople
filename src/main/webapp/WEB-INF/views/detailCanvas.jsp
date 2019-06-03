@@ -44,6 +44,20 @@
 	width : 240px;
 	height: 180px;
 }
+
+.daysInfo{
+	font-size:20px;
+	width:430px; 
+	height:35px; 
+	border:2px solid yellow;
+	border-radius: 5px;
+	background: linear-gradient( to right, yellow 2% ,white 4%);
+	padding-left: 20px;
+	box-shadow: 2px 2px 2px 2px gray;	
+	margin-bottom: 5px;
+}
+
+
 </style>
 </head>
 <body>
@@ -187,21 +201,33 @@
 		});
 		
 		// 등록 버튼 클릭시
-		$("#canvasInsertFrom").click(function() {
+		$("#canvasInsertFrom").click(function() {			
 			if($('#selectType').val() == "1"){				
-				 var pageNo = $('#nowPageNo').val();
-				 document.getElementById("frm").action = "./insertDaysForm.do";
-				 document.getElementById("frm").submit();				
-			}else{				
+				var daysSize = <%=daysList.size()%>;
+				alert(daysSize);
+				if( parseInt(daysSize) < 10){
+				 	var pageNo = $('#nowPageNo').val();
+				 	document.getElementById("frm").action = "./insertDaysForm.do";
+				 	document.getElementById("frm").submit();
+				}else{
+					alert("일정 캔버스는 최대 10개까지 가능합니다.");
+				}
+			}else{	
+				var freeSize = <%=textList.size()%>;
+				alert(freeSize);
+				if(parseInt(freeSize) < 10){
 				 var pageNo = $('#nowPageNo').val();
 				 document.getElementById("frm").action = "./upload.do";
 				 document.getElementById("frm").submit();
+				}else {
+					alert("자유 캔버스는 최대 30개까지 가능합니다.");
+				}
 			}
 		});
 		
 		
 		//페이지 만들기
-		<% if(canvasList != null){%>
+		<% if(canvasList != null){ %>
 			makePage();
 			//일정 게시판일경우 불러오기
 			daysLoad();	
@@ -340,8 +366,8 @@
 	    							+ " onclick='window.open(this.href, \"_경로보기\", \"width=1280px,height=860px;\"); return false;'"
 	    							+ ">최단경로보기</a><br>";
 	    				}				
-	    				div.innerHTML += "<div style='font-size:20px; width:450px; height:38px; border:1px solid black;'>"+(i+1)+"번째 일정:"+daysInfo[i]
-	    							  + "<div style='font-size:12px; float:right; margin-right:50px;'>"+daysStart[i]+"~"+daysEnd[i]+"</div></div>";	
+	    				div.innerHTML += "<div class='daysInfo'>"+daysInfo[i] //+(i+1)+"번째 일정:"+daysInfo[i]
+	    							  + "<div style='font-size:12px; float:right; margin-right:10px;'>"+daysStart[i]+"~"+daysEnd[i]+"</div></div>";	
 	    				daysPage.appendChild(div);	
 	    			}	
 	    			

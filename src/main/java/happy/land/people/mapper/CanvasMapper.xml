@@ -6,7 +6,7 @@
 	<select id="canvas_Cnt" parameterType="java.lang.String" resultType="java.lang.Integer">
 		SELECT COUNT(*) FROM LPCANVAS WHERE SKETCH_ID=#{id}
 	</select>
-	
+		
 	<!-- 해당 스케치북의 id와 type 가져오기 -->
 	<select id="canvas_SelectType" parameterType="java.lang.String" resultType="happy.land.people.dto.LPCanvasDto">
 		SELECT CAN_ID,CAN_TYPE,CAN_TITLE FROM LPCANVAS WHERE SKETCH_ID=#{id} ORDER BY CAN_PAGENO

@@ -46,6 +46,8 @@ public class CanvasController {
 	    	if(sketch_id == null || sketch_id == "")
 	    		sketch_id = "1";
 	    	int canvasCnt = canvasService.canvasCnt(sketch_id);
+	    	// 스케치북 id에 따른 일정 캔버스, 
+	    	
 	    	//스케치북 번호를 세션에 추가
 	    	session.setAttribute("sketch_id", sketch_id);
 	    	//접속한 유저의 정보(나중에 로그인 다 구현되면 바꿀것)

@@ -89,9 +89,9 @@ public class SketchBookServiceImpl implements ISketchBookService {
 	}
 
 	@Override
-	public boolean scrapeUpdateMulti(Map<String, String[]> map) {
+	public boolean scrapeMultiUpdate(Map<String, String[]> map) {
 		logger.info("service scrapeUpdateMulti 스크랩한 스케치북 다중 취소 실행 {}", map);
-		return iSketchBookDao.scrapeUpdateMulti(map);
+		return iSketchBookDao.scrapeMultiUpdate(map);
 	}
 
 	@Override
@@ -122,9 +122,9 @@ public class SketchBookServiceImpl implements ISketchBookService {
 	}
 
 	@Override
-	public boolean sketchRealDeleteMulti(Map<String, String[]> map) {
+	public boolean sketchMultiDelete(Map<String, String[]> map) {
 		logger.info("service sketchRealDeleteMulti 작성한 스케치북 완전 다중 삭제 실행 {}", map);
-		return iSketchBookDao.sketchRealDeleteMulti(map);
+		return iSketchBookDao.sketchMultiDelete(map);
 	}
 	
 	
@@ -149,9 +149,9 @@ public class SketchBookServiceImpl implements ISketchBookService {
 	}
 
 	@Override
-	public String selectNickname(String sketch_id) {
-		logger.info("service selectNickname 스케치북 작성자 닉네임 조회 {}", sketch_id);
-		return iSketchBookDao.selectNickname(sketch_id);
+	public String nicknameSelect(String sketch_id) {
+		logger.info("service nicknameSelect 스케치북 작성자 닉네임 조회 {}", sketch_id);
+		return iSketchBookDao.nicknameSelect(sketch_id);
 	}
 
 

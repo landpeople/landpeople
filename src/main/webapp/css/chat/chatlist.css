@@ -1,0 +1,76 @@
+@charset "UTF-8";
+
+html, body {
+	width: inherit;
+	height: inherit;
+	margin: 0px;
+	padding: 0px;
+	overflow-x: hidden;
+	overflow-y: auto;
+	overflow-x: hidden
+}
+
+.user-status { /* 로그인 안 했을 때 로그인 필요하다고 알려주는 문구 css*/
+	padding: 0.5rem 1rem;
+	margin: 0 0.5rem;
+	padding: 0.5rem 1rem;
+	margin: 0 0.5rem;
+	display: block;
+	color: #3a3b45;
+	text-decoration: none !important;
+	border-radius: 0.35rem;
+	white-space: nowrap;
+	background-color: transparent;
+	font-size: 0.85rem;
+}
+
+.user-list { /* 사용자 list css */
+	padding: 0.5rem 1rem;
+	margin: 0 0.5rem;
+	display: block;
+	color: #3a3b45;
+	text-decoration: none !important;
+	border-radius: 0.35rem;
+	white-space: nowrap;
+	background-color: transparent;
+	font-size: 0.85rem;
+}
+
+.user-list:hover {
+	background-color: #eaecf4;
+}
+
+.user-list.active {
+	font-weight: 700;
+}
+
+.chatable-member { /*chatable-member header 감싸는 div*/
+	display: flex;
+}
+
+.chatmember-header {
+	margin: 0;
+	white-space: nowrap;
+	padding: .5rem 1.5rem;
+	text-transform: uppercase;
+	font-weight: 800;
+	font-size: 0.65rem;
+	color: #b7b9cc;
+}
+
+.refresh-block {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	align-items: flex-end;
+}
+
+.lp-refresh { /* 사이드 바의 채팅 방안의 refresh 버튼*/
+	/* 	margin-left: 2rem; */
+	padding: .3rem 1rem;
+	color: #d2d5dd;
+}
+
+.lp-refresh:hover {
+	color: #b7b9cc;
+}

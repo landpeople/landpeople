@@ -12,13 +12,6 @@
 <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
 
-
-
-
-
-
-
-
 </head>
 <body>
 	<div class="main-wrapper">
@@ -47,15 +40,7 @@
 										
 					<input type="button" value="테마 조회" onclick="sketchSelectTheme()">
 					<input type="hidden" value="나홀로" id="themeType"> 
-					
-				
-				
 				</div>
-			
-			
-			
-			
-			
 			</div>
 			<!--  여기까지 메인 컨텐츠  -->
 			<div class="footer">landpeople</div>
@@ -117,7 +102,6 @@ var LpScrape = function(user){
 			alert("실패");
 		}
 	});
-	   
 }
 
 //---------------------- 스크랩 등록 및 수정 --------------------
