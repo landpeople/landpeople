@@ -300,146 +300,146 @@ $("document").ready(
 	});
 	
 });	
-function getMySketchBook(pageNo){		
-	var user_email = "${ldto.user_email}"
-	var sketchLikes = "${sketchLikes}"
-		$.ajax({
-			url: "mysketchBookPaging.do",
-			type: "get",
-			data: {"pageNo": pageNo , "user_email" : user_email}, 
-			dataTypes: "json",
-			success: function(msg){
-				//alert(msg.addMySketchBook);		
-				alert(msg.addMySketchBook.length);
-				//alert(msg.likeMine);
-				//alert(msg.mySketchNicknames);
-				var sketchLikes = msg.likeMine;
-				var mySketchNickname = msg.mySketchNicknames;
-				
-				//"<form action='#' method='post' id='sketchDel' name='sketchDel' onsubmit='return DelchkBox()'>"
-					
-					for(var i = 0 ; i <  parseInt(msg.addMySketchBook.length/3); i++){
-						
-						var sketchBookContainer = document.createElement('div');
-						sketchBookContainer.className = 'sketchBookContainer';
-						
-						for(var j = 0; j < 3; j++){
-							
-							 var sketch_id=	msg.addMySketchBook[i*3+j].sketch_id;
-							
-							// 관리자에 의해 스케치북이 차단된 경우 sketch_block= 'T' 
-							if(msg.addMySketchBook[i*3+j].sketch_block.trim() == ('T')){	
-							sketchBookContainer.innerHTML += "<div style='width: 280px; height: 230px; border: 1px solid gray; display: inline-block; margin: 0 0 0 10px; position: relative;'>"+
-																 "<div class='selectTheme' style='background-image: url("+msg.addMySketchBook[i*3+j].sketch_spath+")'>"+
-																	 "<div class='sketchTheme_hover' style=' cursor: pointer;'>"+
-										     							 "<div class='hover_inside'>"+
-																		 	"<h5>관리자에 의해 삭제되었습니다.</h5>"+
-																 		 "</div>"+
-																	 "</div>"+
-															    "</div>"+
-															 	"<div style='width: 100%; height: 60px; border: 1px solid black; position: absolute; bottom: 0px;'>"+
-																	"<input type='checkbox' name='chkVal' value='"+msg.addMySketchBook[i*3+j].sketch_id+"'>"+
-																	"<label>"+msg.addMySketchBook[i*3+j].sketch_title+"</label>"+"<label style='float: right;'>"+mySketchNickname[(sketch_id)]+"</label><br>"+
-																	"<label><a href='#' onclick='return sketchBookModify("+msg.addMySketchBook[i*3+j].sketch_id+")'><img alt='modi' src='img/sketch/modifyIcon.png'>스케치북 수정</a></label>"+
-															 	"</div>"+
-															 "</div>";
-																 
-							}else{
-							
-							// 관리자에 의해 스케치북이 차단되지 않은 경우 sketch_block= 'F'	
-							sketchBookContainer.innerHTML +="<div style='width: 280px; height: 230px; border: 1px solid gray; display: inline-block; margin: 0 0 0 10px; position: relative;'>"+
-																"<div class='selectTheme' style='background-image: url("+msg.addMySketchBook[i*3+j].sketch_spath+")'>"+
-																	"<div class='sketchTheme_hover' style=' cursor: pointer;' onclick='goCanvas("+msg.addMySketchBook[i*3+j].sketch_id+")'>"+
-																		"<div class='hover_inside'>"+
-																			"<h5><img alt='likeIcon' src='./img/sketch/likeIcon.png'>"+
-																			sketchLikes[(sketch_id)]+""+msg.addMySketchBook[i*3+j].sketch_theme+"</h5>"+ 
-																		"</div>"+
-																	"</div>"+
-																"</div>"+
-																"<div style='width: 100%; height: 60px; border: 1px solid black; position: absolute; bottom: 0px;'>"+
-																	"<input type='checkbox' name='chkVal' value='"+msg.addMySketchBook[i*3+j].sketch_id+"'>"+
-																	"<label>"+msg.addMySketchBook[i*3+j].sketch_title+"</label>"+"<label style='float: right;'>"+mySketchNickname[(sketch_id)]+"</label><br>"+
-																	"<label><a href='#' onclick='return sketchBookModify("+msg.addMySketchBook[i*3+j].sketch_id+")'><img alt='modi' src='img/sketch/modifyIcon.png'>스케치북 수정</a></label>"+
-														 		"</div>"+
-															"</div>";
-															
-															
-							
-							
-							}		
-							
-															
-							}
-								$(".sketchBookContent").append(sketchBookContainer);
-					
-						
-					}									
-							
-					if(msg.addMySketchBook.length%3 !=0){ 
-						var sketchBookContainer = document.createElement('div');
-						sketchBookContainer.className = 'sketchBookContainer';		
-					
-						for(var i = 0; i < msg.addMySketchBook.length%3; i++){							
-									
-							var sketch_id= msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_id;
-							
-							// 스케치북이 관리자에 의해 차단된 경우 sketch_block= 'T'
-							if(msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_block.trim()== ('T')){		
-							sketchBookContainer.innerHTML += "<div style='width: 280px; height: 230px; border: 1px solid gray; display: inline-block; margin: 0 0 0 10px; position: relative;'>"+
-																"<div class='selectTheme'  style='background-image: url(\""+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_spath+"\")'>"+
-																	"<div class='sketchTheme_hover' style=' cursor: pointer;'>"+
-																		"<div class='hover_inside'>"+
-																		 	"<h5>관리자에 의해 삭제되었습니다.</h5>"+
-																 		"</div>"+
-																 	"</div>"+
-																"</div>"+
-																"<div style='width: 100%; height: 60px; border: 1px solid black; position: absolute; bottom: 0px;'>"+
-																	"<input type='checkbox' name='chkVal' value='"+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_id+"'>"+
-																	"<label>"+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_title+"</label>"+"<label style='float: right;'>"+mySketchNickname[(sketch_id)]+"</label><br>"+
-																	"<label><a href='#' onclick='return sketchBookModify("+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_id+")'><img alt='modi' src='img/sketch/modifyIcon.png'>스케치북 수정</a></label>"+
-													 			"</div>"+ 	  
-															 "</div>";
-															 
-							}else{
-							
-							// 스케치북이 관리자에 의해 차단되지 않은 경우 sketch_block= 'F'
-							sketchBookContainer.innerHTML += "<div style='width: 280px; height: 230px; border: 1px solid gray; display: inline-block; margin: 0 0 0 10px; position: relative;'>"+
-																"<div class='selectTheme' style='background-image: url("+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_spath+")'>"+
-																	"<div class='sketchTheme_hover' style=' cursor: pointer;' onclick='goCanvas("+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_id+")'>"+
-																		"<div class='hover_inside'>"+
-																			"<h5><img alt='likeIcon' src='./img/sketch/likeIcon.png'>"+
-																			sketchLikes[(sketch_id)]+""+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_theme+"</h5>"+ 
-																		"</div>"+
-																	"</div>"+
-																"</div>"+
-																"<div style='width: 100%; height: 60px; border: 1px solid black; position: absolute; bottom: 0px;'>"+
-																	"<input type='checkbox' name='chkVal' value='"+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_id+"'>"+
-																	"<label>"+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_title+"</label>"+"<label style='float: right;'>"+mySketchNickname[(sketch_id)]+"</label><br>"+
-																	"<label><a href='#' onclick='return sketchBookModify("+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_id+")'><img alt='modi' src='img/sketch/modifyIcon.png'>스케치북 수정</a></label>"+
-														 		"</div>"+
-															"</div>";
-							
-																							
-										
-														
-														/* 원본 <div style='width: 280px; height: 230px; border: 1px solid gray; display: inline-block; margin: 0 0 0 10px; position: relative;'>"+
-														 "<div class='selectTheme'  style='background-image: url(\""+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_spath+"\")'>"+
-								  							 "<div class='sketchTheme_hover' onclick='goCanvas("+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_id+")'>"+
-																 "<div class='hover_inside'>"+
-																	 "<div>"+"<a href='#' onclick='return sketchBookModify("+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_id+")'><img alt='modi' src='img/sketch/modifyIcon.png'></a>"+"</div>"+
-																	 "<span>"+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_title+"</span>"+"<h5>"+"<img alt='likeIcon' src='./img/sketch/likeIcon.png'>"+
-																	 sketchLikes[(sketch_id)]+"</h5>"+"<h5>"+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_theme+""+mySketchNickname[(sketch_id)]+"</h5>"+
-																	 "</div>"+
-													 			"</div>"+
-															 "</div>"+
-														 "</div>"+
-													 "</div>" */
-														
-							
-							
-							}
-															
-						}
+function getMySketchBook(pageNo){      
+   var user_email = "${ldto.user_email}"
+   var sketchLikes = "${sketchLikes}"
+      $.ajax({
+         url: "mysketchBookPaging.do",
+         type: "get",
+         data: {"pageNo": pageNo , "user_email" : user_email}, 
+         dataTypes: "json",
+         success: function(msg){
+            //alert(msg.addMySketchBook);    
+            alert(msg.addMySketchBook.length);
+            //alert(msg.likeMine);
+            //alert(msg.mySketchNicknames);
+            var sketchLikes = msg.likeMine;
+            var mySketchNickname = msg.mySketchNicknames;
+            
+            //"<form action='#' method='post' id='sketchDel' name='sketchDel' onsubmit='return DelchkBox()'>"
+               
+               for(var i = 0 ; i <  parseInt(msg.addMySketchBook.length/3); i++){
+                  
+                  var sketchBookContainer = document.createElement('div');
+                  sketchBookContainer.className = 'sketchBookContainer';
+                  
+                  for(var j = 0; j < 3; j++){
+                     
+                      var sketch_id=   msg.addMySketchBook[i*3+j].sketch_id;
+                     
+                     // 관리자에 의해 스케치북이 차단된 경우 sketch_block= 'T' 
+                     if(msg.addMySketchBook[i*3+j].sketch_block.trim() == ('T')){   
+                     sketchBookContainer.innerHTML += "<div style='width: 280px; height: 230px; border: 1px solid gray; display: inline-block; margin: 0 0 0 10px; position: relative;'>"+
+                                                 "<div class='selectTheme' style='background-image: url("+msg.addMySketchBook[i*3+j].sketch_spath+")'>"+
+                                                    "<div class='sketchTheme_hover' style=' cursor: pointer;'>"+
+                                                       "<div class='hover_inside'>"+
+                                                         "<h5>관리자에 의해 삭제되었습니다.</h5>"+
+                                                       "</div>"+
+                                                    "</div>"+
+                                                 "</div>"+
+                                                "<div style='width: 100%; height: 60px; border: 1px solid black; position: absolute; bottom: 0px;'>"+
+                                                   "<input type='checkbox' name='chkVal' value='"+msg.addMySketchBook[i*3+j].sketch_id+"'>"+
+                                                   "<label>"+msg.addMySketchBook[i*3+j].sketch_title+"</label>"+"<label style='float: right;'>"+mySketchNickname[(sketch_id)]+"</label><br>"+
+                                                   "<label><a href='#' onclick='return sketchBookModify("+msg.addMySketchBook[i*3+j].sketch_id+")'><img alt='modi' src='img/sketch/modifyIcon.png'>스케치북 수정</a></label>"+
+                                                "</div>"+
+                                              "</div>";
+                                                 
+                     }else{
+                     
+                     // 관리자에 의해 스케치북이 차단되지 않은 경우 sketch_block= 'F'   
+                     sketchBookContainer.innerHTML +="<div style='width: 280px; height: 230px; border: 1px solid gray; display: inline-block; margin: 0 0 0 10px; position: relative;'>"+
+                                                "<div class='selectTheme' style='background-image: url("+msg.addMySketchBook[i*3+j].sketch_spath+")'>"+
+                                                   "<div class='sketchTheme_hover' style=' cursor: pointer;' onclick='goCanvas("+msg.addMySketchBook[i*3+j].sketch_id+")'>"+
+                                                      "<div class='hover_inside'>"+
+                                                         "<h5><img alt='likeIcon' src='./img/sketch/likeIcon.png'>"+
+                                                         sketchLikes[(sketch_id)]+""+msg.addMySketchBook[i*3+j].sketch_theme+"</h5>"+ 
+                                                      "</div>"+
+                                                   "</div>"+
+                                                "</div>"+
+                                                "<div style='width: 100%; height: 60px; border: 1px solid black; position: absolute; bottom: 0px;'>"+
+                                                   "<input type='checkbox' name='chkVal' value='"+msg.addMySketchBook[i*3+j].sketch_id+"'>"+
+                                                   "<label>"+msg.addMySketchBook[i*3+j].sketch_title+"</label>"+"<label style='float: right;'>"+mySketchNickname[(sketch_id)]+"</label><br>"+
+                                                   "<label><a href='#' onclick='return sketchBookModify("+msg.addMySketchBook[i*3+j].sketch_id+")'><img alt='modi' src='img/sketch/modifyIcon.png'>스케치북 수정</a></label>"+
+                                                "</div>"+
+                                             "</div>";
+                                             
+                                             
+                     
+                     
+                     }     
+                     
+                                             
+                     }
+                        $(".sketchBookContent").append(sketchBookContainer);
+               
+                  
+               }                          
+                     
+               if(msg.addMySketchBook.length%3 !=0){ 
+                  var sketchBookContainer = document.createElement('div');
+                  sketchBookContainer.className = 'sketchBookContainer';      
+               
+                  for(var i = 0; i < msg.addMySketchBook.length%3; i++){                     
+                           
+                     var sketch_id= msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_id;
+                     
+                     // 스케치북이 관리자에 의해 차단된 경우 sketch_block= 'T'
+                     if(msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_block.trim()== ('T')){     
+                     sketchBookContainer.innerHTML += "<div style='width: 280px; height: 230px; border: 1px solid gray; display: inline-block; margin: 0 0 0 10px; position: relative;'>"+
+                                                "<div class='selectTheme'  style='background-image: url(\""+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_spath+"\")'>"+
+                                                   "<div class='sketchTheme_hover' style=' cursor: pointer;'>"+
+                                                      "<div class='hover_inside'>"+
+                                                         "<h5>관리자에 의해 삭제되었습니다.</h5>"+
+                                                      "</div>"+
+                                                   "</div>"+
+                                                "</div>"+
+                                                "<div style='width: 100%; height: 60px; border: 1px solid black; position: absolute; bottom: 0px;'>"+
+                                                   "<input type='checkbox' name='chkVal' value='"+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_id+"'>"+
+                                                   "<label>"+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_title+"</label>"+"<label style='float: right;'>"+mySketchNickname[(sketch_id)]+"</label><br>"+
+                                                   "<label><a href='#' onclick='return sketchBookModify("+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_id+")'><img alt='modi' src='img/sketch/modifyIcon.png'>스케치북 수정</a></label>"+
+                                                "</div>"+     
+                                              "</div>";
+                                              
+                     }else{
+                     
+                     // 스케치북이 관리자에 의해 차단되지 않은 경우 sketch_block= 'F'
+                     sketchBookContainer.innerHTML += "<div style='width: 280px; height: 230px; border: 1px solid gray; display: inline-block; margin: 0 0 0 10px; position: relative;'>"+
+                                                "<div class='selectTheme' style='background-image: url("+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_spath+")'>"+
+                                                   "<div class='sketchTheme_hover' style=' cursor: pointer;' onclick='goCanvas("+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_id+")'>"+
+                                                      "<div class='hover_inside'>"+
+                                                         "<h5><img alt='likeIcon' src='./img/sketch/likeIcon.png'>"+
+                                                         sketchLikes[(sketch_id)]+""+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_theme+"</h5>"+ 
+                                                      "</div>"+
+                                                   "</div>"+
+                                                "</div>"+
+                                                "<div style='width: 100%; height: 60px; border: 1px solid black; position: absolute; bottom: 0px;'>"+
+                                                   "<input type='checkbox' name='chkVal' value='"+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_id+"'>"+
+                                                   "<label>"+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_title+"</label>"+"<label style='float: right;'>"+mySketchNickname[(sketch_id)]+"</label><br>"+
+                                                   "<label><a href='#' onclick='return sketchBookModify("+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_id+")'><img alt='modi' src='img/sketch/modifyIcon.png'>스케치북 수정</a></label>"+
+                                                "</div>"+
+                                             "</div>";
+                     
+                                                                     
+                              
+                                          
+                                          /* 원본 <div style='width: 280px; height: 230px; border: 1px solid gray; display: inline-block; margin: 0 0 0 10px; position: relative;'>"+
+                                           "<div class='selectTheme'  style='background-image: url(\""+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_spath+"\")'>"+
+                                              "<div class='sketchTheme_hover' onclick='goCanvas("+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_id+")'>"+
+                                                 "<div class='hover_inside'>"+
+                                                    "<div>"+"<a href='#' onclick='return sketchBookModify("+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_id+")'><img alt='modi' src='img/sketch/modifyIcon.png'></a>"+"</div>"+
+                                                    "<span>"+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_title+"</span>"+"<h5>"+"<img alt='likeIcon' src='./img/sketch/likeIcon.png'>"+
+                                                    sketchLikes[(sketch_id)]+"</h5>"+"<h5>"+msg.addMySketchBook[parseInt(parseInt(msg.addMySketchBook.length/3)*3+i)].sketch_theme+""+mySketchNickname[(sketch_id)]+"</h5>"+
+                                                    "</div>"+
+                                                "</div>"+
+                                              "</div>"+
+                                           "</div>"+
+                                        "</div>" */
+                                          
+                     
+                     
+                     }
+                                             
+                  }
 						$(".sketchBookContent").append(sketchBookContainer);
 									
 					}		
@@ -460,74 +460,74 @@ function sketchBookModify(sketch) {
 	ajaxSketchModi(user_email, sketch_id);
 	$("#sketchModiForm").modal();
 }
-	var ajaxSketchModi = function(user_email, sketch_id){
-//	alert(user_email);
-//	var user_email 
-	$.ajax({
-		url : "sketchModifyForm.do",
-		type : "post",
-		data : { "user_email" : user_email,
-				 "sketch_id"  :	sketch_id },
-		dataType : "json",
-		success :function(modiModal){
-			//alert(modiModal.sdto.sketch_title);
-			//alert(modiModal.sdto.sketch_id);
-			
-			alert(modiModal.sdto.sketch_share);
-			//alert(modiModal.sdto.user_email);
-			//alert(modiModal.sdto.sketch_theme);
-			//alert(modiModal.sdto.sketch_spath);
-			
-			var modiFormHTML =	"<input type='hidden' name='user_email' value='"+modiModal.sdto.user_email+"'>"+
-							  	"<input type='hidden' name='sketch_id' value='"+modiModal.sdto.sketch_id+"'>"+
-						
-						 "<div class='form-group'>"
-						+ "<label>스케치북 제목</label>"
-						+ "<div class='modal-input'>"
-						+ "<input type='text' class='form-control' id='sketchtitle' name='sketch_title' value='"+modiModal.sdto.sketch_title+"' style='width : 400px;' required='required'></div>"
-						+ "</div>"
-						+
-			
-						"<div class='form-group'>"
-						+ "<label>스케치북 테마</label>"
-						+ "<div class='themeradio'>"
-						+ "<input type='radio' id='familytheme' name='sketch_theme' value='가족여행'><label for='familytheme'>가족여행</label>"
-						+ "<input type='radio' id='solotheme' name='sketch_theme' value='나홀로'><label for='solotheme'>나홀로여행</label>"
-						+ "<input type='radio' id='coupletheme' name='sketch_theme' value='연인과함께'><label for='coupletheme'>연인과함께</label>"
-						+ "<input type='radio' id='friendtheme' name='sketch_theme' value='친구와함께'><label for='friendtheme'>친구와함께</label></div>"
-						+ "</div>"
-						+
-			
-						"<div class='form-group'>"
-						+"<label>스케치북 공유여부</label>"
-						+"<div class='themeradio'>"
-						+"<input type='radio' id='sketchShareY' name='sketch_share' value='Y'><label for='sketchShareY'>Y</label>"
-						+"<input type='radio' id='sketchShareN' name='sketch_share' value='N'><label for='sketchShareN'>N</label>"
-						+"</div>"
-						+"</div>"
-						+
-						
-						
-						"<div class='form-group'>"+
-						"<label>스케치북 커버이미지</label>&nbsp;<label style='color: red;'>(커버이미지를 변경하지 않으시면 기존 이미지가 입력됩니다)</label>"+
-										"<div id='moSketchBookCover'>"+
-												"<div id='modalIMG1' style='background-image :url("+modiModal.sdto.sketch_spath+")'>"+
-												"<input type='hidden' name='sketch_spath' class='img_spath0'>"+
-														"<label for='C_IMG1'><img src='./img/folder.png'></label>"+
-														"<input id='C_IMG1' class='file'  name='file' type='file' multiple='multiple' style='display: none;'>"+
-												"</div>"+
-										"</div>"+
-						 "</div>"+
-			
-						"<div class='modal-footer'>"
-						+ "<input class='btn btn-success' type='button' value='수정완료 ' onclick='sketchModify()'>"
-						+ "<button type='button' class='btn btn-default' data-dismiss='modal'>닫기</button>"
-						+ "</div>";
-					$("#modiSketchBook").html(modiFormHTML);
-					
-					
-					$('input:radio[name=sketch_theme]:input[value='+modiModal.sdto.sketch_theme+']').attr("checked", true);
-					$("input:radio[name='sketch_share'][value="+ modiModal.sdto.sketch_share +"]").prop('checked', true);
+   var ajaxSketchModi = function(user_email, sketch_id){
+// alert(user_email);
+// var user_email 
+   $.ajax({
+      url : "sketchModifyForm.do",
+      type : "post",
+      data : { "user_email" : user_email,
+             "sketch_id"  :   sketch_id },
+      dataType : "json",
+      success :function(modiModal){
+         //alert(modiModal.sdto.sketch_title);
+         //alert(modiModal.sdto.sketch_id);
+         
+         alert(modiModal.sdto.sketch_share);
+         //alert(modiModal.sdto.user_email);
+         //alert(modiModal.sdto.sketch_theme);
+         //alert(modiModal.sdto.sketch_spath);
+         
+         var modiFormHTML =   "<input type='hidden' name='user_email' value='"+modiModal.sdto.user_email+"'>"+
+                        "<input type='hidden' name='sketch_id' value='"+modiModal.sdto.sketch_id+"'>"+
+                  
+                   "<div class='form-group'>"
+                  + "<label>스케치북 제목</label>"
+                  + "<div class='modal-input'>"
+                  + "<input type='text' class='form-control' id='sketchtitle' name='sketch_title' value='"+modiModal.sdto.sketch_title+"' style='width : 400px;' required='required'></div>"
+                  + "</div>"
+                  +
+         
+                  "<div class='form-group'>"
+                  + "<label>스케치북 테마</label>"
+                  + "<div class='themeradio'>"
+                  + "<input type='radio' id='familytheme' name='sketch_theme' value='가족여행'><label for='familytheme'>가족여행</label>"
+                  + "<input type='radio' id='solotheme' name='sketch_theme' value='나홀로'><label for='solotheme'>나홀로여행</label>"
+                  + "<input type='radio' id='coupletheme' name='sketch_theme' value='연인과함께'><label for='coupletheme'>연인과함께</label>"
+                  + "<input type='radio' id='friendtheme' name='sketch_theme' value='친구와함께'><label for='friendtheme'>친구와함께</label></div>"
+                  + "</div>"
+                  +
+         
+                  "<div class='form-group'>"
+                  +"<label>스케치북 공유여부</label>"
+                  +"<div class='themeradio'>"
+                  +"<input type='radio' id='sketchShareY' name='sketch_share' value='Y'><label for='sketchShareY'>Y</label>"
+                  +"<input type='radio' id='sketchShareN' name='sketch_share' value='N'><label for='sketchShareN'>N</label>"
+                  +"</div>"
+                  +"</div>"
+                  +
+                  
+                  
+                  "<div class='form-group'>"+
+                  "<label>스케치북 커버이미지</label>&nbsp;<label style='color: red;'>(커버이미지를 변경하지 않으시면 기존 이미지가 입력됩니다)</label>"+
+                              "<div id='moSketchBookCover'>"+
+                                    "<div id='modalIMG1' style='background-image :url("+modiModal.sdto.sketch_spath+")'>"+
+                                    "<input type='hidden' name='sketch_spath' class='img_spath0'>"+
+                                          "<label for='C_IMG1'><img src='./img/folder.png'></label>"+
+                                          "<input id='C_IMG1' class='file'  name='file' type='file' multiple='multiple' style='display: none;'>"+
+                                    "</div>"+
+                              "</div>"+
+                   "</div>"+
+         
+                  "<div class='modal-footer'>"
+                  + "<input class='btn btn-success' type='button' value='수정완료 ' onclick='sketchModify()'>"
+                  + "<button type='button' class='btn btn-default' data-dismiss='modal'>닫기</button>"
+                  + "</div>";
+               $("#modiSketchBook").html(modiFormHTML);
+               
+               
+               $('input:radio[name=sketch_theme]:input[value='+modiModal.sdto.sketch_theme+']').attr("checked", true);
+               $("input:radio[name='sketch_share'][value="+ modiModal.sdto.sketch_share +"]").prop('checked', true);
 					$("input[id=C_IMG1]").change(function(){
 						var imgClass = $(this).attr("id");
 						subImgClass = imgClass.substring(imgClass.indexOf('_')+1);
@@ -591,29 +591,29 @@ $.ajax({
 	
 //-------------------- 작성 스케치북 수정  --------------------
 function sketchModify(){
-	//var img= img;
-	//chkModify = true;
-	var img = $("div[id=modalIMG1]").css("background-image")
-	img =img.replace('url(','').replace(')','').replace(/\"/gi, "");
-	alert(img);
-	
-	
-	
-	var sketchModiModal = document.getElementById("modiSketchBook");
-	var sketch_theme = $("input[name=sketch_theme]:checked").val();
-	var sketch_share = $("input[name=sketch_share]:checked").val();
-	var sketchConver = $("input[class=img_spath0]").val();
-	sketchModiModal.action = "./modifySketch.do";
-	
-	
-	var title = $("#sketchtitle").val();
-	var theme = $("input[name=sketch_theme]:checked").length;
-	var share = $("input[name=sketch_share]:checked").length;
-	
-	
-	
-	
-	
+   //var img= img;
+   //chkModify = true;
+   var img = $("div[id=modalIMG1]").css("background-image")
+   img =img.replace('url(','').replace(')','').replace(/\"/gi, "");
+   alert(img);
+   
+   
+   
+   var sketchModiModal = document.getElementById("modiSketchBook");
+   var sketch_theme = $("input[name=sketch_theme]:checked").val();
+   var sketch_share = $("input[name=sketch_share]:checked").val();
+   var sketchConver = $("input[class=img_spath0]").val();
+   sketchModiModal.action = "./modifySketch.do";
+   
+   
+   var title = $("#sketchtitle").val();
+   var theme = $("input[name=sketch_theme]:checked").length;
+   var share = $("input[name=sketch_share]:checked").length;
+   
+   
+   
+   
+   
 	
 	
 	if (title == "") {
