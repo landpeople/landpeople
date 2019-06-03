@@ -36,6 +36,7 @@ function setEditor(id, i) {
 		previewStyle : 'tab',
 		height : "'" + $("div[id='" + id + "']").attr("height") + "'"
 	});
+	
 }
 		
 function fileUpload(subImgClass) {
@@ -79,6 +80,7 @@ function extension(file){
 	}
 }
 		
+//입력
 function insert() {
 	for (var i = 0; i < editor.length; i++) {
 		var text_content = $("input[class=text_content"+i+"]");
@@ -87,6 +89,19 @@ function insert() {
 			
 	var frm = document.getElementById("frm");
 	frm.action = './insertData.do';
+	frm.method = 'post';
+	frm.submit();
+}
+
+//수정
+function update() {
+	for (var i = 0; i < editor.length; i++) {
+		var text_content = $("input[class=text_content"+i+"]");
+		text_content.val(editor[i].getHtml());
+	}
+	
+	var frm = document.getElementById("frm");
+	frm.action = './updateFreeCanvas.do';
 	frm.method = 'post';
 	frm.submit();
 }
