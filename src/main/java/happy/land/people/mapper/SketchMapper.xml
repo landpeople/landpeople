@@ -3,25 +3,25 @@
 <mapper namespace="sketch">
 
 	<!-- 스케치북 작성권한 확인  -->
-	<select id="sketch_WriteChk" resultType="java.lang.String" parameterType="happy.land.people.dto.LPUserDto">
+	<select id="sketch_WriteChk" parameterType="happy.land.people.dto.LPUserDto" resultType="java.lang.String">
 		SELECT USER_ISWRITE FROM LPUSER WHERE USER_EMAIL = #{user_email}
 	</select>
 
   	<!-- 스케치북 생성 -->
 	<insert id="sketch_Insert" parameterType="happy.land.people.dto.LPSketchbookDto">
-		INSERT INTO LPSKETCHBOOK(SKETCH_ID, USER_EMAIL, SKETCH_TITLE, SKETCH_THEME, SKETCH_SHARE, SKETCH_DELFLAG, SKETCH_SPATH, SKETCH_BLOCK)
-		VALUES(LPSKETCHBOOK_SEQ.NEXTVAL, #{user_email}, #{sketch_title}, #{sketch_theme}, #{sketch_share}, 'F', #{sketch_spath}, 'F')	
+		INSERT INTO LPSKETCHBOOK(SKETCH_ID, USER_EMAIL, SKETCH_TITLE, SKETCH_THEME, SKETCH_SHARE, SKETCH_SPATH, SKETCH_BLOCK)
+		VALUES(LPSKETCHBOOK_SEQ.NEXTVAL, #{user_email}, #{sketch_title}, #{sketch_theme}, #{sketch_share}, #{sketch_spath}, 'F')	
 	</insert>
 	
 	<!-- 스크랩, 좋아요 최초 등록 -->
 	<insert id="collect_Insert" parameterType="happy.land.people.dto.LPCollectDto">
 		 INSERT INTO LPCOLLECT(COL_ID, USER_EMAIL, SKETCH_ID, COL_SCRAPE, COL_LIKE)
-		     SELECT LPCOLLECT_SEQ.NEXTVAL,#{user_email}, #{sketch_id}, 'F', 'F' 
+		     SELECT LPCOLLECT_SEQ.NEXTVAL, #{user_email}, #{sketch_id}, 'F', 'F' 
 		     FROM DUAL WHERE NOT EXISTS(SELECT * FROM LPCOLLECT WHERE USER_EMAIL=#{user_email} AND SKETCH_ID =#{sketch_id})
 	</insert>
 	
 	<!-- 스크랩 상태 가져오기 -->
-	<select id="scrape_Select" resultType="java.lang.String" parameterType="happy.land.people.dto.LPCollectDto">
+	<select id="scrape_Select" parameterType="happy.land.people.dto.LPCollectDto" resultType="java.lang.String">
 		SELECT COL_SCRAPE FROM LPCOLLECT WHERE USER_EMAIL=#{user_email} AND SKETCH_ID=#{sketch_id}
 	</select>
 
@@ -31,7 +31,7 @@
 	</update>
 
 	<!-- 좋아요 상태 가져오기 -->
-	<select id="like_Select" resultType="java.lang.String" parameterType="java.util.Map">
+	<select id="like_Select" parameterType="java.util.Map" resultType="java.lang.String">
 		SELECT COL_LIKE FROM LPCOLLECT WHERE USER_EMAIL=#{user_email} AND SKETCH_ID=#{sketch_id}
 	</select>
 		
@@ -41,30 +41,29 @@
 	</update>
 
 	<!-- 스크랩한 스케치북 조회 (사용자- 마이페이지) -->
-	<select id="scrape_SelectMine" resultType="happy.land.people.dto.LPSketchbookDto" parameterType="java.util.Map">
+	<select id="scrape_SelectMine" parameterType="java.util.Map" resultType="happy.land.people.dto.LPSketchbookDto">
 		SELECT SKETCH_ID, SKETCH_THEME, SKETCH_TITLE, SKETCH_SPATH	
 		FROM (SELECT ROWNUM RNUM, SKETCH_ID, SKETCH_THEME, SKETCH_TITLE, SKETCH_SPATH
 			FROM (SELECT LPSKETCHBOOK.SKETCH_ID, SKETCH_THEME, SKETCH_TITLE, SKETCH_SPATH FROM LPSKETCHBOOK, LPCOLLECT 
 					WHERE LPCOLLECT.USER_EMAIL=#{user_email} 
-					AND LPSKETCHBOOK.SKETCH_ID = LPCOLLECT.SKETCH_ID AND  LPCOLLECT.COL_SCRAPE = 'T' AND LPSKETCHBOOK.SKETCH_SHARE='Y' AND LPSKETCHBOOK.SKETCH_DELFLAG='F' AND LPSKETCHBOOK.SKETCH_BLOCK='F'
+					AND LPSKETCHBOOK.SKETCH_ID = LPCOLLECT.SKETCH_ID AND  LPCOLLECT.COL_SCRAPE = 'T' AND LPSKETCHBOOK.SKETCH_SHARE='Y' AND LPSKETCHBOOK.SKETCH_BLOCK='F'
 					ORDER BY SKETCH_ID DESC)
 			)
 			WHERE RNUM BETWEEN  #{first} AND #{last}
 	</select>
 		
 	<!-- 스크랩한 스케치북 갯수 조회 -->	
-	<select id="scrape_Cnt" resultType="java.lang.Integer" parameterType="java.lang.String">
+	<select id="scrape_Cnt" parameterType="java.lang.String" resultType="java.lang.Integer">
 		SELECT COUNT(*) CNT FROM LPCOLLECT WHERE USER_EMAIL=#{user_email} AND COL_SCRAPE='T'
-	
 	</select>
 		
 	<!-- 스케치북 좋아요  갯수 조회 -->
-	<select id="like_Cnt" resultType="java.lang.Integer" parameterType="java.lang.String">
+	<select id="like_Cnt" parameterType="java.lang.String" resultType="java.lang.Integer">
 		SELECT COUNT(*) CNT FROM LPCOLLECT WHERE SKETCH_ID=#{sketch_id} AND COL_LIKE='T'
 	</select>
 
 	<!-- 스크랩한 스케치북 다중 취소  -->
-	<update id="scrape_UpdateMulti" parameterType="java.util.Map">
+	<update id="scrape_MultiUpdate" parameterType="java.util.Map">
 		UPDATE LPCOLLECT SET COL_SCRAPE='F' 
 		WHERE USER_EMAIL IN 
 		<foreach collection="user_email_" item="user_email" open="(" close=")" separator=",">
@@ -79,25 +78,25 @@
 	
 	
 	<!-- 페이징 처리된 자신이 작성한 스케치북 조회 (사용자 - 마이페이지) -->
-	<select id="sketch_SelectMine" resultType="happy.land.people.dto.LPSketchbookDto" parameterType="java.util.Map">
-		SELECT SKETCH_ID, SKETCH_THEME, SKETCH_TITLE, SKETCH_SPATH, SKETCH_SHARE
-			FROM (SELECT ROWNUM RNUM, SKETCH_ID, SKETCH_THEME, SKETCH_TITLE, SKETCH_SPATH, SKETCH_SHARE
-				FROM (SELECT SKETCH_ID, SKETCH_THEME, SKETCH_TITLE, SKETCH_SPATH, SKETCH_SHARE
+	<select id="sketch_SelectMine" parameterType="java.util.Map" resultType="happy.land.people.dto.LPSketchbookDto">
+		SELECT SKETCH_ID, SKETCH_THEME, SKETCH_TITLE, SKETCH_SPATH, SKETCH_SHARE, SKETCH_BLOCK
+			FROM (SELECT ROWNUM RNUM, SKETCH_ID, SKETCH_THEME, SKETCH_TITLE, SKETCH_SPATH, SKETCH_SHARE, SKETCH_BLOCK
+				FROM (SELECT SKETCH_ID, SKETCH_THEME, SKETCH_TITLE, SKETCH_SPATH, SKETCH_SHARE, SKETCH_BLOCK
 					FROM LPSKETCHBOOK 
-						WHERE USER_EMAIL=#{user_email} AND SKETCH_DELFLAG='F' AND SKETCH_BLOCK='F' 
+						WHERE USER_EMAIL=#{user_email}
 						ORDER BY SKETCH_ID DESC)		)  	WHERE RNUM BETWEEN #{first} AND #{last}
 	
 	</select>
 	
 	<!-- 자신이 작성한 스케치북 카운팅 -->
-	<select id="sketch_CntMine" resultType="java.lang.Integer" parameterType="java.lang.String">
-	SELECT COUNT(*) FROM LPSKETCHBOOK WHERE USER_EMAIL=#{user_email} AND SKETCH_DELFLAG='F' AND SKETCH_BLOCK='F'
+	<select id="sketch_CntMine" parameterType="java.lang.String" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM LPSKETCHBOOK WHERE USER_EMAIL=#{user_email}
 	</select>
 	
 	
 	<!-- 작성 스케치북 상세조회(사용자- 마이페이지 정보 수정을 위한 상세 조회)-->
-	<select id="sketch_SelectOne" resultType="happy.land.people.dto.LPSketchbookDto" parameterType="happy.land.people.dto.LPSketchbookDto">
-		SELECT SKETCH_ID, USER_EMAIL, SKETCH_TITLE, SKETCH_THEME, SKETCH_SPATH, SKETCH_SHARE FROM LPSKETCHBOOK WHERE  USER_EMAIL=#{user_email} AND SKETCH_ID=#{sketch_id}
+	<select id="sketch_SelectOne" parameterType="happy.land.people.dto.LPSketchbookDto" resultType="happy.land.people.dto.LPSketchbookDto">
+		SELECT SKETCH_ID, USER_EMAIL, SKETCH_TITLE, SKETCH_THEME, SKETCH_SPATH, SKETCH_SHARE FROM LPSKETCHBOOK WHERE USER_EMAIL=#{user_email} AND SKETCH_ID=#{sketch_id}
 	</select>
 	
 	<!-- 작성 스케치북 정보 수정   -->
@@ -107,7 +106,7 @@
 	</update>
 	
 	<!-- 작성 스케치북 완전 다중 삭제 -->
-	<delete id="sketch_RealDeleteMulti" parameterType="java.util.Map">
+	<delete id="sketch_MultiDelete" parameterType="java.util.Map">
 		DELETE FROM LPSKETCHBOOK WHERE SKETCH_ID IN
 		<foreach collection="sketch_id_" item="sketch_id" open="(" close=")" separator=",">
 		#{sketch_id}
@@ -121,25 +120,17 @@
 		FROM (SELECT ROWNUM RNUM, SKETCH_ID, SKETCH_TITLE, SKETCH_SPATH  
 			FROM (SELECT SKETCH_ID,SKETCH_TITLE, SKETCH_SPATH
 				FROM LPSKETCHBOOK WHERE SKETCH_THEME=#{theme}  
-					AND SKETCH_SHARE='Y' AND SKETCH_DELFLAG='F' AND SKETCH_BLOCK='F'      
+					AND SKETCH_SHARE='Y' AND SKETCH_BLOCK='F'      
 				ORDER BY SKETCH_ID DESC)        )        WHERE RNUM BETWEEN #{first} AND #{last}
 	</select>
  	
  	
  	<!-- 좋아요 카운팅이 가장 높은 3개 순으로  페이징 처리된 테마별 스케치북 조회 -->
  	<select id="sketch_SelectMaxLike" parameterType="java.lang.String" resultType="happy.land.people.dto.LPSketchbookDto">
- 		<!-- SELECT SKETCH_ID, SKETCH_TITLE, SKETCH_SPATH
-		 FROM (SELECT ROWNUM RNUM, SKETCH_ID, SKETCH_TITLE, SKETCH_SPATH
-			FROM (SELECT SKETCH_ID, SKETCH_TITLE, SKETCH_SPATH
-				FROM LPSKETCHBOOK WHERE SKETCH_THEME=#{theme} 
-					AND SKETCH_SHARE='Y' AND SKETCH_DELFLAG='F'AND SKETCH_BLOCK='F'  
-				ORDER BY (SELECT COUNT(*) CNT FROM LPCOLLECT WHERE SKETCH_ID=#{sketch_id} AND COL_LIKE='T') DESC)
-				)
-			WHERE RNUM BETWEEN #{first} AND #{last} -->
 		SELECT MAXLIKE, SKETCH_ID, SKETCH_THEME, SKETCH_TITLE, SKETCH_SPATH 
 			FROM (SELECT COUNT(*) MAXLIKE, LPCOLLECT.SKETCH_ID, LPSKETCHBOOK.SKETCH_THEME, LPSKETCHBOOK.SKETCH_TITLE, LPSKETCHBOOK.SKETCH_SPATH 
 				FROM LPSKETCHBOOK, LPCOLLECT
-					WHERE COL_LIKE='T' AND LPCOLLECT.SKETCH_ID=LPSKETCHBOOK.SKETCH_ID AND SKETCH_THEME=#{type} AND SKETCH_SHARE='Y' AND SKETCH_DELFLAG='F'AND SKETCH_BLOCK='F' 
+					WHERE COL_LIKE='T' AND LPCOLLECT.SKETCH_ID=LPSKETCHBOOK.SKETCH_ID AND SKETCH_THEME=#{type} AND SKETCH_SHARE='Y' AND SKETCH_BLOCK='F' 
 					GROUP BY LPCOLLECT.SKETCH_ID, LPSKETCHBOOK.SKETCH_THEME, LPSKETCHBOOK.SKETCH_TITLE, LPSKETCHBOOK.SKETCH_SPATH ORDER BY MAXLIKE DESC, SKETCH_ID DESC)
 			WHERE ROWNUM BETWEEN 1 AND 3	
  	</select>
@@ -147,12 +138,12 @@
  	
  	<!--   스케치북 테마별 카운팅 -->
  	<select id="sketch_CntTheme" parameterType="java.lang.String" resultType="java.lang.Integer">
- 		SELECT COUNT(*) FROM LPSKETCHBOOK WHERE SKETCH_THEME=#{theme} AND SKETCH_SHARE='Y' AND SKETCH_DELFLAG='F' AND SKETCH_BLOCK='F'
+ 		SELECT COUNT(*) FROM LPSKETCHBOOK WHERE SKETCH_THEME=#{theme} AND SKETCH_SHARE='Y' AND SKETCH_BLOCK='F'
  	</select>
 
 
 	<!-- 스케치북 작성자 닉네임 조회 -->
-	<select id="select_Nickname" parameterType="java.lang.String" resultType="java.lang.String">
+	<select id="nickname_Select" parameterType="java.lang.String" resultType="java.lang.String">
 		SELECT LPUSER.USER_NICKNAME FROM LPSKETCHBOOK, LPUSER
 			WHERE LPSKETCHBOOK.USER_EMAIL = LPUSER.USER_EMAIL AND SKETCH_ID=#{sketch_id}
 	</select>

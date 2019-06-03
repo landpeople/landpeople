@@ -106,7 +106,8 @@
 	align-items: center;
 }
 
-.lp-content {
+/* index 페이지의 content*/
+.lp-index-content {
 	display: flex;
 	justify-content: center;
 	min-width: 1000px;
@@ -114,10 +115,22 @@
 	height: 650px;
 	background: white;
 	box-sizing: border-box;
-	padding: 20px;
 	border-radius: 0.4rem !important;
 	padding: 20px;
+}
+
+/* index 페이지를 제외한 content*/
+.lp-content {
+	display: flex;
+	justify-content: center;
+	min-width: 1000px;
 	width: 1000px;
+	height: 840px;
+	background: white;
+	box-sizing: border-box;
+	padding: 20px;
+	border-radius: 0.4rem !important;
+	overflow: auto;
 }
 
 /* index 페이지 그리드 레이아웃*/
@@ -266,4 +279,30 @@
 .lp-icon {
 	width: 3rem;
 	height: auto;
+}
+
+
+/* 스크롤바 css */
+.scroll::-webkit-scrollbar-track {
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 3px #d2d5dd;
+	background-color: #F5F5F5;
+}
+
+.scroll::-webkit-scrollbar {
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+	border-radius: 10px;
+	background-color: #858796;
+}
+
+
+/* 스케치북 정렬을 위한 div*/
+.lp-content-sketch{
+	display:flex;
+	flex-direction: column; /*안쪽에 좋아요 보기와 더보기 버튼이 column으로 정렬되어야 함.*/
+	
 }

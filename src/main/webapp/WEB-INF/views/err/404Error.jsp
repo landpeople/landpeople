@@ -45,9 +45,9 @@
 				<a href="./index.jsp">← Back to All travel schedule</a>
 			</div>
 		</div>
-	</div>
+      <%@include file="../common/lp-footer.jsp"%>
+   </div>
 	<!-- End of Main Content -->
 
-	<%@include file="../common/lp-footer.jsp"%>
 </body>
 </html>
