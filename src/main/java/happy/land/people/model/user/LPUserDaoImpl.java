@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import happy.land.people.dto.LPUserDto;
 
-
 @Repository
 public class LPUserDaoImpl implements ILPUserDao {
 
@@ -24,16 +23,16 @@ public class LPUserDaoImpl implements ILPUserDao {
 	private PasswordEncoder passwordEncoder;
 
 	@Override
-	public boolean signUp(LPUserDto dto) {
+	public boolean user_signUp(LPUserDto dto) {
 		
 		String user_email = dto.getUser_email();
-		int n = session.selectOne(NS + "emailDupChk", user_email);
+		int n = session.selectOne(NS + "user_emailDupChk", user_email);
 		
 		
 		
 		System.out.println("n의값"+n);
 		System.out.println("dto다오임플에서:"+dto);
-		LPUserDto edto =session.selectOne(NS+"emailAuthChk", dto);
+		LPUserDto edto =session.selectOne(NS+"user_emailAuthChk", dto);
 		System.out.println(edto);
 		
 		if(n > 0 && dto.getUser_auth().equalsIgnoreCase("U")) {
@@ -48,8 +47,13 @@ public class LPUserDaoImpl implements ILPUserDao {
 			}
 			
 		}else if(n>0 && dto.getUser_auth().equalsIgnoreCase("G")) {
+			if(dto.getUser_auth().equalsIgnoreCase(edto.getUser_auth())) {
 			System.out.println("이미 구글로 가입한사람");
 			return true;
+			}else {
+				System.out.println("이미 다른 가입폼으로 같은 이메일로 가입했는데 구글로 했을시");
+				return false;
+			}
 		}
 		
 		
@@ -59,7 +63,7 @@ public class LPUserDaoImpl implements ILPUserDao {
 			logger.info("daoimpl에 signup메소드에 유저입니다");
 			String passwordEncode = passwordEncoder.encode(dto.getUser_password());
 			dto.setUser_password(passwordEncode);
-			isc = session.insert(NS + "signUp", dto) > 0 ? true : false;
+			isc = session.insert(NS + "user_signUp", dto) > 0 ? true : false;
 		}
 		else if (dto.getUser_auth().equalsIgnoreCase("N")) {
 			System.out.println("네이버 로그인");
@@ -70,7 +74,7 @@ public class LPUserDaoImpl implements ILPUserDao {
 //				return true;
 //			}
 			logger.info("daoimpl에 signup메소드에 네이버입니다");
-			isc = session.insert(NS + "signUpN", dto) > 0 ? true : false;
+			isc = session.insert(NS + "user_signUpN", dto) > 0 ? true : false;
 		}else {
 			System.out.println("구글 로그인");
 			user_email = dto.getUser_email();
@@ -80,19 +84,19 @@ public class LPUserDaoImpl implements ILPUserDao {
 //				return true;
 //			}
 			logger.info("daoimpl에 signup메소드에 구글입니다");
-			isc = session.insert(NS + "signUpG", dto) > 0 ? true : false;
+			isc = session.insert(NS + "user_signUpG", dto) > 0 ? true : false;
 		}
 		return isc;
 	}
 
 	@Override
-	public boolean authkeyUpdate(LPUserDto dto) {
-		return session.update(NS + "authkeyUpdate", dto) > 0 ? true : false;
+	public boolean user_authkeyUpdate(LPUserDto dto) {
+		return session.update(NS + "user_authkeyUpdate", dto) > 0 ? true : false;
 	}
 
 	// 로그인 다오인데 비밀번호 불일치할떄 로그인이 안되게 설정해줘야함....흠....
 	@Override
-	public LPUserDto login(LPUserDto dto) {
+	public LPUserDto user_login(LPUserDto dto) {
 		logger.info("login 실행");
 
 		String email = dto.getUser_email();
@@ -100,7 +104,7 @@ public class LPUserDaoImpl implements ILPUserDao {
 		// 이제 여기는 일반 가입자만 오니까 비밀번호 일치하는지 확인해주면됨
 
 		// db의 pw값
-		LPUserDto DBPWDto = session.selectOne(NS + "login", dto);
+		LPUserDto DBPWDto = session.selectOne(NS + "user_login", dto);
 		System.out.println("DBPWDto:" + DBPWDto);
 
 		// api가입자는 비번 널임
@@ -131,13 +135,13 @@ public class LPUserDaoImpl implements ILPUserDao {
 	}
 
 	@Override
-	public boolean deleteUser(String user_email) {
-		return session.update(NS + "delflag", user_email) > 0 ? true : false;
+	public boolean user_deleteUser(String user_email) {
+		return session.update(NS + "user_delflag", user_email) > 0 ? true : false;
 	}
 
 	// 회원정보 수정인데
 	@Override
-	public boolean userInfo(LPUserDto dto) {
+	public boolean user_userInfo(LPUserDto dto) {
 		
 		boolean isc = false;
 		
@@ -150,22 +154,22 @@ public class LPUserDaoImpl implements ILPUserDao {
 				System.out.println("닉네임 길이가 0");
 				String passwordEncode = passwordEncoder.encode(dto.getUser_password());
 				dto.setUser_password(passwordEncode);
-				session.update(NS + "modifyPassword", dto);
+				session.update(NS + "user_modifyPassword", dto);
 				return isc = true;
 			}else if(dto.getUser_password().length()==0) {
 				System.out.println("비밀번호 길이가 0");
-				session.update(NS+"modifyNickname",dto);
+				session.update(NS+"user_modifyNickname",dto);
 				return isc = true;
 			}else {
 				System.out.println("나머지 닉넴 비번둘다바꿀떄");
 				String passwordEncode = passwordEncoder.encode(dto.getUser_password());
 				dto.setUser_password(passwordEncode);
-				session.update(NS + "modifyPassword", dto);
-				session.update(NS+"modifyNickname",dto);
+				session.update(NS + "user_modifyPassword", dto);
+				session.update(NS+"user_modifyNickname",dto);
 				return isc = true;
 			}
 		}else {
-			isc = session.update(NS + "modifyNickname", dto) > 0 ? true : false;
+			isc = session.update(NS + "user_modifyNickname", dto) > 0 ? true : false;
 		}
 
 		
@@ -179,38 +183,38 @@ public class LPUserDaoImpl implements ILPUserDao {
 
 	// 이메일 중복체크
 	@Override
-	public int emailDupChk(String user_email) {
+	public int user_emailDupChk(String user_email) {
 
 		logger.info("이메일중복체크 다오임플");
 
-		System.out.printf("이메일중복체크 ------" + session.selectOne(NS + "emailDupChk", user_email));
-		return session.selectOne(NS + "emailDupChk", user_email);
+		System.out.printf("이메일중복체크 ------" + session.selectOne(NS + "user_emailDupChk", user_email));
+		return session.selectOne(NS + "user_emailDupChk", user_email);
 	}
 
 	// 닉네임중복체크
 	@Override
-	public int nicknameDupChk(String user_nickname) {
+	public int user_nicknameDupChk(String user_nickname) {
 		logger.info("닉네임 중복체크 다오 임플");
-		return session.selectOne(NS + "nicknameDupChk", user_nickname);
+		return session.selectOne(NS + "user_nicknameDupChk", user_nickname);
 	}
 
 	@Override
-	public boolean authStatusUpdate(String user_email) {
-		return session.update(NS + "authStatusUpdate", user_email) > 0 ? true : false;
+	public boolean user_authStatusUpdate(String user_email) {
+		return session.update(NS + "user_authStatusUpdate", user_email) > 0 ? true : false;
 	}
 
 	@Override
-	public boolean findPW(LPUserDto dto) {
+	public boolean user_findPW(LPUserDto dto) {
 
 		return true;
 	}
 
 	@Override
-	public int emailAuthChk(String user_email) {
+	public int user_emailAuthChk(String user_email) {
 		logger.info("비밀번호찾기 가입자 확인하고 auth주기");
 
-		LPUserDto dto = session.selectOne(NS + "emailAuthChk", user_email);
-		System.out.printf("이쿼리가 반환하는거뭔지보기용" + session.selectOne(NS + "emailAuthChk", user_email));
+		LPUserDto dto = session.selectOne(NS + "user_emailAuthChk", user_email);
+		System.out.printf("이쿼리가 반환하는거뭔지보기용" + session.selectOne(NS + "user_emailAuthChk", user_email));
 
 		System.out.println("이메일:" + dto.getUser_email());
 		System.out.println("어스:" + dto.getUser_auth());
@@ -231,9 +235,9 @@ public class LPUserDaoImpl implements ILPUserDao {
 
 
 	@Override
-	public LPUserDto apiEmailDupChk(String user_email) {
+	public LPUserDto user_apiEmailDupChk(String user_email) {
 
-		return session.selectOne(NS+"apiEmailDupChk", user_email);
+		return session.selectOne(NS+"user_apiEmailDupChk", user_email);
 	}
 
 }

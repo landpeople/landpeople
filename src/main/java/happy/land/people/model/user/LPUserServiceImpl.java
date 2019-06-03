@@ -27,9 +27,9 @@ public class LPUserServiceImpl implements ILPUserService {
 	
 	
 	@Override
-	public boolean signUp(LPUserDto dto) {
+	public boolean user_signUp(LPUserDto dto) {
 		System.out.println("signUp 서비스 임플");
-		boolean isc = iUserDao.signUp(dto);
+		boolean isc = iUserDao.user_signUp(dto);
 		System.out.println("==============================================================="+isc);
 		
 		// 만약에 user_auth가 n 이거나 g면 바로 가입 u면 이메일인증 하기
@@ -45,7 +45,7 @@ public class LPUserServiceImpl implements ILPUserService {
 		dto.setUser_emailkey(user_emailkey);
 		System.out.println(dto);
 		
-		isc = iUserDao.authkeyUpdate(dto);
+		isc = iUserDao.user_authkeyUpdate(dto);
 		
 		// 메일 관련
 		// 메일 내용 담을 변수(email, authkey만 보낼예정)
@@ -81,49 +81,49 @@ public class LPUserServiceImpl implements ILPUserService {
 	}
 
 	@Override
-	public LPUserDto login(LPUserDto dto) {
-		return iUserDao.login(dto);
+	public LPUserDto user_login(LPUserDto dto) {
+		return iUserDao.user_login(dto);
 	}
 
 	@Override
-	public boolean deleteUser(String user_email) {
-		return iUserDao.deleteUser(user_email);
+	public boolean user_deleteUser(String user_email) {
+		return iUserDao.user_deleteUser(user_email);
 	}
 
 	@Override
-	public boolean userInfo(LPUserDto dto) {
-		return iUserDao.userInfo(dto);
+	public boolean user_userInfo(LPUserDto dto) {
+		return iUserDao.user_userInfo(dto);
 	}
 
 	@Override
-	public int emailDupChk(String user_email) {
+	public int user_emailDupChk(String user_email) {
 		logger.info("이메일중복체크 서비스임플");
-		return iUserDao.emailDupChk(user_email);
+		return iUserDao.user_emailDupChk(user_email);
 	}
 
 	@Override
-	public int nicknameDupChk(String user_nickname) {
+	public int user_nicknameDupChk(String user_nickname) {
 		logger.info("닉네임 중복체크 서비스 임플");
-		return iUserDao.nicknameDupChk(user_nickname);
+		return iUserDao.user_nicknameDupChk(user_nickname);
 	}
 
 	@Override
-	public boolean authkeyUpdate(LPUserDto dto) {
+	public boolean user_authkeyUpdate(LPUserDto dto) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
-	public boolean authStatusUpdate(String user_email) {
-		return iUserDao.authStatusUpdate(user_email);
+	public boolean user_authStatusUpdate(String user_email) {
+		return iUserDao.user_authStatusUpdate(user_email);
 	}
 
 	
 	// 비빌번호찾기한사람한테 이메일 보내주는 메소드
 	@Override
-	public boolean findPW(LPUserDto dto) {
+	public boolean user_findPW(LPUserDto dto) {
 		System.out.println("findPW 서비스 임플");
-		boolean isc = iUserDao.findPW(dto);
+		boolean isc = iUserDao.user_findPW(dto);
 		System.out.println("====================================="+isc);
 		
 		//authkey 임시 생성 후 dto 같이 담아줌
@@ -131,7 +131,7 @@ public class LPUserServiceImpl implements ILPUserService {
 		dto.setUser_emailkey(user_emailkey);
 		System.out.println(dto);
 		
-		isc = iUserDao.authkeyUpdate(dto);
+		isc = iUserDao.user_authkeyUpdate(dto);
 		
 		// 메일 관련
 		// 메일 내용 담을 변수(email, authkey만 보낼예정)
@@ -167,19 +167,19 @@ public class LPUserServiceImpl implements ILPUserService {
 	}
 
 	@Override
-	public int emailAuthChk(String user_email) {
+	public int user_emailAuthChk(String user_email) {
 		logger.info("비밀번호찾기 가입자 확인하고 auth주기");
 		
 		
 		
 		
 		
-		return iUserDao.emailAuthChk(user_email);
+		return iUserDao.user_emailAuthChk(user_email);
 	}
 
 	@Override
-	public LPUserDto apiEmailDupChk(String user_email) {
-		return iUserDao.apiEmailDupChk(user_email);
+	public LPUserDto user_apiEmailDupChk(String user_email) {
+		return iUserDao.user_apiEmailDupChk(user_email);
 	}
 
 }

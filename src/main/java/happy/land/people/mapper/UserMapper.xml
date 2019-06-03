@@ -5,42 +5,42 @@
 
 
 <!-- 회원가입 일반 -->
-<insert id="signUp" parameterType="UserDto">
+<insert id="user_signUp" parameterType="UserDto">
 	INSERT INTO LPUSER (USER_EMAIL, USER_PASSWORD, USER_NICKNAME,USER_AUTH, USER_EMAILCHK, USER_EMAILKEY) 
 	SELECT #{user_email}, #{user_password}, #{user_nickname}, 'U', 'N' , '' FROM DUAL WHERE NOT EXISTS(SELECT * FROM LPUSER WHERE USER_EMAIL=#{user_email})
 </insert>
 
 <!-- 회원가입 (네이버) -->
-<insert id="signUpN" parameterType="UserDto">
+<insert id="user_signUpN" parameterType="UserDto">
 	INSERT INTO LPUSER (USER_EMAIL,  USER_NICKNAME,USER_AUTH, USER_EMAILCHK, USER_EMAILKEY) 
 	SELECT #{user_email},  #{user_nickname}, 'N', 'Y' , '' FROM DUAL WHERE NOT EXISTS(SELECT * FROM LPUSER WHERE USER_EMAIL=#{user_email})
 </insert>
 
 <!-- 회원가입 (구글)  OK-->
-<insert id="signUpG" parameterType="UserDto">
+<insert id="user_signUpG" parameterType="UserDto">
 	INSERT INTO LPUSER (USER_EMAIL,  USER_NICKNAME,USER_AUTH, USER_EMAILCHK, USER_EMAILKEY) 
 	SELECT #{user_email},  #{user_nickname}, 'G', 'Y' , '' FROM DUAL WHERE NOT EXISTS(SELECT * FROM LPUSER WHERE USER_EMAIL=#{user_email})
 </insert>
 
 <!-- 이메일 중복체크  -->
-<select id="emailDupChk" parameterType="java.lang.String" resultType="java.lang.Integer">
+<select id="user_emailDupChk" parameterType="java.lang.String" resultType="java.lang.Integer">
 	SELECT COUNT(USER_EMAIL) FROM LPUSER WHERE USER_EMAIL = #{user_email}
 </select>
 <!-- 닉네임 중복체크 -->
-<select id="nicknameDupChk" parameterType="java.lang.String" resultType="java.lang.Integer">
+<select id="user_nicknameDupChk" parameterType="java.lang.String" resultType="java.lang.Integer">
 	SELECT COUNT(USER_NICKNAME) FROM LPUSER WHERE USER_NICKNAME = #{user_nickname}
 </select>
 
 
 <!-- api사용자 이메일 중복체크 -->
-<select id="apiEmailDupChk" parameterType="java.lang.String" resultType="UserDto">
+<select id="user_apiEmailDupChk" parameterType="java.lang.String" resultType="UserDto">
 	SELECT USER_AUTH FROM LPUSER WHERE USER_EMIAL = #{user_email}
 </select>
 
 
 
 <!-- 로그인 -->
-<select id="login" parameterType="UserDto" resultType="UserDto">
+<select id="user_login" parameterType="UserDto" resultType="UserDto">
 	SELECT USER_EMAIL, USER_PASSWORD, USER_NICKNAME, USER_AUTH, USER_DELFLAG ,USER_EMAILCHK
 	FROM LPUSER
 	WHERE LOWER(USER_EMAIL) = LOWER(#{user_email})
@@ -52,18 +52,18 @@
 <!-- ///////////////////////정보수정 //////////////////////////-->
 
 <!-- 일반회원 정보수정 (비밀번호)-->
-<update id="modifyPassword" parameterType="UserDto">
+<update id="user_modifyPassword" parameterType="UserDto">
 UPDATE LPUSER SET USER_PASSWORD = #{user_password} WHERE USER_EMAIL = #{user_email} AND USER_AUTH = 'U'
 </update>
 
 <!-- 일반회원,API 정보수정 (닉네임) -->
-<update id="modifyNickname" parameterType="UserDto">
+<update id="user_modifyNickname" parameterType="UserDto">
 UPDATE LPUSER SET USER_NICKNAME = #{user_nickname} WHERE USER_EMAIL = #{user_email}
 </update>
 
 
 <!-- 회원탈퇴 -->
-<update id="delflag" parameterType="java.lang.String">
+<update id="user_delflag" parameterType="java.lang.String">
 UPDATE LPUSER SET USER_DELFLAG = 'T' WHERE USER_EMAIL = #{user_email}
 </update>
 
@@ -73,17 +73,17 @@ UPDATE LPUSER SET USER_DELFLAG = 'T' WHERE USER_EMAIL = #{user_email}
 <!--/////////////////////////////////// 이메일인증/////////////////////// -->
 
 <!-- 이메일 키저장  ok-->
-<update id="authkeyUpdate" parameterType="UserDto">
+<update id="user_authkeyUpdate" parameterType="UserDto">
 	UPDATE LPUSER SET USER_EMAILKEY = #{user_emailkey} WHERE USER_EMAIL = #{user_email}
 </update>
 
 <!-- 이메일 인증 상태 변경  ok  -->
-<update id="authStatusUpdate" parameterType="java.lang.String">
+<update id="user_authStatusUpdate" parameterType="java.lang.String">
 	UPDATE LPUSER SET USER_EMAILCHK = 'Y' WHERE  USER_EMAIL = #{user_email}
 </update>
 
 <!-- 이메일로 온 비밀번호 수정 -->
-<update id="modifyEmailPassword">
+<update id="user_modifyEmailPassword">
 	UPDATE LPUSER SET USER_PASSWORD = #{user_password} WHERE USER_EMAIL = #{user_email}
 </update>
 
@@ -92,7 +92,7 @@ UPDATE LPUSER SET USER_DELFLAG = 'T' WHERE USER_EMAIL = #{user_email}
 
 
 <!-- /////////////////////////비밀번호 찾기////////////////////////// -->
-<select id="emailAuthChk" parameterType="java.lang.String" resultType="UserDto">
+<select id="user_emailAuthChk" parameterType="java.lang.String" resultType="UserDto">
 SELECT USER_EMAIL, USER_AUTH 
 	FROM LPUSER 
 		WHERE USER_EMAIL = #{user_email}

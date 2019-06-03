@@ -137,7 +137,7 @@ public class UserController {
 
 //로그인시 아이디를 확인해 그리고 있으면 auth를 반환해 없으면 그냥 자연스럽게 흘러가 ~~
 
-		boolean isc = iUserService.signUp(dto);
+		boolean isc = iUserService.user_signUp(dto);
 
 		if (isc ==false) {
 			System.out.println("여기는 네이버콜백컨트롤러 구글이메일이랑 네이버 이메일이 같을시 일로옴");
@@ -205,11 +205,11 @@ public class UserController {
 
 		System.out.println(dto);
 
-		boolean isc = iUserService.signUp(dto);
+		boolean isc = iUserService.user_signUp(dto);
 		System.out.println(isc);
 		
 		if (isc ==false) {
-			System.out.println("여기는 네이버콜백컨트롤러 구글이메일이랑 네이버 이메일이 같을시 일로옴");
+			System.out.println("여기는 구글콜백컨트롤러 구글이메일이랑 네이버 이메일이 같을시 일로옴");
 			String apiEmailDup = "apiEmailDup";
 			request.setAttribute("apiEmailDupG", apiEmailDup);
 			return "user/login";
@@ -226,7 +226,7 @@ public class UserController {
 
 		//
 
-		int n2 = iUserService.emailDupChk(dto.getUser_email());
+		int n2 = iUserService.user_emailDupChk(dto.getUser_email());
 
 		if (n2 == 0) {
 			System.out.println("가입안한사람임");
@@ -238,7 +238,7 @@ public class UserController {
 
 		// 여기서 막아버리자 로그인시 확인하는거 api인지 일반인지 api면 api가입자라고 보여주자
 		System.out.println("login쿼리 실행전");
-		LPUserDto ldto = iUserService.login(dto);
+		LPUserDto ldto = iUserService.user_login(dto);
 		System.out.println("login쿼리 실행후");
 
 		if (ldto.getUser_delflag().equals("T") && ldto.getUser_password() != null) {
@@ -321,7 +321,7 @@ public class UserController {
 	public String signUp(HttpServletRequest req, LPUserDto dto) {
 
 		dto.setUser_auth("U");
-		boolean isc = iUserService.signUp(dto);
+		boolean isc = iUserService.user_signUp(dto);
 
 		return isc ? "user/signupEmail" : "404";
 	}
@@ -330,7 +330,7 @@ public class UserController {
 	@RequestMapping(value = "/mailConform.do", method = RequestMethod.GET)
 	public String mailConfirm(LPUserDto dto) {
 //		System.out.println(dto); //==	logger.info(dto.toString());
-		boolean isc = iUserService.authStatusUpdate(dto.getUser_email());
+		boolean isc = iUserService.user_authStatusUpdate(dto.getUser_email());
 		System.out.println("-----------------------------------------" + isc);
 		return isc ? "user/infoEmail" : "error";
 	}
@@ -348,7 +348,7 @@ public class UserController {
 	public String findEmailchk(String user_email, LPUserDto dto, HttpServletRequest request) {
 		logger.info("여기는 비밀번호찾기할떄 이메일 뭐야 무슨가입자인지 그리고 가입했는지 구별해주는곳");
 
-		int n2 = iUserService.emailDupChk(dto.getUser_email());
+		int n2 = iUserService.user_emailDupChk(dto.getUser_email());
 
 		if (n2 == 0) {
 			System.out.println("가입안한사람임");
@@ -359,7 +359,7 @@ public class UserController {
 		String email = user_email;
 		System.out.println(email);
 
-		int n = iUserService.emailAuthChk(user_email);
+		int n = iUserService.user_emailAuthChk(user_email);
 
 		System.out.println("n은 뭘 리턴하니?" + n);
 
@@ -386,7 +386,7 @@ public class UserController {
 	// 이메일로 링크보내주기
 	@RequestMapping(value = "/findPW.do", method = RequestMethod.GET)
 	public String findPW(LPUserDto dto) {
-		iUserService.findPW(dto);
+		iUserService.user_findPW(dto);
 		return "user/findPwEmail";
 	}
 
@@ -407,7 +407,7 @@ public class UserController {
 		
 		System.out.println(dto);
 		
-		iUserService.userInfo(dto);
+		iUserService.user_userInfo(dto);
 
 		return "user/login";
 	}
@@ -421,7 +421,7 @@ public class UserController {
 
 		System.out.println(email);
 
-		int n = iUserService.emailDupChk(user_email);
+		int n = iUserService.user_emailDupChk(user_email);
 
 		System.out.println("이메일이 있으면 1 없으면 0 이떠야함:" + n);
 		return (n == 0) ? "0" : "1"; // 0은 사용가능 1은 사용x
@@ -435,7 +435,7 @@ public class UserController {
 
 		System.out.println(user_nickname);
 
-		int n = iUserService.nicknameDupChk(user_nickname);
+		int n = iUserService.user_nicknameDupChk(user_nickname);
 		System.out.println("닉네임 있으면 1 없으면 0 이떠야함:" + n);
 		return (n == 0) ? "0" : "1";// 0은 사용가능 1은 사용x
 	}
@@ -459,7 +459,7 @@ public class UserController {
 		System.out.println("수정했을떄 받아오는 dto---" + dto);
 		System.out.println("session에 담겨있는 dto---"+userDto);
 		dto.setUser_auth(userDto.getUser_auth());
-		iUserService.userInfo(dto);
+		iUserService.user_userInfo(dto);
     
 		session.setAttribute("ldto", dto);
 		return "forward:./index.jsp";
@@ -479,7 +479,7 @@ public class UserController {
 
 		System.out.println(ldto);
 
-		iUserService.deleteUser(ldto.getUser_email());
+		iUserService.user_deleteUser(ldto.getUser_email());
 		session.invalidate();
 		return "forward:./index.jsp";
 	}
