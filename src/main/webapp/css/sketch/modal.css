@@ -1,0 +1,67 @@
+@charset "UTF-8";
+
+/*---------------- 모달 스타일 ---------------------- */
+.modal-content {
+	color: black;
+}
+
+.modal-footer>:not (:last-child ) {
+	margin-right: .25rem;
+}
+
+/* 스케치북 커버이미지 div */
+#moSketchBookCover {
+	width: 300px;
+	height: 100px;
+}
+
+/* 스케치북 커버이미지 div의 이미지 영역 */
+#modalIMG1 {
+	border: 1px solid black;
+	width: 200px;
+	height: 100px;
+	/* float: left; */
+	margin: 0px 20px 30px 20px;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.themeradio {
+	display: flex;
+	justify-content: space-between;
+}
+
+/* 라디오버튼 숨기기 */
+.themeradio input[type=radio] {
+	display: none;
+	margin: 10px;
+	display: none;
+}
+/* 라디오버튼 직사각형 버튼 모양 만들기 */
+.themeradio input[type=radio]+label {
+	flex: 1;
+	flex-basis: auto;
+	/* 	display: inline-block; */
+	margin: -2px;
+	padding: 8px 19px;
+	background-color: #f5f5f5;
+	border: 1px solid #ccc;
+	font-size: 13px !important;
+	text-align: center;
+	cursor: pointer;
+}
+
+/* 라디오버튼 직사각형 버튼 모양 만들기 */
+.themeradio input[type=radio]+label:hover {
+    color:red;
+}
+
+
+
+/* 선택한 라디오버튼 배경색 변경 */
+.themeradio>input[type=radio]:checked+label {
+	background-image: none;
+	background-color: #3598dc;
+	color: #fff;
+}
