@@ -17,11 +17,27 @@
 <link rel="stylesheet" type="text/css" media="screen"
 	href="./css/ui.jqgrid.css" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
 <script type="text/javascript" src="./js/BoardList.js"></script>
 <script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
 <script type="text/javascript" src="./js/grid.locale-kr.js"></script>
 <script type="text/javascript" src="./js/jquery.jqGrid.min.js"></script>
+
+<!-- Custom styles for this template-->
+<link href="./css/theme/sb-admin-2.css" rel="stylesheet">
+
+<!--    Bootstrap core JavaScript-->
+<!--    <script src="./js/theme/jquery.min.js"></script> --> <!-- 이거 하면 jqGrid 안됨 -->
+   <script src="./js/theme/bootstrap.bundle.min.js"></script>
+
+<!--    Core plugin JavaScript-->
+   <script src="./js/theme/jquery.easing.min.js"></script>
+
+<!--    Custom scripts for all pages-->
+   <script src="./js/theme/sb-admin-2.min.js"></script>
+
+   <script src="./js/chat/chat.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 
@@ -45,17 +61,17 @@
 				name : 'SKETCH_ID',
 				index : 'sketch_id',
 				key : true,
-				width : 45,
+				width : 50,
 				align : 'center'
 			}, {
 				name : 'USER_NICKNAME',
 				index : 'user_nickname',
-				width : 195,
+				width : 200,
 				align : 'center'
 			}, {
 				name : 'SKETCH_TITLE',
 				index : 'sketch_title',
-				width : 300,
+				width : 313,
 				align : 'center'
 			}, {
 				name : 'SKETCH_THEME',
@@ -65,12 +81,12 @@
 			}, {
 				name : 'SKETCH_SHARE',
 				index : 'sketch_share',
-				width : 75,
+				width : 80,
 				align : 'center'
 			}, {
 				name : 'SKETCH_BLOCK',
 				index : 'sketch_block',
-				width : 75,
+				width : 80,
 				editable : true,
 				align : 'center',
 				edittype : "select",
@@ -99,7 +115,7 @@
 					} ]
 				}
 			} ],
-			height : 614,
+			height : 504,
 			rowNum : 10,
 			rowList : [ 10, 20, 30 ],
 			pager : '#jqGridPager',
@@ -148,9 +164,11 @@
 			<div class="lpcontents">
 				<div class="content">
 					<div id="jqGridDiv">
+					<h3>육지 관리자</h3>
+						<hr>
 						<div id="selectDiv">
-							<button onclick="location.href='./jqgrid.do'" id="memBtn" style="background: gray;"><i class="fas fa-users fa-2x"></i><br>전체 회원 보기</button>
-							<button onclick="location.href='./jqgrid2.do'" id="sketBtn"><i class="fas fa-book-open fa-2x"></i><br>전체 스케치북 보기</button>
+							<button onclick="location.href='./jqgrid.do'" id="memBtn" style="background: gray;"><i class="fas fa-users fa-2x"></i><br>회원</button>
+							<button onclick="location.href='./jqgrid2.do'" id="sketBtn"><i class="fas fa-book-open fa-2x"></i><br>스케치북</button>
 								<br>
 							<select id="selectId">
 								<option value="" selected="selected">전체</option>

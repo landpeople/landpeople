@@ -43,7 +43,6 @@
 
 <script type="text/javascript"
 	src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 <script type="text/javascript">
       var ws = null ;
       var url = null ;
@@ -225,6 +224,9 @@ alert("클랙!");
 
 </script>
 </head>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<!-- <link href="./css/theme/sb-admin-2.css" rel="stylesheet"> -->
+<!-- <link href="./css/theme/lp-template.css" rel="stylesheet"> -->
 <link rel="stylesheet" href="./css/chat/chatroom.css">
 <body>
 <div id="allContent">
@@ -255,8 +257,8 @@ alert("클랙!");
 			<div>
 				<button id="message_btn" class="chat_btn" value="전송"><i class="far fa-paper-plane fa-2x"></i></button>
 			</div>
-	<!-- 			<input type="button" class="exit_btn" value="나가기" /> -->
-	<!-- 			<input type="image" id="destination" /> -->
+<!-- 				<input type="button" class="exit_btn" value="나가기" /> -->
+<!-- 				<input type="image" id="destination" /> -->
 	</div>
 	그룹아이디 :
 	<%=chr_id%>

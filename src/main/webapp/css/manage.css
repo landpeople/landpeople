@@ -23,13 +23,15 @@
 #selectId{
 	width: 70px;
 	height: 30px;
-	border-right: 1px solid gray;
+	border-right: 1px solid #e3e6f0;
+	color: gray;
 }
 
 #input{
 	width: 150px;
 	height: 30px;
 	padding: 0px;
+	padding-left: 3px;
 }
 
 #inputBtn{
@@ -38,14 +40,16 @@
 }
 
 #memBtn, #sketBtn{
-	background-color: #93c3cd;
+	background-color: #1764ac;
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(10%, #1764ac),
+		to(#155592));
 	color: white;
 	padding: 0px;
 	margin: 0px;
 	width: 100px;
 	height: 60px;
 	font-size: 11px;
-	border: 1.5px solid white;
+	border: 1.5px solid #e3e6f0;
 	border-radius: 5px;
 }
 

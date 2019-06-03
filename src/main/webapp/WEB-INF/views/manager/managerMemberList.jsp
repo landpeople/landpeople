@@ -14,25 +14,24 @@
 <link rel="stylesheet" type="text/css" media="screen"
 	href="./css/ui.jqgrid.css" />
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
 <script type="text/javascript" src="./js/BoardList.js"></script>
 <script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
 <script type="text/javascript" src="./js/grid.locale-kr.js"></script>
 <script type="text/javascript" src="./js/jquery.jqGrid.min.js"></script>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
-<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
 <!-- Custom styles for this template-->
 <link href="./css/theme/sb-admin-2.css" rel="stylesheet">
 
-<!--    <!-- Bootstrap core JavaScript--> -->
+<!--    Bootstrap core JavaScript-->
 <!--    <script src="./js/theme/jquery.min.js"></script> --> <!-- 이거 하면 jqGrid 안됨 -->
    <script src="./js/theme/bootstrap.bundle.min.js"></script>
 
-<!--    <!-- Core plugin JavaScript--> -->
+<!--    Core plugin JavaScript-->
    <script src="./js/theme/jquery.easing.min.js"></script>
 
-<!--    <!-- Custom scripts for all pages--> -->
+<!--    Custom scripts for all pages-->
    <script src="./js/theme/sb-admin-2.min.js"></script>
 
    <script src="./js/chat/chat.js"></script>
@@ -57,12 +56,12 @@
 		        colNames: cnames,
 		        // name은 db의 컬럼명과 일치해야함 , index는 jsp에서 쓸 변수명
 		        colModel: [
-		            { name: 'USER_EMAIL', index: 'user_email', key: true, width: 270, align: 'center' },
-		            { name: 'USER_NICKNAME', index: 'user_nickname', width: 200, align: 'center' },
-		            { name: 'USER_AUTH', index: 'user_auth', width: 75, align: 'center' },
-		            { name: 'USER_DELFLAG', index: 'user_delflag', width: 75, align: 'center' },
-		            { name: 'USER_EMAILCHK', index: 'user_emailchk', width: 75, align: 'center' },
-		            { name: 'USER_ISWRITE', index:'user_iswrite', width:75, editable:true, align: 'center', edittype: "select",
+		            { name: 'USER_EMAIL', index: 'user_email', key: true, width: 280, align: 'center' },
+		            { name: 'USER_NICKNAME', index: 'user_nickname', width: 203, align: 'center' },
+		            { name: 'USER_AUTH', index: 'user_auth', width: 80, align: 'center' },
+		            { name: 'USER_DELFLAG', index: 'user_delflag', width: 80, align: 'center' },
+		            { name: 'USER_EMAILCHK', index: 'user_emailchk', width: 80, align: 'center'  },
+		            { name: 'USER_ISWRITE', index:'user_iswrite', width:80, editable:true, align: 'center', edittype: "select",
 		                editoptions: {
 		                 value : {"False":"F","True":"T"}, 
 		                  dataEvents : [{type: 'change',
@@ -84,7 +83,7 @@
 		                			}
 		            }
 		        ],
-		        height: 614,
+		        height: 504,
 		        rowNum: 10,
 		        rowList: [10,20,30],
 		        pager: '#jqGridPager',
@@ -133,8 +132,8 @@
 						<h3>육지 관리자</h3>
 						<hr>
 						<div id="selectDiv">
-							<button onclick="location.href='./jqgrid.do'" id="memBtn"><i class="fas fa-users fa-2x"></i><br>전체 회원 보기</button>
-							<button onclick="location.href='./jqgrid2.do'" id="sketBtn" style="background: gray;"><i class="fas fa-book-open fa-2x"></i><br>전체 스케치북 보기</button>
+							<button onclick="location.href='./jqgrid.do'" id="memBtn"><i class="fas fa-users fa-2x"></i><br>회원</button>
+							<button onclick="location.href='./jqgrid2.do'" id="sketBtn" style="background: gray;"><i class="fas fa-book-open fa-2x"></i><br>스케치북</button>
 								<br>
 							<select id="selectId">
 								<option value="" selected="selected">전체</option>

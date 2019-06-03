@@ -64,6 +64,7 @@ table {
 	font-size: 12px;
 	text-align: justify;
 	border-radius: 25px;
+	color: black;
 }
 
 .sender_img { /* 본인 메시지 css */
@@ -187,6 +188,7 @@ table {
 	display:flex;
 	justify-content: center;
 	align-items: center;
+	box-sizing: inherit;
 }
 
 .fa-paper-plane, .fa-file-image{
@@ -195,6 +197,7 @@ table {
 
 #allContent{
 	background-color: #656f78;
+	box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15);
 }
 
 #txtarea{
