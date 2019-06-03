@@ -1,14 +1,269 @@
 @charset "UTF-8";
 
-.lp-container {
-	width:1000px;
-	height:650px;
-	min-width:1000px;
-	background:white;
-	margin : auto;
+.bg-header {
+	background-color: fff !important;
 }
 
-.lp-chatlist{
-	height:100%;
+.text-blue{
+	color : #2057a8;
+}
+
+/* lp custom background */
+.bg-gradient-lp-primary {
+	background-color: #1764ac;
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(10%, #1764ac),
+		to(#155592));
+	background-image: linear-gradient(180deg, #1764ac 10%, #155592 100%);
+	background-size: cover;
+}
+
+/* lp custom btn yellow */
+.btn-lp-primary {
+	color: #fff;
+	background-color: #f8b632;
+	border-color: #f8b632;
+}
+
+.btn-lp-primary:hover {
+	color: #fff;
+	background-color: #f0a720;
+	border-color: #f0a720;
+}
+
+.btn-lp-primary:focus, .btn-primary.focus {
+	-webkit-box-shadow: 0 0 0 0.2rem rgba(254, 216, 0, 0.5);
+	box-shadow: 0 0 0 0.2rem rgba(254, 216, 0, 0.5);
+}
+
+.btn-lp-primary.disabled, .btn-lp-primary:disabled {
+	color: #fff;
+	background-color: #f8b632;
+	border-color: #f8b632;
+}
+
+.btn-lp-primary:not (:disabled ):not (.disabled ):active,
+	.btn-lp-primary:not (:disabled ):not (.disabled ).active, .show>.btn-primary.dropdown-toggle
+	{
+	color: #fff;
+	background-color: #f0a720;
+	border-color: #f0a720;
+}
+
+.btn-lp-primary:not (:disabled ):not (.disabled ):active:focus,
+	.btn-lp-primary:not (:disabled ):not (.disabled ).active:focus, .show>.btn-lp-primary.dropdown-toggle:focus
+	{
+	-webkit-box-shadow: 0 0 0 0.2rem rgba(254, 216, 0, 0.5);
+	box-shadow: 0 0 0 0.2rem rgba(254, 216, 0, 0.5);
+}
+
+/* lp custom btn blue */
+.btn-lp-success {
+	color: #fff;
+	background-color: #2057a8;
+	border-color: #2057a8;
+}
+
+.btn-lp-success:hover {
+	color: #fff;
+	background-color: #1c4c93;
+	border-color: #1c4c93;
+}
+
+.btn-lp-success:focus, .btn-lp-success.focus {
+	-webkit-box-shadow: 0 0 0 0.2rem rgba(40, 111, 215, 0.5);
+	box-shadow: 0 0 0 0.2rem rgba(40, 111, 215, 0.5);
+}
+
+.btn-lp-success.disabled, .btn-lp-success:disabled {
+	color: #fff;
+	background-color: #2057a8;
+	border-color: #2057a8;
+}
+
+.btn-lp-success:not (:disabled ):not (.disabled ):active,
+	.btn-lp-success:not (:disabled ):not (.disabled ).active, .show>.btn-lp-success.dropdown-toggle
+	{
+	color: #fff;
+	background-color: #1c4c93;
+	border-color: #1c4c93;
+}
+
+.btn-lp-success:not (:disabled ):not (.disabled ):active:focus,
+	.btn-lp-success:not (:disabled ):not (.disabled ).active:focus, .show>.btn-lp-success.dropdown-toggle:focus
+	{
+	-webkit-box-shadow: 0 0 0 0.2rem rgba(40, 111, 215, 0.5);
+	box-shadow: 0 0 0 0.2rem rgba(40, 111, 215, 0.5);
+}
+
+#content-wrapper {
+	flex: 3;
+}
+
+.lp-container {
+	flex: 1; /* 사이드바의 나머지 영역을 가득 채우기 위함 */
+	display: flex;
+	justify-content: center; /* 자식 요소 정렬 */
+	align-items: center;
+}
+
+.lp-content {
+	display: flex;
+	justify-content: center;
+	min-width: 1000px;
+	width: 1000px;
+	height: 650px;
+	background: white;
+	box-sizing: border-box;
+	padding: 20px;
+	border-radius: 0.4rem !important;
+	padding: 20px;
+	width: 1000px;
+}
+
+/* index 페이지 그리드 레이아웃*/
+.lp-grid-container {
+	width: 100%;
+	height: 100%;
+	display: grid; /*하위 요소들은 grid로 정렬*/
+	grid-template-columns: repeat(2, 1fr);
+	grid-auto-rows: 300px;
+	/* 	grid-auto-rows: minmax(3em, auto); background : pink; */
+	grid-gap: 0.625rem;
+}
+
+/* h2 { */
+/* 	margin-bottom: .5em; */
+/* } */
+.grid-container {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+	grid-gap: 1em;
+}
+
+.lp-theme {
+	width: 100%; /* need to overwrite inline dimensions */
+	height: 100%;
+}
+
+/* hover styles */
+.location-listing {
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.location-image {
 	width:100%;
+	height:100%;
+	line-height: 0;
+	overflow: hidden;
+	line-height: 0;
+}
+
+.location-image img {
+	
+	filter: blur(0px);
+	transition: filter 0.3s ease-in;
+	transform: scale(1.1);
+}
+
+.location-title {
+	font-size: 1.5em;
+	font-weight: bold;
+	text-decoration: none;
+	z-index: 1;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	opacity: 0;
+	transition: opacity .5s;
+	background: rgba(0, 0, 0, 0.6);
+	color: white;
+	/* position the text in t’ middle*/
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.location-listing:hover .location-title {
+	opacity: 1;
+	color: white;
+	text-decoration: none;
+}
+
+.location-listing:hover .location-image img {
+	filter: blur(2px);
+}
+
+/* for touch screen devices */
+@media ( hover : none) {
+	.location-title {
+		opacity: 1;
+	}
+	.location-image img {
+		filter: blur(2px);
+	}
+}
+
+/* for touch screen devices */
+@media ( hover : none) {
+	.location-title {
+		opacity: 1;
+	}
+	.location-image img {
+		filter: blur(2px);
+	}
+}
+
+/* 사이드 바의 버튼 감싸는 div */
+.lp-nav-btn {
+	width: 100%;
+	text-align: center;
+	margin: 0 0 1rem 0;
+	padding: 0 1rem;
+}
+
+.lp-write-btn {
+	width: 100%;
+}
+
+.btn-sl {
+	font-size: 0.85rem !important;
+}
+
+.btn-ss {
+	font-size: 0.65rem;
+}
+
+/* 사이드바의 채팅 div */
+.nav-chat { /**/
+	padding: .5rem 0;
+	/* 	min-width: 10rem; */
+	font-size: 0.85rem;
+	padding-bottom: 0.5rem !important;
+	padding-top: 0.5rem !important;
+	margin: 0 1rem 1rem;
+}
+
+.lp-chatlist { /* 채팅 리스트 div */
+	height: 100%;
+	width: 100%;
+}
+
+/* 사이드바가 줄어들었을 때 버튼과 채팅 영역 변경 */
+@media ( max-width : 768px) {
+	.nav-chat {
+		display: none;
+	}
+	.btn-ss {
+		font-size: 0.65rem !important;
+	}
+}
+
+/* logo size */
+.lp-icon {
+	width: 3rem;
+	height: auto;
 }

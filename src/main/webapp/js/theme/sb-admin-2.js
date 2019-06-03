@@ -5,6 +5,8 @@
   $("#sidebarToggle, #sidebarToggleTop").on('click', function(e) {
     $("body").toggleClass("sidebar-toggled");
     $(".sidebar").toggleClass("toggled");
+    $(".lp-write-btn").toggleClass("btn-sl"); // 채팅 버튼 토글
+    $('.nav-chat').toggle(); // 채팅 리스트 토글
     if ($(".sidebar").hasClass("toggled")) {
       $('.sidebar .collapse').collapse('hide');
     };
