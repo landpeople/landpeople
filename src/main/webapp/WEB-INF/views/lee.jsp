@@ -27,54 +27,29 @@
 <link href="./css/sketch/modal.css" rel="stylesheet">
 
 </head>
-<body id="page-top">
+<body id="page-top" class="scroll">
 
    <!-- Page Wrapper -->
    <div id="wrapper">
       <%@include file="./common/lp-sidebar.jsp"%>
 
-      <!-- LandPeople Content Area -->
-      <div class="lp-container">
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+         <!-- flex 레이아웃 content와 푸터 정렬 -->
 
-         <div class="lp-content shadow-lg">
-            <div class="lp-grid-container">
+         <!-- Main Content -->
+         <div id="content" style="display: flex; flex-direction: column;">
 
-               <article id="" class="location-listing">
-                  <a class="location-title" href="#" onclick="sketchSelectTheme('나홀로')">나홀로 여행</a>
-                  <div class="location-image">
-                     <img class="lp-theme" src="./img/theme/alone.jpg" alt="With me">
-                  </div>
-               </article>
-
-               <article id="" class="location-listing">
-                  <a class="location-title" href="#" onclick="sketchSelectTheme('가족여행')">가족과 함께</a>
-                  <div class="location-image">
-                     <img class="lp-theme" src="./img/theme/family.jpg" alt="With family">
-                  </div>
-               </article>
-
-               <article id="" class="location-listing">
-                  <a class="location-title" href="#" onclick="sketchSelectTheme('연인과함께')">연인과 함께</a>
-                  <div class="location-image">
-                     <img class="lp-theme" src="./img/theme/couple.png" alt="With love">
-                  </div>
-               </article>
-
-               <article id="" class="location-listing">
-                  <a class="location-title" href="#" onclick="sketchSelectTheme('친구와함께')">친구와 함께</a>
-                  <div class="location-image">
-                     <img class="lp-theme" src="./img/theme/friend.png" alt="With friend">
-                  </div>
-               </article>
+            <!-- LandPeople Content Area -->
+            <div class="lp-container">
+               <div class="lp-content shadow-lg"></div>
             </div>
+            <!--End of Page LandPeople Content Area -->
+            <%@include file="./common/lp-footer.jsp"%>
+            <!-- End of Page Wrapper -->
          </div>
       </div>
-      <!--End of Page LandPeople Content Area -->
-
-      <%@include file="./common/lp-footer.jsp"%>
    </div>
-   <!-- End of Page Wrapper -->
-
 </body>
 </html>
 

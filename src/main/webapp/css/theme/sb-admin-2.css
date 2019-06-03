@@ -4430,7 +4430,7 @@ input[type="button"].btn-block {
   -webkit-box-pack: justify;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  padding: 0.5rem 1rem;
+/*   padding: 0.5rem 1rem; */ /* landpeople navbar에 패팅 지우고 background-image 줌*/
 }
 
 .navbar > .container,
@@ -10972,7 +10972,10 @@ a:focus {
 }
 
 .topbar {
-  height: 4.375rem;
+  height: 8rem;
+  background-image: url("../../img/doldam.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .topbar #sidebarToggleTop {
@@ -12046,7 +12049,7 @@ form.user .btn-user {
 }
 
 footer.sticky-footer {
-  padding: 2rem 0;
+  padding: 1.188rem 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }

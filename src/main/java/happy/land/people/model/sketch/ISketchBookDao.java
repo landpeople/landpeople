@@ -40,7 +40,7 @@ public interface ISketchBookDao {
 	public int likeCnt(String sketch_id);
 	
 	// 스크랩한 스케치북 다중 취소
-	public boolean scrapeUpdateMulti(Map<String, String[]> map);
+	public boolean scrapeMultiUpdate(Map<String, String[]> map);
 	
 	// 페이징 처리된 자신이 작성한 스케치북 조회 (사용자- 마이페이지)
 	public List<LPSketchbookDto> sketchSelectMine(Map<String, String> map);
@@ -55,7 +55,7 @@ public interface ISketchBookDao {
 	public boolean sketchUpdate(LPSketchbookDto dto);
 	
 	// 작성 스케치북 완전 다중 삭제
-	public boolean sketchRealDeleteMulti(Map<String, String[]> map);
+	public boolean sketchMultiDelete(Map<String, String[]> map);
 	
 	// 페이징 처리된 테마별 스케치북 조회
 	public List<LPSketchbookDto> sketchSelectTheme(Map<String,String> map);
@@ -67,6 +67,6 @@ public interface ISketchBookDao {
 	public int sketchCntTheme(String theme);
 
 	// 스케치북 작성자 닉네임 조회
-	public String selectNickname(String sketch_id);
+	public String nicknameSelect(String sketch_id);
 	
 }

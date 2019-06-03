@@ -1,0 +1,45 @@
+@charset "UTF-8";
+
+/*스케치북 9개 감싸는 div */
+.sketchBookContent {
+	width: 100%;
+	height: 100%;
+	/* padding: 0 30px; */
+/* 	margin: 0 30px; */
+}
+
+/*스케치북 3개 감싸는 div */
+.sketchBookContainer {
+	width: 100%;
+	height: 230px;
+	/* 	margin: 0 0 20px; */
+	display: flex;
+/* 	justify-content: space-around; */
+/* 	margin : 20px; */
+}
+
+/*--------- 선택한 테마의 스케치북 조회-------------------  */
+
+
+/* 스케치북 1개 감싸는 div */
+.selectTheme {
+	width: 100%;
+	height: 170px;
+	border: 1px solid red;
+	/* margin: 0 0 0 10px; */
+	overflow: hidden;
+	position: relative;
+	/* display: inline-block; */
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+.selectTheme:hover .sketchTheme_hover {
+	top: 0;
+	opacity: 1;
+	visibility: visible;
+}
+
+/*--------- 선택한 테마의 스케치북 조회-------------------  */
+

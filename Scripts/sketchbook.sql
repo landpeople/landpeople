@@ -29,7 +29,6 @@ CREATE TABLE LPCOLLECT(
 	COL_LIKE	CHAR(1)
 );
 
-
 -- 스케치북 작성 O
 
 	

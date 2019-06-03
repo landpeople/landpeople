@@ -12,10 +12,11 @@
 	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
 	rel="stylesheet">
 <link href="./css/theme/sb-admin-2.css" rel="stylesheet">
+<link href="./css/theme/lp-template.css" rel="stylesheet">
 <link href="./css/chat/chatlist.css" rel="stylesheet">
 
 <title>Chatable members</title>
-<body id="style-3"><!-- 스크롤바 스타일을 주기 위해 style-3을 아이디로 줌 -->
+<body class="scroll"><!-- 스크롤바 스타일을 주기 위해 style-3을 아이디로 줌 -->
 	<%
 		response.setHeader("P3P", "CP='CAO PSA CONi OTR OUR DEM ONL'"); // iframe 세션이 날아가지 않도록 잡아줌
 		String session_name = ""; // session_name은 세션의 이름으로 저장할 변수
