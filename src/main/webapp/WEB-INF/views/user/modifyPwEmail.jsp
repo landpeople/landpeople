@@ -1,32 +1,42 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<% request.setCharacterEncoding("UTF-8"); %>
-<% response.setContentType("text/html; charset=UTF-8"); %>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
+
+
 <title>이메일로 비밀번호 찾기 </title>
+
+
+<!-- Custom fonts for this template-->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="./css/sweetalert.css">
-<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="./css/bootstrap-theme.min.css">
+<!-- Custom styles for this template-->
+<link href="./css/theme/sb-admin-2.min.css" rel="stylesheet">
 <script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="./js/bootstrap.min.js"></script>
-<script type="text/javascript" src="./js/sweetalert.min.js"></script>
 
 <script type="text/javascript">
 function pwcheck() {
 	// email 중복 + 유효값
 	var pwchk = document.getElementById("pwchkVal").value;
+	var passchk = document.getElementById("passchkVal").value;
 
 	var pw = document.getElementById("pw").value;
 	var passOK = document.getElementById("passOK").value;
 
-	if(pwchk == "1" && pw ==passOK){
-		swal("비밀번호 수정 완료","로그인하고 이용해주세요");
+	if(pwchk == "1" && passchk == "1" && pw ==passOK){
+		alert("로그인하고 이용해주세요");
 		return true;
 	}else{
-		swal("비밀번호 수정 실패", "비밀번호를 형식에 맞쳐 일치하게 입력해주세요");
+		alert("비밀번호를 형식에 맞쳐 일치하게 입력해주세요");
+		$("#pw").val("");
 		$("#passOK").val("");
 		$("#pwresult").html("");
 		$("#pwchk").html("");
@@ -37,6 +47,8 @@ function pwcheck() {
 
 
 
+
+//아작스
 $(function() {
 	
 	
@@ -67,11 +79,11 @@ $(function() {
 		if(passOK==pw){
 			$("#pwchk").css("color", "forestgreen");
 			$("#pwchk").html("비밀번호가 일치합니다.");
-			$("#pwchkVal").val("1");
+			$("#passchkVal").val("1");
 		} else {
 			$("#pwchk").css("color", "red");
 			$("#pwchk").html("비밀번호가 일치하지 않습니다.");
-			$("#pwchkVal").val("0");
+			$("#passchkVal").val("0");
 		}
 	});
 	
@@ -81,34 +93,79 @@ $(function() {
 });//제일큰
 
 
+
+
 </script>
+
+
+<style type="text/css">
+
+span{
+	font-size: .8rem;
+}
+
+</style>
+
 
 <% String user_email =  (String)request.getAttribute("user_email");%>
 
 </head>
-<body>
-<h1>여기는 이메일로 비밀번호찾기 페이지로 오는곳임</h1><br>
-어케만들어야하지?????흠,,,,,,,
-
-
-<h2>변경할 비밀번호를 입력해주세요
-</h2><br>
 
 <%=user_email%>
 
-<input type="hidden" value="0" id="pwchkVal">
-<form action="./modifyPwSuc.do" method="post" onsubmit="return pwchkeck()">
-<input type="hidden" name="user_email" value="<%=user_email%>">
-	<input type="text" id="pw" name="user_password" placeholder="비밀번호" required="required" max="12">
-	<br>&nbsp;<span id="pwresult">4~10자리의 영문+숫자</span><br>
-	<input type="text" id="passOK" placeholder="비밀번호확인" required="required" max="12">
-	<br>&nbsp;<span id="pwchk"></span><br>
+
+
+
+<body class="bg-gradient-primary">
+
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-xl-5 col-md-5 col-lg-5">
+				<div class="card o-hidden border-0 shadow-lg my-5">
+					<div class="card-body p-0">
+						<!-- Nested Row within Card Body -->
+						<!--                <div class="col-lg-7"> -->
+						<div class="p-5">
+							<div class="text-center">
+								<h1 class="h4 text-gray-900 mb-4">비밀번호 수정</h1>
+							</div>
+
+						<input type="hidden" value="0" id="pwchkVal">
+
+						<input type="hidden" value="0" id="passchkVal">
+							<form class="user" action="./modifyPwSuc.do" method="post" onsubmit="return pwcheck()">
+							<input type="hidden" name="user_email" value="<%=user_email%>">
+								<div class="form-group">
+									<input type="password"  name="user_password" class="form-control form-control-user" id="pw" placeholder="Password" required="required" maxlength="10">
+								&nbsp;<span id="pwresult">4~10자리의 영문+숫자</span>
+								</div>
+								<div class="form-group">
+									<input type="password" class="form-control form-control-user" id="passOK" placeholder="Repeat Password" maxlength="10" required="required">
+								&nbsp;<span id="pwchk"></span>
+								</div>
+								<div class="form-group">
+									<input type="submit" class="btn btn-primary btn-user btn-block" value="변경!">
+								</div>
+							</form>
+							<hr>
+							<div class="text-center">
+								<a class="small" href="./loginPage.do">Login!</a>
+							</div>
+						</div>
+					</div>
+					<!--          </div> -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Bootstrap core JavaScript-->
+	<script src="./js/theme/jquery.min.js"></script>
+	<script src="./js/theme/bootstrap.bundle.min.js"></script>
+
+
+	<!-- Custom scripts for all pages-->
+	<script src="./js/theme/sb-admin-2.min.js"></script>
 	
-	<input type="submit" value="변경!!">
-</form>
-
-
-
-
 </body>
 </html>

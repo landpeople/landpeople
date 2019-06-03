@@ -34,7 +34,6 @@ import org.springframework.web.util.WebUtils;
 import happy.land.people.dto.LPCollectDto;
 import happy.land.people.dto.LPSketchbookDto;
 import happy.land.people.dto.SketchPagingDto;
-import happy.land.people.dto.cho.ChoDto;
 import happy.land.people.model.sketch.ISketchBookService;
 
 @Controller
@@ -366,7 +365,7 @@ public class SketchController {
 		
 		logger.info("JungController scrapeMutilUpdate {}", Arrays.toString(chkVal));
 		Map<String, String[]>map = new HashMap<String, String[]>();
-		ChoDto ldto = (ChoDto) sesseion.getAttribute("ldto");
+		LPUserDto ldto = (LPUserDto) sesseion.getAttribute("ldto");
 		String email = ldto.getUser_email();
 		System.out.println(email+"스크랩 취소할 유저 이메일 확인!!!!!!!");
 		String[] user_email = {email};

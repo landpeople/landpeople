@@ -88,7 +88,7 @@
 	if(apiEmailDupN != null){
 		%>
 		<script type="text/javascript">
-			alert("같은 이메일이 구글로그인으로 가입되있습니다");
+			alert("같은 이메일이 구글 또는 일반 로그인으로 가입되있습니다");
 			location.href="./loginPage.do";
 		</script>
 		<%
@@ -97,7 +97,7 @@
 	if(apiEmailDupG != null){
 		%>
 		<script type="text/javascript">
-			alert("같은 이메일이 네이버로그인으로 가입되있습니다");
+			alert("같은 이메일이 네이버 또는 일반 로그인으로 가입되있습니다");
 			location.href="./loginPage.do";
 		</script>
 		<%

@@ -1,7 +1,6 @@
 package happy.land.people.ctrl;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -38,18 +37,18 @@ import org.springframework.web.client.RestTemplate;
 import com.github.scribejava.core.model.OAuth2AccessToken;
 
 import happy.land.people.dto.AuthInfo;
-import happy.land.people.dto.cho.ChoDto;
+import happy.land.people.dto.LPUserDto;
 import happy.land.people.model.chat.IChatService;
-import happy.land.people.model.user.IChoService;
+import happy.land.people.model.user.ILPUserService;
 import happy.land.people.naver.NaverLoginBO;
 
 @Controller
 public class UserController {
 
-	private Logger logger = LoggerFactory.getLogger(ChoController.class);
+	private Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
-	private IChoService iChoService;
+	private ILPUserService iUserService;
 
 	/* NaverLoginBO */
 	private NaverLoginBO naverLoginBO;
@@ -108,7 +107,7 @@ public class UserController {
 	// 네이버 로그인 성공시 callback호출 메소드
 	@RequestMapping(value = "/callback.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public String callback(Model model, @RequestParam String code, @RequestParam String state, HttpSession session,
-			ChoDto dto, HttpServletResponse response,HttpServletRequest request) throws Exception {
+			LPUserDto dto, HttpServletResponse response,HttpServletRequest request) throws Exception {
 		System.out.println("여기는  네이버 callback");
 		OAuth2AccessToken oauthToken;
 		oauthToken = naverLoginBO.getAccessToken(session, code, state);
@@ -138,7 +137,7 @@ public class UserController {
 
 //로그인시 아이디를 확인해 그리고 있으면 auth를 반환해 없으면 그냥 자연스럽게 흘러가 ~~
 
-		boolean isc = iChoService.signUp(dto);
+		boolean isc = iUserService.user_signUp(dto);
 
 		if (isc ==false) {
 			System.out.println("여기는 네이버콜백컨트롤러 구글이메일이랑 네이버 이메일이 같을시 일로옴");
@@ -196,7 +195,7 @@ public class UserController {
 
 		String user_email = (String) result.get("email");
 
-		ChoDto dto = new ChoDto();
+		LPUserDto dto = new LPUserDto();
 
 		dto.setUser_email(user_email);
 		dto.setUser_auth("G");
@@ -206,11 +205,11 @@ public class UserController {
 
 		System.out.println(dto);
 
-		boolean isc = iChoService.signUp(dto);
+		boolean isc = iUserService.user_signUp(dto);
 		System.out.println(isc);
 		
 		if (isc ==false) {
-			System.out.println("여기는 네이버콜백컨트롤러 구글이메일이랑 네이버 이메일이 같을시 일로옴");
+			System.out.println("여기는 구글콜백컨트롤러 구글이메일이랑 네이버 이메일이 같을시 일로옴");
 			String apiEmailDup = "apiEmailDup";
 			request.setAttribute("apiEmailDupG", apiEmailDup);
 			return "user/login";
@@ -222,12 +221,12 @@ public class UserController {
 
 	// 여기는 나중에 한다 ^^ 로그인기능 => 다 됐다 로그인 기능
 	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
-	public String login(ChoDto dto, HttpSession session, HttpServletResponse response, HttpServletRequest request)
+	public String login(LPUserDto dto, HttpSession session, HttpServletResponse response, HttpServletRequest request)
 			throws IOException {
 
 		//
 
-		int n2 = iChoService.emailDupChk(dto.getUser_email());
+		int n2 = iUserService.user_emailDupChk(dto.getUser_email());
 
 		if (n2 == 0) {
 			System.out.println("가입안한사람임");
@@ -239,7 +238,7 @@ public class UserController {
 
 		// 여기서 막아버리자 로그인시 확인하는거 api인지 일반인지 api면 api가입자라고 보여주자
 		System.out.println("login쿼리 실행전");
-		ChoDto ldto = iChoService.login(dto);
+		LPUserDto ldto = iUserService.user_login(dto);
 		System.out.println("login쿼리 실행후");
 
 		if (ldto.getUser_delflag().equals("T") && ldto.getUser_password() != null) {
@@ -300,7 +299,7 @@ public class UserController {
 
 	// 로그아웃
 	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
-	public String logout(HttpSession session, ChoDto dto) {
+	public String logout(HttpSession session, LPUserDto dto) {
 		logger.info("logout");
 
 		System.out.println("로그아웃.do 현재 세션 : " + session);
@@ -319,19 +318,19 @@ public class UserController {
 
 	// 회원가입(db에저장하기 헤헤) 일반유저
 	@RequestMapping(value = "/signUp.do", method = RequestMethod.POST)
-	public String signUp(HttpServletRequest req, ChoDto dto) {
+	public String signUp(HttpServletRequest req, LPUserDto dto) {
 
 		dto.setUser_auth("U");
-		boolean isc = iChoService.signUp(dto);
+		boolean isc = iUserService.user_signUp(dto);
 
 		return isc ? "user/signupEmail" : "404";
 	}
 
 	// 이메일 링크 클릭으로 들어옴
 	@RequestMapping(value = "/mailConform.do", method = RequestMethod.GET)
-	public String mailConfirm(ChoDto dto) {
+	public String mailConfirm(LPUserDto dto) {
 //		System.out.println(dto); //==	logger.info(dto.toString());
-		boolean isc = iChoService.authStatusUpdate(dto.getUser_email());
+		boolean isc = iUserService.user_authStatusUpdate(dto.getUser_email());
 		System.out.println("-----------------------------------------" + isc);
 		return isc ? "user/infoEmail" : "error";
 	}
@@ -346,10 +345,10 @@ public class UserController {
 	// 아작스인데 이메일 유저인지 네이버인지 구글인지 구별해주는 컨트롤러
 	@RequestMapping(value = "/findEmailchk.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String findEmailchk(String user_email, ChoDto dto, HttpServletRequest request) {
+	public String findEmailchk(String user_email, LPUserDto dto, HttpServletRequest request) {
 		logger.info("여기는 비밀번호찾기할떄 이메일 뭐야 무슨가입자인지 그리고 가입했는지 구별해주는곳");
 
-		int n2 = iChoService.emailDupChk(dto.getUser_email());
+		int n2 = iUserService.user_emailDupChk(dto.getUser_email());
 
 		if (n2 == 0) {
 			System.out.println("가입안한사람임");
@@ -360,7 +359,7 @@ public class UserController {
 		String email = user_email;
 		System.out.println(email);
 
-		int n = iChoService.emailAuthChk(user_email);
+		int n = iUserService.user_emailAuthChk(user_email);
 
 		System.out.println("n은 뭘 리턴하니?" + n);
 
@@ -386,14 +385,14 @@ public class UserController {
 
 	// 이메일로 링크보내주기
 	@RequestMapping(value = "/findPW.do", method = RequestMethod.GET)
-	public String findPW(ChoDto dto) {
-		iChoService.findPW(dto);
+	public String findPW(LPUserDto dto) {
+		iUserService.user_findPW(dto);
 		return "user/findPwEmail";
 	}
 
 	// 비밀번호 찾기로 와서 비밀번호 수정페이지로보내주기
 	@RequestMapping(value = "/pwforget.do", method = RequestMethod.GET)
-	public String pwforget(ChoDto dto, HttpServletRequest request) {
+	public String pwforget(LPUserDto dto, HttpServletRequest request) {
 		request.setAttribute("user_email", dto.getUser_email());
 		System.out.println(dto.getUser_email());
 		return "user/modifyPwEmail";
@@ -401,13 +400,14 @@ public class UserController {
 
 	// 비밀번호찾기로 비밀번호 수정 완료했을때 오는 컨트롤러
 	@RequestMapping(value = "/modifyPwSuc.do", method = RequestMethod.POST)
-	public String modifyPwSuc(ChoDto dto) {
+	public String modifyPwSuc(LPUserDto dto) {
 
 		System.out.println("dto이메일" + dto.getUser_email());
-
 		dto.setUser_auth("U");
-		dto.setUser_email(dto.getUser_email());
-		iChoService.userInfo(dto);
+		
+		System.out.println(dto);
+		
+		iUserService.user_userInfo(dto);
 
 		return "user/login";
 	}
@@ -421,7 +421,7 @@ public class UserController {
 
 		System.out.println(email);
 
-		int n = iChoService.emailDupChk(user_email);
+		int n = iUserService.user_emailDupChk(user_email);
 
 		System.out.println("이메일이 있으면 1 없으면 0 이떠야함:" + n);
 		return (n == 0) ? "0" : "1"; // 0은 사용가능 1은 사용x
@@ -435,7 +435,7 @@ public class UserController {
 
 		System.out.println(user_nickname);
 
-		int n = iChoService.nicknameDupChk(user_nickname);
+		int n = iUserService.user_nicknameDupChk(user_nickname);
 		System.out.println("닉네임 있으면 1 없으면 0 이떠야함:" + n);
 		return (n == 0) ? "0" : "1";// 0은 사용가능 1은 사용x
 	}
@@ -443,7 +443,7 @@ public class UserController {
 	// 마이페이지
 	@RequestMapping(value = "/mypage.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public String mypage(HttpSession session) {
-		ChoDto ldto = (ChoDto) session.getAttribute("ldto");
+		LPUserDto ldto = (LPUserDto) session.getAttribute("ldto");
 		System.out.println(ldto);
 		if (ldto == null) {
 			return "redirect:./index.jsp";
@@ -454,12 +454,14 @@ public class UserController {
 
 	// 마이페이지 수정 완료
 	@RequestMapping(value = "/modifyMypage.do", method = RequestMethod.POST)
-	public String modifyMypage(ChoDto dto, HttpSession session) {
-		ChoDto userDto = (ChoDto) session.getAttribute("ldto");
-		System.out.println("dto잘봤냐" + dto);
+	public String modifyMypage(LPUserDto dto, HttpSession session) {
+		LPUserDto userDto = (LPUserDto) session.getAttribute("ldto");
+		System.out.println("수정했을떄 받아오는 dto---" + dto);
+		System.out.println("session에 담겨있는 dto---"+userDto);
 		dto.setUser_auth(userDto.getUser_auth());
-		iChoService.userInfo(dto);
-
+		iUserService.user_userInfo(dto);
+    
+		session.setAttribute("ldto", dto);
 		return "forward:./index.jsp";
 	}
 
@@ -472,12 +474,12 @@ public class UserController {
 
 	// 회원탈퇴
 	@RequestMapping(value = "/delflag.do", method = RequestMethod.GET)
-	public String delflag(ChoDto dto, HttpSession session) {
-		ChoDto ldto = (ChoDto) session.getAttribute("ldto");
+	public String delflag(LPUserDto dto, HttpSession session) {
+		LPUserDto ldto = (LPUserDto) session.getAttribute("ldto");
 
 		System.out.println(ldto);
 
-		iChoService.deleteUser(ldto.getUser_email());
+		iUserService.user_deleteUser(ldto.getUser_email());
 		session.invalidate();
 		return "forward:./index.jsp";
 	}

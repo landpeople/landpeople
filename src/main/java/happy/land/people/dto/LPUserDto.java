@@ -2,12 +2,19 @@ package happy.land.people.dto;
 
 public class LPUserDto {
 
-	private String user_email;
+	//이메일	
+	private String user_email; 
+	//비번
 	private String user_password;
+	//닉네임
 	private String user_nickname;
-	private String user_auth;
-	private String user_delflag;
-	private String user_emailchk;
+	// 가입종류
+	private String user_auth;           // N네이버 G구글 U유저 M 매니져
+	// 회원상태
+	private String user_delflag;        //  T 탈퇴 F 일반  
+	// 이메일인증 체크
+	private String user_emailchk;       // Y 이메일인증함 N 이메일인증 안함
+	// 이메일키
 	private String user_emailkey;
 	private String user_iswrite;
 	

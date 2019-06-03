@@ -270,9 +270,7 @@
 </body>
 <script type="text/javascript">
 var pageCnt = <%=pagingDto.getNowPageNo()%>
-
 //var chkModify = false;
-
 $("document").ready(
 		function() {
 			$("#infinityScroll").click(
@@ -302,8 +300,6 @@ $("document").ready(
 	});
 	
 });	
-
-
 function getMySketchBook(pageNo){		
 	var user_email = "${ldto.user_email}"
 	var sketchLikes = "${sketchLikes}"
@@ -444,7 +440,6 @@ function getMySketchBook(pageNo){
 							}
 															
 						}
-
 						$(".sketchBookContent").append(sketchBookContainer);
 									
 					}		
@@ -456,21 +451,15 @@ function getMySketchBook(pageNo){
 		});
 	
 }
-
-
 //-------------------- 작성 스케치북 수정 모달 생성 --------------------
-
 function sketchBookModify(sketch) {
 	var user_email = "${ldto.user_email}"
 	var sketch_id = sketch;
 	alert(user_email);
 	alert(sketch_id);
-
-
 	ajaxSketchModi(user_email, sketch_id);
 	$("#sketchModiForm").modal();
 }
-
 	var ajaxSketchModi = function(user_email, sketch_id){
 //	alert(user_email);
 //	var user_email 
@@ -539,7 +528,6 @@ function sketchBookModify(sketch) {
 					
 					$('input:radio[name=sketch_theme]:input[value='+modiModal.sdto.sketch_theme+']').attr("checked", true);
 					$("input:radio[name='sketch_share'][value="+ modiModal.sdto.sketch_share +"]").prop('checked', true);
-
 					$("input[id=C_IMG1]").change(function(){
 						var imgClass = $(this).attr("id");
 						subImgClass = imgClass.substring(imgClass.indexOf('_')+1);
@@ -557,12 +545,7 @@ function sketchBookModify(sketch) {
 	});
 	
 }
-
 //-------------------- 작성 스케치북 수정 모달 생성 --------------------
-
-
-
-
 //확장자 확인 (업로드할 수 있는 확장자일시 true)
 function extension(file){
 	var reg = /gif|jpg|png|jpeg/i;
@@ -573,30 +556,21 @@ function extension(file){
 		return false;
 	}
 }
-
-
-
-
 function fileUpload(subImgClass) {
 	var frmEle = document.forms[1];
 	var formData = new FormData(frmEle);
 	
 		/* formData.append("text_no",subImgClass); */
-
 	//파일 업로드 확장자 확인
 	// 		var file = form.file; 여기 부분이 아직 불확실
 	// 		var fileExt = file.substring(file.lastIndex(".")+1);
 	// 		var reg = /gif|jpg|png|jpeg/i;
 	// 		if(reg.test(fileExt)==false){
 	// 			alert("이미지는 gifm jpg, png 파일만 올릴 수 있습니다.");
-
 	// 			return;
 	// 		}
-
 	//파일 사이즈 확인
-
 	//파일 업로드 확장자 및 사이즈 확인을 메소드로 만들어서 true가 되면 아작스 실행
-
 $.ajax({
 		url : './uploadSketchBook.do',
 		type : 'post',
@@ -614,16 +588,8 @@ $.ajax({
 		}
 	});
 }
-
 	
-
-
-
-
-
 //-------------------- 작성 스케치북 수정  --------------------
-
-
 function sketchModify(){
 	//var img= img;
 	//chkModify = true;
@@ -648,7 +614,6 @@ function sketchModify(){
 	
 	
 	
-
 	
 	
 	if (title == "") {
@@ -672,16 +637,8 @@ function sketchModify(){
 		//chkModify = false;
 	}
 }
-
-
-
 //-------------------- 작성 스케치북 수정  --------------------
-
-
 //------------------- 작성 스케치북 완전 다중 삭제 ----------------- 
-
-
-
 function DelchkBox(){
 	alert("작동");
 	var chks =  document.getElementsByName("chkVal");
@@ -712,31 +669,14 @@ function DelchkBox(){
 		return false;
 	}
 }
-
-
-
 //------------------- 작성 스케치북 완전 다중 삭제 ----------------- 
-
-
-
-
-
-
 //테마별, 작성, 스크랩  스케치북 조회 무한스크롤 후 캔버스 조회 페이지로 이동
 function goCanvas(sketch_id) {
 	//alert(sketch_id);
 	location.href="./detailCanvas.do?sketch_id="+sketch_id;
 }
-
-
-
-
-
 </script>
 
 
 </script>
 </html>
-
-
-

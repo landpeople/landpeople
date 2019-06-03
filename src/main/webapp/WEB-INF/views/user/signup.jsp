@@ -10,7 +10,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>SB Admin 2 - Register</title>
+<title>Register</title>
 
 <!-- Custom fonts for this template-->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -19,24 +19,37 @@
 <!-- Custom styles for this template-->
 <link href="./css/theme/sb-admin-2.min.css" rel="stylesheet">
 <script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
+
+<style type="text/css">
+
+	span{
+	font-size: .8rem
+	}
+</style>
+
+
+
 </head>
+
 
 <script type="text/javascript">
 	function regicheck() {
 		// email 중복 + 유효값
 		var emailchk = document.getElementById("emailchkVal").value;
 		var pwchk = document.getElementById("pwchkVal").value;
+		var passchk = document.getElementById("passchkVal").value;
 		var nicknamechk = document.getElementById("nicknamechkVal").value;
 
 		var pw = document.getElementById("pw").value;
 		var passOK = document.getElementById("passOK").value;
 
-		if (emailchk == "1" && pwchk == "1" && nicknamechk == "1"
+		if (emailchk == "1" && pwchk == "1" && passchk == "1" && nicknamechk == "1"
 				&& pw == passOK) {
 			alert("이메일 인증 후 로그인 해주세요");
 			return true;
 		} else {
 			alert("입력 정보를 확인해주세요");
+			$("#pw").val("");
 			$("#passOK").val("");
 			$("#pwresult").html("");
 			$("#pwchk").html("");
@@ -121,11 +134,11 @@
 			if (passOK == pw) {
 				$("#pwchk").css("color", "forestgreen");
 				$("#pwchk").html("비밀번호가 일치합니다.");
-				$("#pwchkVal").val("1");
+				$("#passchkVal").val("1");
 			} else {
 				$("#pwchk").css("color", "red");
 				$("#pwchk").html("비밀번호가 일치하지 않습니다.");
-				$("#pwchkVal").val("0");
+				$("#passchkVal").val("0");
 			}
 		});
 
@@ -188,6 +201,7 @@
 	});//제일큰
 </script>
 
+
 <body class="bg-gradient-primary">
 
 	<div class="container">
@@ -204,6 +218,7 @@
 
 							<input type="hidden" value="0" id="emailchkVal"> 
 							<input type="hidden" value="0" id="pwchkVal"> 
+							<input type="hidden" value="0" id="passchkVal"> 
 							<input type="hidden" value="0" id="nicknamechkVal">
 							<form class="user" action="./signUp.do" method="post" onsubmit="return regicheck()">
 								<div class="form-group">
@@ -211,11 +226,11 @@
 									&nbsp;<span id="emailresult"></span>
 								</div>
 								<div class="form-group">
-									<input type="password" name="user_password" class="form-control form-control-user" id="pw" placeholder="Password" required="required" maxlength="12">
+									<input type="password" name="user_password" class="form-control form-control-user" id="pw" placeholder="Password" required="required" maxlength="10">
 								&nbsp;<span id="pwresult">4~10자리의 영문+숫자</span>
 								</div>
 								<div class="form-group">
-									<input type="password" class="form-control form-control-user" id="passOK" placeholder="Repeat Password" maxlength="12" required="required">
+									<input type="password" class="form-control form-control-user" id="passOK" placeholder="Repeat Password" maxlength="10" required="required">
 								&nbsp;<span id="pwchk"></span>
 								</div>
 								<div class="form-group">
