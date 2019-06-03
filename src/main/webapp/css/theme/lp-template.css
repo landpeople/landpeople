@@ -300,9 +300,3 @@
 }
 
 
-/* 스케치북 정렬을 위한 div*/
-.lp-content-sketch{
-	display:flex;
-	flex-direction: column; /*안쪽에 좋아요 보기와 더보기 버튼이 column으로 정렬되어야 함.*/
-	
-}
