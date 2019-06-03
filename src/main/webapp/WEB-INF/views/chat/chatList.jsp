@@ -15,7 +15,7 @@
 <link href="./css/chat/chatlist.css" rel="stylesheet">
 
 <title>Chatable members</title>
-<body id="style-3">
+<body id="style-3"><!-- 스크롤바 스타일을 주기 위해 style-3을 아이디로 줌 -->
 	<%
 		response.setHeader("P3P", "CP='CAO PSA CONi OTR OUR DEM ONL'"); // iframe 세션이 날아가지 않도록 잡아줌
 		String session_name = ""; // session_name은 세션의 이름으로 저장할 변수
