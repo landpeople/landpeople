@@ -27,9 +27,13 @@
 }
 
 #TXT1{
+	border: 1px solid #ebebeb;
+	border-radius: 5px;
+	border-radius : 10px;
 	margin: auto;
 	height: 200px;
 	width: 450px;
+	position: absolute;
 }
 
 #RS_Container_1{
@@ -43,23 +47,23 @@
 }
 
 #TXT2, #TXT3, #TXT4{
+	border: 1px solid #e5e5e5;
+	border-radius : 10px;
 	height: 237px;
 	width: 145px;
 }
 
 #TXT2{
 	float: left;
-	margin: 0px 5px 0px 0px;
 }
 
 #TXT3{
 	float: left;
-	margin-right: 5px;
+	margin: 0px 4px 0px 4px;
 }
 
 #TXT4{
 	float: left;
-	margin-right: 0px;
 }
 
 #IMG2{
@@ -82,7 +86,6 @@
  	background-repeat: no-repeat;
  	background-position: center;
 }
-
 
 /* 2번째 폼  */
 
@@ -113,6 +116,8 @@
 }
 
 #TXT21{
+	border: 1px solid #ebebeb;
+	border-radius: 5px;
 	width: 230px;
 	height: 542px;
 	margin: 0px;
@@ -164,6 +169,8 @@
 }
 
 #TXT22{
+	border: 1px solid #e5e5e5;
+	border-radius: 5px;
 	height: 260px;
 	width: 460px;
 	margin: 15px 0px 0px 0px;
@@ -207,11 +214,15 @@
 }
 
 #TXT31{
+	border: 1px solid #e5e5e5;
+	border-radius: 5px;
 	height: 174px;
 	width: 230px;
 }
 
 #TXT32{
+	border: 1px solid #e5e5e5;
+	border-radius: 5px;
 	height : 378px;
 	width: 230px;
 	margin-top: 20px;
@@ -238,6 +249,8 @@
 }
 
 #TXT33{
+	border: 1px solid #e5e5e5;
+	border-radius: 5px;
 	height: 160px;
 	width: 200px;
 	margin: 10px 30px 0px 10px;
@@ -268,6 +281,8 @@
 }
 
 #TXT41{
+	border: 1px solid #e5e5e5;
+	border-radius: 5px;
 	width: 460px;
 	height: 632px;	
 }
@@ -300,11 +315,14 @@
 }
 
 #LS_TContainer5{
+	margin-top: 10px;
 	width: 460px;
 	height: 150px;
 }
 
 #TXT51{
+	border: 1px solid #ebebeb;
+	border-radius: 5px;
 	width: 280px;
 	height: 142px;
 }
@@ -330,6 +348,8 @@
 }
 
 #TXT52 {
+	border: 1px solid #e5e5e5;
+	border-radius: 5px;
 	width: 220px;
 	height: 174px;
 }
@@ -339,6 +359,8 @@
 }
 
 #TXT53, #TXT54{
+	border: 1px solid #e5e5e5;
+	border-radius: 5px;
 	width: 220px;
 	height: 174px;
 }

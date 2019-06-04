@@ -5,12 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <title>레이아웃 1번</title>
-<!-- 토스트 에디터 파일 가져오기 -->
-<link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor.css"></link>
-<link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor-contents.css"></link>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.33.0/codemirror.css"></link>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css"></link>
-<script src="https://uicdn.toast.com/tui-editor/latest/tui-editor-Editor-full.js"></script>
+<!-- CKEditor -->
+<script src="./ckeditor/ckeditor.js"></script>
+<script src="./ckeditor/config.js"></script>
 <!-- CSS -->
 <link rel="stylesheet" href="./css/freeCanvasLayout.css">
 <link rel="stylesheet" href="./css/lp-freeCanvas-style.css">
@@ -25,15 +22,25 @@
 <!-- bootstrap -->
 <script src="./js/min/main.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<!-- summernote css/js -->
-<!-- <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.css" rel="stylesheet"> -->
-<!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.12/summernote.js"></script> -->
 <!-- js -->
 <script src="./js/freeCanvas/freeCanvas.js" defer="defer"></script>
 <!-- font awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 </head>
 <body>
+<script type="text/javascript">
+//에디터
+$(document).ready(function(){
+for (var i = 0; i < ids.length; i++) {
+	setEditor(ids.eq(i).attr("id"));
+	}
+});
+
+function setEditor(id) {
+	CKEDITOR.disableAutoInline = true;
+	CKEDITOR.replace( "'"+id+"'");
+}
+</script>
 <div class="main-wrapper">
 <%@include file="./common/Sidebar.jsp" %>
 <div class="content-wrapper">
@@ -42,10 +49,8 @@
 	<div class="lpcontents">
 	<div class="content">
 		<div class="head-title">
-			<div class="back" onclick="javascript:history.back(-1)"><i class="fas fa-reply fa-3x"></i></div>
-			<div class="title">[스케치북 제목이 들어갑니다.]</div>
-			<div class="imageDown"><i class="far fa-file-image fa-4x"></i></div>
-			<div class="excelDown"><i class="far fa-file-excel fa-4x"></i></div>
+			<div class="back" onclick="javascript:history.back(-1)"><i class="fas fa-reply fa-2x"></i></div>
+			<div class="title">나홀로 떠나는 제주도 여행</div>
 		</div>
 		
 		<div class="article-canvasContent">
@@ -59,28 +64,24 @@
 				</div>
 					<input type="hidden" name="list[0].img_spath" class="img_spath0">				
 					<input type="hidden" name="list[0].text_no" value="0"> 
-					<div id="TXT1">
-						<textarea style="width: 100%; height: 100%; resize: none;" class="text"></textarea>
+					<div id="TXT1" contenteditable="true" class="textContent">
 					</div>
-						<input type="hidden" name="list[1].text_content" class="text_content0">
-						<input type="hidden" name="list[1].text_no" value="1"> 
+					<input type="hidden" name="list[1].text_content" class="text_content0">
+					<input type="hidden" name="list[1].text_no" value="1"> 
 			</div>
 	
 			<!-- 오른쪽  -->
 			<div id="Right-Side">
 				<div id="RS_Container_1">
-					<div id="TXT2">
-						<textarea id="textarea" style="width: 100%; height: 100%; resize: none;"></textarea>
+					<div id="TXT2" contenteditable="true" class="textContent">
 					</div>
 						<input type="hidden" name="list[2].text_content" class="text_content1">
 						<input type="hidden" name="list[2].text_no" value="2"> 
-					<div id="TXT3">
-						<textarea style="width: 100%; height: 100%; resize: none;"></textarea>
+					<div id="TXT3" contenteditable="true" class="textContent">
 					</div> 
 						<input type="hidden" name="list[3].text_content" class="text_content2">
 						<input type="hidden" name="list[3].text_no" value="3"> 
-					<div id="TXT4">
-						<textarea style="width: 100%; height: 100%; resize: none;"></textarea>
+					<div id="TXT4" contenteditable="true" class="textContent">
 					</div>
 						<input type="hidden" name="list[4].text_content" class="text_content3">
 						<input type="hidden" name="list[4].text_no" value="4"> 
@@ -108,7 +109,7 @@
 	
 	<div class="footer-icon">
 		<div class="insertIcon" onclick="insert()">
-			<img id="insert" src="./img/check.png">
+			<img id="insert" src="./img/checkIcon(2).png">
 		</div>
 	</div>
 	

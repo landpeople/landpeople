@@ -7,15 +7,10 @@ $('#mybook').booklet({
 });		
 	
 var ids = $("div[id*='TXT']");
-var editor = new Array(ids.length);
 var imgs =$("div[id*='IMG']");
 var subImgClass;	
 
 $(document).ready(function() {
-	//에디터
-	for (var i = 0; i < ids.length; i++) {
-		setEditor(ids.eq(i).attr("id"), i);
-		}
 	//이미지 업로드
 	$(".file").on("change", function(){
 		var imgClass = $(this).attr("id");
@@ -26,19 +21,17 @@ $(document).ready(function() {
 			fileUpload(subImgClass);
 		}
 	});
-				
-});
-
-function setEditor(id, i) {
-	editor[i] = new tui.Editor({
-		el : document.querySelector("#" + id),
-		initialEditType : 'wysiwyg',
-		previewStyle : 'tab',
-		height : "'" + $("div[id='" + id + "']").attr("height") + "'"
+	$("#TXT1").change(function(){
+		var l = $("#TXT1").children();
+		alert(l.length);
+		if(l.length==6){
+			return false;
+		}
+		
 	});
 	
-}
-		
+});
+
 function fileUpload(subImgClass) {
 	var frmEle = document.getElementById("frm");
 	var formData = new FormData(frmEle);
@@ -82,11 +75,13 @@ function extension(file){
 		
 //입력
 function insert() {
-	for (var i = 0; i < editor.length; i++) {
+	for (var i = 0; i < ids.length; i++) {
+		var id = ids.eq(i).attr("id");
+		var data = $("#"+id).html();
 		var text_content = $("input[class=text_content"+i+"]");
-		text_content.val(editor[i].getHtml());
+		text_content.val(data);
 	}
-			
+	
 	var frm = document.getElementById("frm");
 	frm.action = './insertData.do';
 	frm.method = 'post';
@@ -95,13 +90,15 @@ function insert() {
 
 //수정
 function update() {
-	for (var i = 0; i < editor.length; i++) {
+	for (var i = 0; i < ids.length; i++) {
+		var id = ids.eq(i).attr("id");
+		var data = $("#"+id).html();
 		var text_content = $("input[class=text_content"+i+"]");
-		text_content.val(editor[i].getHtml());
+		text_content.val(data);
 	}
 	
 	var frm = document.getElementById("frm");
-	frm.action = './updateFreeCanvas.do';
+	frm.action = './insertData.do';
 	frm.method = 'post';
 	frm.submit();
 }

@@ -54,10 +54,4 @@ public class LPTextDaoImpl implements ILPTextDao {
 	public int textDelete(String can_id) {
 		return sqlSession.delete("free.free_Delete", can_id);
 	}
-	
-	//자유 캔버스 수정용 insert
-	@Override
-	public int textUpdateInsert(LPTextDto conDto) {
-		return sqlSession.insert("free.text_UpdateInsert", conDto);
-	}	
 }

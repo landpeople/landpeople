@@ -5,16 +5,13 @@
 <head>
 <meta charset="UTF-8">
 <title>레이아웃 5번</title>
-<!-- 토스트 에디터 파일 가져오기 -->
-<link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor.css"></link>
-<link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor-contents.css"></link>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.33.0/codemirror.css"></link>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css"></link>
-<script src="https://uicdn.toast.com/tui-editor/latest/tui-editor-Editor-full.js"></script>
-<script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
+<!-- CKEditor -->
+<script src="https://cdn.ckeditor.com/4.11.4/standard/ckeditor.js"></script>
 <!-- CSS -->
 <link rel="stylesheet" href="css/freeCanvasLayout.css">
 <link rel="stylesheet" href="./css/lp-freeCanvas-style.css">
+<!-- jQuery -->
+<script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
 <!-- Booklet  -->
 <script src="./js/jquery-ui.js"></script>
 <script src="./js/jquery.easing.1.3.js"></script>
@@ -28,6 +25,19 @@
 <!-- font awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 </head>
+<script type="text/javascript">
+//에디터
+$(document).ready(function(){
+for (var i = 0; i < ids.length; i++) {
+	setEditor(ids.eq(i).attr("id"));
+	}
+});
+
+function setEditor(id) {
+	CKEDITOR.disableAutoInline = true;
+	CKEDITOR.inline( "'"+id+"'" );
+}
+</script>
 <body>
 <div class="main-wrapper">
 <%@include file="./common/Sidebar.jsp" %>
@@ -35,11 +45,9 @@
 	<!-- 메인 컨텐츠   -->
 	<div class="lpcontents">
 	<div class="content">
-		<div class="head-title">
-			<div class="back" onclick="javascript:history.back(-1)"><i class="fas fa-reply fa-3x"></i></div>
-			<div class="title">[스케치북 제목이 들어갑니다.]</div>
-			<div class="imageDown"><i class="far fa-file-image fa-4x"></i></div>
-			<div class="excelDown"><i class="far fa-file-excel fa-4x"></i></div>
+	<div class="head-title">
+			<div class="back" onclick="javascript:history.back(-1)"><i class="fas fa-reply fa-2x"></i></div>
+			<div class="title">나홀로 떠나는 제주도 여행</div>
 		</div>
 		
 		<div class="article-canvasContent">
@@ -56,8 +64,7 @@
 				<input type="hidden" name="list[0].text_no" value="0"> 
 			</div>
 			<div id="LS_TContainer5">
-				<div id="TXT51">
-					<textarea style="width: 100%; height: 100%; resize: none;"></textarea>
+				<div id="TXT51" contenteditable="true">
 				</div>
 				<input type="hidden" name="list[1].text_content" class="text_content0">
 				<input type="hidden" name="list[1].text_no" value="1"> 
@@ -73,8 +80,7 @@
 				</div>
 				<input type="hidden" name="list[2].img_spath" class="img_spath1">
 				<input type="hidden" name="list[2].text_no" value="2"> 
-				<div id="TXT52">
-					<textarea style="width: 100%; height: 100%; resize: none;"></textarea>
+				<div id="TXT52" contenteditable="true">
 				</div>
 				<input type="hidden" name="list[3].text_content" class="text_content1">
 				<input type="hidden" name="list[3].text_no" value="3"> 
@@ -86,8 +92,7 @@
 				<input type="hidden" name="list[4].text_no" value="4"> 
 			</div>
 			<div id="RS_ITContainer52">
-				<div id="TXT53">
-					<textarea style="width: 100%; height: 100%; resize: none;"></textarea>
+				<div id="TXT53" contenteditable="true">
 				</div>
 				<input type="hidden" name="list[5].text_content" class="text_content2">
 				<input type="hidden" name="list[5].text_no" value="5"> 
@@ -97,8 +102,7 @@
 				</div>
 				<input type="hidden" name="list[6].img_spath" class="img_spath3">
 				<input type="hidden" name="list[6].text_no" value="6"> 
-				<div id="TXT54">
-					<textarea style="width: 100%; height: 100%; resize: none;"></textarea>
+				<div id="TXT54" contenteditable="true">
 				</div>
 				<input type="hidden" name="list[7].text_content" class="text_content3">
 				<input type="hidden" name="list[7].text_no" value="7"> 

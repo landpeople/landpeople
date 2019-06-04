@@ -24,7 +24,4 @@ public interface ILPTextDao {
 
 	//자유 캔버스 삭제
 	public int textDelete(String can_id);
-	
-	//자유 캔버스 수정용 insert
-	public int textUpdateInsert(LPTextDto conDto);
 }

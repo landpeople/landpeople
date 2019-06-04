@@ -52,13 +52,6 @@ public class LPTextServiceImpl  implements ILPTextService{
 	public int textDelete(String can_id) {
 		return textDao.textDelete(can_id);
 	}
-
-	//자유 캔버스 수정용 insert
-	@Override
-	public int textUpdateInsert(LPTextDto conDto) {
-		return textDao.textUpdateInsert(conDto);
-	}
-
 }
 
 
