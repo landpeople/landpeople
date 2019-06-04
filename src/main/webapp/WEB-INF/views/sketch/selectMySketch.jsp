@@ -4,6 +4,7 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.Map"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <%
 	SketchPagingDto pagingDto = (SketchPagingDto) request.getAttribute("pagingDto");
@@ -37,9 +38,13 @@
 <!-- Custom styles for this template-->
 <link href="./css/theme/sb-admin-2.css" rel="stylesheet">
 <link href="./css/theme/lp-template.css" rel="stylesheet">
+<link href="./css/sketch/sketch.css" rel="stylesheet">
 <link href="./css/sketch/modal.css" rel="stylesheet">
 
 </head>
+<script type="text/javascript">
+
+</script>
 <body id="page-top" class="scroll">
 
    <!-- Page Wrapper -->
@@ -51,192 +56,75 @@
          <!-- flex 레이아웃 content와 푸터 정렬 -->
 
          <!-- Main Content -->
-         <div id="content" style="display: flex; flex-direction: column;">
+         <div id="content">
 
             <!-- LandPeople Content Area -->
             <div class="lp-container">
                <div class="lp-content shadow-lg">
                   <div class="lp-content-sketch">
-                  <div>
-                  
-                  
-                  </div>
-                  
-                  
-                  <form action="#" method="post" id="sketchDel" name="sketchDel" onsubmit="return DelchkBox()">
-                     <div class="btn btn-info">스케치북 보기</div>
-                     <input class="btn btn-danger" type="submit" value="스케치북 삭제">
-                     <div class="sketchBookContent">
-
-                        <%
-                        	for (int i = 0; i < mySketchBookLists.size() / 3; i++) {
-                        %>
-                        <!--스케치북 3개 담는 div  -->
-                        <div class="sketchBookContainer">
-
-                           <%
-                           	for (int j = 0; j < 3; j++) {
-                           			String sketch_id = mySketchBookLists.get(i * 3 + j).getSketch_id();
-                           %>
-                           <%
-                           	// 관리자에 의해 스케치북이 차단된 경우 sketch_block= 'T'
-                           			if (mySketchBookLists.get(i * 3 + j).getSketch_block().trim().compareToIgnoreCase("T") == 0) {
-                           %>
-                           <!--스케치북 1개 담는 div  -->
-                           <div style="width: 280px; height: 230px; border: 1px solid gray; display: inline-block; margin: 0 0 0 10px; position: relative;">
-                              <div class="selectTheme" style="background-image: url('<%=mySketchBookLists.get(i * 3 + j).getSketch_spath()%>');">
-                                 <div class="sketchTheme_hover" style="cursor: pointer;">
-                                    <div class="hover_inside">
-                                       <h5>관리자에 의해 삭제되었습니다.</h5>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div style="width: 100%; height: 60px; border: 1px solid black; position: absolute; bottom: 0px;">
-                                 <input type="checkbox" name="chkVal" value="<%=mySketchBookLists.get(i * 3 + j).getSketch_id()%>">
-                                 <label><%=mySketchBookLists.get(i * 3 + j).getSketch_title()%></label><label style="float: right;"><%=mySketchNickname.get(sketch_id)%></label><br> <label><a href="#" onclick="return sketchBookModify('<%=mySketchBookLists.get(i * 3 + j).getSketch_id()%>')">
-                                       <img alt="modi" src="img/sketch/modifyIcon.png">스케치북 수정
-                                    </a></label>
-                              </div>
-                           </div>
-                           <!--스케치북 1개 담는 div  -->
-                           <%
-                           	} else {
-                           %>
-                           <!--  관리자에 의해 스케치북이 차단되지 않은 경우 sketch_block= 'F' -->
-                           <!--스케치북 1개 담는 div  -->
-                           <div style="width: 280px; height: 230px; border: 1px solid gray; display: inline-block; margin: 0 0 0 10px; position: relative;">
-                              <div class="selectTheme" style="background-image: url('<%=mySketchBookLists.get(i * 3 + j).getSketch_spath()%>');">
-                                 <div class="sketchTheme_hover" style="cursor: pointer;" onclick="location.href='./detailCanvas.do?sketch_id=<%=mySketchBookLists.get(i * 3 + j).getSketch_id()%>'">
-                                    <div class="hover_inside">
-                                       <h5>
-                                          <img alt="likeIcon" src="./img/sketch/likeIcon.png">
-                                          <%=sketchLike.get(sketch_id)%>
-                                          <%=mySketchBookLists.get(i * 3 + j).getSketch_theme()%>
-                                       </h5>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div style="width: 100%; height: 60px; border: 1px solid black; position: absolute; bottom: 0px;">
-                                 <input type="checkbox" name="chkVal" value="<%=mySketchBookLists.get(i * 3 + j).getSketch_id()%>">
-                                 <label><%=mySketchBookLists.get(i * 3 + j).getSketch_title()%></label><label style="float: right;"><%=mySketchNickname.get(sketch_id)%></label><br> <label><a href="#" onclick="return sketchBookModify('<%=mySketchBookLists.get(i * 3 + j).getSketch_id()%>')">
-                                       <img alt="modi" src="img/sketch/modifyIcon.png">스케치북 수정
-                                    </a></label>
-                              </div>
-                           </div>
-                           <!--스케치북 1개 담는 div  -->
-
-                           <%
-                           	}
-                           %>
-
-
-
-                           <%
-                           	}
-                           %>
-                        </div>
-                        <!--스케치북 3개 담는 div  -->
-
-                        <%
-                        	}
-                        %>
-
-
-
-
-
-
-
-
-
-
-                        <%
-                        	if (mySketchBookLists.size() % 3 != 0) {
-                        %>
-                        <!--스케치북 3개 담는 div  -->
-                        <div class="sketchBookContainer">
-
-                           <%
-                           	for (int i = 0; i < mySketchBookLists.size() % 3; i++) {
-                           			String sketch_id = mySketchBookLists.get((mySketchBookLists.size() / 3) * 3 + i).getSketch_id();
-                           %>
-
-                           <%
-                           	// 관리자에 의해 스케치북이 차단된 경우 sketch_block= 'T'
-                           			if (mySketchBookLists.get((mySketchBookLists.size() / 3) * 3 + i).getSketch_block().trim().compareToIgnoreCase("T") == 0) {
-                           %>
-                           <!--스케치북 1개 담는 div  -->
-                           <div style="width: 280px; height: 230px; border: 1px solid gray; display: inline-block; margin: 0 0 0 10px; position: relative;">
-                              <div class="selectTheme" style="background-image: url('<%=mySketchBookLists.get((mySketchBookLists.size() / 3) * 3 + i).getSketch_spath()%>');">
-                                 <div class="sketchTheme_hover" style="cursor: pointer;">
-                                    <div class="hover_inside">
-                                       <h5>관리자에 의해 삭제되었습니다.</h5>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div style="width: 100%; height: 60px; border: 1px solid black; position: absolute; bottom: 0px;">
-                                 <input type="checkbox" name="chkVal" value="<%=mySketchBookLists.get((mySketchBookLists.size() / 3) * 3 + i).getSketch_id()%>">
-                                 <label><%=mySketchBookLists.get((mySketchBookLists.size() / 3) * 3 + i).getSketch_title()%></label><label style="float: right;"><%=mySketchNickname.get(sketch_id)%></label><br> <label><a href="#" onclick="return sketchBookModify('<%=mySketchBookLists.get((mySketchBookLists.size() / 3) * 3 + i).getSketch_id()%>')">
-                                       <img alt="modi" src="img/sketch/modifyIcon.png">스케치북 수정
-                                    </a></label>
-                              </div>
-                           </div>
-                           <!--스케치북 1개 담는 div  -->
-                           <%
-                           	} else {
-                           %>
-                           <!--  관리자에 의해 스케치북이 차단되지 않은 경우 sketch_block= 'F' -->
-                           <!--스케치북 1개 담는 div  -->
-                           <div style="width: 280px; height: 230px; border: 1px solid gray; display: inline-block; margin: 0 0 0 10px; position: relative;">
-                              <div class="selectTheme" style="background-image: url('<%=mySketchBookLists.get((mySketchBookLists.size() / 3) * 3 + i).getSketch_spath()%>');">
-                                 <div class="sketchTheme_hover" style="cursor: pointer;" onclick="location.href='./detailCanvas.do?sketch_id=<%=mySketchBookLists.get((mySketchBookLists.size() / 3) * 3 + i).getSketch_id()%>'">
-                                    <div class="hover_inside">
-                                       <h5>
-                                          <img alt="likeIcon" src="./img/sketch/likeIcon.png">
-                                          <%=sketchLike.get(sketch_id)%>
-                                          <%=mySketchBookLists.get((mySketchBookLists.size() / 3) * 3 + i).getSketch_theme()%>
-                                       </h5>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div style="width: 100%; height: 60px; border: 1px solid black; position: absolute; bottom: 0px;">
-                                 <input type="checkbox" name="chkVal" value="<%=mySketchBookLists.get((mySketchBookLists.size() / 3) * 3 + i).getSketch_id()%>">
-                                 <label><%=mySketchBookLists.get((mySketchBookLists.size() / 3) * 3 + i).getSketch_title()%></label><label style="float: right;"><%=mySketchNickname.get(sketch_id)%></label><br> <label><a href="#" onclick="return sketchBookModify('<%=mySketchBookLists.get((mySketchBookLists.size() / 3) * 3 + i).getSketch_id()%>')">
-                                       <img alt="modi" src="img/sketch/modifyIcon.png">스케치북 수정
-                                    </a></label>
-                              </div>
-                           </div>
-                           <!--스케치북 1개 담는 div  -->
-
-                           <%
-                           	}
-                           %>
-
-                           <%
-                           	}
-                           %>
-                        </div>
-                        <!--스케치북 3개 담는 div  -->
-
-                        <%
-                        	}
-                        %>
-
-
-
-                     </div>
-                  </form>
-
-
-
+                  		<div class="lp-content-header">
+                  			<h1 class="h2 mb-4 text-gray-800 lp-content-title">My Sketchbook</h1>
+                  			<input class="btn btn-danger mb-4 lp-sketch-del " type="submit" value="Delete selected">
+	                  	</div>
+	                  	<form action="#" method="post" id="sketchDel" name="sketchDel" onsubmit="return DelchkBox()">
+                     		<div class="sketchBookContent">
+								<c:forEach var="item" items="${mySketchBookLists}">
+										<c:choose>
+											<c:when test="${item.sketch_block eq 'T'}">
+						                         <div class="single-sketchbook">
+						                                 <div class="single-sketch-img">
+                                                               <div class="figure" onclick="goCanvas(${item.sketch_spath})">
+                                                                  <img alt="" src="url(${item.sketch_spath})">
+                                                               </div>
+															   <div style="color:red" ><i class="fas fa-heart"></i>${sketchLike[item.sketch_id]}</div>
+															   <div> [ ${item.sketch_theme} ] ${item.sketch_title}</div>
+						                                 </div>
+						                              <div class="single-sketch-desc">
+						                                 <input type="checkbox" name="chkVal" value="${item.sketch_id}">
+						                                  	<h5>관리자에 의해 삭제되었습니다.</h5>
+						                                 	<label>${item.sketch_title}</label>
+							                                <label>
+							                                 	<a href="#" onclick="return sketchBookModify('${item.sketch_id}')">
+							                                       <<i class="fas fa-pen-square"></i>
+							                                    </a>
+						                                	</label>
+						                              </div>
+						                           </div>
+											</c:when>
+											<c:otherwise>
+											    <div class="single-sketchbook">
+					                              <div class="single-sketch-desc">
+					                                 <div><input type="checkbox" name="chkVal" value='${item.sketch_id}'></div>
+														
+						                                <div onclick="return sketchBookModify('${item.sketch_id}')"><i class="fas fa-pen-square"></i>
+						                                </div>
+					                              </div>
+			                                       <div class="single-sketch-img figure">
+                                                               <div class="figure" onclick="goCanvas(${item.sketch_spath})">
+                                                                  <img alt="" src=" url(${item.sketch_spath})">
+                                                               </div>
+																<div class="h5"> [ ${item.sketch_theme} ] ${item.sketch_title}</div>
+																<div style="color:red">${sketchLike[item.sketch_id]} <i class="fas fa-heart"></i></div>
+												   </div>
+					                           </div>
+											</c:otherwise>
+										</c:choose>
+								</c:forEach>
+                     		</div>
+                    	</form>
+                     
+                     <c:if test="${fn:length(mySketchBookLists) eq '9'}">
+		                  <button id="infinityScroll">View more</button>
+                     </c:if>
+                   
 
                   <!-- 스케치북 수정 Modal -->
                   <div class="modal fade" id="sketchModiForm" role="dialog">
                      <div class="modal-dialog">
                         <div class="modal-content">
                            <div class="modal-header">
+                              <h4 class="modal-title">Edit sketchbook</h4>
                               <button type="button" class="close" data-dismiss="modal">&times;</button>
-                              <h4 class="modal-title">스케치북 수정</h4>
                            </div>
                            <div class="modal-body">
                               <form action="#" role="form" method="post" id="modiSketchBook"></form>
@@ -245,19 +133,6 @@
                      </div>
                   </div>
                   <!-- 여기까지 스케치북 수정 Modal -->
-
-
-                  <%
-                  	if (mySketchBookLists.size() % 9 == 0) {
-                  %>
-                  <button id="infinityScroll" style="width: 100%;">더보기</button>
-                  <%
-                  	}
-                  %>
-
-
-
-
                </div><!-- 스케치북 정렬을 위한 lp-content-sketch -->
                </div>
             </div>
@@ -268,6 +143,7 @@
       </div>
    </div>
 </body>
+
 <script type="text/javascript">
 var pageCnt = <%=pagingDto.getNowPageNo()%>
 //var chkModify = false;

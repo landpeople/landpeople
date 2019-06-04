@@ -1,38 +1,113 @@
 @charset "UTF-8";
 
+/* 스케치북 정렬을 위한 div*/
+.lp-content-sketch {
+	display: flex;
+	flex-direction: column; /*안쪽에 좋아요 보기와 더보기 버튼이 column으로 정렬되어야 함.*/
+	overflow: hidden;
+	width: 960px;
+}
+
+.lp-content-header {
+	width: 100%; display : flex;
+	justify-content: space-between;
+	display: flex;
+}
+
+.lp-content-title {
+	margin-left: 15px;
+}
+
+.lp-sketch-del {
+	margin-right: 15px;
+}
 /*스케치북 9개 감싸는 div */
 .sketchBookContent {
+	padding: 0 20px;
 	width: 100%;
 	height: 100%;
-	/* padding: 0 30px; */
-/* 	margin: 0 30px; */
+	display: grid; /*하위 요소들은 grid로 정렬*/
+	grid-template-columns: repeat(3, 1fr);
+	grid-auto-rows: 220px;
+	grid-gap: 0.5rem;
 }
 
-/*스케치북 3개 감싸는 div */
-.sketchBookContainer {
+.single-sketchbook {
 	width: 100%;
-	height: 230px;
-	/* 	margin: 0 0 20px; */
+	height: 100%;
 	display: flex;
-/* 	justify-content: space-around; */
-/* 	margin : 20px; */
+	flex-direction: column;
+	border-radius: 0.4rem;
 }
-
-/*--------- 선택한 테마의 스케치북 조회-------------------  */
-
 
 /* 스케치북 1개 감싸는 div */
-.selectTheme {
+/* 스케치북 이미지 */
+.single-sketch-img {
 	width: 100%;
-	height: 170px;
-	border: 1px solid red;
-	/* margin: 0 0 0 10px; */
-	overflow: hidden;
-	position: relative;
-	/* display: inline-block; */
-	background-size: contain;
+	height: 90%;
+	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+/* 스케치북 설명 */
+.single-sketch-desc {
+	background-color:#eceff7;
+	width: 100%;
+	height: 10%;
+	display: flex;
+	justify-content: space-around;
+}
+
+/* img hover시 효과*/
+/* Colorize-zoom Container */
+.img-hover-zoom--brightness {
+  transition: filter 0.1s ease-in-out;
+  filter: brightness(50%);
+}
+
+/* The Transformation */
+.img-hover-zoom--brightness:hover {
+  filter: brightness(100%);
+}
+
+
+.figure{
+  overflow:hidden;
+  transition: all 1s ease-in-out;
+  width:100%;
+  height : 100%;
+}
+
+.figure> img{
+	  width:100%;
+  height : 100%;
+}
+  
+
+.figure:hover{
+  overflow:hidden;
+  -webkit-animation: switch 5s infinite; /* Chrome, Safari, Opera */ 
+    animation: switch 5s infinite;
+   	visibility: visible;
+}
+
+@keyframes switch {
+  background-image: url('http://placeskull.com/200/300/158409/13');
+}
+
+#infinityScroll{
+	margin: 0 20px;
+}
+
+
+/*--------- 선택한 테마의 스케치북 조회-------------------  */
+.single-sketch-img {
+	
 }
 
 .selectTheme:hover .sketchTheme_hover {
@@ -42,4 +117,3 @@
 }
 
 /*--------- 선택한 테마의 스케치북 조회-------------------  */
-

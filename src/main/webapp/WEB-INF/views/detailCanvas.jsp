@@ -34,6 +34,8 @@
 
 <!-- 자유 캔버스 레이아웃  -->
 <link rel="stylesheet" href="css/freeCanvasLayout.css">
+<!-- font awesome -->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 
 <style type="text/css">
 .insertForms{	
@@ -49,12 +51,12 @@
 	font-size:20px;
 	width:430px; 
 	height:35px; 
-	border:2px solid yellow;
-	border-radius: 5px;
-	background: linear-gradient( to right, yellow 2% ,white 4%);
+	border:1px solid #e3e6f0;
+	border-radius: 4px;
+	background: linear-gradient(to right ,yellow 1%, white 1%);
 	padding-left: 20px;
-	box-shadow: 2px 2px 2px 2px gray;	
-	margin-bottom: 5px;
+	box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,59,.15)!important;
+	margin-bottom: 0px;
 }
 
 
@@ -68,25 +70,26 @@
          <!-- 메인 컨텐츠   -->
          <div class="lpcontents">
             <div class="content">
-               <input type="button" id="downloadExcel">
-                <a href="./canvasDownloadExcel.do">엑셀 다운로드</a>        
-               <div id="custom-menu"></div>
-               <div id="mybook" style="border: 1px solid black;">                 
+             <input type="button" id="downloadExcel"  class="far fa-edit" style="width:64px; height:64px; border: none; background: url('./img/canvas/excelIcon.png')"  title="Excel로 다운로드">               
+               <div style="margin-bottom: -15px;">이곳은 스케치북 제목을 적어봅시다.</div>
+               <div><hr></div>
+               <div id="custom-menu"></div>              
+               <div id="mybook" style="border: 1px solid black;">         
                   <div>마지막페이지 입니다.</div>
                   <div>마지막페이지 입니다.</div>                 
                </div>
                <c:choose>
-               <c:when test="${user.user_email eq sketch_email}">
-               	<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">페이지 입력</button>
-               	<input type="button" class="btn btn-info btn-lg" id="pageUpdate" value="페이지 수정"></input>
-               	<input type="button" class="btn btn-info btn-lg" id="pageDelete" value="페이지 삭제"></input>
-               </c:when>
-               <c:otherwise>
-	                <div style="float: right; margin-right: 10px; ">
-					 <a href="#" onclick="like('${user.user_email}','${sketch_id}')"><img id="likeState" alt="likeEmpty" src="./img/LikeBefore.png"></a>				 		
-					 <a href="#" onclick="scrape('${user.user_email}','${sketch_id}')"> <img id="scrapState" alt="scrape" src="./img/scrape.png"> </a>
-		 		   </div>	
-	 		   </c:otherwise>
+               <c:when test="${ldto.user_email eq sketch_email}">                
+               	<button data-toggle="modal" data-target="#myModal" style="width:64px; height:64px; border: none; background: url('./img/canvas/addPage.png')" title="페이지 추가"></button>
+               	<input type="button" style="width:64px; height:64px; border: none; background: url('./img/canvas/editPage.png')" id="pageUpdate" title="페이지 수정"></input>
+                 <input type="button" style="width:64px; height:64px; border: none; background: url('./img/canvas/removePage.png')" id="pageDelete" title="페이지 삭제"></input>
+               </c:when>      
+                <c:otherwise>          	   
+	                 <div style="float: right; margin-right: 10px; ">
+					 <a href="#" onclick="like('${ldto.user_email}','${sketch_id}')"><img id="likeState" alt="likeEmpty" src="./img/LikeBefore.png" title="좋아요"></a>				 		
+					<a href="#" onclick="scrape('${ldto.user_email}','${sketch_id}')"> <img id="scrapState" alt="scrape" src="./img/scrape.png" title="스크랩"> </a>
+		 		  	 </div>	
+	 		    </c:otherwise>       
                
                </c:choose>
                
@@ -140,7 +143,10 @@
  	  			  $('#nowPageNo').val(data.index/2+1); 	  			
  	  		    },
  	  		    menu: '#custom-menu',
- 	  		    pageSelector: true
+ 	  		    pageSelector: true,
+ 	  			tabs:  true,
+ 	 	        tabWidth:  180,
+ 	 	        tabHeight:  20
  	    });				 
 		// 캔버스 클릭시
 		$(".insertForms").click(function(){
@@ -157,7 +163,9 @@
 		});		
 		// 엑셀로 다운로드
 		$("#downloadExcel").click(function() {
-			alert("엑셀다운~");
+		    if(confirm("해당 스케치북의 일정 페이지를 \nExcel파일로 받으시겠습니까?")){
+				location.href="./canvasDownloadExcel.do";				
+			}
 		});
 		// 수정 버튼 클릭시
 		$("#pageUpdate").click(function() {
@@ -507,7 +515,12 @@
 	});		
 	//--------------- 좋아요 등록 및 취소---------------------
 	function like(user,id){		
-		LpLike(user,id);
+	    if(user == ""){
+			alert("로그인 후 사용가능합니다.");
+		}
+		else{
+			LpLike(user,id);
+		}
 	}
 
 	var LpLike = function(user,id){
@@ -531,8 +544,12 @@
 	
 	//---------------------- 스크랩 등록 및 수정 --------------------
 	function scrape(user,id) {
-		//alert("스크랩");
-		LpScrape(user,id);		
+	    if(user == ""){
+			alert("로그인 후 사용가능합니다.");
+		}
+		else{
+			LpScrape(user,id);		
+		}		
 	}
 
 	var LpScrape = function(user,id){
