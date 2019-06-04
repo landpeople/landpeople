@@ -35,7 +35,7 @@
 Custom styles for this template -->
 <link href="./css/theme/sb-admin-booklet.css" rel="stylesheet">
 <link href="./css/theme/lp-template.css" rel="stylesheet">
-<link href="./css/sketch/modal.css" rel="stylesheet"> -->
+<link href="./css/sketch/modal.css" rel="stylesheet">
 
 <!-- 자유 캔버스 레이아웃  -->
 <link rel="stylesheet" href="css/freeCanvasLayout.css">

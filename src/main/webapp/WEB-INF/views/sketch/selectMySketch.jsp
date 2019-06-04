@@ -63,25 +63,28 @@
             <div class="lp-container">
                <div class="lp-content shadow-lg">
                   <div class="lp-content-sketch">
-                  		<div class="lp-content-header">
-                  			<h1 class="h2 mb-4 text-gray-800 lp-content-title">My Sketchbook</h1>
-                  			<input class="btn btn-danger mb-4 lp-sketch-del " type="submit" value="Delete selected">
-	                  	</div>
 	                  	<form action="#" method="post" id="sketchDel" name="sketchDel" onsubmit="return DelchkBox()">
+    	              		<div class="lp-content-header">
+        	          			<h1 class="h2 mb-4 text-gray-800 lp-content-title">My Sketchbook</h1>
+            	      			<input class="btn btn-danger mb-4 lp-sketch-del " type="submit" value="Delete selected">
+		                  	</div>
                      		<div class="sketchBookContent">
 								<c:forEach var="item" items="${mySketchBookLists}">
 										<c:choose>
 											<c:when test="${item.sketch_block eq 'T'}">
 						                         <div class="single-sketchbook">
-						                                 <div class="single-sketch-img">
-                                                               <div class="figure" onclick="goCanvas('${item.sketch_id}')">
-                                                                  <img class="test" alt="" src="${item.sketch_spath}">
-                                                               </div>
-															   <div style="color:red" ><i class="fas fa-heart"></i>${sketchLike[item.sketch_id]}</div>
-															   <div> [ ${item.sketch_theme} ] ${item.sketch_title}</div>
+						                              <div class="single-sketch-img">
+                                                           <div class="figure" onclick="goCanvas('${item.sketch_id}')">
+                                                               <img class="test" alt="" src="${item.sketch_spath}">
+                                                           </div>
+														   <div style="color:red" ><i class="fas fa-heart"></i>${sketchLike[item.sketch_id]}</div>
+														   <div> [ ${item.sketch_theme} ] ${item.sketch_title}</div>
 						                                 </div>
 						                              <div class="single-title">
-                                                         <label><input type="checkbox" name="chkVal" value="${item.sketch_id}"></label>
+                                                         <div class="field">
+	                                                    	 <input class="is-checkradio is-info is-circle" id="chk+${item.sketch_id}"  value="${item.sketch_id}" type="checkbox" name="chkVal">
+	                                                     	<label for="chk+${item.sketch_id}"></label>
+	                                                  	 </div>
 						                                  	<h5>관리자에 의해 삭제되었습니다.</h5>
 						                                 	<label>${item.sketch_title}</label>
 							                                <label>
@@ -100,20 +103,10 @@
                                                         </div>
                                                    </div>
 												   <div class="sigle-title">
-                                       
-                                       
-                                       
-                                       
-                                       
-                                                    <div class="field">
-                                                     <input class="is-checkradio is-info is-circle" id="exampleCheckboxInfoCircle" type="checkbox" name="exampleCheckboxInfoCircle" checked="checked">
-                                                     <label for="exampleCheckboxInfoCircle"></label>
-                                                   </div>
-                                                   
-                                                   
-                                                   
-                                                   
-                                                      <label><input type="checkbox" name="chkVal" value="${item.sketch_id}"></label>
+	                                                   <div class="field">
+	                                                     <input class="is-checkradio is-info is-circle" id="chk+${item.sketch_id}"  value="${item.sketch_id}" type="checkbox" name="chkVal">
+	                                                     <label for="chk+${item.sketch_id}"></label>
+	                                                   </div>
                                                       <div>[ ${item.sketch_theme} ]</div>
                                                       <div>${item.sketch_title}</div>
                                                       <div onclick="return sketchBookModify('${item.sketch_id}')"><i class="fas fa-pen-square"></i></div>
@@ -129,22 +122,6 @@
                      <c:if test="${fn:length(mySketchBookLists) eq '9'}">
 		                  <button id="infinityScroll">View more</button>
                      </c:if>
-                   
-
-                  <!-- 스케치북 수정 Modal -->
-                  <div class="modal fade" id="sketchModiForm" role="dialog">
-                     <div class="modal-dialog">
-                        <div class="modal-content">
-                           <div class="modal-header">
-                              <h4 class="modal-title">Edit sketchbook</h4>
-                              <button type="button" class="close" data-dismiss="modal">&times;</button>
-                           </div>
-                           <div class="modal-body">
-                              <form action="#" role="form" method="post" id="modiSketchBook"></form>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
                   <!-- 여기까지 스케치북 수정 Modal -->
                </div><!-- 스케치북 정렬을 위한 lp-content-sketch -->
                </div>
@@ -156,6 +133,21 @@
       </div>
    </div>
 </body>
+
+<!-- 스케치북 수정 Modal -->
+<div class="modal fade" id="sketchModiForm" role="dialog">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h4 class="modal-title">Edit sketchbook</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+         </div>
+         <div class="modal-body">
+            <form action="#" role="form" method="post" id="modiSketchBook"></form>
+         </div>
+      </div>
+   </div>
+</div>
 
 <script type="text/javascript">
 var pageCnt = <%=pagingDto.getNowPageNo()%>

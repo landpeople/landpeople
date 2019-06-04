@@ -53,7 +53,7 @@
 <!-- 여기까지 스케치북 생성 Modal -->
 
     <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog" style="z-index:4000000">
+  <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
     
       <!-- Modal content-->
