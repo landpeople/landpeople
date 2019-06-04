@@ -9,7 +9,8 @@
 }
 
 .lp-content-header {
-	width: 100%; display : flex;
+	width: 100%;
+	display: flex;
 	justify-content: space-between;
 	display: flex;
 }
@@ -37,14 +38,13 @@
 	height: 100%;
 	display: flex;
 	flex-direction: column;
-	border-radius: 0.4rem;
 }
 
 /* 스케치북 1개 감싸는 div */
 /* 스케치북 이미지 */
 .single-sketch-img {
 	width: 100%;
-	height: 90%;
+	height: 80%;
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
@@ -54,56 +54,53 @@
 	justify-content: center;
 }
 
-/* 스케치북 설명 */
-.single-sketch-desc {
-	background-color:#eceff7;
+.sigle-box{
+	width:100%;
+	height:100%;
+}
+.sketch-img {
 	width: 100%;
-	height: 10%;
+	height:100%;
+	background-color: rgba(0,0,0, 0.4);
+}
+
+
+/* 스케치북 설명 */
+.sigle-title {
+	width: 100%;
+	height: 20%;
 	display: flex;
 	justify-content: space-around;
+	box-sizing: border-box;
+	padding:5px;
+	align-items: center;
+}
+
+.check-box{
+display: inline-block;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 0;
+    top: 0;
+    margin-left: -20px;
+    padding-left: 3px;
+    padding-top: 1px;
+    font-size: 11px;
+    color: #555555;
+}	
 }
 
 /* img hover시 효과*/
 /* Colorize-zoom Container */
 .img-hover-zoom--brightness {
-  transition: filter 0.1s ease-in-out;
-  filter: brightness(50%);
+	transition: filter 0.1s ease-in-out;
+	filter: brightness(50%);
 }
 
-/* The Transformation */
-.img-hover-zoom--brightness:hover {
-  filter: brightness(100%);
-}
-
-
-.figure{
-  overflow:hidden;
-  transition: all 1s ease-in-out;
-  width:100%;
-  height : 100%;
-}
-
-.figure> img{
-	  width:100%;
-  height : 100%;
-}
-  
-
-.figure:hover{
-  overflow:hidden;
-  -webkit-animation: switch 5s infinite; /* Chrome, Safari, Opera */ 
-    animation: switch 5s infinite;
-   	visibility: visible;
-}
-
-@keyframes switch {
-  background-image: url('http://placeskull.com/200/300/158409/13');
-}
-
-#infinityScroll{
+#infinityScroll {
 	margin: 0 20px;
 }
-
 
 /*--------- 선택한 테마의 스케치북 조회-------------------  */
 .single-sketch-img {
