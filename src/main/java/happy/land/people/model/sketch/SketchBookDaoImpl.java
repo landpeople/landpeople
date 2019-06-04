@@ -184,6 +184,12 @@ public class SketchBookDaoImpl implements ISketchBookDao {
 		return sqlsession.selectOne(NS+"nickname_Select", sketch_id);
 	}
 
+	@Override
+	public String sketchemailSelect(String sketch_id) {
+		System.out.println("스케치북 작성자 email 조회="+sketch_id);
+		return sqlsession.selectOne(NS+"sketchemail_Select", sketch_id);
+	}
+
 	
 
 

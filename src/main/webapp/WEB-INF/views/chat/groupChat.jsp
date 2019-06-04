@@ -62,7 +62,7 @@
           $(".chat_div").show();
           $(".chat").focus(); /* 텍스트 박스에 focus를 주어 입력할 수 있는 상태로 만들어 줌 */
           
-          ws = new WebSocket("ws://<%=request.getRemoteAddr()%>:8091/LandPeople/wsChat.do");
+          ws = new WebSocket("ws://<%=request.getRemoteAddr()%>:8092/LandPeople/wsChat.do");
           
           ws.onopen = function() {
           	alert("● groupChat.jsp ws.onopen / 소켓이 열렸습니다.");

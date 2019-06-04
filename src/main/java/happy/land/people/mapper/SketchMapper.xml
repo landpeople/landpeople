@@ -148,6 +148,9 @@
 			WHERE LPSKETCHBOOK.USER_EMAIL = LPUSER.USER_EMAIL AND SKETCH_ID=#{sketch_id}
 	</select>
 	
-	
+	<!-- 스케치북 작성자 id 조회(접속한 유저가 작성자인지 아닌지 판단하기 위함 ) -->
+	<select id="sketchemail_Select" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT USER_EMAIL FROM LPSKETCHBOOK 	WHERE SKETCH_ID=#{sketch_id}
+	</select>
 
 </mapper>

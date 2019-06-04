@@ -49,18 +49,17 @@ public class CanvasController {
 	    public String detailDaysCanvas(HttpSession session, HttpServletRequest request,String sketch_id) throws IOException{
 	    	// 스케치북 id에 따른 캔버스의 개수
 	    	if(sketch_id == null || sketch_id == "")
-	    		sketch_id = "1";
+	    		return "err/404Error";
 	    	int canvasCnt = canvasService.canvasCnt(sketch_id);
 	    	// 스케치북 id에 따른 일정 캔버스, 
 	    	
 	    	//스케치북 번호를 세션에 추가
 	    	session.setAttribute("sketch_id", sketch_id);
-	    	//접속한 유저의 정보(나중에 로그인 다 구현되면 바꿀것)
-	    	//LPUserDto userDto = new LPUserDto();
-	    	//userDto.setUser_email("kim@kim.com");
-	    	//session.setAttribute("user", userDto);
+	    	//접속한 유저의 정보(나중에 로그인 다 구현되면 바꿀것)	    	
+	    	//스케치북 작성자 email 가져오기
+	    	String sketch_email  = iSketchBookService.sketchemailSelect(sketch_id);	    	
 	    	//스케치북 작성자의 정보(나중에 스케치북 연동 끝나면 바꿀것)
-	    	session.setAttribute("sketch_email", "kim@kim.com");
+	    	session.setAttribute("sketch_email", sketch_email);
 	    	
 	    	System.out.println("해당 스케치북의 캔버스 개수:"+canvasCnt);
 	    	

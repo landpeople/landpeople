@@ -6,8 +6,8 @@
 
 <!-- 회원가입 일반 -->
 <insert id="user_signUp" parameterType="UserDto">
-	INSERT INTO LPUSER (USER_EMAIL, USER_PASSWORD, USER_NICKNAME,USER_AUTH, USER_EMAILCHK, USER_EMAILKEY, USER_ISWRITE) 
-	SELECT #{user_email}, #{user_password}, #{user_nickname}, 'U', 'N' , '' ,'' FROM DUAL WHERE NOT EXISTS(SELECT * FROM LPUSER WHERE USER_EMAIL=#{user_email})
+	INSERT INTO LPUSER (USER_EMAIL, USER_PASSWORD, USER_NICKNAME,USER_AUTH, USER_EMAILCHK, USER_EMAILKEY) 
+	SELECT #{user_email}, #{user_password}, #{user_nickname}, 'U', 'N' , ''  FROM DUAL WHERE NOT EXISTS(SELECT * FROM LPUSER WHERE USER_EMAIL=#{user_email})
 </insert>
 
 <!-- 회원가입 (네이버) -->
@@ -82,10 +82,10 @@ UPDATE LPUSER SET USER_DELFLAG = 'T' WHERE USER_EMAIL = #{user_email}
 	UPDATE LPUSER SET USER_EMAILCHK = 'Y' WHERE  USER_EMAIL = #{user_email}
 </update>
 
-<!-- 이메일로 온 비밀번호 수정 -->
-<update id="user_modifyEmailPassword">
+ <!-- 이메일로 온 비밀번호 수정 -->
+<!-- <update id="user_modifyEmailPassword">
 	UPDATE LPUSER SET USER_PASSWORD = #{user_password} WHERE USER_EMAIL = #{user_email}
-</update>
+</update> -->
 
 
 
