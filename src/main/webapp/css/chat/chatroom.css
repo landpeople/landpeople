@@ -7,9 +7,27 @@ body {
 	font-family: 'Jeju Gothic', sans-serif;
 }
 
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+	background-color: #000000;
+}
+
 table {
 	border: 1px solid #B4B4B4;
-	border-collapse: collapse;
+/* 	border-collapse: collapse; */
+	border-radius: 15px;
 }
 
 .message_area { /* 메시지 전송창 전체 div*/
@@ -18,7 +36,7 @@ table {
 	height: 400px;
 	overflow: auto;
 	overflow-x: hidden;
-	background: #F3F3F3;
+	background: #656f78;
 }
 
 .noticeTxt {
@@ -31,7 +49,7 @@ table {
 	padding-bottom: 5px;
 	padding-left: 20px;
 	padding-right: 20px;
-	background: white;
+	background: #c0c0c0;
 	border-radius: 3px;
 }
 
@@ -46,6 +64,7 @@ table {
 	font-size: 12px;
 	text-align: justify;
 	border-radius: 25px;
+	color: black;
 }
 
 .sender_img { /* 본인 메시지 css */
@@ -92,13 +111,29 @@ table {
 }
 
 .chat_btn {
-	margin-top: 0px;
-	margin-left: 5px;
-	width: 52px;
-	height: 31px;
+	margin: 0px;
+	width: 60px;
+	height: 60px;
+	padding: 0px;
+	border: 0px;
+	background-color: #495057;
 	background-image: url('images/btn_send.png');
 	background-size: 100% 100%;
 	display: inline-block;
+	cursor: pointer;
+}
+
+.file_btn{
+	margin: 0px;
+	width: 60px;
+	height: 60px;
+	padding: 0px;
+	border: 0px;
+	background-color: #495057;
+	background-image: url('images/btn_send.png');
+	background-size: 100% 100%;
+	display: inline-block;
+	cursor: pointer;
 }
 
 .memListBox {
@@ -140,11 +175,56 @@ table {
 }
 
 .chat_div {
-	background-color: #495057;
 	border:0;
 	border-radius: 15px;
 	color:white;
+	width: 513px;
 	height: 60px;
 	overflow-y: auto;
 	opacity: 1;
+	margin-top: 0px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	box-sizing: inherit;
+}
+
+.fa-paper-plane, .fa-file-image{
+	color: white;
+}
+
+#allContent{
+	background-color: #656f78;
+	box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15);
+}
+
+#txtarea{
+	width: 342px;
+	height: 60px;
+	margin: 0px;
+	border-right: 1px solid #808080;
+	border-left: 1px solid #808080;
+	border-top: 0px;
+	border-bottom: 0px;
+	padding: 0px;
+	padding-left: 8px;
+	background-color: #495057;
+	color: white;
+}
+
+#fileForm{
+	border-radius: 15px 0px 0px 15px;
+}
+
+#message_btn{
+	border-radius: 0px 15px 15px 0px;
+}
+
+#fileForm{
+	display:flex;
+	justify-content: center;
+	align-items: center;	
+	vertical-align: middle;
 }

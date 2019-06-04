@@ -4,7 +4,7 @@
 <ul class="navbar-nav bg-gradient-lp-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
    <!-- Sidebar - Brand -->
-   <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+   <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.jsp">
       <div class="sidebar-brand-icon rotate-n-15">
          <img class="lp-icon" src="./img/logo.png">
       </div>
@@ -23,7 +23,7 @@
       </a>
    </c:if>
 
-   <li class="nav-item active"><a class="nav-link" href="index.html">
+   <li class="nav-item active"><a class="nav-link" href="./sketchBookTheme.do">
          <i class="fas fa-th-large"></i> <span>All travel schedule</span>
       </a></li>
 
@@ -43,9 +43,9 @@
             <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                <div class="bg-white py-2 collapse-inner rounded">
                   <h6 class="collapse-header">Components</h6>
-                  <a class="collapse-item" href="buttons.html">Members list</a>
-                  <a class="collapse-item" href="cards.html">Member sketchbook list</a>
-                  <a class="collapse-item" href="utilities-animation.html">Admin chatRoom</a>
+                  <a class="collapse-item" href="./jqgrid.do">Members list</a>
+                  <a class="collapse-item" href="./jqgrid2.do">Member sketchbook list</a>
+                  <a class="collapse-item" href="./selectChatList.do">Admin chatroom</a>
                </div>
             </div></li>
       </c:when>
@@ -61,7 +61,7 @@
                   <a class="collapse-item" href="#" onclick="sketchSelectMine()">My sketchbook</a>
                   <a class="collapse-item" href="#" onclick="goScrapMine()">My scrapbook</a>
                   <input type="hidden" id="user_email" value="${ldto.user_email}">
-                  <a class="collapse-item" href="utilities-animation.html">My chatroom</a>
+                  <a class="collapse-item" href="./selectChatList.do">My chatroom</a>
                </div>
             </div></li>
          <!-- Nav Item - Utilities Collapse Menu -->

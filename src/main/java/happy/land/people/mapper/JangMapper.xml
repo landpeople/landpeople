@@ -59,7 +59,6 @@
 		                         , SKETCH_TITLE
 		                         , SKETCH_THEME
 		                         , SKETCH_SHARE
-		                         , SKETCH_DELFLAG
 		                         , SKETCH_BLOCK
 		                      FROM LPSKETCHBOOK lps, LPUSER lpu
  							  WHERE lps.USER_EMAIL = lpu.USER_EMAIL

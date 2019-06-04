@@ -129,6 +129,21 @@
 	overflow: auto;
 }
 
+/* canvaspage content flex레이아웃 적용을 제외하기 위함*/
+.lp-other-content {
+/* 	display: flex; */
+	justify-content: center;
+	min-width: 1000px;
+	width: 1000px;
+	height: 840px;
+	background: white;
+	box-sizing: border-box;
+	padding: 20px;
+	border-radius: 0.4rem !important;
+	overflow: auto;
+}
+
+
 /* index 페이지 그리드 레이아웃*/
 .lp-grid-container {
 	width: 100%;

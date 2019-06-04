@@ -52,8 +52,35 @@
 </div>
 <!-- 여기까지 스케치북 생성 Modal -->
 
+    <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog" style="z-index:4000000">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content" style="width:1000px; height:800px;">
+        <div class="modal-header">          
+          <h4 class="modal-title" style="text-align: center;">페이지 입력</h4>
+        </div>
+        <div class="modal-body" style="padding: 30px 30px 30px 30px;">
+          <p><img src="./img/days.jpg" class="insertForms" title="1번스타일"></img>
+             <img src="./img/free2.png" class="insertForms" title="2번스타일"></img>
+             <img src="./img/free2.png" class="insertForms" title="3번스타일"></img><br>
+             <img src="./img/free3.png" class="insertForms" title="4번스타일"></img>
+             <img src="./img/free4.png" class="insertForms" title="5번스타일"></img>
+             <img src="./img/free5.png" class="insertForms" title="6번스타일"></img>
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal" id="closeModal">Close</button>
+          <button type="button" class="btn btn-default" id="canvasInsertFrom">ok</button>
+        </div>
+      </div>
+   </div>
+ </div>
+
+
 <!-- Bootstrap core JavaScript-->
-<script src="./js/theme/jquery.min.js"></script>
+<!-- <script src="./js/theme/jquery.min.js"></script> --><!-- 이거하면 다른데서 안 먹음 -->
 <script src="./js/theme/bootstrap.bundle.min.js"></script>
 
 <!-- Core plugin JavaScript-->
@@ -68,9 +95,9 @@
 <script type="text/javascript">
     var pathname = window.location.pathname;
 
-    // 	alert(window.location.pathname );
+    //   alert(window.location.pathname );
     if (pathname == '/LandPeople/lee.do') {
-	var title = 'All themes';
-	$('#lp-header-title').text(title);
+   var title = 'All themes';
+   $('#lp-header-title').text(title);
     }
 </script>

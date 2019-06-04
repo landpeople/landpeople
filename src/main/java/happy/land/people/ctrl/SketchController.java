@@ -52,7 +52,6 @@ public class SketchController {
 		
 		Map<String, String> map = new HashMap<String, String>();
 		
-		
 		String user_iswrite = iSketchBookService.sketchSelectWrite(user_email);
 	
 		map.put("user_email", user_email);

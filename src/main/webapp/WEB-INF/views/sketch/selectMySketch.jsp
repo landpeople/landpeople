@@ -43,9 +43,9 @@
 <link href="./css/theme/checkradio.min.css" rel="stylesheet">
 
 </head>
-<script type="text/javascript">
 
-</script>
+<script src="./js/theme/jquery.min.js"></script>
+
 <body id="page-top" class="scroll">
 
    <!-- Page Wrapper -->

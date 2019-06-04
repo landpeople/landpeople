@@ -38,6 +38,8 @@
 <link href="./css/theme/lp-template.css" rel="stylesheet">
 <link href="./css/sketch/modal.css" rel="stylesheet">
 
+<script src="./js/theme/jquery.min.js"></script>
+
 </head>
 <body id="page-top" class="scroll">
 

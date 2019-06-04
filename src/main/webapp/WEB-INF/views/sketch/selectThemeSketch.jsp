@@ -43,6 +43,8 @@
 <link rel="stylesheet" href="./css/sketch/sketch.css">
 <link href="./css/sketch/modal.css" rel="stylesheet">
 
+<script src="./js/theme/jquery.min.js"></script>
+
 </head>
 <body id="page-top" class="scroll">
 

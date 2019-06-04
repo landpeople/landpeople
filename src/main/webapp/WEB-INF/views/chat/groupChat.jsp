@@ -62,7 +62,7 @@
           $(".chat_div").show();
           $(".chat").focus(); /* 텍스트 박스에 focus를 주어 입력할 수 있는 상태로 만들어 줌 */
           
-          ws = new WebSocket("ws://<%=request.getRemoteAddr()%>:8092/LandPeople/wsChat.do");
+          ws = new WebSocket("ws://<%=request.getRemoteAddr()%>:8091/LandPeople/wsChat.do");
           
           ws.onopen = function() {
           	alert("● groupChat.jsp ws.onopen / 소켓이 열렸습니다.");
@@ -213,14 +213,26 @@
 		    }
 		});
     }
+    
+    $(".file_btn").click(function() {
+//     	$("#file").click(function() {
+			
+// 		});
+
+alert("클랙!");
+    });
 
 </script>
 </head>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+<!-- <link href="./css/theme/sb-admin-2.css" rel="stylesheet"> -->
+<!-- <link href="./css/theme/lp-template.css" rel="stylesheet"> -->
 <link rel="stylesheet" href="./css/chat/chatroom.css">
 <body>
+<div id="allContent">
 	<table id="content">
 		<tr>
-			<td width="360x" height="390px" align="center">
+			<td width="360px" height="390px" align="center">
 				<div class="message_area" style="border: 1px">
 					<input type="text" id="nickName" value=<%=user%> />
 				</div>
@@ -232,24 +244,28 @@
 		</tr>
 	</table>
 
-	<div class="chat_div" style="display: none; margin-top: 10px; display:flex;" >
-		<span>
-			<form id="fileForm" style="display:inline-block;"><label for="file"><button><img alt="" src="./img/sendMessage.png"></button></label>
-			<input id="file" type="file" name="file" accept="image/*" style="display: none;"> </form>
-		</span>	
-		<span style="">
-			<input type="text" id="txtarea" class="chat" onKeypress="if(event.keyCode==13) $('.chat_btn').click();" />
-		</span>
-		<span>	
-			<button class="chat_btn" value="전송"><img alt="" src="./img/sendMessage.png"></button>
-		</span>
-<!-- 			<input type="button" class="exit_btn" value="나가기" /> -->
-<!-- 			<input type="image" id="destination" /> -->
+	<div class="chat_div">
+			<div>
+				<form id="fileForm" class="file_btn">
+					<i class="far fa-file-image fa-2x" onclick="$('#file').click();"></i>
+					<input id="file" type="file" name="file" accept="image/*" style="display: none;"> 
+				</form>
+			</div>
+			<div>
+				<input type="text" id="txtarea" class="chat" onKeypress="if(event.keyCode==13) $('.chat_btn').click();" />
+			</div>
+			<div>
+				<button id="message_btn" class="chat_btn" value="전송"><i class="far fa-paper-plane fa-2x"></i></button>
+			</div>
+<!-- 				<input type="button" class="exit_btn" value="나가기" /> -->
+<!-- 				<input type="image" id="destination" /> -->
 	</div>
 	그룹아이디 :
 	<%=chr_id%>
 	나의아이디 :
 	<%=user%>
+	
+</div>
 </body>
 <script type="text/javascript">
 document.getElementById("file").onchange = function (){

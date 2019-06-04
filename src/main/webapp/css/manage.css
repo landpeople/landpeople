@@ -4,37 +4,95 @@
 	padding: 30px 60px 30px 60px;
 }
 
+#gview_jqGrid{
+	width: 840px !important;
+	height: 550px;
+}
+
+#selectDiv{
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 30px;
+}
+
+#selectId, #input, #inputBtn{
+ 	border: 0px;
+ 	margin-top: 20px;
+}
+
 #selectId{
-	border: 0px;
 	width: 70px;
 	height: 30px;
-	margin: 20px 10px 20px 0px;
+	border-right: 1px solid #e3e6f0;
+	color: gray;
 }
 
 #input{
-	border: 0px;
 	width: 150px;
 	height: 30px;
-	margin: 20px 10px 20px 10px;
+	padding: 0px;
+	padding-left: 3px;
 }
 
 #inputBtn{
-	border: 0px;
 	width: 60px;
 	height: 30px;
-	margin: 20px 10px 20px 10px;
 }
 
 #memBtn, #sketBtn{
-	background-color: #079df8;
+	background-color: #1764ac;
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(10%, #1764ac),
+		to(#155592));
 	color: white;
 	padding: 0px;
 	margin: 0px;
 	width: 100px;
 	height: 60px;
 	font-size: 11px;
+	border: 1.5px solid #e3e6f0;
+	border-radius: 5px;
 }
 
 #memBtn{
 	margin-right: 20px;
 }
+
+#sketBtn{
+	margin-right: 340px;
+}
+
+#select{
+	width: 100%;
+	text-align: right;
+}
+
+div.center{
+	text-align: center;
+}
+
+ul.pagination{
+	display: inline-block;
+	padding: 0px;
+	margin: 0px;
+}
+
+ul.pagination li{
+	display: inline;
+}
+
+ul.pagination li a{
+	color: black;
+	float: left;
+	padding: 10px 20px;
+	text-decoration: none;
+	border: 1px solid #00ffff;
+	transition: background-color 1s;
+}
+
+ul.pagination li a:active{
+	background-color: #8080ff; 
+	color: white;
+	border: 1px solid skyblue;
+}
+
