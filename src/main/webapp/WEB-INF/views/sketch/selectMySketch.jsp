@@ -73,13 +73,13 @@
 											<c:when test="${item.sketch_block eq 'T'}">
 						                         <div class="single-sketchbook">
 						                                 <div class="single-sketch-img">
-                                                               <div class="figure" onclick="goCanvas(${item.sketch_spath})">
-                                                                  <img alt="" src="url(${item.sketch_spath})">
+                                                               <div class="figure" onclick="goCanvas('${item.sketch_id}')">
+                                                                  <img class="test" alt="" src="${item.sketch_spath}">
                                                                </div>
 															   <div style="color:red" ><i class="fas fa-heart"></i>${sketchLike[item.sketch_id]}</div>
 															   <div> [ ${item.sketch_theme} ] ${item.sketch_title}</div>
 						                                 </div>
-						                              <div class="single-sketch-desc">
+						                              <div class="single-title">
 						                                 <input type="checkbox" name="chkVal" value="${item.sketch_id}">
 						                                  	<h5>관리자에 의해 삭제되었습니다.</h5>
 						                                 	<label>${item.sketch_title}</label>
@@ -93,19 +93,18 @@
 											</c:when>
 											<c:otherwise>
 											    <div class="single-sketchbook">
-					                              <div class="single-sketch-desc">
-					                                 <div><input type="checkbox" name="chkVal" value='${item.sketch_id}'></div>
-														
-						                                <div onclick="return sketchBookModify('${item.sketch_id}')"><i class="fas fa-pen-square"></i>
-						                                </div>
-					                              </div>
 			                                       <div class="single-sketch-img figure">
-                                                               <div class="figure" onclick="goCanvas(${item.sketch_spath})">
-                                                                  <img alt="" src=" url(${item.sketch_spath})">
-                                                               </div>
-																<div class="h5"> [ ${item.sketch_theme} ] ${item.sketch_title}</div>
-																<div style="color:red">${sketchLike[item.sketch_id]} <i class="fas fa-heart"></i></div>
-												   </div>
+                                                        <div class="sigle-box" onclick="goCanvas('${item.sketch_id}')">
+                                                            <img class="sketch-img" alt="" src="${item.sketch_spath}">
+                                                        </div>
+                                                   </div>
+												   <div class="sigle-title">
+                                                      <div><input type="checkbox" name="chkVal" value='${item.sketch_id}'></div>
+                                                      <div>[ ${item.sketch_theme} ]</div>
+                                                      <div>${item.sketch_title}</div>
+                                                      <div onclick="return sketchBookModify('${item.sketch_id}')"><i class="fas fa-pen-square"></i></div>
+                                                      <span class="badge badge-danger badge-counter hover-item">${sketchLike[item.sketch_id]} <i class="fas fa-heart"></i></span>
+                                                   </div>
 					                           </div>
 											</c:otherwise>
 										</c:choose>
