@@ -177,18 +177,18 @@ ${ldto.user_email}
 
 
 
-<div class="bg-gradient-primary">
+<div class="bg-gradient-primary" >
 
-	<div class="container">
+	<div class="container" >
 		<div class="row justify-content-center">
 			<div class="col-xl-5 col-md-5 col-lg-5">
-				<div class="card o-hidden border-0 shadow-lg my-5">
-					<div class="card-body p-0">
+				<div class="card o-hidden border-0 shadow-lg my-5"> 
+					<div class="card-body p-0">  
 						<!-- Nested Row within Card Body -->
 						<!--                <div class="col-lg-7"> -->
-						<div class="p-5">
+						 <div class="p-5">
 							<div class="text-center">
-								<h1 class="h4 text-gray-900 mb-4">My Page!</h1>
+								<h1 class="h4 text-gray-900 mb-4"><strong>My Page!</strong></h1>
 							</div>
 
 							<input type="hidden" value="0" id="emailchkVal"> 
@@ -201,6 +201,10 @@ ${ldto.user_email}
 								</div>
 								
 								<c:if test="${ldto.user_auth eq 'U'}">
+								
+							<div class="text-center">
+								<h1 class="h4 text-gray-900 mb-4">비밀번호 변경</h1>
+							</div>
 								<div class="form-group">
 									<input type="password" name="user_password" id="pw" class="form-control form-control-user" placeholder="Password" maxlength="10">
 								&nbsp;<span id="pwresult">4~10자리의 영문+숫자</span>
@@ -210,6 +214,10 @@ ${ldto.user_email}
 								&nbsp;<span id="pwchk"></span>
 								</div>
 								</c:if>
+								
+								<div class="text-center">
+								<h1 class="h4 text-gray-900 mb-4">닉네임 변경</h1>
+							</div>
 								
 								<div class="form-group">
 									<input type="text" name="user_nickname" id="nickname" class="form-control form-control-user" placeholder="Nick Name" value="${ldto.user_nickname}" maxlength="10">
@@ -223,14 +231,15 @@ ${ldto.user_email}
 							
 							<form class="user" action="./delpage.do" method="get">
 							<div class="form-group">
-								<input type="submit" class="btn btn-primary btn-user btn-block" value="회원탈퇴" style="background-color: #8B0000; border-color: #8B0000;">
+								<input type="submit" class="btn btn-primary btn-user btn-block" value="회원탈퇴" style="background-color: #B40404; border-color: #B40404;">
 								</div>
 							</form>
 							
 						</div>
-					</div>
-					<!--          </div> -->
-				</div>
+					</div> <!--card-body p-0 -->
+				
+				
+				</div> <!--card o-hidden border-0 shadow-lg my-5 -->
 			</div>
 		</div>
 	</div>
