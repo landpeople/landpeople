@@ -1,6 +1,7 @@
 package happy.land.people.ctrl;
 
 import java.io.IOException;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,9 +25,13 @@ import happy.land.people.model.canvas.ILPCanvasService;
 import happy.land.people.model.canvas.ILPDaysService;
 import happy.land.people.model.canvas.ILPMapdataService;
 import happy.land.people.model.canvas.ILPTextService;
+import happy.land.people.model.sketch.ISketchBookService;
 
 @Controller
 public class CanvasController {
+	
+	@Autowired
+	private ISketchBookService iSketchBookService;	
 	
 	@Autowired
 	private ILPMapdataService mapService;
@@ -51,9 +56,9 @@ public class CanvasController {
 	    	//스케치북 번호를 세션에 추가
 	    	session.setAttribute("sketch_id", sketch_id);
 	    	//접속한 유저의 정보(나중에 로그인 다 구현되면 바꿀것)
-	    	LPUserDto userDto = new LPUserDto();
-	    	userDto.setUser_email("kim@kim.com");
-	    	session.setAttribute("user", userDto);
+	    	//LPUserDto userDto = new LPUserDto();
+	    	//userDto.setUser_email("kim@kim.com");
+	    	//session.setAttribute("user", userDto);
 	    	//스케치북 작성자의 정보(나중에 스케치북 연동 끝나면 바꿀것)
 	    	session.setAttribute("sketch_email", "kim@kim.com");
 	    	

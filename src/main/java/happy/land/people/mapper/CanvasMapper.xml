@@ -19,7 +19,7 @@
 	
 	<!-- 캔버스 생성 -->
 	<insert id="canvas_Insert" parameterType="happy.land.people.dto.LPCanvasDto">
-		INSERT INTO LPCANVAS VALUES(LPCANVAS_SEQ.NEXTVAL,#{sketch_id},#{can_title}, #{can_content} , #{can_type} ,#{can_pageno})
+		INSERT INTO LPCANVAS VALUES(LPCANVAS_SEQ.NEXTVAL,#{sketch_id},#{can_title}, #{can_type} ,#{can_pageno})
 	</insert>
 	
 	<!-- 생성된 캔버스의 id값 찾기 -->

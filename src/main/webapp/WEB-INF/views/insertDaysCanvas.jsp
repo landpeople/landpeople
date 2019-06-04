@@ -30,22 +30,23 @@
          <!-- 메인 컨텐츠   -->
          <div class="lpcontents">
             <div class="content">
+               <a href='./detailCanvas.do?sketch_id=${sketch_id}'>뒤로가기</a>
                <div id="mybook" style="border: 1px solid black;">
                   <div id="page3" style="width: 470px; height: 630px; overflow: auto;">
                      페이지 제목:
                      <input type="text" id="pageTitle" value="1일차">
                   </div>
                   <div>
-                     <!-- <a href="./loadMap.do">아아아</a> -->
-                     <button onclick="showFood()">음식점</button>
-                     <button onclick="showTrip()">관광지</button>
-                     <button onclick="showRest()">숙소</button>
-                     <input type="text" id="searchKeyword">
-                     <button onclick="searchKeyword()">검색</button>
+                     <!-- <a href="./loadMap.do">지도정보가져오기</a>  -->               
+                     <input type="button" onclick="showTrip()" style="margin-right: 5px; width:34px; height:34px; border: 1px solid black; background: url('./img/canvas/tour.png')" title="관광지">
+                     <input type="button" onclick="showFood()" style="margin-right: 5px; width:34px; height:34px; border: 1px solid black; background: url('./img/canvas/restaurant.png')" title="음식점">
+                     <input type="button" onclick="showRest()" style="margin-right: 5px; width:34px; height:34px; border: 1px solid black; background: url('./img/canvas/rest.png')" title="숙소">
+                     <input type="button" onclick="searchKeyword()" style="float:right; width:34px; height:34px; border: 1px solid black; background: url('./img/manager/search.png')" title="검색">
+                     <input type="text" id="searchKeyword" style="float:right; margin-right: 10px;">
                      <div id="map" style="width: 440px; height: 560px;"></div>                    
                   </div>
                </div>
-                <input id="insertCanvas" type="button" value="저장 완료"/>
+               <input id="insertCanvas" type="button" style="width:64px; height:64px; border: none; background: url('./img/canvas/check.png')" title="저장 완료"/>
             </div>
          </div>
          <!-- </div> 여기까지 메인 컨텐츠  -->
@@ -73,8 +74,8 @@
 		//다음 맵 세팅
 		var container = document.getElementById('map');
 		var options = {
-		    center : new daum.maps.LatLng(33.450701, 126.570667),
-		    level : 3,
+			center : new daum.maps.LatLng(33.48888971585, 126.4982271088),
+			level : 7,
 		    disableDoubleClickZoom : true
 		};
 		var map = new daum.maps.Map(container, options);		
@@ -600,7 +601,9 @@
 		}
 	}
 	
-	 
+	$('#searchKeyword').keyup(function(e) {
+		    if (e.keyCode == 13) searchKeyword();        
+	});
  	
 	</script>
 	

@@ -72,9 +72,12 @@
 										<c:choose>
 											<c:when test="${item.sketch_block eq 'T'}">
 						                         <div class="single-sketchbook">
-						                                 <div class="single-sketch-img figure"  style='background-image: url(${item.sketch_spath})'>
-															    <div style="color:red"><i class="fas fa-heart"></i>${sketchLike[item.sketch_id]}</div>
-																<div> [ ${item.sketch_theme} ] ${item.sketch_title}</div>
+						                                 <div class="single-sketch-img">
+                                                               <div class="figure" onclick="goCanvas(${item.sketch_spath})">
+                                                                  <img alt="" src="url(${item.sketch_spath})">
+                                                               </div>
+															   <div style="color:red" ><i class="fas fa-heart"></i>${sketchLike[item.sketch_id]}</div>
+															   <div> [ ${item.sketch_theme} ] ${item.sketch_title}</div>
 						                                 </div>
 						                              <div class="single-sketch-desc">
 						                                 <input type="checkbox" name="chkVal" value="${item.sketch_id}">
@@ -96,7 +99,10 @@
 						                                <div onclick="return sketchBookModify('${item.sketch_id}')"><i class="fas fa-pen-square"></i>
 						                                </div>
 					                              </div>
-			                                       <div class="single-sketch-img figure" style='background-image: url(${item.sketch_spath})'>
+			                                       <div class="single-sketch-img figure">
+                                                               <div class="figure" onclick="goCanvas(${item.sketch_spath})">
+                                                                  <img alt="" src=" url(${item.sketch_spath})">
+                                                               </div>
 																<div class="h5"> [ ${item.sketch_theme} ] ${item.sketch_title}</div>
 																<div style="color:red">${sketchLike[item.sketch_id]} <i class="fas fa-heart"></i></div>
 												   </div>
