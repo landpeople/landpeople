@@ -40,6 +40,7 @@
 <link href="./css/theme/lp-template.css" rel="stylesheet">
 <link href="./css/sketch/sketch.css" rel="stylesheet">
 <link href="./css/sketch/modal.css" rel="stylesheet">
+<link href="./css/theme/checkradio.min.css" rel="stylesheet">
 
 </head>
 <script type="text/javascript">
@@ -80,7 +81,7 @@
 															   <div> [ ${item.sketch_theme} ] ${item.sketch_title}</div>
 						                                 </div>
 						                              <div class="single-title">
-						                                 <input type="checkbox" name="chkVal" value="${item.sketch_id}">
+                                                         <label><input type="checkbox" name="chkVal" value="${item.sketch_id}"></label>
 						                                  	<h5>관리자에 의해 삭제되었습니다.</h5>
 						                                 	<label>${item.sketch_title}</label>
 							                                <label>
@@ -99,7 +100,20 @@
                                                         </div>
                                                    </div>
 												   <div class="sigle-title">
-                                                      <div><input type="checkbox" name="chkVal" value='${item.sketch_id}'></div>
+                                       
+                                       
+                                       
+                                       
+                                       
+                                                    <div class="field">
+                                                     <input class="is-checkradio is-info is-circle" id="exampleCheckboxInfoCircle" type="checkbox" name="exampleCheckboxInfoCircle" checked="checked">
+                                                     <label for="exampleCheckboxInfoCircle"></label>
+                                                   </div>
+                                                   
+                                                   
+                                                   
+                                                   
+                                                      <label><input type="checkbox" name="chkVal" value="${item.sketch_id}"></label>
                                                       <div>[ ${item.sketch_theme} ]</div>
                                                       <div>${item.sketch_title}</div>
                                                       <div onclick="return sketchBookModify('${item.sketch_id}')"><i class="fas fa-pen-square"></i></div>

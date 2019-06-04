@@ -86,40 +86,6 @@
 	box-shadow: 0 0 0 0.2rem rgba(40, 111, 215, 0.5);
 }
 
-
-/*Check box*/
-input[type="checkbox"] + .label-text:before{
-	content: "\f096";
-	font-family: "FontAwesome";
-	speak: none;
-	font-style: normal;
-	font-weight: normal;
-	font-variant: normal;
-	text-transform: none;
-	line-height: 1;
-	-webkit-font-smoothing:antialiased;
-	width: 1em;
-	display: inline-block;
-	margin-right: 5px;
-}
-
-input[type="checkbox"]:checked + .label-text:before{
-	content: "\f14a";
-	color: #2980b9;
-	animation: effect 250ms ease-in;
-}
-
-input[type="checkbox"]:disabled + .label-text{
-	color: #aaa;
-}
-
-input[type="checkbox"]:disabled + .label-text:before{
-	content: "\f0c8";
-	color: #ccc;
-}
-
-
-
 #content-wrapper {
 	flex: 3;
 }
