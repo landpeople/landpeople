@@ -13,7 +13,7 @@
    
    <!-- aspect, pointCut -->
    <aop:config>
-      <aop:pointcut expression="execution(* happy.land.people.model.*Dao*.*(..))" id="daoLogPoint"/>
+      <aop:pointcut expression="execution(* happy.land.people.model.*.*Dao*.*(..))" id="daoLogPoint"/>
    <!-- 실행되는 Class의 Bean을 등록 -->
       <aop:aspect id="logAop" ref="logAop">
       <!-- DAO 실행 전에 -->

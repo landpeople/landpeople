@@ -69,7 +69,7 @@
 
 	<!-- Session config -->
 	<listener>
-		<listener-class>happy.land.people.ctrl.SessionListner</listener-class>
+		<listener-class>happy.land.people.ctrl.SessionListener</listener-class>
 	</listener>
 
 	<!-- Sessiong Time Config -->

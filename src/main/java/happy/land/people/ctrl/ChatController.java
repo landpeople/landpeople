@@ -35,6 +35,7 @@ import org.springframework.web.util.WebUtils;
 
 import happy.land.people.dto.ChatContentDto;
 import happy.land.people.dto.ChatImageFileDto;
+import happy.land.people.dto.LPUserDto;
 import happy.land.people.model.chat.IChatService;
 
 @Controller
@@ -313,5 +314,34 @@ public class ChatController implements ServletConfigAware {
 		}
 
 		return thumbnailRealPath;
+	}
+	
+	// 채팅방 목록 조회
+	@RequestMapping(value="/selectChatList.do")
+	public String selectChatList(Model model, HttpSession session) {
+		logger.info("Controller selectChatList");
+		LPUserDto ldto = (LPUserDto) session.getAttribute("ldto");
+		String id = ldto.getUser_nickname();
+		List<List<Map<String, String>>> lists = chatService.selectChr(id);
+		model.addAttribute("resultLists", lists);
+		return "manager/chatList";
+	}
+	
+	// 채팅방 삭제
+	@RequestMapping(value="/deleteChatroom.do", method=RequestMethod.GET)
+	public String deleteChatroom(HttpSession session, HttpServletRequest request) {
+		logger.info("Controller deleteChatroom");
+		String chrId = (String) request.getParameter("chksVal");
+		String[] chrIds = chrId.split(",");
+		
+		LPUserDto ldto = (LPUserDto) session.getAttribute("ldto");
+		String id = ldto.getUser_nickname();
+		
+//		for (int i = 0; i < chrIds.length; i++) {
+//			iManagerService.deleteChatroom(chrIds[i], id);
+//			System.out.println(chrIds[i]+"번 채팅방 삭제 쿼리 실행!");
+//		}
+		
+		return "forward:/selectChatList.do";
 	}
 }

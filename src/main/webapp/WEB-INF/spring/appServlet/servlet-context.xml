@@ -128,10 +128,8 @@
       </websocket:handshake-interceptors>
    </websocket:handlers>
 
-
-
 <!-- NaverLoginBO Class에 대한 Bean설정 추가 -->
-<bean id="naverLoginBO" class="happy.land.people.naver.NaverLoginBO" />
+<bean id="naverLoginBO" class="happy.land.people.dto.NaverLoginBO" />
 
 <!-- google login -->
  <!-- Google 소셜 로그인 연결 설정 -->
@@ -141,7 +139,6 @@
             value="302749873898-fq7tebgkhe04612h4fm02n6c4hlonrno.apps.googleusercontent.com" />
         <constructor-arg value="S9hUasoYIzVHxozaEYokHHVd" />
     </bean>
- 
  
     <bean id="googleOAuth2Parameters"
         class="org.springframework.social.oauth2.OAuth2Parameters">
@@ -153,9 +150,7 @@
         <constructor-arg
             value="302749873898-fq7tebgkhe04612h4fm02n6c4hlonrno.apps.googleusercontent.com" />
         <constructor-arg value="S9hUasoYIzVHxozaEYokHHVd" />
- 
     </bean>
-	
 </beans>
 
 

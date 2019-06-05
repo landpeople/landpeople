@@ -557,7 +557,4 @@ function goCanvas(sketch_id) {
 	location.href="./detailCanvas.do?sketch_id="+sketch_id;
 }
 </script>
-
-
-</script>
 </html>

@@ -59,4 +59,16 @@ public class ChatServiceImpl implements IChatService {
 		logger.info("● Service chatContent_InsertMsg 실행");
 		return dao.chatContent_InsertMsg(dto);
 	}
+	
+	@Override
+	public List<List<Map<String, String>>> selectChr(String id) {
+		logger.info("ManagerServiceImpl selectChr");	
+		return dao.selectChr(id);
+	}
+
+	@Override
+	public boolean deleteChatroom(String chrId, String id) {
+		logger.info("ManagerServiceImpl deleteChatroom");	
+		return dao.deleteChatroom(chrId, id);
+	}
 }

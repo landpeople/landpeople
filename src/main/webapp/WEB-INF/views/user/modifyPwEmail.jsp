@@ -1,47 +1,58 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<% String user_email =  (String)request.getAttribute("user_email");%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+<link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="./css/theme/sb-admin-2.css" type="image/x-icon">
 
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
-<meta name="author" content="">
+<meta name="author" content="LandPeople">
 
-
-<title>이메일로 비밀번호 찾기 </title>
-
+<title>제주도 여행 일정 공유 커뮤니티 | 육지사람</title>
 
 <!-- Custom fonts for this template-->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
 <link rel="stylesheet" type="text/css" href="./css/sweetalert.css">
+
 <!-- Custom styles for this template-->
-<link href="./css/theme/sb-admin-2.min.css" rel="stylesheet">
+<link href="./css/theme/sb-admin-2.css" rel="stylesheet">
+<link href="./css/theme/lp-template.css" rel="stylesheet">
+<link href="./css/sketch/sketch.css" rel="stylesheet">
+<link href="./css/sketch/modal.css" rel="stylesheet">
+<link href="./css/theme/checkradio.min.css" rel="stylesheet">
+
+</head>
+
 <script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
 
 <script type="text/javascript">
 function pwcheck() {
-	// email 중복 + 유효값
-	var pwchk = document.getElementById("pwchkVal").value;
-	var passchk = document.getElementById("passchkVal").value;
+   // email 중복 + 유효값
+   var pwchk = document.getElementById("pwchkVal").value;
+   var passchk = document.getElementById("passchkVal").value;
 
-	var pw = document.getElementById("pw").value;
-	var passOK = document.getElementById("passOK").value;
+   var pw = document.getElementById("pw").value;
+   var passOK = document.getElementById("passOK").value;
 
-	if(pwchk == "1" && passchk == "1" && pw ==passOK){
-		alert("로그인하고 이용해주세요");
-		return true;
-	}else{
-		alert("비밀번호를 형식에 맞쳐 일치하게 입력해주세요");
-		$("#pw").val("");
-		$("#passOK").val("");
-		$("#pwresult").html("");
-		$("#pwchk").html("");
-		return false;
-	}
+   if(pwchk == "1" && passchk == "1" && pw ==passOK){
+      alert("로그인하고 이용해주세요");
+      return true;
+   }else{
+      alert("비밀번호를 형식에 맞쳐 일치하게 입력해주세요");
+      $("#pw").val("");
+      $("#passOK").val("");
+      $("#pwresult").html("");
+      $("#pwchk").html("");
+      return false;
+   }
 }
 
 
@@ -50,46 +61,46 @@ function pwcheck() {
 
 //아작스
 $(function() {
-	
-	
-	$("#pw").keyup(function() {
-		var pw = $(this).val();
-		var regex =/^[A-Za-z0-9]{4,10}$/;
-		
-		if(pw.indexOf(" ") != -1){
-			$("#pwresult").css("color", "red");
-			$("#pwresult").html("공백 사용 불가능");
-			$("pwchkVal").val("0");
-		} else if(pw.match(regex) !=null){
-			$("#pwresult").css("color", "forestgreen");
-			$("#pwresult").html("사용가능한 비밀번호 입니다.");
-			$("#pwchkVal").val("1");
-		} else {
-			$("#pwresult").css("color", "red");
-			$("#pwresult").html("4~10자리의 영문, 숫자를 입력해주세요");
-			$("#pwchkVal").val("0");
-		}
-	});
-	
-	
-	$("#passOK").keyup(function() {
-		var passOK = $(this).val();
-		var pw = $("#pw").val();
-		
-		if(passOK==pw){
-			$("#pwchk").css("color", "forestgreen");
-			$("#pwchk").html("비밀번호가 일치합니다.");
-			$("#passchkVal").val("1");
-		} else {
-			$("#pwchk").css("color", "red");
-			$("#pwchk").html("비밀번호가 일치하지 않습니다.");
-			$("#passchkVal").val("0");
-		}
-	});
-	
-	
-	
-	
+   
+   
+   $("#pw").keyup(function() {
+      var pw = $(this).val();
+      var regex =/^[A-Za-z0-9]{4,10}$/;
+      
+      if(pw.indexOf(" ") != -1){
+         $("#pwresult").css("color", "red");
+         $("#pwresult").html("공백 사용 불가능");
+         $("pwchkVal").val("0");
+      } else if(pw.match(regex) !=null){
+         $("#pwresult").css("color", "forestgreen");
+         $("#pwresult").html("사용가능한 비밀번호 입니다.");
+         $("#pwchkVal").val("1");
+      } else {
+         $("#pwresult").css("color", "red");
+         $("#pwresult").html("4~10자리의 영문, 숫자를 입력해주세요");
+         $("#pwchkVal").val("0");
+      }
+   });
+   
+   
+   $("#passOK").keyup(function() {
+      var passOK = $(this).val();
+      var pw = $("#pw").val();
+      
+      if(passOK==pw){
+         $("#pwchk").css("color", "forestgreen");
+         $("#pwchk").html("비밀번호가 일치합니다.");
+         $("#passchkVal").val("1");
+      } else {
+         $("#pwchk").css("color", "red");
+         $("#pwchk").html("비밀번호가 일치하지 않습니다.");
+         $("#passchkVal").val("0");
+      }
+   });
+   
+   
+   
+   
 });//제일큰
 
 
@@ -97,23 +108,13 @@ $(function() {
 
 </script>
 
-
 <style type="text/css">
 
 span{
-	font-size: .8rem;
+   font-size: .8rem;
 }
 
 </style>
-
-
-<% String user_email =  (String)request.getAttribute("user_email");%>
-
-</head>
-
-<%=user_email%>
-
-
 
 
 <body class="bg-gradient-primary">

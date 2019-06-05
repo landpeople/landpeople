@@ -90,7 +90,7 @@ public class CanvasController {
 	    	// 자유 캔버스 화면으로 보내기
 	    	request.setAttribute("textList", freeMap);  
 	    	
-	    	return "detailCanvas";
+	    	return "canvas/detailCanvas";
 	    }
 	 
 	 // 수정폼으로 이동
@@ -111,13 +111,13 @@ public class CanvasController {
 		    	// 일정 캔버스 세팅
 		    	List<LPDaysDto> daysDto = daysService.daysSelectAll(id);
 		    	session.setAttribute("days", daysDto);
-		    	return "updateDaysCanvas";
+		    	return "canvas/updateDaysCanvas";
 		    	
 	    	}else{
 	    		// 자유 캔버스
 	    		List<LPTextDto> list = textService.textSelectOne(id);
 	    		model.addAttribute("textList", list);
-	    		return "updateFreeCanvas_"+(Integer.parseInt(canvasDto.getCan_type())-1);
+	    		return "canvas/updateFreeCanvas_"+(Integer.parseInt(canvasDto.getCan_type())-1);
 	    	}     	
 	    }
 	    

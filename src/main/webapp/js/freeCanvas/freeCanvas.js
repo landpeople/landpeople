@@ -7,15 +7,11 @@ $('#mybook').booklet({
 });		
 	
 var ids = $("div[id*='TXT']");
-var editor = new Array(ids.length);
 var imgs =$("div[id*='IMG']");
+//var editor = new Array(ids.length);
 var subImgClass;	
 
 $(document).ready(function() {
-	//에디터
-	for (var i = 0; i < ids.length; i++) {
-		setEditor(ids.eq(i).attr("id"), i);
-		}
 	//이미지 업로드
 	$(".file").on("change", function(){
 		var imgClass = $(this).attr("id");
@@ -26,19 +22,9 @@ $(document).ready(function() {
 			fileUpload(subImgClass);
 		}
 	});
-				
+	
 });
 
-function setEditor(id, i) {
-	editor[i] = new tui.Editor({
-		el : document.querySelector("#" + id),
-		initialEditType : 'wysiwyg',
-		previewStyle : 'tab',
-		height : "'" + $("div[id='" + id + "']").attr("height") + "'"
-	});
-	
-}
-		
 function fileUpload(subImgClass) {
 	var frmEle = document.getElementById("frm");
 	var formData = new FormData(frmEle);
@@ -82,10 +68,10 @@ function extension(file){
 		
 //입력
 function insert() {
-	for (var i = 0; i < editor.length; i++) {
-		var text_content = $("input[class=text_content"+i+"]");
-		text_content.val(editor[i].getHtml());
-	}
+//	for (var i = 0; i < editor.length; i++) {
+//		var text_content = $("input[class=text_content"+i+"]");
+//		text_content.val(editor[i].getHtml());
+//	}
 			
 	var frm = document.getElementById("frm");
 	frm.action = './insertData.do';
@@ -95,10 +81,10 @@ function insert() {
 
 //수정
 function update() {
-	for (var i = 0; i < editor.length; i++) {
-		var text_content = $("input[class=text_content"+i+"]");
-		text_content.val(editor[i].getHtml());
-	}
+//	for (var i = 0; i < editor.length; i++) {
+//		var text_content = $("input[class=text_content"+i+"]");
+//		text_content.val(editor[i].getHtml());
+//	}
 	
 	var frm = document.getElementById("frm");
 	frm.action = './updateFreeCanvas.do';

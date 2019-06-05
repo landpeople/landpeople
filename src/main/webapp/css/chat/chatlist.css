@@ -65,7 +65,7 @@ html, body {
 	align-items: flex-end;
 }
 
-.lp-refresh { /* 사이드 바의 채팅 방안의 refresh 버튼*/
+.lp-refresh { /*사이드 바의 채팅 방안의 refresh 버튼*/
 	/* 	margin-left: 2rem; */
 	padding: .3rem 1rem;
 	color: #d2d5dd;

@@ -81,8 +81,6 @@ INSERT INTO LPCHATCONTENT VALUES(LPCHATCONTENT_SEQ.NEXTVAL, #{chr_id}, #{user_ni
 -- @ int chatContent_InsertMsg(ChatContentDto dto)
 INSERT INTO LPCHATCONTENT VALUES(LPCHATCONTENT_SEQ.NEXTVAL, #{chr_id}, #{user_nickname}, #{chc_message}, 'F', SYSDATE);
 
-
-
 -- ==========================================================================================================================================
 -- 2. 채팅방 삭제(TT이면 다 삭제)
 -- 내가 SENDER인지 RECEIVER인지 확인하고 SENDER일 때와 RECEIVER인지 확인 위함

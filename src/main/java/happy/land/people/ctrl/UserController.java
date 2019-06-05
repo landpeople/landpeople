@@ -38,9 +38,9 @@ import com.github.scribejava.core.model.OAuth2AccessToken;
 
 import happy.land.people.dto.AuthInfo;
 import happy.land.people.dto.LPUserDto;
+import happy.land.people.dto.NaverLoginBO;
 import happy.land.people.model.chat.IChatService;
 import happy.land.people.model.user.ILPUserService;
-import happy.land.people.naver.NaverLoginBO;
 
 @Controller
 public class UserController {
@@ -70,7 +70,7 @@ public class UserController {
 	private OAuth2Parameters googleOAuth2Parameters;
 
 	@Autowired
-	IChatService iLeeService;
+	IChatService iChatService;
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -288,9 +288,9 @@ public class UserController {
 			}
 		}
 
-		int n = iLeeService.chatList_SelectOne(ldto.getUser_nickname());
+		int n = iChatService.chatList_SelectOne(ldto.getUser_nickname());
 		if (n == 0) {
-			iLeeService.chatList_Insert(ldto.getUser_nickname());
+			iChatService.chatList_Insert(ldto.getUser_nickname());
 		}
 		session.setAttribute("ldto", ldto);
 

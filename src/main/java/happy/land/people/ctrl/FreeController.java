@@ -35,7 +35,7 @@ import happy.land.people.model.canvas.ILPTextService;
 
 @Controller
 public class FreeController {
-	private Logger log = LoggerFactory.getLogger(NaController.class);
+	private Logger log = LoggerFactory.getLogger(FreeController.class);
 	
 	@Autowired
 	private  ILPTextService textService;
@@ -48,9 +48,9 @@ public class FreeController {
     	// 페이지 번호 , 캔버스 id  
 		System.out.println("타입 : "+selectType);
     	String sketch_id = (String)session.getAttribute("sketch_id");
-    	LPCanvasDto dto = new LPCanvasDto("0001", sketch_id, "제목은 대충", "내용도 아무거나", selectType, nowPageNo);
+    	LPCanvasDto dto = new LPCanvasDto("0001", sketch_id, "임시 타이틀", "임시 내용(한글을 사랑하자)", selectType, nowPageNo);
     	session.setAttribute("canvas", dto);    	
-		return "insertFreeCanvas_"+(Integer.parseInt(selectType)-1);
+		return "canvas/insertFreeCanvas_"+(Integer.parseInt(selectType)-1);
 	}
 	
 	@RequestMapping(value="/uploadFile.do", method=RequestMethod.POST, produces="application/text;charset=UTF-8")
@@ -184,7 +184,9 @@ public class FreeController {
 		}else {
 			System.out.println("데이터베이스 정보 추가 실패.");
 		}
-		return "kim";
+		String sketch_id = (String)session.getAttribute("sketch_id");
+		
+		return "redirect:/detailCanvas.do?sketch_id="+sketch_id;
 	}
 	
 	//썸네일 생성 메소드
@@ -321,6 +323,7 @@ public class FreeController {
 				return "404Error";
 			}
 		}
-		return "kim";
+		String sketch_id = (String)session.getAttribute("sketch_id");		
+		return "redirect:/detailCanvas.do?sketch_id="+sketch_id;
 	}
 }

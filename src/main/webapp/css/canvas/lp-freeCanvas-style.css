@@ -1,0 +1,57 @@
+@charset "UTF-8";
+
+.head-title{
+	display:flex;
+	border-bottom : 1px solid #e6e6e6;
+	height: 50px;
+	margin: 20px 5px;
+}
+
+.title{
+	margin-left: 30px;
+	font-size: medium;
+ }
+ 
+.back{
+	margin-left: 10px;
+	margin-top : 5px;
+	width: 32px;
+	height: 32px;
+	float: left;
+	cursor: pointer;
+}
+
+.imageDown{
+	margin-left: 72px;
+	margin-top : 15px;
+	width: 64px;
+	height: 64px;
+	float: left;
+	text-align: center;
+}
+
+.excelDown{
+	margin: 15px 20px 0px 20px;
+	width: 64px;
+	height: 64px;
+	float: left;
+	text-align: center;
+}
+
+.article-canvasContent{
+	height: 650px;
+	margin-bottom: 10px;	
+}
+
+.footer-icon{
+	height: 85px;
+}
+
+.insertIcon{
+	height: 64px;
+	width : 64px;
+/* 	position : absolute; */
+	right: 40px;
+	margin-top : 10px;
+	cursor: pointer;
+}

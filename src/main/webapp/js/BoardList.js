@@ -17,6 +17,3 @@ function search() {
         }
     }).trigger("reloadGrid");
 }
-	
-	
-

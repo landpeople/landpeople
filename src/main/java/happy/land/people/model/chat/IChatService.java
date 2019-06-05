@@ -16,4 +16,8 @@ public interface IChatService {
 	public int chatContent_InsertMsg(ChatContentDto dto);
 	
 	public String chkChatMember(String chr_id);
+	
+	public List<List<Map<String, String>>> selectChr(String id);
+	
+	public boolean deleteChatroom(String chrId, String id);
 }

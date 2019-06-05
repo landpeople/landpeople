@@ -28,9 +28,9 @@
 <link href="./css/theme/sb-admin-2.css" rel="stylesheet">
 <link href="./css/theme/lp-template.css" rel="stylesheet">
 <link href="./css/sketch/modal.css" rel="stylesheet">
-<link rel="stylesheet" href="./css/manage.css">
+<link rel="stylesheet" href="./css/manager/manager.css">
 <link rel="stylesheet" type="text/css" media="screen" href="./css/jquery-ui.css" />
-<link rel="stylesheet" type="text/css" media="screen" href="./css/ui.jqgrid.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="./css/manager/ui.jqgrid.css" />
 
 </head>
 

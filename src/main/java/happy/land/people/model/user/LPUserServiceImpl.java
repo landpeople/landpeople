@@ -1,7 +1,6 @@
 package happy.land.people.model.user;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Map;
 
 import javax.mail.MessagingException;
 
@@ -11,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import happy.land.people.cho.mail.MailUtils;
-import happy.land.people.cho.mail.TempKey;
+import happy.land.people.beans.MailUtils;
+import happy.land.people.beans.TempKey;
 import happy.land.people.dto.LPUserDto;
 @Service
 public class LPUserServiceImpl implements ILPUserService {

@@ -250,7 +250,7 @@ public class DaysController {
 	    	String sketch_id = (String)session.getAttribute("sketch_id");
 	    	LPCanvasDto dto = new LPCanvasDto("0001", sketch_id, "제목은 대충", "내용도 아무거나", "1", nowPageNo);
 	    	session.setAttribute("canvas", dto);
-	    	return "insertDaysCanvas";
+	    	return "canvas/insertDaysCanvas";
 	    }
 	    
 	    @ResponseBody
