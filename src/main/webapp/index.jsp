@@ -54,9 +54,9 @@
             </a>
          </c:if>
 
-         <li class="nav-item active"><a class="nav-link" href="./index.jsp">
-               <i class="fas fa-th-large"></i> <span>All travel schedule</span>
-            </a></li>
+<!--          <li class="nav-item active"><a class="nav-link" href="./index.jsp"> -->
+<!--                <i class="fas fa-th-large"></i> <span>All travel schedule</span> -->
+<!--             </a></li> -->
 
          <!-- Divider -->
          <hr class="sidebar-divider my-0">
