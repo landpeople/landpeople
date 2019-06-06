@@ -40,7 +40,7 @@
 <link href="./css/theme/lp-template.css" rel="stylesheet">
 <link href="./css/sketch/sketch.css" rel="stylesheet">
 <link href="./css/sketch/modal.css" rel="stylesheet">
-<link href="./css/theme/checkradio.min.css" rel="stylesheet">
+<link href="./css/theme/checkradio.css" rel="stylesheet">
 
 </head>
 
@@ -68,50 +68,49 @@
         	          			<h1 class="h2 mb-4 text-gray-800 lp-content-title">My Sketchbook</h1>
             	      			<input class="btn btn-danger mb-4 lp-sketch-del " type="submit" value="Delete selected">
 		                  	</div>
-                     		<div class="sketchBookContent">
+                     		<div class="sketchBookContent scroll">
 								<c:forEach var="item" items="${mySketchBookLists}">
 										<c:choose>
 											<c:when test="${item.sketch_block eq 'T'}">
-						                         <div class="single-sketchbook">
-						                              <div class="single-sketch-img">
-                                                           <div class="figure" onclick="goCanvas('${item.sketch_id}')">
-                                                               <img class="test" alt="" src="${item.sketch_spath}">
-                                                           </div>
-														   <div style="color:red" ><i class="fas fa-heart"></i>${sketchLike[item.sketch_id]}</div>
-														   <div> [ ${item.sketch_theme} ] ${item.sketch_title}</div>
-						                                 </div>
-						                              <div class="single-title">
-                                                         <div class="field">
-	                                                    	 <input class="is-checkradio is-info is-circle" id="chk+${item.sketch_id}"  value="${item.sketch_id}" type="checkbox" name="chkVal">
-	                                                     	<label for="chk+${item.sketch_id}"></label>
-	                                                  	 </div>
-						                                  	<h5>관리자에 의해 삭제되었습니다.</h5>
-						                                 	<label>${item.sketch_title}</label>
-							                                <label>
-							                                 	<a href="#" onclick="return sketchBookModify('${item.sketch_id}')">
-							                                       <<i class="fas fa-pen-square"></i>
-							                                    </a>
-						                                	</label>
-						                              </div>
-						                           </div>
+						                        <div class="single-sketchbook">
+											    	<div class="hovereffect">
+											       		<img class="img-responsive" src="${item.sketch_spath}" alt="">
+											            <div class="overlay">
+				                                            <input class="is-checkradio is-info is-circle" id="chk+${item.sketch_id}"  value="${item.sketch_id}" type="checkbox" name="chkVal">
+				                                            <label "class="lp-check-box" for="chk+${item.sketch_id}"></label>
+											               	<h1>[ ${item.sketch_theme} ]</h1>
+											               	<h2>This post has been deleted by admin.</h2>
+															<p class="modify-icon">
+																<a href="#" onclick="return sketchBookModify('${item.sketch_id}')">
+																	<i class="fas fa-pen-square"></i>
+											            		</a>
+											            	</p>
+															<p>
+																<a href="#" onclick="goCanvas('${item.sketch_id}')">Show detail</a>
+															</p>
+											            </div>
+											    	</div>
+					                           </div>
 											</c:when>
 											<c:otherwise>
-											    <div class="single-sketchbook">
-			                                       <div class="single-sketch-img figure">
-                                                        <div class="sigle-box" onclick="goCanvas('${item.sketch_id}')">
-                                                            <img class="sketch-img" alt="" src="${item.sketch_spath}">
-                                                        </div>
-                                                   </div>
-												   <div class="sigle-title">
-	                                                   <div class="field">
-	                                                     <input class="is-checkradio is-info is-circle" id="chk+${item.sketch_id}"  value="${item.sketch_id}" type="checkbox" name="chkVal">
-	                                                     <label for="chk+${item.sketch_id}"></label>
-	                                                   </div>
-                                                      <div>[ ${item.sketch_theme} ]</div>
-                                                      <div>${item.sketch_title}</div>
-                                                      <div onclick="return sketchBookModify('${item.sketch_id}')"><i class="fas fa-pen-square"></i></div>
-                                                      <span class="badge badge-danger badge-counter hover-item">${sketchLike[item.sketch_id]} <i class="fas fa-heart"></i></span>
-                                                   </div>
+											   <div class="single-sketchbook">
+											    	<div class="hovereffect">
+											       		<img class="img-responsive" src="${item.sketch_spath}" alt="">
+											            <div class="overlay">
+				                                            <input class="is-checkradio is-info is-circle" id="chk+${item.sketch_id}"  value="${item.sketch_id}" type="checkbox" name="chkVal">
+				                                            <label "class="lp-check-box" for="chk+${item.sketch_id}"></label>
+											               	<h1>[ ${item.sketch_theme} ]</h1>
+											               	<h2>${item.sketch_title} | <i class="fas fa-heart"></i><span> ${sketchLike[item.sketch_id]}개</span></h2>
+															<p class="modify-icon">
+																<a href="#" onclick="return sketchBookModify('${item.sketch_id}')">
+																	<i class="fas fa-pen-square"></i>
+											            		</a>
+											            	</p>
+															<p>
+																<a href="#" onclick="goCanvas('${item.sketch_id}')">Show detail</a>
+															</p>
+											            </div>
+											    	</div>
 					                           </div>
 											</c:otherwise>
 										</c:choose>
@@ -120,7 +119,9 @@
                     	</form>
                      
                      <c:if test="${fn:length(mySketchBookLists) eq '9'}">
-		                  <button id="infinityScroll">View more</button>
+                     	<div class="view-more">
+		                  <button id="infinityScroll" class="btn">View more</button>
+		                </div>
                      </c:if>
                   <!-- 여기까지 스케치북 수정 Modal -->
                </div><!-- 스케치북 정렬을 위한 lp-content-sketch -->
@@ -151,14 +152,14 @@
 
 <script type="text/javascript">
 var pageCnt = <%=pagingDto.getNowPageNo()%>
-//var chkModify = false;
+
 $("document").ready(
 		function() {
 			$("#infinityScroll").click(
 					function() {
 						$("#infinityScroll").hide();						
 				if(pageCnt >= <%=pagingDto.getEndPageNo()%>){
-					alert("마지막페이지 입니다.");
+					swal("마지막페이지 입니다.");
 				}else{		
 					pageCnt++;			
 					getMySketchBook(pageCnt);
@@ -243,14 +244,8 @@ function getMySketchBook(pageNo){
                                                    "<label><a href='#' onclick='return sketchBookModify("+msg.addMySketchBook[i*3+j].sketch_id+")'><img alt='modi' src='img/sketch/modifyIcon.png'>스케치북 수정</a></label>"+
                                                 "</div>"+
                                              "</div>";
-                                             
-                                             
-                     
-                     
                      }     
-                     
-                                             
-                     }
+                  }
                         $(".sketchBookContent").append(sketchBookContainer);
                
                   
@@ -490,14 +485,8 @@ function sketchModify(){
    var title = $("#sketchtitle").val();
    var theme = $("input[name=sketch_theme]:checked").length;
    var share = $("input[name=sketch_share]:checked").length;
-   
-   
-   
-   
-   
-	
-	
-	if (title == "") {
+
+   if (title == "") {
 		alert("스케치북 제목을 확인해주세요");
 	} else if(theme == 0 || share == 0 ){
 		alert("스케치북 타입 혹은 공유 여부를 선택해주세요");	

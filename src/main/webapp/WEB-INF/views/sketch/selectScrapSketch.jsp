@@ -341,7 +341,6 @@
    
 //---------------------- 스케치북 다중 스크랩  취소 -----------------------
    
-   
    function ScrapeChk(){
 //    alert("작동");
       var chks =  document.getElementsByName("chkVal");
