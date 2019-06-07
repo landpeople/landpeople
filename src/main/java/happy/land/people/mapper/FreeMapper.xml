@@ -9,7 +9,7 @@
 	
 	<!-- 자유 캔버스 작성(등록) -->
 	<insert parameterType="happy.land.people.dto.LPTextDto" id="text_Insert"> 
-		INSERT INTO LPTEXT(TEXT_ID, CAN_ID, TEXT_CONTENT, TEXT_NO, IMG_SPATH) 
+		INSERT INTO LPTEXT(TEXT_ID, CAN_ID,  TEXT_CONTENT, TEXT_NO, IMG_SPATH) 
 			VALUES(LPTEXT_SEQ.NEXTVAL, #{can_id}, #{text_content}, #{text_no}, #{img_spath}) 
 	</insert>
 	

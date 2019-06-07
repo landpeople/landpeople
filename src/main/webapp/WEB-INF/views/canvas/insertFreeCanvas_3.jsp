@@ -25,9 +25,8 @@
 <link href="./css/theme/sb-admin-2.css" rel="stylesheet">
 <link href="./css/theme/lp-template.css" rel="stylesheet">
 <link href="./css/sketch/modal.css" rel="stylesheet">
-<link rel="stylesheet" href="./css/freeCanvasLayout.css">
-<link rel="stylesheet" href="./css/canvas/lp-freeCanvas-style.css">
-
+<link rel="stylesheet" href="./css/canvas/freeCanvas-Layout.css">
+<link rel="stylesheet" href="./css/canvas/freeCanvas-style.css">
 </head>
 
 <!-- jQuery -->
@@ -73,12 +72,14 @@
             <div class="lp-container">
                <div class="lp-other-content shadow-lg">
 
-                  <div class="head-title">
-                     <div class="back" onclick="javascript:history.back(-1)">
-                        <i class="fas fa-reply fa-2x"></i>
+                   <div class="head-title">
+                         <div class="back" onclick="javascript:history.back(-1)">
+                         	<img alt="뒤로가기" src="./img/canvas/back.png"
+								onmouseover="this.src='./img/canvas/back-over.png';"
+								onmouseout="this.src='./img/canvas/back.png';">
+                         </div>
+                         <div class="title">나홀로 떠나는 제주도 여행</div>
                      </div>
-                     <div class="title">나홀로 떠나는 제주도 여행</div>
-                  </div>
 
                   <div class="article-canvasContent">
                      <form method="post" enctype="multipart/form-data" name="frm" id="frm">
@@ -96,10 +97,18 @@
                            <!-- 오른쪽 -->
                            <div id="Right-Side3">
                               <div id="RS_TContainer3">
-                                 <div id="TXT31" contenteditable="true"></div>
+                                 <div id="TXT31" style="overflow: auto;">
+                                 	<a onclick="editor('txt31')" class="inner"><img alt="글 작성" src="./img/canvas/editor.png"></a>
+									<div id="txt31">
+								</div>
+                                 </div>
                                  <input type="hidden" name="list[1].text_content" class="text_content0">
                                  <input type="hidden" name="list[1].text_no" value="1">
-                                 <div id="TXT32" contenteditable="true"></div>
+                                 <div id="TXT32" style="overflow: auto;">
+                                 	<a onclick="editor('txt32')" class="inner"><img alt="글 작성" src="./img/canvas/editor.png"></a>
+									<div id="txt32">
+								</div>
+                                 </div>
                                  <input type="hidden" name="list[2].text_content" class="text_content1">
                                  <input type="hidden" name="list[2].text_no" value="2">
                               </div>
@@ -116,7 +125,11 @@
                                  </div>
                                  <input type="hidden" name="list[4].img_spath" class="img_spath2">
                                  <input type="hidden" name="list[4].text_no" value="4">
-                                 <div id="TXT33" contenteditable="true"></div>
+                                 <div id="TXT33" style="overflow: auto;">
+                                 	<a onclick="editor('txt33')" class="inner"><img alt="글 작성" src="./img/canvas/editor.png"></a>
+									<div id="txt33">
+								</div>
+                                 </div>
                                  <input type="hidden" name="list[5].text_content" class="text_content2">
                                  <input type="hidden" name="list[5].text_no" value="5">
                               </div>
@@ -125,12 +138,15 @@
                      </form>
                   </div>
 
-                  <div class="footer-icon">
-                     <div class="insertIcon" onclick="insert()">
-                        <img id="insert" src="./img/check.png">
-                     </div>
-                  </div>
+                   <div class="footer-icon">
+				      <div class="insertIcon" onclick="insert()">
+				         <img id="insert" alt="등록하기" src="./img/canvas/check.png"
+				         	onmouseover="this.src='./img/canvas/check-over.png';"
+				         	onmouseout="this.src='./img/canvas/check.png';">
+    			  </div>
+                  
                </div>
+            </div>
             </div>
             <!--End of Page LandPeople Content Area -->
             <%@include file="../common/lp-footer.jsp"%>

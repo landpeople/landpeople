@@ -3,21 +3,22 @@
 .head-title{
 	display:flex;
 	border-bottom : 1px solid #e6e6e6;
-	height: 50px;
-	margin: 20px 5px;
+	height: 80px;
+	margin-bottom: 20px;
 }
 
 .title{
-	margin-left: 30px;
+	width: 200px;
+	height : 20px;
+	margin-top : 50px;
 	font-size: medium;
  }
  
 .back{
-	margin-left: 10px;
-	margin-top : 5px;
+	float : left;
+	margin-bottom : 30px;
 	width: 32px;
 	height: 32px;
-	float: left;
 	cursor: pointer;
 }
 
@@ -44,14 +45,13 @@
 }
 
 .footer-icon{
-	height: 85px;
+	height: 70px;
 }
 
 .insertIcon{
 	height: 64px;
 	width : 64px;
-/* 	position : absolute; */
-	right: 40px;
-	margin-top : 10px;
+	float: right;
+	margin-right :20px;
 	cursor: pointer;
 }

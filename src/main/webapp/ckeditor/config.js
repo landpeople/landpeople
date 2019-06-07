@@ -5,28 +5,13 @@
 
 CKEDITOR.editorConfig = function( config ) {
 	config.uiColor = '#F8F7F2';
-	// Define changes to default configuration here.
-	// For complete reference see:
-	// https://ckeditor.com/docs/ckeditor4/latest/api/CKEDITOR_config.html
-
-	// The toolbar groups arrangement, optimized for two toolbar rows.
-	config.toolbarGroup = [
-		{ name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
-		{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
-		{ name: 'paragraph',   groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
-		{ name: 'styles', items:[ 'Font', 'FontSize' ] },
-		{ name: 'colors', items:[ 'TextColor', 'BGColor' ] }
+	config.toolbar = [
+		{name : 'clipboard', items:['Cut','Copy','Paste','-','Undo','Redo']},
+		{name : 'basicstyles', items:['Bold', 'ltalic', 'Underline', 'Strike', '-', 'RemoveFormat']},
+		{name : 'paragraph', items:['NumberedList', 'BulletedList','-', 'Outdent', 'Indent', '-', 
+								'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBolck']},
+		{name : 'insert', items:['Smiley','SpecialChar']},
+		{name : 'styles', items:['Styles','Format','Font','FontSize']},
+		{name : 'colors', items:['TextColor','BFColor']},
 	];
-//
-//	// Remove some buttons provided by the standard plugins, which are
-//	// not needed in the Standard(s) toolbar.
-//	config.removeButtons = 'Underline,Subscript,Superscript';
-//
-//	// Set the most common block elements.
-//	config.format_tags = 'p;h1;h2;h3;pre';
-//
-//	// Simplify the dialog windows.
-//	config.removeDialogTabs = 'image:advanced;link:advanced';
-	
-
 };
