@@ -164,6 +164,7 @@ span {
 
 #haha2 {
 	width: 50%;
+	margin: auto;
 }
 </style>
 
@@ -181,9 +182,9 @@ span {
          <div id="content" style="display: flex; flex-direction: column;">
 
             <!-- LandPeople Content Area -->
-            <div class="lp-container">
+            <div class="lp-container" >
                <div class="lp-other-content shadow-lg">
-                  <div id="haha2" class="card border-light  mb-3" style="border: 0px white solid !important">
+                  <div id="haha2" class="card border-light  mb-3" style="border: 1px #6CC3D5 solid !important">
                      <div class="card-body">
                         <div>
                            <input type="hidden" value="0" id="emailchkVal">

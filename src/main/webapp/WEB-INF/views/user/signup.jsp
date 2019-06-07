@@ -109,39 +109,43 @@ span {
 			    }
 			});//이메일유효성 끝
 
-	$("#pw").keyup(function() {
-	    var pw = $(this).val();
-	    var regex = /^[A-Za-z0-9]{4,10}$/;
+	$("#pw").on("propertychange change keyup paste input",function(){		
+		var pw = $(this).val();
+		var regex = /^[A-Za-z0-9]{4,10}$/;
 
-	    if (pw.indexOf(" ") != -1) {
-		$("#pwresult").css("color", "red");
-		$("#pwresult").html("공백 사용 불가능");
-		$("pwchkVal").val("0");
-	    } else if (pw.match(regex) != null) {
-		$("#pwresult").css("color", "forestgreen");
-		$("#pwresult").html("사용가능한 비밀번호 입니다.");
-		$("#pwchkVal").val("1");
-	    } else {
-		$("#pwresult").css("color", "red");
-		$("#pwresult").html("4~10자리의 영문, 숫자를 입력해주세요");
-		$("#pwchkVal").val("0");
-	    }
+		if (pw.indexOf(" ") != -1) {
+			$("#pwresult").css("color", "red");
+			$("#pwresult").html("공백 사용 불가능");
+			$("pwchkVal").val("0");
+		} else if (pw.match(regex) != null) {
+			$("#pwresult").css("color", "forestgreen");
+			$("#pwresult").html("사용가능한 비밀번호 입니다.");
+			$("#pwchkVal").val("1");
+		} else {
+			$("#pwresult").css("color", "red");
+			$("#pwresult").html("4~10자리의 영문, 숫자를 입력해주세요");
+			$("#pwchkVal").val("0");
+		}
+		
+		passOKCheck();
 	});
 
-	$("#passOK").keyup(function() {
-	    var passOK = $(this).val();
-	    var pw = $("#pw").val();
+	$("#passOK").keyup(passOKCheck);
+	
+	function passOKCheck(){
+		var passOK = $("#passOK").val();
+		var pw = $("#pw").val();
 
-	    if (passOK == pw) {
-		$("#pwchk").css("color", "forestgreen");
-		$("#pwchk").html("비밀번호가 일치합니다.");
-		$("#passchkVal").val("1");
-	    } else {
-		$("#pwchk").css("color", "red");
-		$("#pwchk").html("비밀번호가 일치하지 않습니다.");
-		$("#passchkVal").val("0");
-	    }
-	});
+		if (passOK == pw) {
+			$("#pwchk").css("color", "forestgreen");
+			$("#pwchk").html("비밀번호가 일치합니다.");
+			$("#passchkVal").val("1");
+		} else {
+			$("#pwchk").css("color", "red");
+			$("#pwchk").html("비밀번호가 일치하지 않습니다.");
+			$("#passchkVal").val("0");
+		}
+	}
 
 	//닉네임 작성시 유효성 검사 (자리수 2~10 , 닉네임 중복여부 , 공백포함여부)
 	$("#nickname").keyup(
@@ -227,7 +231,7 @@ span {
                         </div>
                         <div class="form-group">
                            <input type="password" name="user_password" class="form-control form-control-user" id="pw" placeholder="Password" required="required" maxlength="10">
-                           &nbsp;<span id="pwresult form-text">4~10자리의 영문+숫자</span>
+                           &nbsp;<span id="pwresult" class="form-text">4~10자리의 영문+숫자</span>
                         </div>
                         <div class="form-group">
                            <input type="password" class="form-control form-control-user" id="passOK" placeholder="Repeat Password" maxlength="10" required="required">
@@ -235,7 +239,7 @@ span {
                         </div>
                         <div class="form-group">
                            <input type="text" name="user_nickname" class="form-control form-control-user" id="nickname" placeholder="Nick Name" maxlength="10" required="required">
-                           &nbsp;<span id="nicknameresult form-text">2~10자리의 닉네임을 입력</span>
+                           &nbsp;<span id="nicknameresult" class=" form-text">2~10자리의 닉네임을 입력</span>
                         </div>
                         <div class="form-group">
                            <input type="submit" class="btn btn-primary btn-user btn-block" value="Register Account">
