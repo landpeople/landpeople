@@ -82,7 +82,6 @@ public class SketchController {
 			boolean isc = iSketchBookService.sketchInsert(dto);
 			System.out.println(isc);
 		}
-		
 		return "redirect:/detailCanvas.do?sketch_id=" + dto.getSketch_id();
 	}
 	
