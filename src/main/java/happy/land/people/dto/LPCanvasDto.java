@@ -4,7 +4,6 @@ public class LPCanvasDto {
 	public String can_id;
 	public String sketch_id;
 	public String can_title;
-	public String can_content;
 	public String can_type;
 	public String can_pageno;
 	
@@ -12,13 +11,11 @@ public class LPCanvasDto {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public LPCanvasDto(String can_id, String sketch_id, String can_title, String can_content, String can_type,
-			String can_pageno) {
+	public LPCanvasDto(String can_id, String sketch_id, String can_title, String can_type, String can_pageno) {
 		super();
 		this.can_id = can_id;
 		this.sketch_id = sketch_id;
 		this.can_title = can_title;
-		this.can_content = can_content;
 		this.can_type = can_type;
 		this.can_pageno = can_pageno;
 	}
@@ -41,12 +38,6 @@ public class LPCanvasDto {
 	public void setCan_title(String can_title) {
 		this.can_title = can_title;
 	}
-	public String getCan_content() {
-		return can_content;
-	}
-	public void setCan_content(String can_content) {
-		this.can_content = can_content;
-	}
 	public String getCan_type() {
 		return can_type;
 	}
@@ -63,6 +54,6 @@ public class LPCanvasDto {
 	@Override
 	public String toString() {
 		return "LPCanvasDto [can_id=" + can_id + ", sketch_id=" + sketch_id + ", can_title=" + can_title
-				+ ", can_content=" + can_content + ", can_type=" + can_type + ", can_pageno=" + can_pageno + "]";
+				+ ", can_type=" + can_type + ", can_pageno=" + can_pageno + "]";
 	}	
 }

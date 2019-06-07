@@ -25,32 +25,26 @@
 <link href="./css/theme/sb-admin-2.css" rel="stylesheet">
 <link href="./css/theme/lp-template.css" rel="stylesheet">
 <link href="./css/sketch/modal.css" rel="stylesheet">
-<link rel="stylesheet" href="./css/freeCanvasLayout.css">
-<link rel="stylesheet" href="./css/canvas/lp-freeCanvas-style.css">
+<link rel="stylesheet" href="./css/canvas/freeCanvas-Layout.css">
+<link rel="stylesheet" href="./css/canvas/freeCanvas-style.css">
 
 </head>
 
 <!-- jQuery -->
 <script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
-<!-- Booklet  -->
+
+<!-- bootstrap -->
+<script src="./js/min/main.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<!-- 책모양  -->
 <script src="./js/jquery-ui.js"></script>
 <script src="./js/jquery.easing.1.3.js"></script>
 <script src="./js/jquery.booklet.latest.min.js"></script>
 <link href="./css/canvas/jquery.booklet.latest.css" type="text/css" rel="stylesheet" media="screen, projection, tv" />
-<script src="./js/min/plugins.min.js"></script>
-<!-- bootstrap -->
-<script src="./js/min/main.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
 <!-- js -->
 <script src="./js/freeCanvas/freeCanvas.js" defer="defer"></script>
-<script type="text/javascript">
-
-   function editor(){
-//       window.open('/WEB-INF/views/editor.jsp', '글 편집',  'width=400, height=600, resizable=no, left=30, top=30');
-   }
-   
-</script>
-
 
 <body id="page-top" class="scroll">
 
@@ -70,7 +64,11 @@
                <div class="lp-other-content shadow-lg">
                
                      <div class="head-title">
-                         <div class="back" onclick="javascript:history.back(-1)"><i class="fas fa-reply fa-2x"></i></div>
+                         <div class="back" onclick="javascript:history.back(-1)">
+                         	<img alt="뒤로가기" src="./img/canvas/back.png"
+								onmouseover="this.src='./img/canvas/back-over.png';"
+								onmouseout="this.src='./img/canvas/back.png';">
+                         </div>
                          <div class="title">나홀로 떠나는 제주도 여행</div>
                      </div>
       
@@ -85,7 +83,10 @@
             </div>
                <input type="hidden" name="list[0].img_spath" class="img_spath0">          
                <input type="hidden" name="list[0].text_no" value="0"> 
-               <div id="TXT1" onclick="editor()"></div>
+               <div id="TXT1" style="overflow: auto;">
+					<a onclick="editor('txt1')" class="inner"><img alt="글 작성" src="./img/canvas/editor.png"></a>
+					<div id="txt1"></div>
+               </div>
                <input type="hidden" name="list[1].text_content" class="text_content0">
                <input type="hidden" name="list[1].text_no" value="1"> 
          </div>
@@ -93,18 +94,21 @@
          <!-- 오른쪽  -->
          <div id="Right-Side">
             <div id="RS_Container_1">
-               <div id="TXT2">
-               <textarea style="width: 100%; height: 100%; resize: none;"></textarea>
+               <div id="TXT2" style="overflow: auto;">
+               		<a onclick="editor('txt2')" class="inner"><img alt="글 작성" src="./img/canvas/editor.png"></a>
+					<div id="txt2"></div>
                </div>
                   <input type="hidden" name="list[2].text_content" class="text_content1">
                   <input type="hidden" name="list[2].text_no" value="2"> 
-               <div id="TXT3">
-               <textarea style="width: 100%; height: 100%; resize: none;"></textarea>
+               <div id="TXT3" style="overflow: auto;">
+               		<a onclick="editor('txt3')" class="inner"><img alt="글 작성" src="./img/canvas/editor.png"></a>
+					<div id="txt3"></div>
                </div> 
                   <input type="hidden" name="list[3].text_content" class="text_content2">
                   <input type="hidden" name="list[3].text_no" value="3"> 
-               <div id="TXT4">
-               <textarea style="width: 100%; height: 100%; resize: none;"></textarea>
+               <div id="TXT4" style="overflow: auto;">
+               		<a onclick="editor('txt4')" class="inner"><img alt="글 작성" src="./img/canvas/editor.png"></a>
+					<div id="txt4"></div>
                </div>
                   <input type="hidden" name="list[4].text_content" class="text_content3">
                   <input type="hidden" name="list[4].text_no" value="4"> 
@@ -132,7 +136,9 @@
    
    <div class="footer-icon">
       <div class="insertIcon" onclick="insert()">
-         <img id="insert" src="./img/checkIcon(2).png">
+         <img id="insert" alt="등록하기" src="./img/canvas/check.png"
+         	onmouseover="this.src='./img/canvas/check-over.png';"
+         	onmouseout="this.src='./img/canvas/check.png';">
       </div>
    </div>
                

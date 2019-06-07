@@ -108,20 +108,20 @@
                   <div>마지막페이지 입니다.</div>
                   <div>마지막페이지 입니다.</div>                 
                </div>
-               <c:choose>
-               <c:when test="${ldto.user_email eq sketch_email}">                
+<%--                <c:choose> --%>
+<%--                <c:when test="${ldto.user_email eq sketch_email}">                 --%>
                   <button data-toggle="modal" data-target="#myModal" style="width:64px; height:64px; border: none; background: url('./img/canvas/addPage.png')" title="페이지 추가"></button>
                   <input type="button" style="width:64px; height:64px; border: none; background: url('./img/canvas/editPage.png')" id="pageUpdate" title="페이지 수정"></input>
                  <input type="button" style="width:64px; height:64px; border: none; background: url('./img/canvas/removePage.png')" id="pageDelete" title="페이지 삭제"></input>
-               </c:when>      
-                <c:otherwise>                
-                    <div style="float: right; margin-right: 10px; ">
-                <a href="#" onclick="like('${ldto.user_email}','${sketch_id}')"><img id="likeState" alt="likeEmpty" src="./img/LikeBefore.png" title="좋아요"></a>                  
-               <a href="#" onclick="scrape('${ldto.user_email}','${sketch_id}')"> <img id="scrapState" alt="scrape" src="./img/scrape.png" title="스크랩"> </a>
-                </div>  
-             </c:otherwise>       
+<%--                </c:when>       --%>
+<%--                 <c:otherwise>                 --%>
+<!--                     <div style="float: right; margin-right: 10px; "> -->
+<%--                 <a href="#" onclick="like('${ldto.user_email}','${sketch_id}')"><img id="likeState" alt="likeEmpty" src="./img/LikeBefore.png" title="좋아요"></a>                   --%>
+<%--                <a href="#" onclick="scrape('${ldto.user_email}','${sketch_id}')"> <img id="scrapState" alt="scrape" src="./img/scrape.png" title="스크랩"> </a> --%>
+<!--                 </div>   -->
+<%--              </c:otherwise>        --%>
                
-               </c:choose>
+<%--                </c:choose> --%>
 
                <form action="./insertDaysForm.do" onsubmit="return false" method="post" id="frm">
                   <input type="hidden" value=1  id="nowPageNo" name="nowPageNo">

@@ -25,8 +25,8 @@
 <link href="./css/theme/sb-admin-2.css" rel="stylesheet">
 <link href="./css/theme/lp-template.css" rel="stylesheet">
 <link href="./css/sketch/modal.css" rel="stylesheet">
-<link rel="stylesheet" href="./css/freeCanvasLayout.css">
-<link rel="stylesheet" href="./css/canvas/lp-freeCanvas-style.css">
+<link rel="stylesheet" href="./css/canvas/freeCanvas-Layout.css">
+<link rel="stylesheet" href="./css/canvas/freeCanvas-style.css">
 
 </head>
 
@@ -75,11 +75,13 @@
                <div class="lp-other-content shadow-lg" style="overflow:hidden">
 
                   <div class="head-title">
-                     <div class="back" onclick="javascript:history.back(-1)">
-                        <i class="fas fa-reply fa-2x"></i>
+                         <div class="back" onclick="javascript:history.back(-1)">
+                         	<img alt="뒤로가기" src="./img/canvas/back.png"
+								onmouseover="this.src='./img/canvas/back-over.png';"
+								onmouseout="this.src='./img/canvas/back.png';">
+                         </div>
+                         <div class="title">나홀로 떠나는 제주도 여행</div>
                      </div>
-                     <div class="title">나홀로 떠나는 제주도 여행</div>
-                  </div>
 
                   <div class="article-canvasContent">
                      <form method="post" enctype="multipart/form-data" name="frm" id="frm">
@@ -95,7 +97,10 @@
                                  <input type="hidden" name="list[0].text_no" value="0">
                               </div>
                               <div id="LS_TContainer5">
-                                 <div id="TXT51" contenteditable="true"></div>
+                                 <div id="TXT51" style="overflow: auto;">	
+                                 	<a onclick="editor('txt51')" class="inner"><img alt="글 작성" src="./img/canvas/editor.png"></a>
+									<div id="txt51"></div>
+                                 </div>
                                  <input type="hidden" name="list[1].text_content" class="text_content0">
                                  <input type="hidden" name="list[1].text_no" value="1">
                               </div>
@@ -110,7 +115,10 @@
                                  </div>
                                  <input type="hidden" name="list[2].img_spath" class="img_spath1">
                                  <input type="hidden" name="list[2].text_no" value="2">
-                                 <div id="TXT52" contenteditable="true"></div>
+                                 <div id="TXT52" style="overflow: auto;">
+                                 	<a onclick="editor('txt52')" class="inner"><img alt="글 작성" src="./img/canvas/editor.png"></a>
+									<div id="txt52"></div>
+                                 </div>
                                  <input type="hidden" name="list[3].text_content" class="text_content1">
                                  <input type="hidden" name="list[3].text_no" value="3">
                                  <div id="IMG53">
@@ -121,7 +129,10 @@
                                  <input type="hidden" name="list[4].text_no" value="4">
                               </div>
                               <div id="RS_ITContainer52">
-                                 <div id="TXT53" contenteditable="true"></div>
+                                 <div id="TXT53" style="overflow: auto;">
+                                 	<a onclick="editor('txt53')" class="inner"><img alt="글 작성" src="./img/canvas/editor.png"></a>
+									<div id="txt53"></div>
+                                 </div>
                                  <input type="hidden" name="list[5].text_content" class="text_content2">
                                  <input type="hidden" name="list[5].text_no" value="5">
                                  <div id="IMG54">
@@ -130,7 +141,10 @@
                                  </div>
                                  <input type="hidden" name="list[6].img_spath" class="img_spath3">
                                  <input type="hidden" name="list[6].text_no" value="6">
-                                 <div id="TXT54" contenteditable="true"></div>
+                                 <div id="TXT54" style="overflow: auto;">
+                                 	<a onclick="editor('txt54')" class="inner"><img alt="글 작성" src="./img/canvas/editor.png"></a>
+									<div id="txt54"></div>
+                                 </div>
                                  <input type="hidden" name="list[7].text_content" class="text_content3">
                                  <input type="hidden" name="list[7].text_no" value="7">
                               </div>
@@ -139,11 +153,12 @@
                      </form>
                   </div>
 
-                  <div class="footer-icon">
-                     <div class="insertIcon" onclick="insert()">
-                        <img id="insert" src="./img/check.png">
-                     </div>
-                  </div>
+                   <div class="footer-icon">
+				      <div class="insertIcon" onclick="insert()">
+				         <img id="insert" alt="등록하기" src="./img/canvas/check.png"
+				         	onmouseover="this.src='./img/canvas/check-over.png';"
+				         	onmouseout="this.src='./img/canvas/check.png';">
+    			  </div>
 
                </div>
             </div>

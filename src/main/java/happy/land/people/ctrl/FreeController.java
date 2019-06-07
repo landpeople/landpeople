@@ -43,12 +43,17 @@ public class FreeController {
 	@Autowired
 	private ILPCanvasService canvasService;
 	
+	@RequestMapping(value="/editor.do", method=RequestMethod.GET)
+	public String editorPopUp(String id, Model model) {
+		model.addAttribute("id", id);
+		return "/canvas/insertFreeCanvasEditor";
+	}
+	
 	@RequestMapping(value="/upload.do", method=RequestMethod.POST)
 	public String uploadPage(HttpSession session,String nowPageNo,String selectType){
     	// 페이지 번호 , 캔버스 id  
-		System.out.println("타입 : "+selectType);
     	String sketch_id = (String)session.getAttribute("sketch_id");
-    	LPCanvasDto dto = new LPCanvasDto("0001", sketch_id, "임시 타이틀", "임시 내용(한글을 사랑하자)", selectType, nowPageNo);
+    	LPCanvasDto dto = new LPCanvasDto("0", sketch_id, "임시 타이틀", selectType, nowPageNo);
     	session.setAttribute("canvas", dto);    	
 		return "canvas/insertFreeCanvas_"+(Integer.parseInt(selectType)-1);
 	}
@@ -70,7 +75,6 @@ public class FreeController {
 		
 		try {
 			inputStream = uploadfile.getInputStream();
-			//WebUtils : spring에서 제공하는 객체로 session에 담긴 여러가지 정보를 활용하게 한다.
 			String path = WebUtils.getRealPath(request.getSession().getServletContext(), "/tempFolder");
 			System.out.println("실제 업로드 경로 : "+path);
 			
@@ -113,24 +117,18 @@ public class FreeController {
 	
 	@RequestMapping(value="/insertData.do", method=RequestMethod.POST)
 	public String insertData(LPTextDto cdto, HttpSession session, HttpServletRequest request) {
-		log.info("dto list 사이즈"+cdto.getList().size());
-		
 		boolean isc = false;
 		
-		// 캔버스 생성 부분 
+		// 캔버스 생성 
     	LPCanvasDto canvasDto =  (LPCanvasDto)session.getAttribute("canvas"); 
-    	System.out.println("캔버스 dto :"+canvasDto);
     	int chk = canvasService.canvasInsert(canvasDto);
+    	System.out.println("캔버스 dto : "+canvasDto.toString());
     	String canvasID = canvasService.canvasSelectID(canvasDto);
     	canvasDto.setCan_id(canvasID);
-    	
+    	System.out.println("set canvasid 캔버스 dto : "+canvasDto.toString());
 		
 		for (LPTextDto dto:cdto.getList()) {
-			System.out.println(dto.toString());
-			System.out.println("------------공백 값 : "+StringUtils.isBlank(dto.getImg_spath()));
-			
 			//썸네일 생성
-			//컨트롤러로 이동할 예정(request 객체를 DAO에서 못 받아 올 수 있기 때문에 완료 후 수정시 실행)
 			if(dto.getImg_spath()!=null && !StringUtils.isBlank(dto.getImg_spath())) {//이미지 DB 저장
 				String origianlImgPath = dto.getImg_spath();
 				String thumbnailImgPath = makeTumbnail(origianlImgPath, request);
@@ -142,7 +140,6 @@ public class FreeController {
 				//텍스트 null 값 공백으로 치환
 				String text_content = StringUtils.defaultString(dto.getText_content());
 				dto.setText_content(text_content);
-				System.out.println("=====썸네일로 변경된 dto"+dto.toString());
 				
 				//DB에 저장
 				isc = textService.insertImgFile(dto);
@@ -164,8 +161,6 @@ public class FreeController {
 				//DB에 저장
 				isc = textService.insertImgFile(dto);				
 			}else if(StringUtils.isBlank(dto.getImg_spath())) {
-				System.out.println("흰 배경 이미지 DB에 삽입");
-				System.out.println("텍스트 공백으로 DB에 삽입");
 					dto.setCan_id(canvasDto.getCan_id());
 					//이미지에 공백 추가
 					dto.setImg_spath("　");
@@ -178,8 +173,6 @@ public class FreeController {
 		}
 
 		if(isc) {
-			// List<LPTextDto> textList = textService.textSelectOne("2");
-			// session.setAttribute("textList", textList);		 
 			 System.out.println("데이터베이스 정보 추가 성공");
 		}else {
 			System.out.println("데이터베이스 정보 추가 실패.");
@@ -195,7 +188,6 @@ public class FreeController {
 		try {
 			
 			if(!originalImgPath.contains("S_")) {
-				System.out.println("------------------썸네일이 아닌 사진");
 				String path = WebUtils.getRealPath(request.getSession().getServletContext(), "/tempFolder"); //원본 이미지 상대 경로
 				String originalImgName = originalImgPath.substring(originalImgPath.lastIndexOf("/")+1); //원본 파일 이름(확장자 포함)
 				File file = new File(path+"/"+originalImgName);
@@ -208,7 +200,6 @@ public class FreeController {
 				
 				//썸네일 업로드 경로
 				String thumbnailPath = WebUtils.getRealPath(request.getSession().getServletContext(), "/thumbnailImg"); //썸네일 상대 경로
-				System.out.println("===========실제 썸네일 업로드 경로 : "+thumbnailPath);
 				
 				//썸네일 폴더 생성
 				File folder = new File(WebUtils.getRealPath(request.getSession().getServletContext(), "/thumbnailImg"));
@@ -227,12 +218,9 @@ public class FreeController {
 				
 				//썸네일 상대 경로
 				thumbnailRealPath = request.getContextPath()+"/thumbnailImg/"+thumbnailSaveName;
-				System.out.println("썸네일 상대 경로 : "+thumbnailRealPath);
 			
 			}else {
-				System.out.println("------------------썸네일인 사진");
 				String path = originalImgPath;
-				System.out.println("변경 되지 않은 썸네일 경로 : "+path);
 				return path;
 			}
 			
@@ -248,8 +236,6 @@ public class FreeController {
 	public String updateData(LPTextDto tDto, HttpSession session, HttpServletRequest request) {
 		
 		LPCanvasDto cdto = (LPCanvasDto)session.getAttribute("canvas");
-		System.out.println("캔버스 값 : "+cdto.toString());
-		System.out.println("화면에서 수정을 위해 받은 값"+tDto.getList().toString());
 		
 		//캔버스 id 가져오기
 		String can_id = textService.canvasSelectID(cdto);
@@ -266,7 +252,6 @@ public class FreeController {
 			if(delCnt>0) {
 				
 				if(dto.getImg_spath()!=null && !StringUtils.isBlank(dto.getImg_spath())) {
-					System.out.println("--------------이미지-----------");
 					//썸네일 생성 및 dto에 추가
 					String thumbnailPath = makeTumbnail(dto.getImg_spath(), request);
 					dto.setImg_spath(thumbnailPath);
@@ -282,7 +267,6 @@ public class FreeController {
 					textService.insertImgFile(dto);
 					
 				}else if(dto.getText_content()!=null && !StringUtils.isBlank(dto.getText_content())){
-					System.out.println("--------------텍스트-----------");
 					//이미지 경로 null로 치환 및 dto에 추가
 					String img_spath = StringUtils.defaultString(dto.getImg_spath());
 					dto.setImg_spath(img_spath);
@@ -303,8 +287,6 @@ public class FreeController {
 					textService.insertImgFile(dto);
 					
 				}else if(StringUtils.isBlank(dto.getImg_spath())) {
-						System.out.println("기본 이미지로 공백으로 치환");
-						System.out.println("텍스트 공백으로 DB에 삽입");
 						
 						//캔버스 id 추가
 						dto.setCan_id(can_id);
