@@ -1,22 +1,21 @@
 @charset "UTF-8";
 
 .head-title{
-	display:flex;
+/* 	display:flex; */
 	border-bottom : 1px solid #e6e6e6;
 	height: 80px;
 	margin-bottom: 20px;
 }
 
 .title{
-	width: 200px;
-	height : 20px;
+	float : left;
 	margin-top : 50px;
 	font-size: medium;
  }
  
 .back{
 	float : left;
-	margin-bottom : 30px;
+	margin : 10px 0px 30px 10px;
 	width: 32px;
 	height: 32px;
 	cursor: pointer;
