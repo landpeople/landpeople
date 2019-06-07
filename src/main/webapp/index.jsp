@@ -43,15 +43,19 @@
          </a>
 
          <c:if test="${not empty ldto}">
-            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-lp-success shadow-sm" data-toggle="modal" data-target="#logoutModal">
-               <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>Logout
-            </a>
+            <div class="lp-nav-btn">
+	           <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-lp-success shadow-sm lp-write-btn" data-toggle="modal" data-target="#logoutModal">
+	              <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>Logout
+	           </a>
+            </div>
          </c:if>
 
          <c:if test="${empty ldto}">
-            <a href="./loginPage.do" class="d-none d-sm-inline-block btn btn-sm btn-lp-success shadow-sm">
-               <i class="fas fa-sign-in-alt fa-sm fa-fw mr-2"></i>Login
-            </a>
+            <div class="lp-nav-btn">
+	           <a href="./loginPage.do" class="d-none d-sm-inline-block btn btn-sm btn-lp-success shadow-sm lp-write-btn">
+	              <i class="fas fa-sign-in-alt fa-sm fa-fw mr-2"></i>Login
+	           </a>
+			</div>
          </c:if>
 
 <!--          <li class="nav-item active"><a class="nav-link" href="./index.jsp"> -->
