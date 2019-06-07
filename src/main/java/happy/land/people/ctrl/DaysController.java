@@ -248,7 +248,7 @@ public class DaysController {
 	    public String insertDaysFrom(HttpSession session,String nowPageNo){
 	    	// 페이지 번호 , 캔버스 id     	
 	    	String sketch_id = (String)session.getAttribute("sketch_id");
-	    	LPCanvasDto dto = new LPCanvasDto("0001", sketch_id, "제목은 대충", "내용도 아무거나", "1", nowPageNo);
+	    	LPCanvasDto dto = new LPCanvasDto("0001", sketch_id, "제목은 대충", "1", nowPageNo);
 	    	session.setAttribute("canvas", dto);
 	    	return "canvas/insertDaysCanvas";
 	    }

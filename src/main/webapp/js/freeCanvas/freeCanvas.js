@@ -6,12 +6,23 @@ $('#mybook').booklet({
     pageNumbers : false
 });		
 	
-var ids = $("div[id*='TXT']");
+var text = $("div[id*='txt']");
 var imgs =$("div[id*='IMG']");
-//var editor = new Array(ids.length);
 var subImgClass;	
 
 $(document).ready(function() {
+	//에디터 버튼
+	var inner = $(".inner");
+	inner.css('opacity', '0');
+	
+	inner.mouseover(function(){
+		$(this).css('opacity', '1');
+	});
+	
+	inner.mouseout(function(){
+		$(this).css('opacity', '0');
+	});
+	
 	//이미지 업로드
 	$(".file").on("change", function(){
 		var imgClass = $(this).attr("id");
@@ -54,6 +65,12 @@ function fileUpload(subImgClass) {
 		}
 	});
 }
+
+//에디터 팝업창
+function editor(id){
+	window.open('./editor.do?id='+id,'글 편집',
+			'width=600, height=500, resizable=no, fullscreen=no, left=20, top=20');
+}
 		
 //확장자 확인 (업로드할 수 있는 확장자일시 true)
 function extension(file){
@@ -68,10 +85,10 @@ function extension(file){
 		
 //입력
 function insert() {
-//	for (var i = 0; i < editor.length; i++) {
-//		var text_content = $("input[class=text_content"+i+"]");
-//		text_content.val(editor[i].getHtml());
-//	}
+	for (var i = 0; i < text.length; i++) {
+		var text_content = $("input[class=text_content"+i+"]");
+		text_content.val(text.eq(i).html());
+	}
 			
 	var frm = document.getElementById("frm");
 	frm.action = './insertData.do';
@@ -81,10 +98,10 @@ function insert() {
 
 //수정
 function update() {
-//	for (var i = 0; i < editor.length; i++) {
-//		var text_content = $("input[class=text_content"+i+"]");
-//		text_content.val(editor[i].getHtml());
-//	}
+	for (var i = 0; i < text.length; i++) {
+		var text_content = $("input[class=text_content"+i+"]");
+		text_content.val(text.eq(i).html());
+	}
 	
 	var frm = document.getElementById("frm");
 	frm.action = './updateFreeCanvas.do';

@@ -26,19 +26,12 @@
 
 <link rel="stylesheet" type="text/css" href="./css/sweetalert.css">
 
-<!-- toast editor -->
-<link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor.css"></link>
-<link rel="stylesheet" href="https://uicdn.toast.com/tui-editor/latest/tui-editor-contents.css"></link>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.33.0/codemirror.css"></link>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css"></link>
-<script src="https://uicdn.toast.com/tui-editor/latest/tui-editor-Editor-full.js"></script>
-
 <!-- Custom styles for this template-->
 <link href="./css/theme/sb-admin-2.css" rel="stylesheet">
 <link href="./css/theme/lp-template.css" rel="stylesheet">
 <link href="./css/sketch/modal.css" rel="stylesheet">
-<link rel="stylesheet" href="./css/freeCanvasLayout.css">
-<link rel="stylesheet" href="./css/canvas/lp-freeCanvas-style.css">
+<link rel="stylesheet" href="./css/canvas/freeCanvas-Layout.css">
+<link rel="stylesheet" href="./css/canvas/freeCanvas-style.css">
 
 </head>
 
@@ -74,11 +67,13 @@
                <div class="lp-other-content shadow-lg">
 
                   <div class="head-title">
-                     <div class="back" onclick="javascript:history.back(-1)">
-                        <i class="fas fa-reply fa-2x"></i>
-                     </div>
-                     <div class="title">나홀로 떠나는 제주도 여행</div>
-                  </div>
+                  	<div class="back" onclick="javascript:history.back(-1)">
+                      <img alt="뒤로가기" src="./img/canvas/back.png"
+							onmouseover="this.src='./img/canvas/back-over.png';"
+							onmouseout="this.src='./img/canvas/back.png';">
+					</div>
+					<div class="title">나홀로 떠나는 제주도 여행</div>
+            	  </div>
 
                   <div class="article-canvasContent">
                      <form method="post" enctype="multipart/form-data" name="frm" id="frm">
@@ -86,8 +81,9 @@
                            <!-- 왼쪽  -->
                            <div id="Left-Side2">
                               <div id="LS_TContainer2">
-                                 <div id="TXT21">
-                                    <textarea style="width: 100%; height: 100%; resize: none;"><%=list.get(0).getText_content()%></textarea>
+                                 <div id="TXT21" style="overflow: auto;">
+                                	 <a onclick="editor('txt21')" class="inner"><img alt="글 작성" src="./img/canvas/editor.png"></a>
+									<div id="txt21"><%=list.get(0).getText_content()%></div>
                                  </div>
                                  <input type="hidden" name="list[0].text_content" class="text_content0" value="<%=list.get(0).getText_content()%>">
                                  <input type="hidden" name="list[0].text_no" value="0">
@@ -122,8 +118,9 @@
                               </div>
                               <input type="hidden" name="list[4].img_spath" class="img_spath3" value="<%=list.get(4).getImg_spath()%>">
                               <input type="hidden" name="list[4].text_no" value="4">
-                              <div id="TXT22">
-                                 <textarea style="width: 100%; height: 100%; resize: none;"><%=list.get(5).getText_content()%></textarea>
+                              <div id="TXT22" style="overflow: auto;">
+                             	 <a onclick="editor('txt22')" class="inner"><img alt="글 작성" src="./img/canvas/editor.png"></a>
+								 <div id="txt22"><%=list.get(5).getText_content()%></div>
                               </div>
                               <input type="hidden" name="list[5].text_content" class="text_content1" value="<%=list.get(5).getText_content()%>">
                               <input type="hidden" name="list[5].text_no" value="5">
@@ -132,14 +129,17 @@
                      </form>
                   </div>
 
-                  <div class="footer-icon">
-                     <div class="insertIcon" onclick="update()">
-                        <img id="insert" src="./img/check.png">
-                     </div>
-                  </div>
+              <div class="footer-icon">
+				   <div class="insertIcon" onclick="update()">
+				      <img id="insert" alt="등록하기" src="./img/canvas/check.png"
+				        onmouseover="this.src='./img/canvas/check-over.png';"
+				        onmouseout="this.src='./img/canvas/check.png';">
+				   </div>
+    		  </div>
 
 
 
+               </div>
                </div>
             </div>
             <!--End of Page LandPeople Content Area -->
@@ -147,6 +147,5 @@
             <!-- End of Page Wrapper -->
          </div>
       </div>
-   </div>
 </body>
 </html>
