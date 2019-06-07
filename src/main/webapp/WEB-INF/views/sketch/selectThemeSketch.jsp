@@ -75,26 +75,28 @@ console.log('${sketchBook}');
                         <h1 class="h2 mb-4 text-gray-800 lp-content-title">${themeTitle}</h1>
                      </div>
                      <div class="sketckBookScroll">
-                        <div class="bestThemeContent"><!-- 좋아요 카운트 top 3 스케치북  -->
-                           <c:choose>
-                              <c:when test="${fn:length(maxLikeSketchBook) eq 0}">
-                                                                              좋아요한 스케치북이 없습니다.
-                              </c:when>
-                              <c:otherwise>
-                                  <c:forEach var="item" items="${maxLikeSketchBook}">
-                                      <div class="single-sketchbook">
-                                        <div class="hovereffect2">
-                                            <img class="img-responsive" src="${item.sketch_spath }" alt="">
-                                            <div class="overlay2">
-                                               <h2>Hover effect 4</h2>
-                                               <a class="info" href="#">link here</a>
-                                            </div>
-                                        </div>
-                                      </div>
-                                   </c:forEach>                                   
+                     	<c:choose>
+                           	<c:when test="${fn:length(maxLikeSketchBook) eq 0}">
+                               	<div class="bestThemeContent-none"><!-- 좋아요 카운트 top 3 스케치북  -->
+                                      <h2>좋아요한 스케치북이 없습니다.</h2>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                       		<div class="bestThemeContent"><!-- 좋아요 카운트 top 3 스케치북  -->
+                                <c:forEach var="item" items="${maxLikeSketchBook}">
+		                           <div class="single-sketchbook">
+		                              <div class="hovereffect2">
+		                                           <img class="img-responsive" src="${item.sketch_spath }" alt="">
+		                                            <div class="overlay2">
+		                                               <h2>Hover effect 4</h2>
+		                                               <a class="info" href="#">link here</a>
+		                                            </div>
+		                                        </div>
+		                                      </div>
+                                 		</c:forEach>                                   
+                        		</div>
                               </c:otherwise>
                            </c:choose>
-                        </div>
                         <div class="themeContent">
                            <c:forEach var="item" items="${sketchBook}">
                              <div class="single-sketchbook">
