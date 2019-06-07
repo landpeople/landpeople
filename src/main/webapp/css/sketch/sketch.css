@@ -26,7 +26,7 @@
 
 .sketckBookScroll {
 	width: 100%;
-	height:100%;
+	height: 100%;
 	overflow-y: auto;
 }
 
@@ -34,17 +34,19 @@
 .sketchBookContent {
 	display: grid; /*하위 요소들은 grid로 정렬*/
 	grid-template-columns: repeat(3, 1fr);
+	grid-auto-rows: 230px;
 	grid-gap: 0.3rem;
-	height:700px;
+	height: 700px;
 	width: 100%;
 	padding: 0 20px;
 	/*append로 스크롤을 붙이려면 height를 지정해줘야함*/
-	overflow: hidden;
+	overflow-y: hidden;
 }
 
 .allThemeContent {
 	width: 100%;
 	height: 700px;
+	padding: 0 20px;
 	overflow: hidden;
 }
 
@@ -52,20 +54,16 @@
 	display: grid;
 	grid-template-rows: repeat(1, 1fr);
 	grid-template-columns: repeat(1, 1fr);
-	padding : 0 20px;
 	width: 100%;
 	height: 230px;
-	padding: 0 20px
 }
 
 .bestThemeContent {
 	display: grid;
-	grid-template-rows: repeat(3, 1fr);
 	grid-template-columns: repeat(3, 1fr);
-	padding: 0 20px;
+	grid-auto-rows: 230px;
 	width: 100%;
 	grid-gap: 0.3rem;
-	padding: 0 20px;
 }
 
 .themeContent {
@@ -74,7 +72,6 @@
 	grid-gap: 0.3rem;
 	width: 100%;
 	margin-top: 0.3rem;
-	padding: 0 20px;
 }
 
 .single-sketchbook {

@@ -13,9 +13,9 @@ html, body{
 
 /* lp custom background */
 .bg-gradient-lp-primary {
-	background-color: #1764ac;
-	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(10%, #1764ac), to(#155592));
-	background-image: linear-gradient(180deg, #1764ac 10%, #155592 100%);
+	background-color: #19547b;
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(10%, #19547b), to(#155592));
+	background-image: linear-gradient(180deg, #19547b 10%, #155592 100%);
 	background-size: cover;
 }
 

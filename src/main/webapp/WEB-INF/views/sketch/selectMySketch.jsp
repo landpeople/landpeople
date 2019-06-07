@@ -177,7 +177,7 @@ $("document").ready(
 			      var contentH = $('.sketchBookContent').height(); //문서 전체 내용을 갖는 div의 높이
 			    
 			        console.log(scrollT +" : " + scrollH + ":" + contentH);
-			        if(scrollT + scrollH + 1  >= contentH) { // 스크롤바가 맨 아래에 위치할 때
+			        if(scrollT + contentH + 1  >= scrollH) { // 스크롤바가 맨 아래에 위치할 때
 			        	$("#infinityScroll").trigger("click");
 			        }
 			

@@ -74,7 +74,7 @@ console.log('${sketchBook}');
                      <div class="lp-content-header">
                         <h1 class="h2 mb-4 text-gray-800 lp-content-title">${themeTitle}</h1>
                      </div>
-                     <div class="sketckBookScroll">
+                     <div class="allThemeContent scroll">
                      	<c:choose>
                            	<c:when test="${fn:length(maxLikeSketchBook) eq 0}">
                                	<div class="bestThemeContent-none"><!-- 좋아요 카운트 top 3 스케치북  -->
