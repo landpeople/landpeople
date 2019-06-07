@@ -38,7 +38,8 @@
 <link href="./css/sketch/modal.css" rel="stylesheet">
 
 <!-- 자유 캔버스 레이아웃  -->
-<link rel="stylesheet" href="css/freeCanvasLayout.css">
+<link rel="stylesheet" href="./css/canvas/insert-freeCanvas-Layout.css">
+<link rel="stylesheet" href="./css/canvas/freeCanvas-style.css">
 <!-- font awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 
@@ -108,20 +109,20 @@
                   <div>마지막페이지 입니다.</div>
                   <div>마지막페이지 입니다.</div>                 
                </div>
-<%--                <c:choose> --%>
-<%--                <c:when test="${ldto.user_email eq sketch_email}">                 --%>
+               <c:choose>
+               <c:when test="${ldto.user_email eq sketch_email}">                
                   <button data-toggle="modal" data-target="#myModal" style="width:64px; height:64px; border: none; background: url('./img/canvas/addPage.png')" title="페이지 추가"></button>
                   <input type="button" style="width:64px; height:64px; border: none; background: url('./img/canvas/editPage.png')" id="pageUpdate" title="페이지 수정"></input>
                  <input type="button" style="width:64px; height:64px; border: none; background: url('./img/canvas/removePage.png')" id="pageDelete" title="페이지 삭제"></input>
-<%--                </c:when>       --%>
-<%--                 <c:otherwise>                 --%>
-<!--                     <div style="float: right; margin-right: 10px; "> -->
-<%--                 <a href="#" onclick="like('${ldto.user_email}','${sketch_id}')"><img id="likeState" alt="likeEmpty" src="./img/LikeBefore.png" title="좋아요"></a>                   --%>
-<%--                <a href="#" onclick="scrape('${ldto.user_email}','${sketch_id}')"> <img id="scrapState" alt="scrape" src="./img/scrape.png" title="스크랩"> </a> --%>
-<!--                 </div>   -->
-<%--              </c:otherwise>        --%>
+               </c:when>      
+                <c:otherwise>                
+                    <div style="float: right; margin-right: 10px; ">
+                <a href="#" onclick="like('${ldto.user_email}','${sketch_id}')"><img id="likeState" alt="likeEmpty" src="./img/LikeBefore.png" title="좋아요"></a>                  
+               <a href="#" onclick="scrape('${ldto.user_email}','${sketch_id}')"> <img id="scrapState" alt="scrape" src="./img/scrape.png" title="스크랩"> </a>
+                </div>  
+             </c:otherwise>       
                
-<%--                </c:choose> --%>
+               </c:choose>
 
                <form action="./insertDaysForm.do" onsubmit="return false" method="post" id="frm">
                   <input type="hidden" value=1  id="nowPageNo" name="nowPageNo">
@@ -191,7 +192,6 @@
          // 현재 제목을 가져와서 해당 값을 넘김
          var titleContent = $(this).attr('title');       
          $('#selectType').val(titleContent.substr(0,1)); 
-         alert($('#selectType').val());
       });      
       // 엑셀로 다운로드
       $("#downloadExcel").click(function() {
@@ -201,43 +201,46 @@
       });
       // 수정 버튼 클릭시
       $("#pageUpdate").click(function() {
-         alert("수정");         
-         //location.href="./updateDaysForm.do?pageNo="+pageNo;       
-         var updateForm = $('<form></form>');
-         updateForm.attr('action', './updateCanvas.do');
-          updateForm.attr('method', 'post');        
-          updateForm.appendTo('body');     
-          // 페이지 번호 받아옴
-          var pageNo = $('<input type="hidden" name="nowPageNo">');
-          pageNo.val($('#nowPageNo').val());
-          // 해당 캔버스의 타입을 받아옴
-          var typeNo = $('<input type="hidden" name="selectType">');
-          typeNo.val($('#selectType').val());
-          // 세션에 등록된 스케치북 받아오기       
-          updateForm.append(pageNo);
-          updateForm.append(typeNo);
-          updateForm.submit();   
+    	 if(confirm("수정하시겠습니까?")){
+	         //location.href="./updateDaysForm.do?pageNo="+pageNo;       
+	         var updateForm = $('<form></form>');
+	         updateForm.attr('action', './updateCanvas.do');
+	          updateForm.attr('method', 'post');        
+	          updateForm.appendTo('body');     
+	          // 페이지 번호 받아옴
+	          var pageNo = $('<input type="hidden" name="nowPageNo">');
+	          pageNo.val($('#nowPageNo').val());
+	          // 해당 캔버스의 타입을 받아옴
+	          var typeNo = $('<input type="hidden" name="selectType">');
+	          typeNo.val($('#selectType').val());
+	          // 세션에 등록된 스케치북 받아오기       
+	          updateForm.append(pageNo);
+	          updateForm.append(typeNo);
+	          updateForm.submit();   
+    	 }
       });
+      
       //삭제 버튼 클릭시
       $("#pageDelete").click(function() {       
          var pageNo = $('#nowPageNo').val();    
-         alert(pageNo);
-         $.ajax({
-            url : "deleteCanvas.do", //요청 url
-            type : "post", // 전송 처리방식
-
-            asyn : false, // true 비동기 false 동기           
-
-            data : {"nowPageNo" : pageNo}, // 서버 전송 파라메터
-            dataType : "json", // 서버에서 받는 데이터 타입
-            success : function(msg) {
-                var sketch_id = msg.result;
-                location.href ="detailCanvas.do?sketch_id="+sketch_id;
-            },
-            error : function() {
-                alert("삶의 지혜가 부족하다.");
-            }
-          });     
+         if(confirm(pageNo+"번 페이지를 삭제하시겠습니까? \n삭제된 페이지는 복원할 수 없습니다.")){
+	         $.ajax({
+	            url : "deleteCanvas.do", //요청 url
+	            type : "post", // 전송 처리방식
+	
+	            asyn : false, // true 비동기 false 동기           
+	
+	            data : {"nowPageNo" : pageNo}, // 서버 전송 파라메터
+	            dataType : "json", // 서버에서 받는 데이터 타입
+	            success : function(msg) {
+	                var sketch_id = msg.result;
+	                location.href ="detailCanvas.do?sketch_id="+sketch_id;
+	            },
+	            error : function() {
+	                alert("삶의 지혜가 부족하다.");
+	            }
+	          });     
+         }
       });
       
       // 등록 버튼 클릭시
