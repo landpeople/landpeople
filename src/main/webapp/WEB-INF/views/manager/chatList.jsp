@@ -59,8 +59,8 @@ $(document).ready(function() {
             colModel: [
             	{ name: 'CHR_ID', index: 'chr_id', key: true, width: 180, align: 'center', hidden: true },
                 { name: 'CHR_RECEIVER', index: 'chr_receiver', width: 180, align: 'center' },
-                { name: 'CHC_MESSAGE', index: 'chc_message', width: 456, align: 'center' },
-                { name: 'CHC_REGDATE', index: 'chc_regdate', width: 158, align: 'center' }
+                { name: 'CHC_MESSAGE', index: 'chc_message', width: 455, align: 'center' },
+                { name: 'CHC_REGDATE', index: 'chc_regdate', width: 155, align: 'center' }
                        ],
             height: 504,
             rowNum: 10,
@@ -85,20 +85,12 @@ $(document).ready(function() {
            $("#jqGrid").setGridParam({
                datatype : "json",
                postData : {"param" : JSON.stringify(jsonObj), "param2" : JSON.stringify(jsonObj2)},
-//              loadComplete : function(data) {
-//              },
-//              gridComplete : function() {
-//              }
         }).trigger("reloadGrid"); // jqgrid가 데이터를 가져온 후 리로드를 해줘야 그리드에 적용이 되기 때문에 작업이 완료된 후 reload를 해줌
     });
 
    // 다중 삭제
    function mutidel(){
 	   		var ids = jQuery("#jqGrid").jqGrid('getGridParam', 'selarrrow');
-//          var chksVal = [];
-//          $('input:checkbox[class="cbox"]:checked').each(function () {
-//             chksVal.push($(this).val());
-//          });
             location.href="./deleteChatroom.do?chksVal="+ids;
    }
 </script>            
@@ -121,16 +113,7 @@ $(document).ready(function() {
 				<div id="jqGridDiv">
                   <h3>채팅 리스트</h3>
                   <hr>
-                  <div id="selectDiv">
-                     <select id="selectId">
-                        <option value="" selected="selected">전체</option>
-                        <option value="chat_member">상대방</option>
-                     </select>
-                     <input id="input" type="text" placeholder="검색어를 입력하세요" value="">
-                     <button id="inputBtn" onclick="search()"><i class="fas fa-search"></i></button>
-
-                     <button id="mutidel" onclick="mutidel()">채팅방 나가기</button>
-                  </div>
+			   	  <button id="mutidel" class="" onclick="mutidel()">채팅방 나가기</button>
                   <hr>
                   <table id="jqGrid"></table>
                   <div id="jqGridPager"></div>

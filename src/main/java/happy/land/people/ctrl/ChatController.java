@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -357,12 +358,16 @@ public class ChatController implements ServletConfigAware {
         List<List<Map<String, String>>> jqGridList = chatService.selectChr(lDto, id);
         Map<String, Integer> jqGridListCnt = chatService.selectChrListCnt(lDto, id);
 	        HashMap<String, Object> resMap = new HashMap<String, Object>();
-	        System.out.println("루피!! = "+jqGridList.get(0));
-	        System.out.println("루피!! = "+jqGridList.get(1));
+	        
+	        // 복잡한 구조의 list안의 list인 jqGridList를 그냥 List로 바꿔줌
+	        List<Map<String, String>> listst = new ArrayList<Map<String, String>>();
+	        for (int i = 0; i < jqGridList.size(); i++) {
+	        	listst.add(jqGridList.get(i).get(0));
+			}
 	        
 	        // 페이징
 	        resMap.put("records", jqGridListCnt.get("TOTALTOTCNT"));
-	        resMap.put("rows", jqGridList);
+	        resMap.put("rows", listst);
 	        resMap.put("page", request.getParameter("page"));
 	        System.out.println("page from request "+request.getParameter("page"));
 	        resMap.put("total", jqGridListCnt.get("TOTALPAGE"));
@@ -389,10 +394,10 @@ public class ChatController implements ServletConfigAware {
 		LPUserDto ldto = (LPUserDto) session.getAttribute("ldto");
 		String id = ldto.getUser_nickname();
 		
-//		for (int i = 0; i < chrIds.length; i++) {
-//			iManagerService.deleteChatroom(chrIds[i], id);
-//			System.out.println(chrIds[i]+"번 채팅방 삭제 쿼리 실행!");
-//		}
+		for (int i = 0; i < chrIds.length; i++) {
+			chatService.deleteChatroom(chrIds[i], id);
+			System.out.println(chrIds[i]+"번 채팅방 삭제 쿼리 실행!");
+		}
 		
 		return "forward:/jqgrid3.do";
 	}
