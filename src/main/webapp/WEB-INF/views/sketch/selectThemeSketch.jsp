@@ -74,7 +74,7 @@ console.log('${sketchBook}');
                      <div class="lp-content-header">
                         <h1 class="h2 mb-4 text-gray-800 lp-content-title">${themeTitle}</h1>
                      </div>
-                     <div class="allThemeContent">
+                     <div class="sketckBookScroll">
                         <div class="bestThemeContent"><!-- 좋아요 카운트 top 3 스케치북  -->
                            <c:choose>
                               <c:when test="${fn:length(maxLikeSketchBook) eq 0}">
@@ -101,8 +101,8 @@ console.log('${sketchBook}');
                                   <div class="hovereffect2">
                                       <img class="img-responsive" src="${item.sketch_spath }" alt="">
                                          <div class="overlay2">
-                                            <h2>Hover effect 4</h2>
-                                               <a class="info" href="#">link here</a>
+                                            <h2>${item.sketch_title} | <i class="fas fa-heart"></i><span> ${sketchLike[item.sketch_id]}명</span></h2>
+                                               <a class="info" href="#" onclick="goCanvas('${item.sketch_id}')">link here</a>
                                          </div>
                                   </div>
                              </div>
@@ -145,30 +145,25 @@ console.log('${sketchBook}');
             }
          });
             
-            
-            
-      $(".content").scroll(
+      $(".sketckBookScroll").scroll(
             function(event){
          
-               var hh = $(".content").height();
-               var ee = $(".content").scrollTop();
+               var hh = $(this).height();
+               var ee = $(this).scrollTop();
                
-               var scHeight = $(".content").prop('scrollHeight');
+               var scHeight = $(".themeContent").prop('scrollHeight');
                
                if (scHeight - hh - ee < 1) {
                   $("#infinityScroll").trigger("click");
                }
          
       });
-   
    });
    
 
    
    function getSketchBook(pageNo){     
       var type = "${type}"
-            
-         
          $.ajax({
             url: "sketchBookPaging.do",
             type: "get",

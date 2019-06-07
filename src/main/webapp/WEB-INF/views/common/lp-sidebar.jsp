@@ -55,7 +55,7 @@
       </c:when>
        <c:when test="${ldto.user_auth eq 'U' or ldto.user_auth eq 'G' or ldto.user_auth eq 'N'}">
          <!-- Nav Item - My page Menu -->
-         <li class="nav-item"><a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+         <li class="nav-item"><a class="nav-link collapsed lp-write-btn" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
                <i class="fas fa-user"></i> <span>${ldto.user_nickname}</span>
             </a>
             <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">

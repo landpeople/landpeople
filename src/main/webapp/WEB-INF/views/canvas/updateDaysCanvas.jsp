@@ -32,8 +32,6 @@
 <link href="./css/theme/lp-template.css" rel="stylesheet">
 <link href="./css/sketch/modal.css" rel="stylesheet">
 
-<!-- 자유 캔버스 레이아웃  -->
-<link rel="stylesheet" href="css/freeCanvasLayout.css">
 <!-- font awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
 

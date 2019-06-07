@@ -31,8 +31,7 @@ ol {
 text-align: left;
 }
 </style>
-<body class="bg-gray-100">
-
+<body>
 <div>
    <div class="container">
       <!-- Outer Row -->
