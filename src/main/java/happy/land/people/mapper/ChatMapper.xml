@@ -76,21 +76,88 @@
 		WHERE CHR_SENDER = #{id} OR CHR_RECEIVER = #{id}
 	</select>
 	
-	<select id="selectChrListR" parameterType="java.util.Map" resultType="java.util.Map">
-		SELECT LPCR.CHR_ID AS CHR_ID, CHR_RECEIVER, CHC_MESSAGE, CHC_REGDATE FROM LPCHATROOM LPCR, LPCHATCONTENT LPCC
-		WHERE LPCR.CHR_ID = LPCC.CHR_ID AND CHR_SENDER = #{id} AND CHR_SOUT = 'F'
-			AND LPCC.CHC_ID = (SELECT MAX(CHC_ID) CHC_ID FROM LPCHATCONTENT
-								WHERE CHR_ID=#{chr_id} AND CHC_OUT='F'
-								GROUP BY CHR_ID)
+<!-- 	<select id="selectChrListR" parameterType="java.util.Map" resultType="java.util.Map"> -->
+<!-- 		SELECT LPCR.CHR_ID AS CHR_ID, CHR_RECEIVER, CHC_MESSAGE, CHC_REGDATE FROM LPCHATROOM LPCR, LPCHATCONTENT LPCC -->
+<!-- 		WHERE LPCR.CHR_ID = LPCC.CHR_ID AND CHR_SENDER = #{id} AND CHR_SOUT = 'F' -->
+<!-- 			AND LPCC.CHC_ID = (SELECT MAX(CHC_ID) CHC_ID FROM LPCHATCONTENT -->
+<!-- 								WHERE CHR_ID=#{chr_id} AND CHC_OUT='F' -->
+<!-- 								GROUP BY CHR_ID) -->
+<!--     </select> -->
+    
+    <select id="selectChrListR" parameterType="java.util.Map" resultType="java.util.Map">
+	     SELECT  a.*
+	          FROM  (
+		            SELECT  a.*,
+		                    ROWNUM rnum,
+		                    FLOOR((ROWNUM - 1) /#{rows} + 1) pageNumber
+		              FROM  (
+			                    SELECT LPCR.CHR_ID AS CHR_ID, CHR_RECEIVER, CHC_MESSAGE, CHC_REGDATE FROM LPCHATROOM LPCR, LPCHATCONTENT LPCC
+								WHERE LPCR.CHR_ID = LPCC.CHR_ID AND CHR_SENDER = #{id} AND CHR_SOUT = 'F'
+									AND LPCC.CHC_ID = (SELECT MAX(CHC_ID) CHC_ID FROM LPCHATCONTENT
+														WHERE CHR_ID=#{chr_id} AND CHC_OUT='F'
+														GROUP BY CHR_ID)
+			                      <if test='serviceImplYn != ""'>
+			                         <choose>
+			                             <when test='serviceImplYn == "chat_member"'>
+			                                 AND CHR_RECEIVER LIKE '%'||#{input}||'%'
+			                             </when>
+			                             <otherwise>
+			                             </otherwise>
+			                         </choose>
+			                    </if>
+			                 ORDER BY CHR_RECEIVER
+		                    ) a
+	                ) a
+	           WHERE  a.pageNumber = #{page}
+	        order by a.rnum
     </select>
     
-    <select id="selectChrListS" parameterType="java.util.Map" resultType="java.util.Map">
-    	SELECT LPCR.CHR_ID AS CHR_ID, CHR_SENDER AS CHR_RECEIVER, CHC_MESSAGE, CHC_REGDATE FROM LPCHATROOM LPCR, LPCHATCONTENT LPCC
-		WHERE LPCR.CHR_ID = LPCC.CHR_ID AND CHR_RECEIVER = #{id} AND CHR_ROUT = 'F'
-			AND LPCC.CHC_ID = (SELECT MAX(CHC_ID) CHC_ID FROM LPCHATCONTENT
-								WHERE CHR_ID=#{chr_id} AND CHC_OUT='F'
-								GROUP BY CHR_ID)
+<!--     <select id="selectChrListS" parameterType="java.util.Map" resultType="java.util.Map"> -->
+<!--     	SELECT LPCR.CHR_ID AS CHR_ID, CHR_SENDER AS CHR_RECEIVER, CHC_MESSAGE, CHC_REGDATE FROM LPCHATROOM LPCR, LPCHATCONTENT LPCC -->
+<!-- 		WHERE LPCR.CHR_ID = LPCC.CHR_ID AND CHR_RECEIVER = #{id} AND CHR_ROUT = 'F' -->
+<!-- 			AND LPCC.CHC_ID = (SELECT MAX(CHC_ID) CHC_ID FROM LPCHATCONTENT -->
+<!-- 								WHERE CHR_ID=#{chr_id} AND CHC_OUT='F' -->
+<!-- 								GROUP BY CHR_ID) -->
+<!--     </select> -->
+
+<select id="selectChrListS" parameterType="java.util.Map" resultType="java.util.Map">
+	     SELECT  a.*
+	          FROM  (
+		            SELECT  a.*,
+		                    ROWNUM rnum,
+		                    FLOOR((ROWNUM - 1) /#{rows} + 1) pageNumber
+		              FROM  (
+			                    SELECT LPCR.CHR_ID AS CHR_ID, CHR_SENDER AS CHR_RECEIVER, CHC_MESSAGE, CHC_REGDATE FROM LPCHATROOM LPCR, LPCHATCONTENT LPCC
+								WHERE LPCR.CHR_ID = LPCC.CHR_ID AND CHR_RECEIVER = #{id} AND CHR_ROUT = 'F'
+									AND LPCC.CHC_ID = (SELECT MAX(CHC_ID) CHC_ID FROM LPCHATCONTENT
+														WHERE CHR_ID=#{chr_id} AND CHC_OUT='F'
+														GROUP BY CHR_ID)
+			                      <if test='serviceImplYn != ""'>
+			                         <choose>
+			                             <when test='serviceImplYn == "chat_member"'>
+			                                 AND CHR_SENDER LIKE '%'||#{input}||'%'
+			                             </when>
+			                             <otherwise>
+			                             </otherwise>
+			                         </choose>
+			                    </if>
+			                 ORDER BY CHR_SENDER
+		                    ) a
+	                ) a
+	           WHERE  a.pageNumber = #{page}
+	        order by a.rnum
     </select>
+    
+    <select id="selectChrListCnt" parameterType="java.util.Map" resultType="java.util.Map">
+        SELECT count(*) totalTotCnt 
+        	,CEIL(count(*) / #{rows}) totalPage
+          FROM LPCHATROOM
+          WHERE CHR_RECEIVER = #{id} OR CHR_SENDER = #{id}
+<!--           <if test='serviceImplYn != ""'> -->
+<!--         	 AND CHR_SENDER LIKE '%'||#{input}||'%' -->
+<!--         	 </if> -->
+    </select>
+
     <!-- selectChr 끝 -->
     
     <select id="selectSender" parameterType="java.lang.String" resultType="java.lang.String">

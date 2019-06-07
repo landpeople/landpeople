@@ -76,7 +76,7 @@
                         <h6 class="collapse-header">Components</h6>
                         <a class="collapse-item" href="./jqgrid.do">Members list</a>
                         <a class="collapse-item" href="./jqgrid2.do">Member sketchbook list</a>
-                        <a class="collapse-item" href="./selectChatList.do">Admin chatroom</a>
+                        <a class="collapse-item" href="./jqgrid3.do">Admin chatroom</a>
                      </div>
                   </div></li>
             </c:when>
@@ -92,7 +92,7 @@
                         <a class="collapse-item" href="#" onclick="sketchSelectMine()">My sketchbook</a>
                         <a class="collapse-item" href="#" onclick="goScrapMine()">My scrapbook</a>
                         <input type="hidden" id="user_email" value="${ldto.user_email}">
-                        <a class="collapse-item" href="./selectChatList.do">My chatroom</a>
+                        <a class="collapse-item" href="./jqgrid3.do">My chatroom</a>
                      </div>
                   </div></li>
                <!-- Nav Item - Utilities Collapse Menu -->
