@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import happy.land.people.dto.ChatContentDto;
+import happy.land.people.dto.LPUserDto;
 
 @Service
 public class ChatServiceImpl implements IChatService {
@@ -61,14 +62,20 @@ public class ChatServiceImpl implements IChatService {
 	}
 	
 	@Override
-	public List<List<Map<String, String>>> selectChr(String id) {
-		logger.info("ManagerServiceImpl selectChr");	
-		return dao.selectChr(id);
+	public List<List<Map<String, String>>> selectChr(LPUserDto dto, String id) {
+		logger.info("● Service selectChr");	
+		return dao.selectChr(dto, id);
+	}
+	
+	@Override
+	public Map<String, Integer> selectChrListCnt(LPUserDto dto, String id) {
+		logger.info("● Service selectChrListCnt");
+		return dao.selectChrListCnt(dto, id);
 	}
 
 	@Override
 	public boolean deleteChatroom(String chrId, String id) {
-		logger.info("ManagerServiceImpl deleteChatroom");	
+		logger.info("● Service deleteChatroom");	
 		return dao.deleteChatroom(chrId, id);
 	}
 }

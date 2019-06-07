@@ -1,3 +1,6 @@
+<%@page import="org.springframework.beans.factory.annotation.Autowired"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
@@ -25,27 +28,80 @@
 <link href="./css/theme/sb-admin-2.css" rel="stylesheet">
 <link href="./css/theme/lp-template.css" rel="stylesheet">
 <link href="./css/sketch/modal.css" rel="stylesheet">
+<link rel="stylesheet" href="./css/manager/manager.css">
+<link rel="stylesheet" type="text/css" media="screen" href="./css/jquery-ui.css" />
+<link rel="stylesheet" type="text/css" media="screen" href="./css/manager/ui.jqgrid.css" />
 
 </head>
 
-<script src="./js/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="./js/BoardList.js"></script>
+<script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
+<script type="text/javascript" src="./js/grid.locale-kr.js"></script>
+<script type="text/javascript" src="./js/jquery.jqGrid.min.js"></script>
 <script type="text/javascript">
-   function allSel(bool) {
-      var chks = document.getElementsByName("chk");
-      for (var i = 0; i < chks.length; i++) {
-         chks[i].checked = bool;
-      }
-   }
-   
-   function mutidel(){
-         var chksVal = [];
-         $('input:checkbox[name="chk"]:checked').each(function () {
-            chksVal.push($(this).val());
-         });
-            location.href="./deleteChatroom.do?chksVal="+chksVal;
-      }
-</script>
+$(document).ready(function() {
 
+    var cnames = ['아이디', '상대방', '최근메시지', '날짜'];
+
+    $("#jqGrid").jqGrid({
+
+         url: "./selectChatList.do",
+            datatype: "local",
+            cellEdit: true,
+            cellsubmit: "remote",
+            jsonReader: {
+             records: "records",
+             rows: "rows",
+             page: "page",
+             total: "total"
+            },
+            colNames: cnames,
+            colModel: [
+            	{ name: 'CHR_ID', index: 'chr_id', key: true, width: 180, align: 'center', hidden: true },
+                { name: 'CHR_RECEIVER', index: 'chr_receiver', width: 180, align: 'center' },
+                { name: 'CHC_MESSAGE', index: 'chc_message', width: 456, align: 'center' },
+                { name: 'CHC_REGDATE', index: 'chc_regdate', width: 158, align: 'center' }
+                       ],
+            height: 504,
+            rowNum: 10,
+            rowList: [10,20,30],
+            pager: '#jqGridPager',
+            rownumbers  : true, // row 넘버를 보여줄지 말지
+            viewrecords : true, // 현재 몇 페이지며 총 데이터가 몇개인지를 보여 주는 설정        
+            emptyrecords : "데이터가 없습니다.",
+            multiselect : true,
+            loadonce : false // loadonce가 true면 (정렬이 되면) 페이징이 안됨...
+        });
+    });
+
+    $(document).ready(function() {
+
+        var jsonObj = {};
+        var jsonObj2 = {};
+           
+          jsonObj.serviceImplYn = $("#selectId").val();
+          jsonObj2.input = $("#input").val();
+           
+           $("#jqGrid").setGridParam({
+               datatype : "json",
+               postData : {"param" : JSON.stringify(jsonObj), "param2" : JSON.stringify(jsonObj2)},
+//              loadComplete : function(data) {
+//              },
+//              gridComplete : function() {
+//              }
+        }).trigger("reloadGrid"); // jqgrid가 데이터를 가져온 후 리로드를 해줘야 그리드에 적용이 되기 때문에 작업이 완료된 후 reload를 해줌
+    });
+
+   // 다중 삭제
+   function mutidel(){
+	   		var ids = jQuery("#jqGrid").jqGrid('getGridParam', 'selarrrow');
+//          var chksVal = [];
+//          $('input:checkbox[class="cbox"]:checked').each(function () {
+//             chksVal.push($(this).val());
+//          });
+            location.href="./deleteChatroom.do?chksVal="+ids;
+   }
+</script>            
 <body id="page-top" class="scroll">
 
    <!-- Page Wrapper -->
@@ -62,20 +118,23 @@
             <!-- LandPeople Content Area -->
             <div class="lp-container">
                <div class="lp-other-content shadow-lg">
-               <table>
-                  <button onclick="mutidel()" >채팅방 나가기</button>
-                  <tr>
-                     <th><input type="checkbox" onclick="allSel(this.checked)"></th><th>상대방</th><th>최근메시지</th><th>날짜</th>
-                  </tr>
-                  <c:forEach var="list" items="${resultLists}" varStatus="status" >
-                     <tr>
-                        <td><input type="checkbox" name="chk" value="${list.get(0).get('CHR_ID')}"></td>
-                        <td>${list.get(0).get("CHR_RECEIVER")}</td>
-                        <td>${list.get(0).get("CHC_MESSAGE")}</td>
-                        <td>${list.get(0).get("CHC_REGDATE")}</td>
-                     </tr>
-                  </c:forEach>
-               </table>
+				<div id="jqGridDiv">
+                  <h3>채팅 리스트</h3>
+                  <hr>
+                  <div id="selectDiv">
+                     <select id="selectId">
+                        <option value="" selected="selected">전체</option>
+                        <option value="chat_member">상대방</option>
+                     </select>
+                     <input id="input" type="text" placeholder="검색어를 입력하세요" value="">
+                     <button id="inputBtn" onclick="search()"><i class="fas fa-search"></i></button>
+
+                     <button id="mutidel" onclick="mutidel()">채팅방 나가기</button>
+                  </div>
+                  <hr>
+                  <table id="jqGrid"></table>
+                  <div id="jqGridPager"></div>
+               </div>
                
                
                </div>
@@ -88,6 +147,3 @@
    </div>
 </body>
 </html>
-
-
-

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import happy.land.people.dto.ChatContentDto;
 import happy.land.people.dto.ChatUserDto;
+import happy.land.people.dto.LPUserDto;
 
 @Repository
 public class ChatDaoImpl implements IChatDao {
@@ -21,6 +24,7 @@ public class ChatDaoImpl implements IChatDao {
 
 	@Autowired
 	private SqlSessionTemplate sqlSession;
+	private HttpSession session;
 	private final String NS = "chat.";
 
 	@Override
@@ -123,23 +127,29 @@ public class ChatDaoImpl implements IChatDao {
 	}
 	
 	@Override
-	public List<List<Map<String, String>>> selectChr(String id) {
-		logger.info("ManagerDaoImpl selectChr");
+	public List<List<Map<String, String>>> selectChr(LPUserDto dto, String id) {
+		logger.info("● Repository selectChr");
 		List<List<Map<String, String>>> resultLists = new ArrayList<List<Map<String, String>>>();
 		List<Map<String, String>> lists = sqlSession.selectList(NS+"selectChr", id);
 			for (int i = 0; i < lists.size(); i++) {
 				if (lists.get(i).get("CHR_SENDER").equals(id)) { // SENDER가 나인 방의 채팅 상대, 최근 메시지, 날짜 조회
-					logger.info("ManagerDaoImpl selectChrListR");
+					logger.info("● Repository selectChrListR");
 					Map<String, String> map = new HashMap<String, String>();
 					map.put("id", id);
 					map.put("chr_id", lists.get(i).get("CHR_ID"));
+					map.put("rows", dto.getRows());
+					map.put("input", dto.getInput());
+					map.put("page", dto.getPage());
 					resultLists.add(sqlSession.selectList(NS+"selectChrListR", map));
 				} 
 				else if(lists.get(i).get("CHR_RECEIVER").equals(id)) { // RECEIVER가 나인 방의 채팅 상대, 최근 메시지, 날짜 조회
-					logger.info("ManagerDaoImpl selectChrListS");
+					logger.info("● Repository selectChrListS");
 					Map<String, String> map = new HashMap<String, String>();
 					map.put("id", id);
 					map.put("chr_id", lists.get(i).get("CHR_ID"));
+					map.put("rows", dto.getRows());
+					map.put("input", dto.getInput());
+					map.put("page", dto.getPage());
 					resultLists.add(sqlSession.selectList(NS+"selectChrListS", map));
 				}
 			}
@@ -153,22 +163,31 @@ public class ChatDaoImpl implements IChatDao {
 			}
 			// CHC_CONTENT의 태그들을 지워주고 내용만 잘라 줌 
 			for (int i = 0; i < resultLists.size(); i++) {
-				logger.info("ManagerDaoImpl CHC_CONTENT.substring");
+				logger.info("● Repository CHC_CONTENT.substring");
 				int start = resultLists.get(i).get(0).get("CHC_MESSAGE").indexOf("]")+1;
 				int last = resultLists.get(i).get(0).get("CHC_MESSAGE").lastIndexOf("</span>");
 				resultLists.get(i).get(0).replace("CHC_MESSAGE", resultLists.get(i).get(0).get("CHC_MESSAGE").substring(start, last)) ;
 			}
 			return resultLists;
 	}
+	
+	@Override
+	public Map<String, Integer> selectChrListCnt(LPUserDto dto, String id) {
+		logger.info("● Repository selectChrListCnt");
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("rows", dto.getRows());
+		map.put("id", id);
+		return sqlSession.selectOne(NS+"selectChrListCnt", map);
+	}
 
 	@Override
 	public boolean deleteChatroom(String chrId, String id) {
 		// 선택된 채팅방의 SENDER를 조회
-		logger.info("ManagerDaoImpl selectSender 20%");
+		logger.info("● Repository selectSender 20%");
 		String sender = sqlSession.selectOne(NS+"selectSender", chrId);
 		
 		// SENDER랑 내 아이디랑 같으면 SOUT을 T로 변경 아니면 ROUT을 T로 변경
-		logger.info("ManagerDaoImpl modifyChrout 40%");
+		logger.info("● Repository modifyChrout 40%");
 		Map<String, String> mapModify = new HashMap<String, String>();
 		mapModify.put("sender", sender);
 		mapModify.put("nickname", id);
@@ -176,20 +195,22 @@ public class ChatDaoImpl implements IChatDao {
 		sqlSession.update(NS+"modifyChrout", mapModify);
 		
 		// 나간 사람의 채팅들 CHC_OUT을 T로 변경
-		logger.info("ManagerDaoImpl modifyChcout 60%");
+		logger.info("● Repository modifyChcout 60%");
 		sqlSession.update(NS+"modifyChcout", mapModify);
 		
 		// 선택된 채팅방의 SOUT, ROUT을 조회
-		logger.info("ManagerDaoImpl selectChrout 80%");
+		logger.info("● Repository selectChrout 80%");
 		List<Map<String, String>> listSelect = sqlSession.selectList(NS+"selectChrout", chrId);
 		
 		int n = 0;
 		// 선택된 채팅방의 SOUT, ROUT이 둘 다 T면 해당 채팅방을 삭제
 		if (listSelect.get(0).get("CHR_ROUT").equals("T") && listSelect.get(0).get("CHR_SOUT").equals("T")) { // SOUT, ROUT이 둘 다 T면 실행
-			logger.info("ManagerDaoImpl deleteChatroom 100%");
+			logger.info("● Repository deleteChatroom 100%");
 			n = sqlSession.delete(NS+"deleteChatroom", chrId);
 		}
 		System.out.println(n>0 ? "채팅방이 삭제되었습니다.":"삭제할 채팅방이 없습니다.");
 		return false;
 	}
+
+	
 }

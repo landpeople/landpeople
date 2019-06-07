@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import happy.land.people.dto.JsonUtil;
 import happy.land.people.dto.LPSketchbookDto;
 import happy.land.people.dto.LPUserDto;
+import happy.land.people.model.chat.IChatService;
 import happy.land.people.model.manager.IManagerService;
 import happy.land.people.beans.ExecuteUsingQuartz;
 import happy.land.people.ctrl.ManagerController;
@@ -58,7 +59,7 @@ public class ManagerController {
 		PrintWriter out = null;
 
 		response.setCharacterEncoding("UTF-8");
-		System.out.println(title);
+		System.out.println("title = "+title);
 		
 		String serviceImplYn = request.getParameter("param");
         System.out.println(serviceImplYn);
