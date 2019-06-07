@@ -110,8 +110,6 @@
             </div>
          </c:if>
 
-
-
          <!-- 채팅방 iframe -->
          <div class="nav-chat rounded bg-white pt-2 pb-2 py-2">
             <div class="chatting">

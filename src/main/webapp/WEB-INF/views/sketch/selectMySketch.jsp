@@ -63,19 +63,20 @@
 					<div class="lp-content shadow-lg">
 						<div class="lp-content-sketch">
 							<form action="#" method="post" id="sketchDel" name="sketchDel" onsubmit="return DelchkBox()">
+                                <input type="hidden" name="user_email" value="${ldto.user_email}">
 								<div class="lp-content-header">
 									<h1 class="h2 mb-4 text-gray-800 lp-content-title">My Sketchbook</h1>
 									<input class="btn btn-danger mb-4 lp-sketch-del " type="submit" value="Delete selected">
 								</div>
-								<div class="testtt scroll" style="overflow-y: auto">
+								<div class="sketckBookScroll scroll">
 									<div class="sketchBookContent">
 										<c:forEach var="item" items="${mySketchBookLists}">
 											<c:choose>
 												<c:when test="${item.sketch_block eq 'T'}">
 													<div class="single-sketchbook">
-														<div class="hovereffect">
+														<div class="hovereffect1">
 															<img class="img-responsive" src="${item.sketch_spath}" alt="">
-															<div class="overlay">
+															<div class="overlay1">
 																<input class="is-checkradio is-info is-circle" id="chk${item.sketch_id}" value="${item.sketch_id}" type="checkbox" name="chkVal"> <label class="lp-check-box" for="chk${item.sketch_id}"></label>
 																<h1>[ ${item.sketch_theme} ]</h1>
 																<h2>This post has been deleted by admin.</h2>
@@ -92,13 +93,12 @@
 												</c:when>
 												<c:otherwise>
 													<div class="single-sketchbook">
-														<div class="hovereffect">
+														<div class="hovereffect1">
 															<img class="img-responsive" src="${item.sketch_spath}" alt="">
-															<div class="overlay">
+															<div class="overlay1">
 																<input class="is-checkradio is-info is-circle" id="chk${item.sketch_id}" value="${item.sketch_id}" type="checkbox" name="chkVal"> <label class="lp-check-box" for="chk${item.sketch_id}"></label>
 																<h1>[ ${item.sketch_theme} ]</h1>
-																<h2>${item.sketch_title}
-																	| <i class="fas fa-heart"></i><span> ${sketchLike[item.sketch_id]}개</span>
+																<h2>${item.sketch_title} | <i class="fas fa-heart"></i><span> ${sketchLike[item.sketch_id]}명</span>
 																</h2>
 																<p class="modify-icon">
 																	<a href="#" onclick="return sketchBookModify('${item.sketch_id}')"> <i class="fas fa-pen-square"></i>
@@ -169,7 +169,7 @@ $("document").ready(
 				}
 			});
 		
-		$(".testtt").scroll(
+		$(".sketckBookScroll").scroll(
 			function(event){
 				  var scrollT = $(this).scrollTop(); //스크롤바의 상단위치
 			      var scrollH = $(this).height(); //스크롤바를 갖는 div의 높이
@@ -195,15 +195,15 @@ function getMySketchBook(pageNo){
 		 	var sketchLikes = msg.likeMine;
 			var mySketchNickname = msg.mySketchNicknames;
 			
-      		var test = "";
+      		var sketch = "";
       			for(var i = 0 ; i <  parseInt(msg.addMySketchBook.length); i++){
       				var sketch_id=	msg.addMySketchBook[i].sketch_id;
       				
             			if(msg.addMySketchBook[i].sketch_block.trim() == ('T')){// 관리자에 의해 스케치북이 차단된 경우 sketch_block= 'T' 
-            				test += "<div class='single-sketchbook'>" +
-            			 				"<div class='hovereffect'>" +
+            				sketch += "<div class='single-sketchbook'>" +
+            			 				"<div class='hovereffect1'>" +
             			 	    			"<img class='img-responsive' src=" + msg.addMySketchBook[i].sketch_spath + ">" +
-            			 	        		"<div class='overlay'>" +
+            			 	        		"<div class='overlay1'>" +
             			 	        	    "<input class='is-checkradio is-info is-circle' id='chk" + msg.addMySketchBook[i].sketch_id + "' value=" + msg.addMySketchBook[i].sketch_id + " type='checkbox' name='chkVal'>" +
             			 	            	"<label class='lp-check-box' for='chk" + msg.addMySketchBook[i].sketch_id + "'></label>" +
             			 	            	"<h1>[ " + msg.addMySketchBook[i].sketch_theme + " ]</h1>" +
@@ -220,14 +220,14 @@ function getMySketchBook(pageNo){
             			 	 			"</div>" +
             			 			"</div>";								 
             			}else{
-                  		test += "<div class='single-sketchbook'>" +
-                           	 		"<div class='hovereffect'>" +
+            				sketch += "<div class='single-sketchbook'>" +
+                           	 		"<div class='hovereffect1'>" +
                            	 	   		"<img class='img-responsive' src=" + msg.addMySketchBook[i].sketch_spath + ">" +
-                           	 	    		"<div class='overlay'>" +
+                           	 	    		"<div class='overlay1'>" +
                            	 	    	    "<input class='is-checkradio is-info is-circle' id='chk" + msg.addMySketchBook[i].sketch_id + "' value=" + msg.addMySketchBook[i].sketch_id + " type='checkbox' name='chkVal'>" +
                            	 	        	"<label class='lp-check-box' for='chk" + msg.addMySketchBook[i].sketch_id + "'></label>" +
                            	 	        	"<h1>[ " + msg.addMySketchBook[i].sketch_theme + " ]</h1>" +
-                           	 	        	"<h2>" + msg.addMySketchBook[i].sketch_title + " | <i class='fas fa-heart'></i><span>" + msg.addMySketchBook[i].sketch_id + "개</span></h2>" +
+                           	 	        	"<h2>" + msg.addMySketchBook[i].sketch_title + " | <i class='fas fa-heart'></i><span>" + sketchLikes[msg.addMySketchBook[i].sketch_id] + "명</span></h2>" +
                            	 			"<p class='modify-icon'>" +
                            	 				"<a href='#' onclick='return sketchBookModify(" + msg.addMySketchBook[i].sketch_id + ")'>" +
                            	 					"<i class='fas fa-pen-square'></i>" +
@@ -241,7 +241,7 @@ function getMySketchBook(pageNo){
                   	 	        "</div>";								
          					}		
       				}
-      					$(".sketchBookContent").append(test);
+      					$(".sketchBookContent").append(sketch);
       			}, error : function() {
       				alert("실패");
       			}
@@ -258,8 +258,6 @@ function sketchBookModify(sketch) {
 	$("#sketchModiForm").modal();
 }
    var ajaxSketchModi = function(user_email, sketch_id){
-// alert(user_email);
-// var user_email 
    $.ajax({
       url : "sketchModifyForm.do",
       type : "post",
@@ -267,13 +265,7 @@ function sketchBookModify(sketch) {
              "sketch_id"  :   sketch_id },
       dataType : "json",
       success :function(modiModal){
-         //alert(modiModal.sdto.sketch_title);
-         //alert(modiModal.sdto.sketch_id);
-         
          alert(modiModal.sdto.sketch_share);
-         //alert(modiModal.sdto.user_email);
-         //alert(modiModal.sdto.sketch_theme);
-         //alert(modiModal.sdto.sketch_spath);
          
          var modiFormHTML =   "<input type='hidden' name='user_email' value='"+modiModal.sdto.user_email+"'>"+
                         "<input type='hidden' name='sketch_id' value='"+modiModal.sdto.sketch_id+"'>"+
@@ -355,51 +347,40 @@ function extension(file){
 function fileUpload(subImgClass) {
 	var frmEle = document.forms[1];
 	var formData = new FormData(frmEle);
-	
-		/* formData.append("text_no",subImgClass); */
-	//파일 업로드 확장자 확인
-	// 		var file = form.file; 여기 부분이 아직 불확실
-	// 		var fileExt = file.substring(file.lastIndex(".")+1);
-	// 		var reg = /gif|jpg|png|jpeg/i;
-	// 		if(reg.test(fileExt)==false){
-	// 			alert("이미지는 gifm jpg, png 파일만 올릴 수 있습니다.");
-	// 			return;
-	// 		}
 	//파일 사이즈 확인
 	//파일 업로드 확장자 및 사이즈 확인을 메소드로 만들어서 true가 되면 아작스 실행
-$.ajax({
-		url : './uploadSketchBook.do',
-		type : 'post',
-		data : formData,
-		enctype : 'multipart/form-data',
-		processData : false,
-		contentType : false,
-		success : function(result) {
-			alert("아작스 결과"+result);
-					$("div[id=modalIMG1]").css("background-image", "url('" + result+ "')");
-					var img_spath = $("input[class=img_spath0]");
-					img_spath.val(result);
-		},error : function(){
-			alert("실패");
-		}
-	});
-}
+   $.ajax({
+   		url : './uploadSketchBook.do',
+   		type : 'post',
+   		data : formData,
+   		enctype : 'multipart/form-data',
+   		processData : false,
+   		contentType : false,
+   		success : function(result) {
+   			alert("아작스 결과"+result);
+   					$("div[id=modalIMG1]").css("background-image", "url('" + result+ "')");
+   					var img_spath = $("input[class=img_spath0]");
+   					img_spath.val(result);
+   		},error : function(){
+   			alert("실패");
+   		}
+   	});
+   }
 	
 //-------------------- 작성 스케치북 수정  --------------------
 function sketchModify(){
    //var img= img;
    //chkModify = true;
+   var email = '${ldto.user_email}';
    var img = $("div[id=modalIMG1]").css("background-image")
    img =img.replace('url(','').replace(')','').replace(/\"/gi, "");
    alert(img);
-   
-   
    
    var sketchModiModal = document.getElementById("modiSketchBook");
    var sketch_theme = $("input[name=sketch_theme]:checked").val();
    var sketch_share = $("input[name=sketch_share]:checked").val();
    var sketchConver = $("input[class=img_spath0]").val();
-   sketchModiModal.action = "./modifySketch.do";
+   sketchModiModal.action = "./modifySketch.do?user_email"+ email;
    
    
    var title = $("#sketchtitle").val();
