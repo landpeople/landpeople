@@ -66,7 +66,10 @@
                                 <input type="hidden" name="user_email" value="${ldto.user_email}">
 								<div class="lp-content-header">
 									<h1 class="h2 mb-4 text-gray-800 lp-content-title">My Sketchbook</h1>
+									<div>
+									<input class="btn btn-success mb-4 lp-sketch-del" id="topBtn" type="button" value="Move to top">
 									<input class="btn btn-danger mb-4 lp-sketch-del " type="submit" value="Delete selected">
+									</div>
 								</div>
 								<div class="sketckBookScroll scroll">
 									<div class="sketchBookContent">
@@ -154,18 +157,19 @@
 <script type="text/javascript">
 
 var pageCnt = <%=pagingDto.getNowPageNo()%>
-alert("현 페이지 번호" + pageCnt);
 
 $("document").ready(
 	function() {
+		$("#topBtn").hide();
 		$("#infinityScroll").click(
 			function() {
 				$("#infinityScroll").hide();						
-					if(pageCnt >= <%=pagingDto.getEndPageNo()%>){
+				$("#topBtn").show();						
+					if(pageCnt >= <%=pagingDto.getLastPageNo()%>){
 // 					alert("마지막페이지 입니다.");
 				}else{		
 					pageCnt++;			
-					alert(pageCnt);
+// 					alert(pageCnt);
 					getMySketchBook(pageCnt);
 				}
 			});
@@ -176,8 +180,8 @@ $("document").ready(
 			      var scrollH = $(this).height(); //스크롤바를 갖는 div의 높이
 			      var contentH = $('.sketchBookContent').height(); //문서 전체 내용을 갖는 div의 높이
 			    
-			        console.log(scrollT +" : " + scrollH + ":" + contentH);
-			        if(scrollT + contentH + 1  >= scrollH) { // 스크롤바가 맨 아래에 위치할 때
+// 			        console.log(scrollT +" : " + scrollH + " : " + contentH + " : " + (scrollH + scrollT));
+			        if(scrollT + scrollH + 1.5 >= contentH) { // 스크롤바가 맨 아래에 위치할 때
 			        	$("#infinityScroll").trigger("click");
 			        }
 			
@@ -249,7 +253,15 @@ function getMySketchBook(pageNo){
       	});
 }
 
+var topEle = $('#topBtn');
+var delay = 1000;
+topEle.on('click', function() {
+  $('.sketckBookScroll').animate({scrollTop: 0}, delay);
+});
+
+
 //-------------------- 작성 스케치북 수정 모달 생성 --------------------
+
 function sketchBookModify(sketch) {
 	var user_email = "${ldto.user_email}"
 	var sketch_id = sketch;
