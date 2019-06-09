@@ -55,10 +55,6 @@ function pwcheck() {
    }
 }
 
-
-
-
-
 //아작스
 $(function() {
    
@@ -97,10 +93,6 @@ $(function() {
          $("#passchkVal").val("0");
       }
    });
-   
-   
-   
-   
 });//제일큰
 
 
@@ -117,7 +109,7 @@ span{
 </style>
 
 
-<body class="bg-gradient-primary">
+<body>
 
 	<div class="container">
 		<div class="row justify-content-center">

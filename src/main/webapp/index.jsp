@@ -44,16 +44,14 @@
 
          <c:if test="${not empty ldto}">
             <div class="lp-nav-btn">
-	           <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-lp-success shadow-sm lp-write-btn" data-toggle="modal" data-target="#logoutModal">
-	              <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>Logout
+	           <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-lp-success shadow-sm lp-write-btn" data-toggle="modal" data-target="#logoutModal"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>Logout
 	           </a>
             </div>
          </c:if>
 
          <c:if test="${empty ldto}">
             <div class="lp-nav-btn">
-	           <a href="./loginPage.do" class="d-none d-sm-inline-block btn btn-sm btn-lp-success shadow-sm lp-write-btn">
-	              <i class="fas fa-sign-in-alt fa-sm fa-fw mr-2"></i>Login
+	           <a href="./loginPage.do" class="d-none d-sm-inline-block btn btn-sm btn-lp-success shadow-sm lp-write-btn"><i class="fas fa-sign-in-alt fa-sm fa-fw mr-2"></i>Login
 	           </a>
 			</div>
          </c:if>
@@ -143,28 +141,28 @@
                   <div class="lp-grid-container">
 
                      <article id="" class="location-listing">
-                        <a class="location-title" href="#" onclick="sketchSelectTheme('나홀로')">나홀로 여행</a>
+                        <a class="location-title" href="#" onclick="sketchSelectTheme('With me')">With me</a>
                         <div class="location-image">
                            <img class="lp-theme" src="./img/theme/alone.jpg" alt="With me">
                         </div>
                      </article>
 
                      <article id="" class="location-listing">
-                        <a class="location-title" href="#" onclick="sketchSelectTheme('가족여행')">가족과 함께</a>
+                        <a class="location-title" href="#" onclick="sketchSelectTheme('With Family')">With Family</a>
                         <div class="location-image">
                            <img class="lp-theme" src="./img/theme/family.jpg" alt="With family">
                         </div>
                      </article>
 
                      <article id="" class="location-listing">
-                        <a class="location-title" href="#" onclick="sketchSelectTheme('연인과함께')">연인과 함께</a>
+                        <a class="location-title" href="#" onclick="sketchSelectTheme('With love')">With love</a>
                         <div class="location-image">
                            <img class="lp-theme" src="./img/theme/couple.png" alt="With love">
                         </div>
                      </article>
 
                      <article id="" class="location-listing">
-                        <a class="location-title" href="#" onclick="sketchSelectTheme('친구와함께')">친구와 함께</a>
+                        <a class="location-title" href="#" onclick="sketchSelectTheme('With friend')">With friend</a>
                         <div class="location-image">
                            <img class="lp-theme" src="./img/theme/friend.png" alt="With friend">
                         </div>

@@ -1,9 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.List"%>
 <%@page import="happy.land.people.dto.LPSketchbookDto"%>
 <%@page import="happy.land.people.dto.SketchPagingDto"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
 <%
 	SketchPagingDto pagingDto = (SketchPagingDto) request.getAttribute("pagingDto");
@@ -37,6 +38,8 @@
 <link href="./css/theme/sb-admin-2.css" rel="stylesheet">
 <link href="./css/theme/lp-template.css" rel="stylesheet">
 <link href="./css/sketch/modal.css" rel="stylesheet">
+<link href="./css/sketch/sketch.css" rel="stylesheet"> 
+<link href="./css/theme/checkradio.css" rel="stylesheet">
 
 <script src="./js/theme/jquery.min.js"></script>
 
@@ -57,139 +60,49 @@
             <!-- LandPeople Content Area -->
             <div class="lp-container">
                <div class="lp-content shadow-lg">
-                  <form action="#" method="post" id="scrapeSketch" name="scrapeSketch" onsubmit="ScrapeChk()">
-                     <input type="submit" value="스크랩 취소">
-                     <div class="sketchBookContent">
-
-
-                        <%
-                        	for (int i = 0; i < myScrapeList.size() / 3; i++) {
-                        %>
-                        <!--스케치북 3개 담는 div  -->
-                        <div class="sketchBookContainer">
-
-                           <%
-                           	for (int j = 0; j < 3; j++) {
-                           			String sketch_id = myScrapeList.get(i * 3 + j).getSketch_id();
-                           %>
-                           <!--스케치북 1개 담는 div  -->
-                           <%-- <div class="selectTheme" style="background-image: url('<%=myScrapeList.get(i*3+j).getSketch_spath()%>')">
-                           <div class="sketchTheme_hover" onclick="location.href='./kim.do?sketch_id=<%=myScrapeList.get(i*3+j).getSketch_id()%>'"><!-- onclick="sketchSelectTheme('나홀로')" -->
-                              <div class="hover_inside">
-                                 <span><%=myScrapeList.get(i*3+j).getSketch_title()%></span>
-                                 <h5><img alt="likeIcon" src="./img/sketch/likeIcon.png"> 
-                                 <%=sketchLike.get(sketch_id)%> <%=myScrapeList.get(i*3+j).getSketch_theme()%> <%=scrapeSketchNickname.get(sketch_id)%></h5>
-                              </div>
-                           </div>
-                           
-                        </div> --%>
-                           <!--스케치북 1개 담는 div  -->
-
-                           <!--스케치북 1개 담는 div  -->
-                           <div style="width: 280px; height: 230px; border: 1px solid gray; display: inline-block; margin: 0 0 0 10px; position: relative;">
-                              <div class="selectTheme" style="background-image: url('<%=myScrapeList.get(i * 3 + j).getSketch_spath()%>');">
-                                 <div class="sketchTheme_hover" style="cursor: pointer;" onclick="location.href='./kim.do?sketch_id=<%=myScrapeList.get(i * 3 + j).getSketch_id()%>'">
-                                    <div class="hover_inside">
-                                       <h5>
-                                          <img alt="likeIcon" src="./img/sketch/likeIcon.png">
-                                          <%=sketchLike.get(sketch_id)%>
-                                          <%=myScrapeList.get(i * 3 + j).getSketch_theme()%>
-                                       </h5>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div style="width: 100%; height: 60px; border: 1px solid black; position: absolute; bottom: 0px;">
-                                 <input type="checkbox" name="chkVal" value="<%=myScrapeList.get(i * 3 + j).getSketch_id()%>">
-                                 <label><%=myScrapeList.get(i * 3 + j).getSketch_title()%></label><label style="float: right;"><%=scrapeSketchNickname.get(sketch_id)%></label><br>
-                                 <%-- <label><a href="#" onclick="return sketchBookModify('<%=myScrapeList.get(i*3+j).getSketch_id()%>')"><img alt="modi" src="img/sketch/modifyIcon.png">스케치북 수정</a></label> --%>
-                              </div>
-                           </div>
-                           <!--스케치북 1개 담는 div  -->
-
-
-
-
-
-
-
-
-
-
-                           <%
-                           	}
-                           %>
-                        </div>
-
-                        <%
-                        	}
-                        %>
-
-
-                        <%
-                        	if (myScrapeList.size() % 3 != 0) {
-                        %>
-                        <div class="sketchBookContainer">
-
-                           <%
-                           	for (int i = 0; i < myScrapeList.size() % 3; i++) {
-                           			String sketch_id = myScrapeList.get((myScrapeList.size() / 3) * 3 + i).getSketch_id();
-                           %>
-                           <%-- <div class="selectTheme" style="background-image: url('<%=myScrapeList.get((myScrapeList.size()/3)*3+i).getSketch_spath()%>')">
-                           <div class="sketchTheme_hover" onclick="location.href='./kim.do?sketch_id=<%=myScrapeList.get((myScrapeList.size()/3)*3+i).getSketch_id()%>'">
-                              <div class="hover_inside">
-                                 <span><%=myScrapeList.get((myScrapeList.size()/3)*3+i).getSketch_title()%></span>
-                                 <h5><img alt="likeIcon" src="./img/sketch/likeIcon.png"> 
-                                 <%=sketchLike.get(sketch_id)%> <%=myScrapeList.get((myScrapeList.size()/3)*3+i).getSketch_theme()%> <%=scrapeSketchNickname.get(sketch_id)%> </h5>
-                              </div>
-                           </div>
-                           
-                        </div> --%>
-
-                           <!--스케치북 1개 담는 div  -->
-                           <div style="width: 280px; height: 230px; border: 1px solid gray; display: inline-block; margin: 0 0 0 10px; position: relative;">
-                              <div class="selectTheme" style="background-image: url('<%=myScrapeList.get((myScrapeList.size() / 3) * 3 + i).getSketch_spath()%>');">
-                                 <div class="sketchTheme_hover" style="cursor: pointer;" onclick="location.href='./kim.do?sketch_id=<%=myScrapeList.get((myScrapeList.size() / 3) * 3 + i).getSketch_id()%>'">
-                                    <div class="hover_inside">
-                                       <h5>
-                                          <img alt="likeIcon" src="./img/sketch/likeIcon.png">
-                                          <%=sketchLike.get(sketch_id)%>
-                                          <%=myScrapeList.get((myScrapeList.size() / 3) * 3 + i).getSketch_theme()%>
-                                       </h5>
-                                    </div>
-                                 </div>
-                              </div>
-                              <div style="width: 100%; height: 60px; border: 1px solid black; position: absolute; bottom: 0px;">
-                                 <input type="checkbox" name="chkVal" value="<%=myScrapeList.get((myScrapeList.size() / 3) * 3 + i).getSketch_id()%>">
-                                 <label><%=myScrapeList.get((myScrapeList.size() / 3) * 3 + i).getSketch_title()%></label><label style="float: right;"><%=scrapeSketchNickname.get(sketch_id)%></label><br> <label><a href="#" onclick="return sketchBookModify('<%=myScrapeList.get((myScrapeList.size() / 3) * 3 + i).getSketch_id()%>')">
-                                       <img alt="modi" src="img/sketch/modifyIcon.png">스케치북 수정
-                                    </a></label>
-                              </div>
-                           </div>
-                           <!--스케치북 1개 담는 div  -->
-
-
-
-
-
-                           <%
-                           	}
-                           %>
-                        </div>
-
-                        <%
-                        	}
-                        %>
-                     </div>
-                  </form>
-                  <%
-                  	if (myScrapeList.size() % 9 == 0) {
-                  %>
-                  <button id="infinityScroll" style="width: 100%;">더보기</button>
-                  <%
-                  	}
-                  %>
-
-
+                	<div class="lp-content-sketch">
+						<form action="#" method="post" id="scrapeSketch" name="scrapeSketch" onsubmit="ScrapeChk()">
+	                            <input type="hidden" name="user_email" value="${ldto.user_email}">
+							<div class="lp-content-header">
+								<h1 class="h2 mb-4 text-gray-800 lp-content-title">My scrapbook</h1>
+								<div>
+								<input class="btn btn-success mb-4 lp-sketch-del" id="topBtn" type="button" value="Move to top">
+								<input class="btn btn-danger mb-4 lp-sketch-del " type="submit" value="Cancle scrap selected">
+								</div>
+							</div>
+							<div class="sketckBookScroll scroll">
+								<div class="sketchBookContent">
+									<c:forEach var="item" items="${myScrapeList}">
+										<div class="single-sketchbook">
+											<div class="hovereffect1">
+												<img class="img-responsive" src="${item.sketch_spath}" alt="">
+												<div class="overlay1">
+													<input class="is-checkradio is-info is-circle" id="chk${item.sketch_id}" value="${item.sketch_id}" type="checkbox" name="chkVal"> <label class="lp-check-box" for="chk${item.sketch_id}"></label>
+													<h1>[ ${item.sketch_theme} ]</h1>
+													<h2>${item.sketch_title} | <i class="fas fa-heart"></i><span> ${sketchLike[item.sketch_id]}명</span>
+													</h2>
+													<p class="modify-icon">
+														<i class="fas fa-smile"></i> ${scrapeSketchNickname[(item.sketch_id)]}
+													</p>
+													<p>
+														<a href="#" onclick="goCanvas('${item.sketch_id}')">Show detail</a>
+													</p>
+												</div>
+											</div>
+										</div>
+									</c:forEach>
+								</div>
+							</div>
+						</form>
+	
+						<c:if test="${fn:length(myScrapeList) eq '9'}">
+							<div class="view-more">
+								<button id="infinityScroll" class="view-btn">View more</button>
+							</div>
+						</c:if>
+					<!-- 여기까지 스케치북 수정 Modal -->
+						</div>
+						<!-- 스케치북 정렬을 위한 lp-content-sketch -->
                </div>
             </div>
             <!--End of Page LandPeople Content Area -->
@@ -204,34 +117,30 @@
    var pageCnt = <%=pagingDto.getNowPageNo()%>
 
    $("document").ready(
-         function() {
-            $("#infinityScroll").click(
-               function() {
-                     $("#infinityScroll").hide();                 
-               if(pageCnt >= <%=pagingDto.getEndPageNo()%>){
-                  alert("마지막페이지 입니다.");
-               }else{      
-                  pageCnt++;        
-                  getSketchBook(pageCnt);
-               }
-            });
-            
-            
-            $(".content").scroll(
-                  function(event){
-               
-                     var hh = $(".content").height();
-                     var ee = $(".content").scrollTop();
-                     
-                     var scHeight = $(".content").prop('scrollHeight');
-                     
-                     if (scHeight - hh - ee < 1) {
-                        $("#infinityScroll").trigger("click");
-                     }
-         
-      });
-      
-   });   
+			function() {
+				$("#topBtn").hide();
+				$("#infinityScroll").click(
+					function() {
+						$("#infinityScroll").hide();						
+						$("#topBtn").show();						
+						if(pageCnt >= <%=pagingDto.getLastPageNo()%>){
+						}else{		
+							pageCnt++;			
+							getSketchBook(pageCnt);
+						}
+					});
+				
+				$(".sketckBookScroll").scroll(
+					function(event){
+						  var scrollT = $(this).scrollTop(); //스크롤바의 상단위치
+					      var scrollH = $(this).height(); //스크롤바를 갖는 div의 높이
+					      var contentH = $('.sketchBookContent').height(); //문서 전체 내용을 갖는 div의 높이
+					    
+					      if(scrollT + scrollH + 1.5 >= contentH) { // 스크롤바가 맨 아래에 위치할 때
+					      	 $("#infinityScroll").trigger("click");
+					      }
+					});
+				});  
    
    function getSketchBook(pageNo){     
    var user_email = "${ldto.user_email}"  
@@ -245,103 +154,43 @@
                alert(msg.addScrapeSketchBook.length);    
                var sketchLike = msg.likeScrape;
                var sketchNickname = msg.scrapeSketchNickname;
+               var sketch = "";
                
-               //var content =  document.getElementsByClassName("content")[0];
-               var sketchBookContent= document.getElementsByClassName("sketchBookContent")[0];
-               var sketchBookContent = document.createElement('div');
-                  sketchBookContent.className = 'sketchBookContent'; 
-                  
-               for(var i = 0 ; i < parseInt(msg.addScrapeSketchBook.length/3) ; i++){
-                  
-                  var sketchBookContainer = document.createElement('div');
-                  sketchBookContainer.className = 'sketchBookContainer';    //style='background: url('"+msg.addSketchBook[i].sketch_spath+"');"
-                  
-                  for(var j = 0; j < 3; j++){
-                  
-                   var sketch_id=   msg.addScrapeSketchBook[i*3+j].sketch_id;
-                   //alert(sketch_id);
+               for(var i = 0 ; i < parseInt(msg.addScrapeSketchBook.length) ; i++){
+                   var sketch_id=   msg.addScrapeSketchBook[i].sketch_id;
                      
-                  sketchBookContainer.innerHTML +=/*  "<div class='selectTheme' style='background-image: url("+msg.addScrapeSketchBook[i*3+j].sketch_spath+")'>"+
-                                          "<div class='sketchTheme_hover' onclick='goCanvas("+msg.addScrapeSketchBook[i*3+j].sketch_id+")'>"+
-                                          "<div class='hover_inside'>"+"<span>"+msg.addScrapeSketchBook[i*3+j].sketch_title+"</span>"+"<h5>"+"<img alt='likeIcon' src='./img/sketch/likeIcon.png'>"+
-                                          sketchLike[(sketch_id)]+"</h5>"+
-                                          "<h5>"+msg.addScrapeSketchBook[i*3+j].sketch_theme+""+sketchNickname[(sketch_id)]+"<h5>"+ 
-                                          "</div></div></div>"; */
-                                          
-                                          
-                                       "<div style='width: 280px; height: 230px; border: 1px solid gray; display: inline-block; margin: 0 0 0 10px; position: relative;'>"+
-                                          "<div class='selectTheme' style='background-image: url("+msg.addScrapeSketchBook[i*3+j].sketch_spath+")'>"+
-                                             "<div class='sketchTheme_hover' style=' cursor: pointer;' onclick='goCanvas("+msg.addScrapeSketchBook[i*3+j].sketch_id+")'>"+
-                                                "<div class='hover_inside'>"+
-                                                   "<h5><img alt='likeIcon' src='./img/sketch/likeIcon.png'>"+
-                                                   sketchLike[(sketch_id)]+""+msg.addScrapeSketchBook[i*3+j].sketch_theme+"</h5>"+ 
-                                                "</div>"+
-                                             "</div>"+
-                                          "</div>"+
-                                          "<div style='width: 100%; height: 60px; border: 1px solid black; position: absolute; bottom: 0px;'>"+
-                                             "<input type='checkbox' name='chkVal' value='"+msg.addScrapeSketchBook[i*3+j].sketch_id+"'>"+
-                                             "<label>"+msg.addScrapeSketchBook[i*3+j].sketch_title+"</label>"+"<label style='float: right;'>"+sketchNickname[(sketch_id)]+"</label><br>"+
-                                             /* "<label><a href='#' onclick='return sketchBookModify("+msg.addScrapeSketchBook[i*3+j].sketch_id+")'><img alt='modi' src='img/sketch/modifyIcon.png'>스케치북 수정</a></label>"+ */
-                                          "</div>"+
-                                       "</div>";
-                                          
+                   sketch += "<div class='single-sketchbook'>"+
+					"<div class='hovereffect1'>"+
+					"<img class='img-responsive' src=" + msg.addScrapeSketchBook[i].sketch_spath + " alt=''>"+
+					"<div class='overlay1'>"+
+						"<input class='is-checkradio is-info is-circle' id='chk" + msg.addScrapeSketchBook[i].sketch_id + " value='" + msg.addScrapeSketchBook[i].sketch_id+ "' type='checkbox' name='chkVal'> <label class='lp-check-box' for='chk" + msg.addScrapeSketchBook[i].sketch_id + "'></label>"+
+						"<h1>[ " + msg.addScrapeSketchBook[i].sketch_theme + " ]</h1>"+
+						"<h2>" + msg.addScrapeSketchBook[i].sketch_title + " | <i class='fas fa-heart'></i><span>" + sketchLike[sketch_id] + "명</span>"+
+						"</h2>" +
+						"<p class='modify-icon'>" +
+						"<i class='fas fa-smile'></i> " + sketchNickname[sketch_id] +
+						"</p>" +
+						"<p>"+
+							"<a href='#' onclick='goCanvas(" + msg.addScrapeSketchBook[i].sketch_id + ")'>Show detail</a>"+
+						"</p>"+
+					"</div>"+
+				"</div>"+
+			"</div>";
                   }
-                  $(".sketchBookContent").append(sketchBookContainer);
-                  //sketchBookContent.appendChild(sketchBookContainer);
-                  //    sketchBookContainer.innerHTML = "</div>";
-            
-               } 
-               
-               if(msg.addScrapeSketchBook.length%3 !=0){ 
-                  var sketchBookContainer = document.createElement('div');
-                  sketchBookContainer.className = 'sketchBookContainer';   
-                  
-                  for(var i = 0; i < msg.addScrapeSketchBook.length%3; i++){                    
-                     
-                     var sketch_id= msg.addScrapeSketchBook[parseInt(parseInt(msg.addScrapeSketchBook.length/3)*3+i)].sketch_id;
-                     
-                     
-                      //style='background: url('"+msg.addSketchBook[i].sketch_spath+"');"
-                     sketchBookContainer.innerHTML +=/*  "<div class='selectTheme'  style='background-image: url(\""+msg.addScrapeSketchBook[parseInt(parseInt(msg.addScrapeSketchBook.length/3)*3+i)].sketch_spath+"\")'>"+
-                                             "<div class='sketchTheme_hover' onclick='goCanvas("+msg.addScrapeSketchBook[parseInt(parseInt(msg.addScrapeSketchBook.length/3)*3+i)].sketch_id+")'>"+
-                                             "<div class='hover_inside'>"+"<span>"+msg.addScrapeSketchBook[parseInt(parseInt(msg.addScrapeSketchBook.length/3)*3+i)].sketch_title+"</span>"+"<h5>"+"<img alt='likeIcon' src='./img/sketch/likeIcon.png'>"+
-                                             sketchLike[(sketch_id)]+"</h5>"+
-                                             "<h5>"+msg.addScrapeSketchBook[parseInt(parseInt(msg.addScrapeSketchBook.length/3)*3+i)].sketch_theme+""+sketchNickname[(sketch_id)]+"<h5>"+ 
-                                             "</div></div></div>"; */
-                                             
-                                                                     
-                                             "<div style='width: 280px; height: 230px; border: 1px solid gray; display: inline-block; margin: 0 0 0 10px; position: relative;'>"+
-                                                "<div class='selectTheme' style='background-image: url("+msg.addScrapeSketchBook[parseInt(parseInt(msg.addScrapeSketchBook.length/3)*3+i)].sketch_spath+")'>"+
-                                                   "<div class='sketchTheme_hover' style=' cursor: pointer;' onclick='goCanvas("+msg.addScrapeSketchBook[parseInt(parseInt(msg.addScrapeSketchBook.length/3)*3+i)].sketch_id+")'>"+
-                                                      "<div class='hover_inside'>"+
-                                                         "<h5><img alt='likeIcon' src='./img/sketch/likeIcon.png'>"+
-                                                         sketchLike[(sketch_id)]+""+msg.addScrapeSketchBook[parseInt(parseInt(msg.addScrapeSketchBook.length/3)*3+i)].sketch_theme+"</h5>"+ 
-                                                      "</div>"+
-                                                   "</div>"+
-                                                "</div>"+
-                                                "<div style='width: 100%; height: 60px; border: 1px solid black; position: absolute; bottom: 0px;'>"+
-                                                   "<input type='checkbox' name='chkVal' value='"+msg.addScrapeSketchBook[parseInt(parseInt(msg.addScrapeSketchBook.length/3)*3+i)].sketch_id+"'>"+
-                                                   "<label>"+msg.addScrapeSketchBook[parseInt(parseInt(msg.addScrapeSketchBook.length/3)*3+i)].sketch_title+"</label>"+"<label style='float: right;'>"+sketchNickname[(sketch_id)]+"</label><br>"+
-                                                   /* "<label><a href='#' onclick='return sketchBookModify("+msg.addScrapeSketchBook[parseInt(parseInt(msg.addScrapeSketchBook.length/3)*3+i)].sketch_id+")'><img alt='modi' src='img/sketch/modifyIcon.png'>스케치북 수정</a></label>"+ */
-                                                "</div>"+
-                                             "</div>";
-                  }
-                  
-                  $(".sketchBookContent").append(sketchBookContainer);
-                  //sketchBookContent.appendChild(sketchBookContainer); 
-               }
-               
-         }, error : function() {
+                  $(".sketchBookContent").append(sketch);
+	         }, error : function() {
                alert("실패");
          }
       });
-   
-   
    }
    
+
+   var topEle = $('#topBtn');
+   var delay = 1000;
+   topEle.on('click', function() {
+     $('.sketckBookScroll').animate({scrollTop: 0}, delay);
+   });
 //---------------------- 스케치북 다중 스크랩  취소 -----------------------
-   
-   
    function ScrapeChk(){
 //    alert("작동");
       var chks =  document.getElementsByName("chkVal");

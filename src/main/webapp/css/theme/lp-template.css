@@ -1,4 +1,7 @@
-@charset "UTF-8";
+ @charset "UTF-8";
+html, body{
+	background-color: #f8f9fc !important;
+}
 
 .bg-header {
 	background-color: fff !important;
@@ -10,9 +13,9 @@
 
 /* lp custom background */
 .bg-gradient-lp-primary {
-	background-color: #1764ac;
-	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(10%, #1764ac), to(#155592));
-	background-image: linear-gradient(180deg, #1764ac 10%, #155592 100%);
+	background-color: #19547b;
+	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(10%, #19547b), to(#ffd89b));
+	background-image: linear-gradient(180deg, #19547b 10%, #ffd89b 100%);
 	background-size: cover;
 }
 
@@ -131,7 +134,7 @@
 
 /* canvaspage content flex레이아웃 적용을 제외하기 위함*/
 .lp-other-content {
-/* 	display: flex; */
+	/* 	display: flex; */
 	justify-content: center;
 	min-width: 1000px;
 	width: 1000px;
@@ -142,7 +145,6 @@
 	border-radius: 0.4rem !important;
 	overflow: auto;
 }
-
 
 /* index 페이지 그리드 레이아웃*/
 .lp-grid-container {
@@ -251,6 +253,7 @@
 
 .lp-write-btn {
 	width: 100%;
+	box-sizing: border-box;
 }
 
 .btn-sl {
@@ -307,4 +310,24 @@
 .scroll::-webkit-scrollbar-thumb {
 	border-radius: 10px;
 	background-color: #858796;
+}
+
+/* 모달을 정중앙에 나타나게 함 */
+.modal {
+	text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+	.modal:before {
+		display: inline-block;
+		vertical-align: middle;
+		content: " ";
+		height: 100%;
+	}
+}
+
+.modal-dialog {
+	display: inline-block;
+	text-align: left;
+	vertical-align: middle;
 }

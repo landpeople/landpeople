@@ -164,6 +164,7 @@ span {
 
 #haha2 {
 	width: 50%;
+    margin: auto;
 }
 </style>
 
@@ -196,13 +197,13 @@ span {
                                  <div class="form-group">
                                     <label for="exampleInputEmail1">Email address</label>
                                     <input type="email" class="form-control" id="exampleInputEmail1" v name="user_email" aria-describedby="emailHelp" value="${ldto.user_email}" readonly="readonly">
-                                    <small id="emailHelp" class="form-text">이메일은 수정하실수 없습니다. 헤헤</small>
+                                    <small id="emailHelp" class="form-text">이메일은 수정할 수 없습니다.</small>
                                  </div>
                                  <c:if test="${ldto.user_auth eq 'U'}">
                                     <div class="form-group">
                                        <label for="exampleInputPassword1">Password</label>
                                        <input type="password" class="form-control" name="user_password" id="pw" placeholder="Password" maxlength="10">
-                                       <span id="pwresult" class="form-text">4~10자리의 영문+숫자</span>
+                                       <span id="pwresult" class="form-text">4 ~ 10자리의 영문 + 숫자</span>
                                     </div>
                                     <div class="form-group">
                                        <label for="exampleInputPassword1">Password</label>
@@ -213,7 +214,7 @@ span {
                                  <div class="form-group">
                                     <label for="exampleInputPassword1">NickName</label>
                                     <input type="text" class="form-control" name="user_nickname" id="nickname" placeholder="Nick Name" value="${ldto.user_nickname}" maxlength="10">
-                                    &nbsp;<span id="nicknameresult">2~10자리의 닉네임을 입력</span>
+                                    &nbsp;<span id="nicknameresult">2 ~ 10 자리의 닉네임을 입력</span>
                                  </div>
                                  <input type="submit" class="btn btn-primary" style="width: 100%" value="수정">
                               </fieldset>

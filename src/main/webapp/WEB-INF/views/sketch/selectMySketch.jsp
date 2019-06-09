@@ -52,7 +52,7 @@
 	<div id="wrapper">
 		<%@include file="../common/lp-sidebar.jsp"%>
 
-		<!-- Content Wrapper -->
+		<!-- Content Wrapper -->d
 		<div id="content-wrapper" class="d-flex flex-column">
 			<!-- flex 레이아웃 content와 푸터 정렬 -->
 
@@ -66,7 +66,10 @@
                                 <input type="hidden" name="user_email" value="${ldto.user_email}">
 								<div class="lp-content-header">
 									<h1 class="h2 mb-4 text-gray-800 lp-content-title">My Sketchbook</h1>
+									<div>
+									<input class="btn btn-success mb-4 lp-sketch-del" id="topBtn" type="button" value="Move to top">
 									<input class="btn btn-danger mb-4 lp-sketch-del " type="submit" value="Delete selected">
+									</div>
 								</div>
 								<div class="sketckBookScroll scroll">
 									<div class="sketchBookContent">
@@ -77,7 +80,8 @@
 														<div class="hovereffect1">
 															<img class="img-responsive" src="${item.sketch_spath}" alt="">
 															<div class="overlay1">
-																<input class="is-checkradio is-info is-circle" id="chk${item.sketch_id}" value="${item.sketch_id}" type="checkbox" name="chkVal"> <label class="lp-check-box" for="chk${item.sketch_id}"></label>
+																<input class="is-checkradio is-info is-circle" id="chk${item.sketch_id}" value="${item.sketch_id}" type="checkbox" name="chkVal">
+																<label class="lp-check-box" for="chk${item.sketch_id}"></label>
 																<h1>[ ${item.sketch_theme} ]</h1>
 																<h2>This post has been deleted by admin.</h2>
 																<p class="modify-icon">
@@ -119,7 +123,7 @@
 
 							<c:if test="${fn:length(mySketchBookLists) eq '9'}">
 								<div class="view-more">
-									<button id="infinityScroll" class="btn">View more</button>
+									<button id="infinityScroll" class="view-btn">View more</button>
 								</div>
 							</c:if>
 							<!-- 여기까지 스케치북 수정 Modal -->
@@ -153,18 +157,17 @@
 <script type="text/javascript">
 
 var pageCnt = <%=pagingDto.getNowPageNo()%>
-alert("현 페이지 번호" + pageCnt);
 
 $("document").ready(
 	function() {
+		$("#topBtn").hide();
 		$("#infinityScroll").click(
 			function() {
 				$("#infinityScroll").hide();						
-					if(pageCnt >= <%=pagingDto.getEndPageNo()%>){
-// 					alert("마지막페이지 입니다.");
+				$("#topBtn").show();						
+				if(pageCnt >= <%=pagingDto.getLastPageNo()%>){
 				}else{		
 					pageCnt++;			
-					alert(pageCnt);
 					getMySketchBook(pageCnt);
 				}
 			});
@@ -175,13 +178,11 @@ $("document").ready(
 			      var scrollH = $(this).height(); //스크롤바를 갖는 div의 높이
 			      var contentH = $('.sketchBookContent').height(); //문서 전체 내용을 갖는 div의 높이
 			    
-			        console.log(scrollT +" : " + scrollH + ":" + contentH);
-			        if(scrollT + scrollH + 1  >= contentH) { // 스크롤바가 맨 아래에 위치할 때
-			        	$("#infinityScroll").trigger("click");
-			        }
-			
+			      if(scrollT + scrollH + 1.5 >= contentH) { // 스크롤바가 맨 아래에 위치할 때
+			      	 $("#infinityScroll").trigger("click");
+			      }
 			});
-	});
+		});
 	
 function getMySketchBook(pageNo){      
    var user_email = "${ldto.user_email}"
@@ -194,28 +195,28 @@ function getMySketchBook(pageNo){
          success: function(msg){
 		 	var sketchLikes = msg.likeMine;
 			var mySketchNickname = msg.mySketchNicknames;
-			
       		var sketch = "";
+      		
       			for(var i = 0 ; i <  parseInt(msg.addMySketchBook.length); i++){
       				var sketch_id=	msg.addMySketchBook[i].sketch_id;
       				
-            			if(msg.addMySketchBook[i].sketch_block.trim() == ('T')){// 관리자에 의해 스케치북이 차단된 경우 sketch_block= 'T' 
-            				sketch += "<div class='single-sketchbook'>" +
-            			 				"<div class='hovereffect1'>" +
-            			 	    			"<img class='img-responsive' src=" + msg.addMySketchBook[i].sketch_spath + ">" +
-            			 	        		"<div class='overlay1'>" +
-            			 	        	    "<input class='is-checkradio is-info is-circle' id='chk" + msg.addMySketchBook[i].sketch_id + "' value=" + msg.addMySketchBook[i].sketch_id + " type='checkbox' name='chkVal'>" +
-            			 	            	"<label class='lp-check-box' for='chk" + msg.addMySketchBook[i].sketch_id + "'></label>" +
-            			 	            	"<h1>[ " + msg.addMySketchBook[i].sketch_theme + " ]</h1>" +
-            			 	            	"<h2>This post has been deleted by admin.</h2>" +
-            			 					"<p class='modify-icon'>" +
+            		if(msg.addMySketchBook[i].sketch_block.trim() == ('T')){// 관리자에 의해 스케치북이 차단된 경우 sketch_block= 'T' 
+            			sketch += "<div class='single-sketchbook'>" +
+            			 		  	 "<div class='hovereffect1'>" +
+            			 	    		 "<img class='img-responsive' src=" + msg.addMySketchBook[i].sketch_spath + ">" +
+            			 	        		 "<div class='overlay1'>" +
+            			 	        	     	"<input class='is-checkradio is-info is-circle' id='chk" + msg.addMySketchBook[i].sketch_id + "' value=" + msg.addMySketchBook[i].sketch_id + " type='checkbox' name='chkVal'>" +
+            			 	            	 	"<label class='lp-check-box' for='chk" + msg.addMySketchBook[i].sketch_id + "'></label>" +
+            			 	            		"<h1>[ " + msg.addMySketchBook[i].sketch_theme + " ]</h1>" +
+            			 	            		"<h2>This post has been deleted by admin.</h2>" +
+            			 						"<p class='modify-icon'>" +
             			 						"<a href='#' onclick='return sketchBookModify(" + msg.addMySketchBook[i].sketch_id + ")'>" +
             			 							"<i class='fas fa-pen-square'></i>" +
             			 	         			"</a>" +
-            			 	         		"</p>" +
-            			 					"<p>" +
+            			 	         			"</p>" +
+            			 						"<p>" +
             			 						"<a href='#' onclick='goCanvas(" + msg.addMySketchBook[i].sketch_id + ")'>Show detail</a>" +
-            			 					"</p>" +
+            			 						"</p>" +
             			 	         		"</div>" +
             			 	 			"</div>" +
             			 			"</div>";								 
@@ -223,20 +224,20 @@ function getMySketchBook(pageNo){
             				sketch += "<div class='single-sketchbook'>" +
                            	 		"<div class='hovereffect1'>" +
                            	 	   		"<img class='img-responsive' src=" + msg.addMySketchBook[i].sketch_spath + ">" +
-                           	 	    		"<div class='overlay1'>" +
-                           	 	    	    "<input class='is-checkradio is-info is-circle' id='chk" + msg.addMySketchBook[i].sketch_id + "' value=" + msg.addMySketchBook[i].sketch_id + " type='checkbox' name='chkVal'>" +
-                           	 	        	"<label class='lp-check-box' for='chk" + msg.addMySketchBook[i].sketch_id + "'></label>" +
-                           	 	        	"<h1>[ " + msg.addMySketchBook[i].sketch_theme + " ]</h1>" +
-                           	 	        	"<h2>" + msg.addMySketchBook[i].sketch_title + " | <i class='fas fa-heart'></i><span>" + sketchLikes[msg.addMySketchBook[i].sketch_id] + "명</span></h2>" +
-                           	 			"<p class='modify-icon'>" +
-                           	 				"<a href='#' onclick='return sketchBookModify(" + msg.addMySketchBook[i].sketch_id + ")'>" +
-                           	 					"<i class='fas fa-pen-square'></i>" +
-                           	 	     		"</a>" +
-                           	 	     	"</p>" +
-                           	 			"<p>" +
-                           	 				"<a href='#' onclick='goCanvas(" + msg.addMySketchBook[i].sketch_id + ")'>Show detail</a>" +
-                           	 			"</p>" +
-                           	 	     		"</div>" +
+                           	 	    	"<div class='overlay1'>" +
+	                           	 	    	"<input class='is-checkradio is-info is-circle' id='chk" + msg.addMySketchBook[i].sketch_id + "' value=" + msg.addMySketchBook[i].sketch_id + " type='checkbox' name='chkVal'>" +
+	                           	 	       	"<label class='lp-check-box' for='chk" + msg.addMySketchBook[i].sketch_id + "'></label>" +
+	                           	 	    	"<h1>[ " + msg.addMySketchBook[i].sketch_theme + " ]</h1>" +
+	                           	 	    	"<h2>" + msg.addMySketchBook[i].sketch_title + " | <i class='fas fa-heart'></i><span>" + sketchLikes[msg.addMySketchBook[i].sketch_id] + "명</span></h2>" +
+	                           	 			"<p class='modify-icon'>" +
+	                           	 			"<a href='#' onclick='return sketchBookModify(" + msg.addMySketchBook[i].sketch_id + ")'>" +
+	                           	 			"<i class='fas fa-pen-square'></i>" +
+	                           	 	    	"</a>" +
+	                           	 	    	"</p>" +
+	                           	 		"<p>" +
+	                           	 		"<a href='#' onclick='goCanvas(" + msg.addMySketchBook[i].sketch_id + ")'>Show detail</a>" +
+	                           	 		"</p>" +
+                           	 	     	"</div>" +
                            	 	 	"</div>" +
                   	 	        "</div>";								
          					}		
@@ -248,7 +249,15 @@ function getMySketchBook(pageNo){
       	});
 }
 
+var topEle = $('#topBtn');
+var delay = 1000;
+topEle.on('click', function() {
+  $('.sketckBookScroll').animate({scrollTop: 0}, delay);
+});
+
+
 //-------------------- 작성 스케치북 수정 모달 생성 --------------------
+
 function sketchBookModify(sketch) {
 	var user_email = "${ldto.user_email}"
 	var sketch_id = sketch;
@@ -280,10 +289,10 @@ function sketchBookModify(sketch) {
                   "<div class='form-group'>"
                   + "<label>스케치북 테마</label>"
                   + "<div class='themeradio'>"
-                  + "<input type='radio' id='familytheme' name='sketch_theme' value='가족여행'><label for='familytheme'>가족여행</label>"
-                  + "<input type='radio' id='solotheme' name='sketch_theme' value='나홀로'><label for='solotheme'>나홀로여행</label>"
-                  + "<input type='radio' id='coupletheme' name='sketch_theme' value='연인과함께'><label for='coupletheme'>연인과함께</label>"
-                  + "<input type='radio' id='friendtheme' name='sketch_theme' value='친구와함께'><label for='friendtheme'>친구와함께</label></div>"
+                  + "<input type='radio' id='solotheme' name='sketch_theme' value='With me'><label for='solotheme'>With me</label>"
+                  + "<input type='radio' id='famliytheme' name='sketch_theme' value='With family'><label for='famliytheme'>With family</label>"
+                  + "<input type='radio' id='coupletheme' name='sketch_theme' value='With love'><label for='coupletheme'>With love</label>"
+                  + "<input type='radio' id='friendtheme' name='sketch_theme' value='With friend'><label for='friendtheme'>With friend</label></div>"
                   + "</div>"
                   +
          

@@ -24,7 +24,7 @@
 <link href="./css/theme/sb-admin-2.css" rel="stylesheet">
 <link href="./css/theme/lp-template.css" rel="stylesheet">
 </head>
-<body class="bg-gray-100">
+<body>
    <div>
       <div class="container">
          <!-- Outer Row -->
