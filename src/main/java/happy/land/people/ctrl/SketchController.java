@@ -68,7 +68,7 @@ public class SketchController {
 		System.out.println(dto.getSketch_spath());
 		if (dto.getSketch_spath() == null || dto.getSketch_spath() == "") {
 
-			dto.setSketch_spath("./img/sketch/제주배경.jpg");
+			dto.setSketch_spath("./img/sketch/basic.jpg");
 			boolean isc = iSketchBookService.sketchInsert(dto);
 			System.out.println(isc);
 		} else {
@@ -221,7 +221,7 @@ public class SketchController {
 	// 스케치북 스크랩
 	@RequestMapping(value = "Scrape.do", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, String> scrapeState(String user_email, String[] sketch_id, LPCollectDto dto) {
+	public Map<String, String> scrapeState(LPCollectDto dto) {
 		// 스케치북 스크랩 최초 등록
 		
 		boolean isc = iSketchBookService.collectInsert(dto);
@@ -357,7 +357,7 @@ public class SketchController {
 
 		boolean isc = iSketchBookService.scrapeMultiUpdate(map);
 
-		return "redirect:/Scrape.do?user_email="+email+"&sketch_id"+chkVal;
+		return "redirect:/SelectScrapeSketch.do?user_email=" + email;
 	}
 
 	// 작성 스케치북 조회
@@ -458,12 +458,14 @@ public class SketchController {
 
 	// 작성 스케치북 수정
 	@RequestMapping(value = "modifySketch.do", method = RequestMethod.POST)
-	public String modifySketchBook(LPSketchbookDto dto, String user_email) {
+	public String modifySketchBook(LPSketchbookDto dto, String user_email, String modiSketch_theme, String modiSketch_share) {
 		logger.info("JungController modifySketchBook {}", dto);
 		System.out.println("수정할 이미지 경로 = " + dto.getSketch_spath().substring(dto.getSketch_spath().indexOf("/LandPeople")));
 		String s_path = dto.getSketch_spath().substring(dto.getSketch_spath().indexOf("/LandPeople"));
 		dto.setSketch_spath(s_path);
-
+		dto.setSketch_theme(modiSketch_theme);
+		dto.setSketch_share(modiSketch_share);
+		
 		boolean isc = iSketchBookService.sketchUpdate(dto);
 
 		System.out.println(isc);

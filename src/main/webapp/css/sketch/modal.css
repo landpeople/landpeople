@@ -11,20 +11,59 @@
 
 /* 스케치북 커버이미지 div */
 #moSketchBookCover {
-	width: 300px;
-	height: 100px;
+    width: 100%;
+    height: 200px;
+}
+
+#modalIMG2{
+	border: 1px solid #cccccc;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	height:100%;
 }
 
 /* 스케치북 커버이미지 div의 이미지 영역 */
 #modalIMG1 {
-	border: 1px solid black;
-	width: 200px;
-	height: 100px;
+	border: 1px solid #cccccc;
+	height:100%;
 	/* float: left; */
-	margin: 0px 20px 30px 20px;
-	background-size: contain;
+	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
+}
+
+#sketchtitle{
+	width:100% !important;
+}
+
+#modiSketchTitle{
+	width:100% !important;
+}
+
+.modal-close{
+	margin-right: 1rem;
+}
+
+
+#C_IMG1-label{
+	display: block;
+    float: right;
+    padding: 0.8rem;
+    color : white !important;
+	font-size: 30px;
+}
+
+#C_IMG1-label:hover{
+	color: #dddfeb !important;
+}
+
+.cover-label-label{
+	font-size: 13px;
+}
+
+.cover-label{
+	margin-bottom: 3px;
 }
 
 .themeradio {
@@ -56,8 +95,6 @@
 .themeradio input[type=radio]+label:hover {
     color:red;
 }
-
-
 
 /* 선택한 라디오버튼 배경색 변경 */
 .themeradio>input[type=radio]:checked+label {
