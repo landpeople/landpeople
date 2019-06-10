@@ -1,42 +1,70 @@
 @charset "UTF-8";
 
-@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
-
-body {
+html, body {
+	width: 100%;
+	height: 100%;
+	margin: 0px;
 	padding: 0px;
-	font-family: 'Jeju Gothic', sans-serif;
+	overflow: hidden;
 }
 
-::-webkit-scrollbar-track
-{
-	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-	background-color: #F5F5F5;
+/* 가운데 정렬을 위한 table 레이아웃(의미없음) */
+#cover {
+	display: table;
+	height: 100vh;
+	width: 100%;
 }
 
-::-webkit-scrollbar
-{
-	width: 6px;
-	background-color: #F5F5F5;
+/* 가운데 정렬을 위한 table 레이아웃(의미없음) */
+#cover-inner {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: center;
 }
 
-::-webkit-scrollbar-thumb
-{
-	background-color: #000000;
+.inner-wrapper { /* 이 안에서 움직이도록 할 것임 */
+	width: 550px;
+	margin: 0 auto;
+	background: white;
+	box-sizing: border-box;
+	border-radius: 0.4rem !important;
 }
 
-table {
-	border: 1px solid #B4B4B4;
-/* 	border-collapse: collapse; */
-	border-radius: 15px;
+/*================================================*/
+.message-box {
+	display: flex;
 }
 
 .message_area { /* 메시지 전송창 전체 div*/
-	padding: 3px;
-	width: 350px;
-	height: 400px;
-	overflow: auto;
+	height: 500px;
 	overflow-x: hidden;
-	background: #656f78;
+	overflow: auto;
+	width: 70%;
+}
+
+.memListBox {
+	width: 30%; text-align : center;
+	padding: 10px;
+	overflow: auto;
+	text-align: center;
+}
+
+.listTitle {
+	height: 50px;
+	vertical-align: top;
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.memList {
+	vertical-align: top;
+}
+
+/*================================================*/
+
+/*================================================*/
+.send-box {
+	display: flex;
 }
 
 .noticeTxt {
@@ -53,46 +81,125 @@ table {
 	border-radius: 3px;
 }
 
-.sender_msg { /* 본인 메시지 css */
-	background-color: #febd12;
-	background-clip: padding-box;
-	-webkit-border-image: url(images/sender_bubble.png) 25 25 round;
-	-o-border-image: url(images/sender_bubble.png) 25 25 round;
-	border-image: url(images/sender_bubble.png) 25 25 round;
-	padding: 10px;
+/* .sender_msg { 본인 메시지 css */
+/* 	background-color: #febd12; */
+/* 	background-clip: padding-box; */
+/* 	-webkit-border-image: url(images/sender_bubble.png) 25 25 round; */
+/* 	-o-border-image: url(images/sender_bubble.png) 25 25 round; */
+/* 	border-image: url(images/sender_bubble.png) 25 25 round; */
+/* 	padding: 10px; */
+/* 	float: right; */
+/* 	font-size: 12px; */
+/* 	text-align: justify; */
+/* 	border-radius: 25px; */
+/* 	color: black; */
+/* } */
+
+/* .sender_img { 본인 메시지 css */
+/* 	background-clip: border-box; */
+/* 	padding: 10px; */
+/* 	float: right; */
+/* } */
+.send-box {
+	width: 100%;
+}
+
+.sender_msg {
 	float: right;
-	font-size: 12px;
-	text-align: justify;
-	border-radius: 25px;
-	color: black;
+	width: 46%;
 }
 
-.sender_img { /* 본인 메시지 css */
-	background-clip: border-box;
-	padding: 10px;
-	float: right;
+.sender_msg {
+	background: #0465ac;
+	border-radius: 12px 15px 15px 0;
+	font-size: 14px;
+	margin: 0;
+	color: #fff;
+	padding: 5px 10px 5px 12px;
+	width: 100%;
 }
 
-.receiver_msg { /* 상대방 메시지 css */
-	background-color: #E6F4B5;
-	background-clip: padding-box;
-	-webkit-border-image: url(images/receiver_bubble.png) 25 25 round;
-	-o-border-image: url(images/receiver_bubble.png) 25 25 round;
-	border-image: url(images/receiver_bubble.png) 25 25 round;
-	padding: 10px;
-	float: left;
-	font-size: 12px;
-	text-align: justify;
-	border-radius: 25px;
+
+.input_msg_write input {
+	background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+	border: medium none;
+	color: #4c4c4c;
+	font-size: 15px;
+	min-height: 48px;
+	width: 100%;
+	outline:none;
 }
 
-.receiver_img { /* 상대방 메시지 css */
+.input_msg_write{
+	
+	display:flex;
+	
+}
+
+.type_msg {
+	border-top: 1px solid #c4c4c4;
+/* 	position: relative; */
+}
+
+.msg_send_btn {
+	background: #05728f none repeat scroll 0 0;
+	border:none;
+	border-radius: 50%;
+	color: #fff;
+	cursor: pointer;
+	font-size: 15px;
+	height: 33px;
+/* 	position: absolute; */
+/* 	right: 0; */
+/* 	top: 11px; */
+	width: 33px;
+}
+
+/* .receiver_msg { 상대방 메시지 css */
+/* 	background-color: #E6F4B5; */
+/* 	background-clip: padding-box; */
+/* 	-webkit-border-image: url(images/receiver_bubble.png) 25 25 round; */
+/* 	-o-border-image: url(images/receiver_bubble.png) 25 25 round; */
+/* 	border-image: url(images/receiver_bubble.png) 25 25 round; */
+/* 	padding: 10px; */
+/* 	float: left; */
+/* 	font-size: 12px; */
+/* 	text-align: justify; */
+/* 	border-radius: 25px; */
+/* } */
+
+.receiver_img { 상대방 메시지 css
 	width: 200px;
 	height: 200px;
 	border: 1px solid;
 	background-clip: border-box;
 	padding: 10px;
 	float: left;
+}
+/* .receiver_msg { */
+/* 	background: #ebebeb none repeat scroll 0 0; */
+/* 	border-radius: 0 15px 15px 15px; */
+/* 	color: #646464; */
+/* 	font-size: 14px; */
+/* 	margin: 0; */
+/* 	padding: 5px 10px 5px 12px; */
+/* 	width: 100%; */
+/* } */
+
+.chat_div {
+	border: 0;
+	border-radius: 15px;
+	color: white;
+	height: 60px;
+	overflow-y: auto;
+	opacity: 1;
+	margin-top: 0px;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	box-sizing: inherit;
 }
 
 .chat {
@@ -123,7 +230,7 @@ table {
 	cursor: pointer;
 }
 
-.file_btn{
+.file_btn {
 	margin: 0px;
 	width: 60px;
 	height: 60px;
@@ -136,28 +243,10 @@ table {
 	cursor: pointer;
 }
 
-.memListBox {
-	text-align: center;
-	vertical-align: text-top;
-	padding: 10px;
-	overflow: auto;
-}
-
-.listTitle {
-	height: 50px;
-	vertical-align: top;
-	font-size: 12px;
-	font-weight: bold;
-}
-
 .mem_icon {
 	padding: 0px;
 	display: inline-block;
 	float: left;
-}
-
-.memList {
-	vertical-align: top;
 }
 
 .sendTxt {
@@ -174,33 +263,11 @@ table {
 	word-break: break-word;
 }
 
-.chat_div {
-	border:0;
-	border-radius: 15px;
-	color:white;
-	width: 513px;
-	height: 60px;
-	overflow-y: auto;
-	opacity: 1;
-	margin-top: 0px;
-	padding-top: 15px;
-	padding-bottom: 15px;
-	display:flex;
-	justify-content: center;
-	align-items: center;
-	box-sizing: inherit;
-}
-
-.fa-paper-plane, .fa-file-image{
+.fa-paper-plane, .fa-file-image {
 	color: white;
 }
 
-#allContent{
-	background-color: #656f78;
-	box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,69,.15);
-}
-
-#txtarea{
+.txtarea {
 	width: 342px;
 	height: 60px;
 	margin: 0px;
@@ -210,25 +277,22 @@ table {
 	border-bottom: 0px;
 	padding: 0px;
 	padding-left: 8px;
-	background-color: #495057;
-	color: white;
 }
 
-#fileForm{
+#fileForm {
 	border-radius: 15px 0px 0px 15px;
 }
 
-#message_btn{
+#message_btn {
 	border-radius: 0px 15px 15px 0px;
 }
 
-#fileForm{
-	display:flex;
+#fileForm {
+	display: flex;
 	justify-content: center;
-	align-items: center;	
+	align-items: center;
 	vertical-align: middle;
 }
-
 
 /* @charset "UTF-8"; */
 /* @import url(//fonts.googleapis.com/earlyaccess/jejugothic.css); */
@@ -242,7 +306,7 @@ table {
 /*       border: 1px solid #B4B4B4; */
 /*       border-collapse: collapse; */
 /*    } */
-   
+
 /*    .sender_img{ */
 /*       border: 6px solid; */
 /*       background-color: #69B55B;  */
@@ -258,7 +322,7 @@ table {
 /*       font-size: 12px; */
 /*       text-align: justify; */
 /*    } */
-   
+
 /*    .receiver_img{ */
 /*       border: 6px solid; */
 /*       background-color: #E6F4B5;  */
@@ -274,7 +338,7 @@ table {
 /*       font-size: 12px; */
 /*       text-align: justify; */
 /*    } */
-   
+
 /*    .receive_msg{ */
 /*       padding: 3px; */
 /*       width: 350px; */
@@ -283,7 +347,7 @@ table {
 /*       overflow-x: hidden; */
 /*       background: #F3F3F3; */
 /*    } */
-   
+
 /*    .chat{ */
 /*       width: 340px; */
 /*       height: 35px; */
@@ -294,11 +358,11 @@ table {
 /*       resize: none; */
 /*       border: 0.5px solid #F3F3F3; */
 /*    } */
-   
+
 /*    .chat:focus{ */
 /*       outline: none; */
 /*    } */
-   
+
 /*    .chat_btn{ */
 /*       margin-top: 0px; */
 /*       margin-left: 5px; */
@@ -308,7 +372,7 @@ table {
 /*       background-size: 100% 100%; */
 /*       display: inline-block; */
 /*    } */
-   
+
 /*    .memListBox{ */
 /*       text-align: center;  */
 /*       vertical-align: text-top;  */
@@ -316,29 +380,29 @@ table {
 /*       overflow: auto; */
 /*       background: #D8D8D8; */
 /*    } */
-   
+
 /*    .listTitle{ */
 /*       height:50px;  */
 /*       vertical-align: top;  */
 /*       font-size: 12px;  */
 /*       font-weight: bold; */
 /*    } */
-   
+
 /*    .mem_icon{ */
 /*       padding: 0px; */
 /*       display : inline-block; */
 /*       float: left; */
 /*    } */
-   
+
 /*    .memList{ */
 /*       vertical-align: top; */
 /*    } */
-   
+
 /*    .noticeTxt{ */
 /*       clear:both; */
 /*       margin: 10px; */
 /*    } */
-   
+
 /*    .noticeTxt font{ */
 /*       padding-top: 5px; */
 /*       padding-bottom: 5px; */
@@ -347,14 +411,14 @@ table {
 /*       background: white; */
 /*       border-radius: 3px; */
 /*    } */
-   
+
 /*    .sendTxt{ */
 /*       width:172px;  */
 /*       float:right;  */
 /*       margin:2px;  */
 /*       word-break:break-word; */
 /*    } */
-   
+
 /*    .receiveTxt{ */
 /*       width:172px;  */
 /*       float:left;  */

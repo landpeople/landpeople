@@ -61,7 +61,7 @@ public class MySocketHandler extends TextWebSocketHandler {
 		System.err.println(test);
 
 		if (msg != null && !msg.equals("")) { // 메시지가 null이 아닐 때 처리,
-			if (msg.indexOf("#$nick_") > -1) {
+			if (msg.indexOf("#$nick_") > -1) { // 입장 했을 때의 메시지를 판단함
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM월 dd일 HH시 mm분");
 				String now = sdf.format(new Date());
 				for (WebSocketSession s : list) {
@@ -81,31 +81,35 @@ public class MySocketHandler extends TextWebSocketHandler {
 					}
 				}
 			} else if (msg.indexOf(myMemSession) == 0) {
+				System.out.println("● myMemSession" + myMemSession);
 				String msg2 = msg.substring(0, msg.indexOf(":")).trim(); // 소켓이 열린 상태에서 메시지 주고받을 수 있도록
 				for (WebSocketSession s : list) {
 					Map<String, Object> sessionMap = s.getHandshakeAttributes();
 					String otherGrSession = (String) sessionMap.get("chr_id");
 					String otherMemSession = (String) sessionMap.get("user");
+					System.out.println("dkdkdkdkdkdkdkdk" + otherMemSession);
+					System.out.println("메시지 투다아아아"+msg2);
 					if (myGrSession.equals(otherGrSession)) {
 						if (msg2.equals(myMemSession)) { // 나의 메시지
-							String newMsg = "<div class = 'sendTxt'><span class ='sender_msg'>[" + otherMemSession + "]" + msg.replace(msg.substring(0, msg.trim().indexOf(":") + 1), "") + "</span></div><br><br>";
+							String newMsg = "<div class = 'sendTxt'><span class ='sender_msg'>[" + myMemSession + "]" + msg.replace(msg.substring(0, msg.trim().indexOf(":") + 1), "") + "</span></div><br><br>";
 							System.out.println("● MySocketHandler handleTextMessage() newMsg :" + newMsg);
 
 //							"<div class = 'sendTxt'><span class ='sender_msg'>"+msg + "</span></div><br><br>"
 							txt = newMsg;
 						} else { // 상대가 메시지 보냈을 때,
 							String part1 = msg.substring(0, msg.trim().indexOf(":")).trim();
-							String part2 = "<div class = 'receiveTxt'><span class = 'receiver_msg'>[" + part1 + "]" + msg.substring(msg.trim().indexOf(":") + 1) + "</span></div><br><br>";
+							System.out.println(part1);
+							String part2 = "<div class = 'receiveTxt'><span class = 'receiver_msg'>[" + otherMemSession + "]" + msg.substring(msg.trim().indexOf(":") + 1) + "</span></div><br><br>";
 							System.out.println("● MySocketHandler handleTextMessage() part2 :" + part2);
 
 //							"<div class = 'receiveTxt'><span class = 'receiver_msg'>" + msg + "</span></div><br><br>"
 							txt = part2;
 						}
-
 						System.out.println("● MySocketHandler handleTextMessage() > service.chatConttent_InsertMsg text :" + txt);
 						ChatContentDto dto = new ChatContentDto(otherGrSession, otherMemSession, txt);
 						int n = service.chatContent_InsertMsg(dto);
 						s.sendMessage(new TextMessage(txt));
+//						s.sendMessage(new TextMessage(txt));
 					}
 				}
 			} else {

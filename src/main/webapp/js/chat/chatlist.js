@@ -15,7 +15,7 @@ if (refresh != null) {
 		alert("● chatList.jsp / 상대 : " + this.innerHTML);
 		alert("● chatList.jsp / 나 : " + sender);
 		window.open("./socketOpen.do?sender=" + sender + "&receiver="
-				+ this.innerHTML, '_blank', 'width=600px,height=600px');
+				+ this.innerHTML, '_blank', 'width=600px,height=600px, scrollbars=no, resizable=no, toolbars=no, menubar=no');
 	}
 
 	var as = document.getElementById("userlist");
