@@ -150,6 +150,9 @@
 			<div class="modal-body">
 				<form action="#" role="form" method="post" id="modiSketchBook"></form>
 			</div>
+            <div class="modal-footer">
+				<form action="#" role="form" method="post" id="modiSketchFooter"></form>
+			</div>
 		</div>
 	</div>
 </div>
@@ -255,9 +258,7 @@ topEle.on('click', function() {
   $('.sketckBookScroll').animate({scrollTop: 0}, delay);
 });
 
-
 //-------------------- 작성 스케치북 수정 모달 생성 --------------------
-
 function sketchBookModify(sketch) {
 	var user_email = "${ldto.user_email}"
 	var sketch_id = sketch;
@@ -274,7 +275,7 @@ function sketchBookModify(sketch) {
              "sketch_id"  :   sketch_id },
       dataType : "json",
       success :function(modiModal){
-         alert(modiModal.sdto.sketch_share);
+         alert(modiModal.sdto.sketch_theme.replace(' ',''));
          
          var modiFormHTML =   "<input type='hidden' name='user_email' value='"+modiModal.sdto.user_email+"'>"+
                         "<input type='hidden' name='sketch_id' value='"+modiModal.sdto.sketch_id+"'>"+
@@ -282,25 +283,25 @@ function sketchBookModify(sketch) {
                    "<div class='form-group'>"
                   + "<label>스케치북 제목</label>"
                   + "<div class='modal-input'>"
-                  + "<input type='text' class='form-control' id='sketchtitle' name='sketch_title' value='"+modiModal.sdto.sketch_title+"' style='width : 400px;' required='required'></div>"
+                  + "<input type='text' class='form-control' id='modiSketchTitle' name='sketch_title' value='"+modiModal.sdto.sketch_title+"' style='width : 400px;' required='required'></div>"
                   + "</div>"
                   +
          
                   "<div class='form-group'>"
                   + "<label>스케치북 테마</label>"
                   + "<div class='themeradio'>"
-                  + "<input type='radio' id='solotheme' name='sketch_theme' value='With me'><label for='solotheme'>With me</label>"
-                  + "<input type='radio' id='famliytheme' name='sketch_theme' value='With family'><label for='famliytheme'>With family</label>"
-                  + "<input type='radio' id='coupletheme' name='sketch_theme' value='With love'><label for='coupletheme'>With love</label>"
-                  + "<input type='radio' id='friendtheme' name='sketch_theme' value='With friend'><label for='friendtheme'>With friend</label></div>"
+                  + "<input type='radio' id='solotheme' name='modiSketch_theme' value='Withme'><label for='solotheme'>With me</label>"
+                  + "<input type='radio' id='familytheme' name='modiSketch_theme' value='Withfamliy'><label for='familytheme'>With famliy</label>"
+                  + "<input type='radio' id='coupletheme' name='modiSketch_theme' value='Withlove'><label for='coupletheme'>With love</label>"
+                  + "<input type='radio' id='friendtheme' name='modiSketch_theme' value='Withfriend'><label for='friendtheme'>With friend</label></div>"
                   + "</div>"
                   +
          
                   "<div class='form-group'>"
                   +"<label>스케치북 공유여부</label>"
                   +"<div class='themeradio'>"
-                  +"<input type='radio' id='sketchShareY' name='sketch_share' value='Y'><label for='sketchShareY'>Y</label>"
-                  +"<input type='radio' id='sketchShareN' name='sketch_share' value='N'><label for='sketchShareN'>N</label>"
+                  +"<input type='radio' id='sketchShareY' name='modiSketch_share' value='Y'><label for='sketchShareY'>Y</label>"
+                  +"<input type='radio' id='sketchShareN' name='modiSketch_share' value='N'><label for='sketchShareN'>N</label>"
                   +"</div>"
                   +"</div>"
                   +
@@ -308,34 +309,29 @@ function sketchBookModify(sketch) {
                   "<div class='form-group'>"+
                   "<label>스케치북 커버이미지</label>&nbsp;<label style='color: red;'>(커버이미지를 변경하지 않으시면 기존 이미지가 입력됩니다)</label>"+
                               "<div id='moSketchBookCover'>"+
-                                    "<div id='modalIMG1' style='background-image :url("+modiModal.sdto.sketch_spath+")'>"+
+                                    "<div id='modalIMG2' style='background-image :url("+modiModal.sdto.sketch_spath+")'>"+
                                     "<input type='hidden' name='sketch_spath' class='img_spath0'>"+
-                                          "<label for='C_IMG1'><img src='./img/folder.png'></label>"+
-                                          "<input id='C_IMG1' class='file'  name='file' type='file' multiple='multiple' style='display: none;'>"+
+                                          "<label for='C_IMG2' id='C_IMG1-label'><i class='fas fa-file-image'></i></label>"+
+                                          "<input id='C_IMG2' class='file'  name='file' type='file' multiple='multiple' style='display: none;'>"+
                                     "</div>"+
                               "</div>"+
-                   "</div>"+
+                   "</div>";
          
-                  "<div class='modal-footer'>"
-                  + "<input class='btn btn-success' type='button' value='수정완료 ' onclick='sketchModify()'>"
-                  + "<button type='button' class='btn btn-default' data-dismiss='modal'>닫기</button>"
-                  + "</div>";
+                  var modalFooter = "<button type='button' class='btn btn-secondary modal-close' data-dismiss='modal'>닫기</button>" +
+                  						 "<input class='btn btn-lp-success' type='button' value='수정완료 ' onclick='sketchModify()'>";
+                  					
                $("#modiSketchBook").html(modiFormHTML);
+               $('#modiSketchFooter').html(modalFooter);
                
-               
-               $('input:radio[name=sketch_theme]:input[value='+modiModal.sdto.sketch_theme+']').attr("checked", true);
-               $("input:radio[name='sketch_share'][value="+ modiModal.sdto.sketch_share +"]").prop('checked', true);
-					$("input[id=C_IMG1]").change(function(){
+               $('input:radio[name=modiSketch_theme]:input[value='+modiModal.sdto.sketch_theme.replace(' ','')+']').attr("checked", true);
+               $("input:radio[name='modiSketch_share'][value="+ modiModal.sdto.sketch_share +"]").prop('checked', true);
+					$("input[id=C_IMG2]").change(function(){
 						var imgClass = $(this).attr("id");
 						subImgClass = imgClass.substring(imgClass.indexOf('_')+1);
 						if(extension($("input[id="+imgClass+"]").val())){
-							fileUpload(subImgClass);
+							modiFileUpload(subImgClass);
 						}
-										
 					});
-					
-					
-					
 		}, error : function(){
 			alert("실패");
 		}
@@ -353,8 +349,8 @@ function extension(file){
 		return false;
 	}
 }
-function fileUpload(subImgClass) {
-	var frmEle = document.forms[1];
+function modiFileUpload(subImgClass) {
+	var frmEle = document.getElementById("modiSketchBook");  
 	var formData = new FormData(frmEle);
 	//파일 사이즈 확인
 	//파일 업로드 확장자 및 사이즈 확인을 메소드로 만들어서 true가 되면 아작스 실행
@@ -367,7 +363,7 @@ function fileUpload(subImgClass) {
    		contentType : false,
    		success : function(result) {
    			alert("아작스 결과"+result);
-   					$("div[id=modalIMG1]").css("background-image", "url('" + result+ "')");
+   					$("div[id=modalIMG2]").css("background-image", "url('" + result+ "')");
    					var img_spath = $("input[class=img_spath0]");
    					img_spath.val(result);
    		},error : function(){
@@ -381,20 +377,20 @@ function sketchModify(){
    //var img= img;
    //chkModify = true;
    var email = '${ldto.user_email}';
-   var img = $("div[id=modalIMG1]").css("background-image")
+   var img = $("div[id=modalIMG2]").css("background-image")
    img =img.replace('url(','').replace(')','').replace(/\"/gi, "");
    alert(img);
    
    var sketchModiModal = document.getElementById("modiSketchBook");
-   var sketch_theme = $("input[name=sketch_theme]:checked").val();
-   var sketch_share = $("input[name=sketch_share]:checked").val();
+   var modiSketch_theme = $("input[name=modiSketch_theme]:checked").val();
+   var modiSketch_share = $("input[name=modiSketch_share]:checked").val();
    var sketchConver = $("input[class=img_spath0]").val();
    sketchModiModal.action = "./modifySketch.do?user_email"+ email;
    
    
-   var title = $("#sketchtitle").val();
-   var theme = $("input[name=sketch_theme]:checked").length;
-   var share = $("input[name=sketch_share]:checked").length;
+   var title = $("#modiSketchTitle").val();
+   var theme = $("input[name=modiSketch_theme]:checked").length;
+   var share = $("input[name=modiSketch_share]:checked").length;
 
    if (title == "") {
 		alert("스케치북 제목을 확인해주세요");
@@ -402,7 +398,7 @@ function sketchModify(){
 		alert("스케치북 타입 혹은 공유 여부를 선택해주세요");	
 	} else if (title.length >= 20) {
 		alert("스케치북의 제목이 너무 깁니다");
-		$("#sketchtitle").val("");
+		$("#modiSketchTitle").val("");
 	} else if(sketchConver == null||sketchConver == ""){
 		//alert("커버이미지를 수정하지 않으시면 기존 이미지가 입력됩니다")
 	

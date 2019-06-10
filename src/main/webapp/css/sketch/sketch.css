@@ -274,6 +274,10 @@
 	right: 30px;
 }
 
+.modify-icon:hover a{
+	color: #dddfeb;
+}
+
 /* check box 위치 */
 .is-checkradio[type=checkbox]+label, is-checkradio[type=checkbox]+label::before {
 	position: absolute !important;
@@ -286,6 +290,7 @@
 	/* 	font-size: 11px; */
 	/* 	color: #555555; */
 }
+
 
 /* 하트 색상 변경*/
 .fa-heart {

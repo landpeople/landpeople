@@ -1,5 +1,6 @@
- @charset "UTF-8";
-html, body{
+@charset "UTF-8";
+
+html, body {
 	background-color: #f8f9fc !important;
 }
 
@@ -266,6 +267,7 @@ html, body{
 
 /* 사이드바의 채팅 div */
 .nav-chat { /**/
+	background-color: #f8f9fc !important;
 	padding: .5rem 0;
 	/* 	min-width: 10rem; */
 	font-size: 0.85rem;
@@ -315,6 +317,7 @@ html, body{
 /* 모달을 정중앙에 나타나게 함 */
 .modal {
 	text-align: center;
+	margin-left : 9rem;
 }
 
 @media screen and (min-width: 768px) {

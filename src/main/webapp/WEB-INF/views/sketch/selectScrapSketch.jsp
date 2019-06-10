@@ -77,7 +77,8 @@
 											<div class="hovereffect1">
 												<img class="img-responsive" src="${item.sketch_spath}" alt="">
 												<div class="overlay1">
-													<input class="is-checkradio is-info is-circle" id="chk${item.sketch_id}" value="${item.sketch_id}" type="checkbox" name="chkVal"> <label class="lp-check-box" for="chk${item.sketch_id}"></label>
+													<input class="is-checkradio is-info is-circle" id="chk${item.sketch_id}" value="${item.sketch_id}" type="checkbox" name="chkVal">
+                                                    <label class="lp-check-box" for="chk${item.sketch_id}"></label>
 													<h1>[ ${item.sketch_theme} ]</h1>
 													<h2>${item.sketch_title} | <i class="fas fa-heart"></i><span> ${sketchLike[item.sketch_id]}명</span>
 													</h2>
@@ -163,7 +164,8 @@
 					"<div class='hovereffect1'>"+
 					"<img class='img-responsive' src=" + msg.addScrapeSketchBook[i].sketch_spath + " alt=''>"+
 					"<div class='overlay1'>"+
-						"<input class='is-checkradio is-info is-circle' id='chk" + msg.addScrapeSketchBook[i].sketch_id + " value='" + msg.addScrapeSketchBook[i].sketch_id+ "' type='checkbox' name='chkVal'> <label class='lp-check-box' for='chk" + msg.addScrapeSketchBook[i].sketch_id + "'></label>"+
+						"<input class='is-checkradio is-info is-circle' id='chk" + msg.addScrapeSketchBook[i].sketch_id + "' value='" + msg.addScrapeSketchBook[i].sketch_id + "' type='checkbox' name='chkVal'>" +
+						"<label class='lp-check-box' for='chk" + msg.addScrapeSketchBook[i].sketch_id + "'></label>"+
 						"<h1>[ " + msg.addScrapeSketchBook[i].sketch_theme + " ]</h1>"+
 						"<h2>" + msg.addScrapeSketchBook[i].sketch_title + " | <i class='fas fa-heart'></i><span>" + sketchLike[sketch_id] + "명</span>"+
 						"</h2>" +

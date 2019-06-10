@@ -1,3 +1,7 @@
+SELECT  'DROP TABLE ' || object_name || ' CASCADE CONSTRAINTS;'
+  FROM    user_objects
+WHERE   object_type = 'TABLE';
+
 -- 유저 삭제
 DROP TABLE LPUSER;
 -- 자유 캔버스 삭제
