@@ -41,7 +41,7 @@
                      <i class="far fa-file-image fa-2x" onclick="$('#file').click();"></i>
                      <input id="file" type="file" name="file" accept="image/*" style="display: none;">
                   </form>
-                  <input type="text" class="write_msg txtarea chat" onKeypress="if(event.keyCode==13) $('.chat_btn').click();" placeholder="Type a message" />
+                  <textarea class="write_msg txtarea chat" placeholder="Type a message" wrap="hard"></textarea>
                   <button class="msg_send_btn chat_btn" type="button">
                      <i class="fa fa-paper-plane" aria-hidden="true"></i>
                   </button>
@@ -49,7 +49,7 @@
             </div>
 
             <input type="hidden" id="ip" value="<%=request.getRemoteAddr()%>">
-            <input type="hidden" id="messagelist" value="${messagelist}">
+            <input type="hidden" id="messagelist" value="${messageList}">
             <input type="hidden" id="chr_id" value="<%=(String) session.getAttribute("chr_id")%>">
          </div>
       </div>

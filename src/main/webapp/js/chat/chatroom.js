@@ -4,7 +4,14 @@ var nick = null ;
 var content = [];
 
 var img = $(".img");
-	        
+
+$('textarea').on('keydown', function(event) {
+    if (event.keyCode == 13)
+        if (!event.shiftKey) // shift key와 enter 함께 누르면 줄 바꿈이 되도록함
+        	$('.chat_btn').click();
+});
+
+
 $(document).ready(function() {
 
     var ip = $("#ip").val();
@@ -86,7 +93,6 @@ $(document).ready(function() {
                alert("● 대화 상대가 없습니다. *채팅 불가*");
                return;
            } else {
-               alert(nick);
                ws.send(nick + " : "+ $(".chat").val());
         	    // content.push(nick+" : "+$(".chat").val()); // 보내는 메시지 content에 저장
         	    // $.ajax({

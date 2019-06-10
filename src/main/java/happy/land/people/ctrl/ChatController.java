@@ -119,6 +119,7 @@ public class ChatController implements ServletConfigAware {
 		logger.info("● ChatController socketOpen.do / 유저 닉네임 : " + sender);
 		logger.info("● ChatController socketOpen.do / 채팅방 아이디 : " + chr_id);
 		HashMap<String, String> chatList = (HashMap<String, String>) servletContext.getAttribute("chatList");
+		
 		if (chatList == null) {
 			chatList = new HashMap<String, String>();
 			chatList.put(sender, chr_id);
