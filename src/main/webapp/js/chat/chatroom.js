@@ -70,7 +70,9 @@ $(document).ready(function() {
                enctype : 'multipart/form-data',
                processData : false,
                contentType : false,
-               success : function(result) {ws.send("file : " + nick + " > " + result);},
+               success : function(result) {
+            	   ws.send("file : " + nick + " > " + result);
+               },
                error : function(result) {alert(실패);}
             });
         } else {
@@ -106,6 +108,8 @@ $(document).ready(function() {
                $(".chat").val('');
                $(".chat").empty();
                $(".chat").focus();
+               file.val('');
+
            }
         }
     }); /* 전송 버튼 눌렀을 때 이벤트 */

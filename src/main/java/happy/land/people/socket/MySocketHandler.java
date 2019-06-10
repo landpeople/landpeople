@@ -1,16 +1,14 @@
 package happy.land.people.socket;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Map;
-import java.util.WeakHashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.datetime.joda.LocalDateTimeParser;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -66,7 +64,7 @@ public class MySocketHandler extends TextWebSocketHandler {
 		if (msg != null && !msg.equals("")) { // 메시지가 null이 아닐 때 처리,
 			if (msg.indexOf("#$nick_") > -1) { // 입장 했을 때의 메시지를 판단함
 				for (WebSocketSession s : list) {
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy년 MM시 dd분 HH:mm");
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd. HH:mm" , new Locale("en", "US"));
 					String time = sdf.format(new Date());
 					Map<String, Object> sessionMap = s.getHandshakeAttributes();
 					String otherGrSession = (String) sessionMap.get("chr_id"); // 같은 그룹끼리 묶어 주는 거 같은데??
@@ -76,14 +74,14 @@ public class MySocketHandler extends TextWebSocketHandler {
 					System.out.println("● MySocketHandler 접속자 other nickname : " + otherMemSession);
 
 					if (myGrSession.equals(otherGrSession)) { // 같은 그룹 소속일 때 대화가 가능하도록 처리
-						txt = "<div class = 'noticeTxt'>" + myMemSession + " 님이 입장했습니다 ("+ time + ")</font><br/></br></div>";
+						txt = "<div class = 'noticeTxt'>" + myMemSession + " 님이 입장했습니다 ("+ time + ")</div>";
 						System.out.println("● MySocketHandler handleTextMessage() 접속 했을 때 메시지 처리 :" + txt);
 						ChatContentDto dto = new ChatContentDto(otherGrSession, otherMemSession, txt);
 						s.sendMessage(new TextMessage(txt));
 					}
 				}
 			} else if (msg.indexOf(myMemSession) == 0) {
-				SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a  |  MMM");
+				SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a  |  MMM" , new Locale("en", "US"));
 				String time = sdf.format(new Date());
 				System.out.println("● myMemSession 메시지 발송한 사람의 session : " + myMemSession);
 				String msg2 = msg.substring(0, msg.indexOf(":")).trim(); // 소켓이 열린 상태에서 메시지 주고받을 수 있도록
@@ -97,7 +95,6 @@ public class MySocketHandler extends TextWebSocketHandler {
 						if (msg2.equals(otherMemSession)) { // 나의 메시지
 							String newMsg = "<div class='outgoing_msg'>"
 												+ "<div class='sent_msg'>"
-													+ "<div class='sent_user'>" + myMemSession + "</div>"
 													+ "<p>" + msg.replace(msg.substring(0, msg.trim().indexOf(":") + 1), "") + "</p>"
 													+ "<span class='time_date'>" + time + "</span>"
 												+ "</div>"
@@ -245,13 +242,13 @@ public class MySocketHandler extends TextWebSocketHandler {
 
 		list.remove(session);
 		for (WebSocketSession a : list) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd at HH:mm");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd at HH:mm", new Locale("en", "US"));
 			String time = sdf.format(new Date());
 			Map<String, Object> sessionMap = a.getHandshakeAttributes();
 			String otherGrSession = (String) sessionMap.get("chr_id");
 
 			if (myGrSession.equals(otherGrSession)) {
-				String txt = "<div class = 'noticeTxt exit'>" + myMemSession + "님이 퇴장했습니다 (" + time + ")<br/></br></div>";
+				String txt = "<div class = 'noticeTxt exit'>" + myMemSession + "님이 퇴장했습니다 (" + time + ")</div>";
 				System.out.println("● MySocketHandler handleTextMessage() > service.chatContent_InsertMsg text :" + txt);
 				ChatContentDto dto = new ChatContentDto(otherGrSession, receiver, txt); // 일단 마이 세션에 넣어주는데 상대방 창에 나와야함.
 				int n = service.chatContent_InsertMsg(dto);

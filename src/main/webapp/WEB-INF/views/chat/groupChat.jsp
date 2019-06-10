@@ -6,8 +6,8 @@
 <title>제주도 여행 일정 공유 커뮤니티 | 육지사람</title>
 
 <%
-   String chr_id = (String) session.getAttribute("chr_id");
-   String user = (String) session.getAttribute("user");
+	String chr_id = (String) session.getAttribute("chr_id");
+	String user = (String) session.getAttribute("user");
 %>
 
 </head>
@@ -21,39 +21,40 @@
 <link href="./css/theme/lp-template.css" rel="stylesheet">
 
 <body>
-   <div id="cover">
-      <div id="cover-inner">
-         <div class="inner-wrapper shadow-lg">
+	<div id="cover">
+		<div id="cover-inner">
+			<div class="inner-wrapper shadow-lg">
 
-            <div class="message-box">
-               <div class="message_area">
-                  <input type="text" id="nickName" value=<%=user%> />
-               </div>
-               <div class="memListBox">
-                  <div class="listTitle">접속자 목록</div>
-                  <div class="memList"></div>
-               </div>
-            </div>
+				<div class="message-box">
+					<div class="message_area scroll">
+						<input type="text" id="nickName" value=<%=user%> />
+					</div>
+					<div class="memListBox">
+						<div class="listTitle">접속자 목록</div>
+						<div class="memList"></div>
+					</div>
+				</div>
 
-            <div class="type_msg">
-               <div class="input_msg_write">
-                  <form id="fileForm" class="file_btn">
-                     <i class="far fa-file-image fa-2x" onclick="$('#file').click();"></i>
-                     <input id="file" type="file" name="file" accept="image/*" style="display: none;">
-                  </form>
-                  <textarea class="write_msg txtarea chat" placeholder="Type a message" wrap="hard"></textarea>
-                  <button class="msg_send_btn chat_btn" type="button">
-                     <i class="fa fa-paper-plane" aria-hidden="true"></i>
-                  </button>
-               </div>
-            </div>
+				<div class="type_msg">
+					<div class="input_msg_write">
+						<div class="btn-box">
+							<form id="fileForm" class="file_btn">
+								<i class="far fa-file-image" onclick="$('#file').click();"></i> <input id="file" type="file" name="file" accept="image/*" style="display: none;">
+							</form>
+						</div>
+						<textarea class="write_msg txtarea chat scroll" placeholder="Type a message" wrap="hard"></textarea>
+						<div class="btn-box">
+							<button class="msg_send_btn chat_btn" type="button">
+								<i class="fa fa-paper-plane" aria-hidden="true"></i>
+							</button>
+						</div>
+					</div>
+				</div>
 
-            <input type="hidden" id="ip" value="<%=request.getRemoteAddr()%>">
-            <input type="hidden" id="messagelist" value="${messageList}">
-            <input type="hidden" id="chr_id" value="<%=(String) session.getAttribute("chr_id")%>">
-         </div>
-      </div>
-   </div>
+				<input type="hidden" id="ip" value="<%=request.getRemoteAddr()%>"> <input type="hidden" id="messagelist" value="${messageList}"> <input type="hidden" id="chr_id" value="<%=(String) session.getAttribute("chr_id")%>">
+			</div>
+		</div>
+	</div>
 </body>
 <script src="./js/theme/jquery.min.js"></script>
 <script src="./js/chat/chatroom.js"></script>
