@@ -110,10 +110,11 @@ $(document).ready(function() {
             <!-- LandPeople Content Area -->
             <div class="lp-container">
                <div class="lp-other-content shadow-lg">
+               	<div class="lp-content-header">
+					<h1 id="title" class="h2 mb-4 text-gray-800 lp-content-title">My Chatroom</h1>
+					<button id="mutidel" class="btn btn-danger mb-4 lp-sketch-del" onclick="mutidel()">채팅방 나가기</button>
+				</div>
 				<div id="jqGridDiv">
-                  <h3>채팅 리스트</h3>
-                  <hr>
-			   	  <button id="mutidel" class="" onclick="mutidel()">채팅방 나가기</button>
                   <hr>
                   <table id="jqGrid"></table>
                   <div id="jqGridPager"></div>

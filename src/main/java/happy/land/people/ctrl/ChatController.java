@@ -58,9 +58,9 @@ public class ChatController implements ServletConfigAware {
 	// 8. log처리를 위한 logger객체 생성
 	Logger logger = LoggerFactory.getLogger(ChatController.class);
 
-	@RequestMapping(value="/jqgrid3.do", method=RequestMethod.GET)
+	@RequestMapping(value="/myChatroom.do", method=RequestMethod.GET)
 	public String jqgrid3() {
-		logger.info("Controller jqgrid3");
+		logger.info("Controller myChatroom");
 		return "manager/chatList";
 	}
 	
