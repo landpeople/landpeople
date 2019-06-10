@@ -39,16 +39,16 @@ public class ManagerController {
 	private IManagerService iManagerService; 
 	
 	// 회원 조회 페이지로 이동
-	@RequestMapping(value="/jqgrid.do", method=RequestMethod.GET)
+	@RequestMapping(value="/memberList.do", method=RequestMethod.GET)
 	public String jqgrid() {
-		logger.info("Controller jqgrid");
+		logger.info("Controller memberList");
 		return "manager/managerMemberList";
 	}
 	
 	// 스케치북 조회 페이지로 이동
-	@RequestMapping(value="/jqgrid2.do", method=RequestMethod.GET)
+	@RequestMapping(value="/memberSketchList.do", method=RequestMethod.GET)
 	public String jqgrid2() {
-		logger.info("Controller jqgrid2");
+		logger.info("Controller memberSketchList");
 		return "manager/managerSketchList";
 	}
 	
