@@ -59,7 +59,7 @@ public class ChatController implements ServletConfigAware {
 	Logger logger = LoggerFactory.getLogger(ChatController.class);
 
 	@RequestMapping(value="/myChatroom.do", method=RequestMethod.GET)
-	public String jqgrid3() {
+	public String myChatroom() {
 		logger.info("Controller myChatroom");
 		return "manager/chatList";
 	}
@@ -119,6 +119,7 @@ public class ChatController implements ServletConfigAware {
 		logger.info("● ChatController socketOpen.do / 유저 닉네임 : " + sender);
 		logger.info("● ChatController socketOpen.do / 채팅방 아이디 : " + chr_id);
 		HashMap<String, String> chatList = (HashMap<String, String>) servletContext.getAttribute("chatList");
+		
 		if (chatList == null) {
 			chatList = new HashMap<String, String>();
 			chatList.put(sender, chr_id);
@@ -399,6 +400,6 @@ public class ChatController implements ServletConfigAware {
 			System.out.println(chrIds[i]+"번 채팅방 삭제 쿼리 실행!");
 		}
 		
-		return "forward:/jqgrid3.do";
+		return "forward:/myChatroom.do";
 	}
 }

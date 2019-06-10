@@ -77,9 +77,6 @@ function sketchBookMake(user) {
 									fileUpload(subImgClass);
 								}
 							});
-								
-		
-							
 						}
 					},
 					error : function() {

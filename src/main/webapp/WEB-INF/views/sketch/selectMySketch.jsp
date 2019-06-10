@@ -52,7 +52,7 @@
 	<div id="wrapper">
 		<%@include file="../common/lp-sidebar.jsp"%>
 
-		<!-- Content Wrapper -->d
+		<!-- Content Wrapper -->
 		<div id="content-wrapper" class="d-flex flex-column">
 			<!-- flex 레이아웃 content와 푸터 정렬 -->
 
@@ -262,8 +262,8 @@ topEle.on('click', function() {
 function sketchBookModify(sketch) {
 	var user_email = "${ldto.user_email}"
 	var sketch_id = sketch;
-	alert(user_email);
-	alert(sketch_id);
+// 	alert(user_email);
+// 	alert(sketch_id);
 	ajaxSketchModi(user_email, sketch_id);
 	$("#sketchModiForm").modal();
 }
@@ -275,7 +275,7 @@ function sketchBookModify(sketch) {
              "sketch_id"  :   sketch_id },
       dataType : "json",
       success :function(modiModal){
-         alert(modiModal.sdto.sketch_theme.replace(' ',''));
+//          alert(modiModal.sdto.sketch_theme.replace(' ',''));
          
          var modiFormHTML =   "<input type='hidden' name='user_email' value='"+modiModal.sdto.user_email+"'>"+
                         "<input type='hidden' name='sketch_id' value='"+modiModal.sdto.sketch_id+"'>"+
