@@ -155,9 +155,9 @@ public class SketchBookServiceImpl implements ISketchBookService {
 	}
 	
 	@Override
-	public String sketchemailSelect(String sketch_id) {
+	public LPSketchbookDto sketchinfoSelect(String sketch_id) {
 		logger.info("service nicknameSelect 스케치북 작성자 email 조회 {}", sketch_id);
-		return iSketchBookDao.sketchemailSelect(sketch_id);
+		return iSketchBookDao.sketchinfoSelect(sketch_id);
 	}
 	
 

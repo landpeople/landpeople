@@ -25,7 +25,19 @@
 <link href="./css/theme/sb-admin-booklet.css" rel="stylesheet">
 <link href="./css/theme/lp-template.css" rel="stylesheet">
 <link href="./css/sketch/modal.css" rel="stylesheet">
-
+<style type="text/css">
+.daysInfo{
+   font-size:20px;
+   width:430px; 
+   height:35px; 
+   border:1px solid #e3e6f0;
+   border-radius: 4px;
+   background: linear-gradient(to right ,yellow 1%, white 1%);
+   padding-left: 20px;
+   box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,59,.15)!important;
+   margin-bottom: 0px;
+}
+</style>
 </head>
 
 <script src="./js/jquery-3.3.1.js"></script>
@@ -43,6 +55,8 @@
 <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=559fa9d8ea227159941f35acba720d2b&libraries=services"></script>
 
+
+
 <body id="page-top" class="scroll">
 
    <!-- Page Wrapper -->
@@ -58,8 +72,14 @@
 
             <!-- LandPeople Content Area -->
             <div class="lp-container">
-               <div class="lp-other-content shadow-lg scroll">
-                  <a href='./detailCanvas.do?sketch_id=${sketch_id}'>뒤로가기</a>
+               <div class="lp-other-content shadow-lg scroll" style="overflow:hidden;">
+               <div class="back" onclick="moveDetailCanvas(${sketch_id})">
+                         	<img alt="뒤로가기" src="./img/canvas/back.png"
+								onmouseover="this.src='./img/canvas/back-over.png';"
+								onmouseout="this.src='./img/canvas/back.png';">
+                         </div>
+               
+                 <%--  <a href='./detailCanvas.do?sketch_id=${sketch_id}'>뒤로가기</a> --%>
                <div id="mybook" style="border: 1px solid black;">
                   <div id="page3" style="width: 470px; height: 630px; overflow: auto;">
                      페이지 제목:
@@ -129,6 +149,8 @@
       // 일정 마커들의 시작시간,종료시간 정보
       var daysStart = [];
       var daysEnd = [];
+      // 일정 마커들의 주소
+      var daysAddress = [];
 
       //클릭시 나오는 임시 마커
       var marker;
@@ -250,6 +272,8 @@
          min = $("#endMM").val();
          if(endHalf == "PM"){ hour = (12+parseInt(hour)); }
          daysEnd.push(hour+":"+min);   
+         //주소 넣기
+         daysAddress.push(detailAddr);
 
          // 클릭 이벤트 설정
          var addwindow = new daum.maps.InfoWindow({
@@ -272,7 +296,7 @@
             var endCoord =  new daum.maps.LatLng(daysMarker[daysMarker.length-1].getPosition().getLat(), daysMarker[daysMarker.length-1].getPosition().getLng());
             div.innerHTML += "<a style='float:right; margin-right:30px;' href='https://map.kakao.com/?sX="+startCoord.toCoords().getX()+"&sY="+startCoord.toCoords().getY()+"&sName=출발점&eX="+endCoord.toCoords().getX()+"&eY="+endCoord.toCoords().getY()+"&eName=도착점' onclick='window.open(this.href, \"_경로보기\", \"width=1280px,height=860px;\"); return false;'>최단경로보기</a><br>";
          }
-         div.innerHTML += "<div style='font-size:20px; width:450px; height:38px; border:1px solid black;'>"+daysMarker.length+"번째 일정:"+title                       
+         div.innerHTML += "<div class='daysInfo'>"+daysMarker.length+"번째 일정:"+title                       
                      + "<div style='float:right;'><img src='./img/canvas/normalClose.png' class='deleteDays' title='"+(daysMarker.length-1)+"' width='38' height='38' onclick='deleteDay("+(daysMarker.length-1)+")'></div>"
                     + "<div style='font-size:12px; float:right; margin-right:50px;'>"+startHalf+" "+startHour+":"+startMin+"~"+endHalf+" "+endHour+":"+endMin+"</div></div>"; 
             daysPage.appendChild(div);
@@ -340,7 +364,7 @@
                    'endDate' : "2019-05-14 " + daysEnd[i] + ":00",
                    'x' : String(daysMarker[i].getPosition().getLat()),
                    'y' : String(daysMarker[i].getPosition().getLng()),
-                   'address' : "제주특별자치도 서귀포시 성산읍 고성리 127-2"
+                   'address' : daysAddress[i]
                };
                jsonObj["days" + i] = testVal;
              }
@@ -356,8 +380,7 @@
                    var sketch_id = msg.result;
                    location.href ="detailCanvas.do?sketch_id="+sketch_id;
                },
-               error : function() {
-                   alert("삶의 지혜가 부족하다.");
+               error : function() {                   
                }
              });
          }
@@ -421,6 +444,7 @@
                         // 마커 위에 인포윈도우를 표시합니다                      
                         foodMarkerInfo.open(map,foodMarker);
                         marker = foodMarker;
+                        detailAddr = "제주특별시";
                   });
                })(foodMarker, foodMarkerInfo);
                
@@ -636,6 +660,11 @@
    $('#searchKeyword').keyup(function(e) {
           if (e.keyCode == 13) searchKeyword();        
    });
+   
+   // 뒤로 가기 이벤트
+   function moveDetailCanvas(sketch_id) {
+		location.href="./detailCanvas.do?sketch_id="+sketch_id;
+	}  
    
    </script>
    

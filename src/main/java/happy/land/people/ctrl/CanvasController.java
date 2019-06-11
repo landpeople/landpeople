@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import happy.land.people.dto.LPCanvasDto;
 import happy.land.people.dto.LPDaysDto;
+import happy.land.people.dto.LPSketchbookDto;
 import happy.land.people.dto.LPTextDto;
 import happy.land.people.dto.LPUserDto;
 import happy.land.people.model.canvas.ILPCanvasService;
@@ -56,10 +57,11 @@ public class CanvasController {
 	    	//스케치북 번호를 세션에 추가
 	    	session.setAttribute("sketch_id", sketch_id);
 	    	//접속한 유저의 정보(나중에 로그인 다 구현되면 바꿀것)	    	
-	    	//스케치북 작성자 email 가져오기
-	    	String sketch_email  = iSketchBookService.sketchemailSelect(sketch_id);	    	
+	    	//스케치북 작성자 email 및 제목 가져오기
+	    	LPSketchbookDto sketchinfo  = iSketchBookService.sketchinfoSelect(sketch_id);	    	
 	    	//스케치북 작성자의 정보(나중에 스케치북 연동 끝나면 바꿀것)
-	    	session.setAttribute("sketch_email", sketch_email);
+	    	session.setAttribute("sketch_email", sketchinfo.getUser_email());
+	    	session.setAttribute("sketch_title", sketchinfo.getSketch_title());
 	    	
 	    	System.out.println("해당 스케치북의 캔버스 개수:"+canvasCnt);
 	    	

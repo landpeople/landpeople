@@ -102,3 +102,25 @@
 	background-color: #3598dc;
 	color: #fff;
 }
+
+
+/* 모달을 정중앙에 나타나게 함 */
+.modal {
+	text-align: center;
+	margin-left : 9rem;
+}
+
+@media screen and (min-width: 768px) {
+	.modal:before {
+		display: inline-block;
+		vertical-align: middle;
+		content: " ";
+		height: 100%;
+	}
+}
+
+.modal-dialog {
+	display: inline-block;
+	text-align: left;
+	vertical-align: middle;
+}
