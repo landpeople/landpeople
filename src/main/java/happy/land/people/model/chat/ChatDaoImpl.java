@@ -47,9 +47,9 @@ public class ChatDaoImpl implements IChatDao {
 	}
 
 	@Override
-	public int chatList_Delete(String user_nickname) {
+	public int chatList_Delete(LPUserDto dto) {
 		logger.info("● Repository chatList_Delete 실행");
-		return sqlSession.insert(NS + "chatList_Delete", user_nickname);
+		return sqlSession.insert(NS + "chatList_Delete", dto);
 	}
 
 	@Override

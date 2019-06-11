@@ -17,9 +17,7 @@ function sketchBookMake(user) {
 
 						if (map.user_iswrite == "F" || map.user_iswrite == null)
 							alert("작성권한이 없습니다.");
-						else {
-							alert(map.user_iswrite);
-							alert(map.user_email);
+						else {						
 							$("#sketchForm").modal();
 							var htmlModal = "<input type='hidden' name='user_email' value='"+map.user_email+"'>"
 									+
@@ -79,8 +77,7 @@ function sketchBookMake(user) {
 							});
 						}
 					},
-					error : function() {
-						alert("실패");
+					error : function() {						
 					}
 				});
 	}
@@ -117,8 +114,7 @@ function sketchBookMake(user) {
 			alert("스케치북의 제목이 너무 깁니다.");
 			$("#sketchtitle").val("");
 		} else {
-			sketch.submit();
-			alert("스케치북 작성완료");
+			sketch.submit();			
 		}
 	}
 	
@@ -154,13 +150,11 @@ function sketchBookMake(user) {
 			enctype : 'multipart/form-data',
 			processData : false,
 			contentType : false,
-			success : function(result) {
-				alert("아작스 결과"+result);
+			success : function(result) {				
 						$("div[id=modalIMG1]").css("background-image", "url('" + result+ "')");
 						var img_spath = $("input[class=img_spath0]");
 						img_spath.val(result);
-			},error : function(){
-				alert("실패");
+			},error : function(){				
 			}
 		});
 	}
@@ -176,7 +170,7 @@ function sketchBookMake(user) {
 /* 작성항 스케치북 조회 페이지로 이동 시켜주는 함수*/
 	function sketchSelectMine(){
 		var email = $("#user_email").val();
-		alert(email);
+		
 		location.href = "./sketchSelMine.do?user_email="+email;
 		
 	}
