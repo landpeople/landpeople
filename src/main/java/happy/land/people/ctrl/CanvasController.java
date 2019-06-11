@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import happy.land.people.dto.LPCanvasDto;
 import happy.land.people.dto.LPDaysDto;
+import happy.land.people.dto.LPSketchbookDto;
 import happy.land.people.dto.LPTextDto;
 import happy.land.people.dto.LPUserDto;
 import happy.land.people.model.canvas.ILPCanvasService;
@@ -56,10 +57,11 @@ public class CanvasController {
 	    	//스케치북 번호를 세션에 추가
 	    	session.setAttribute("sketch_id", sketch_id);
 	    	//접속한 유저의 정보(나중에 로그인 다 구현되면 바꿀것)	    	
-	    	//스케치북 작성자 email 가져오기
-	    	String sketch_email  = iSketchBookService.sketchemailSelect(sketch_id);	    	
+	    	//스케치북 작성자 email 및 제목 가져오기
+	    	LPSketchbookDto sketchinfo  = iSketchBookService.sketchinfoSelect(sketch_id);	    	
 	    	//스케치북 작성자의 정보(나중에 스케치북 연동 끝나면 바꿀것)
-	    	session.setAttribute("sketch_email", sketch_email);
+	    	session.setAttribute("sketch_email", sketchinfo.getUser_email());
+	    	session.setAttribute("sketch_title", sketchinfo.getSketch_title());
 	    	
 	    	System.out.println("해당 스케치북의 캔버스 개수:"+canvasCnt);
 	    	
@@ -88,7 +90,32 @@ public class CanvasController {
 	    	// 캔버스 타입들
 	    	request.setAttribute("daysType", canvasList);
 	    	// 자유 캔버스 화면으로 보내기
-	    	request.setAttribute("textList", freeMap);  
+	    	request.setAttribute("textList", freeMap);
+	    	
+	    	
+			// 자신의 아이디 이메일 가져오기
+			LPUserDto user = (LPUserDto)session.getAttribute("ldto");
+			if(user != null) {
+				if(user.getUser_email() != null) {
+					// 스케치북 좋아요 상태 가져오기
+					Map<String, String> likeMap = new HashMap<String, String>();					
+					likeMap.put("user_email", user.getUser_email());
+					likeMap.put("sketch_id", sketch_id);
+					String like = iSketchBookService.likeSelect(likeMap);
+					if(like != null) {
+						session.setAttribute("usersketch_like", like);
+					}
+					
+					// 스케치북 스크랩 상태 가져오기
+					Map<String, String> scrapMap = new HashMap<String, String>();
+					scrapMap.put("user_email",user.getUser_email());
+					scrapMap.put("sketch_id", sketch_id);
+					String scrape = iSketchBookService.scrapeSelect(scrapMap);
+					if(scrape != null)	{
+						session.setAttribute("usersketch_scrap", scrape);
+					}
+				}
+			}
 	    	
 	    	return "canvas/detailCanvas";
 	    }
