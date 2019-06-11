@@ -43,20 +43,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <!-- js -->
 <script src="./js/freeCanvas/freeCanvas.js" defer="defer"></script>
-<script type="text/javascript">
-    //에디터
-    $(document).ready(function() {
-	for (var i = 0; i < ids.length; i++) {
-	    setEditor(ids.eq(i).attr("id"));
-	}
-    });
-
-    function setEditor(id) {
-	CKEDITOR.disableAutoInline = true;
-	CKEDITOR.inline("'" + id + "'");
-    }
-</script>
-
 <body id="page-top" class="scroll">
 
    <!-- Page Wrapper -->
@@ -90,7 +76,7 @@
                            <div id="Left-Side5">
                               <div id="LS_IContainer5">
                                  <div id="IMG51">
-                                    <label for="C_IMG51"><img src="./img/folder.png"></label>
+                                    <label for="C_IMG51"><img src="./img/canvas/insertImg.png" class="insertImg"></label>
                                     <input id="C_IMG51" class="file" name="file" type="file" multiple="multiple" style="display: none;">
                                  </div>
                                  <input type="hidden" name="list[0].img_spath" class="img_spath0">
@@ -110,7 +96,7 @@
                            <div id="Right-Side5">
                               <div id="RS_ITContainer51">
                                  <div id="IMG52">
-                                    <label for="C_IMG52"><img src="./img/folder.png"></label>
+                                    <label for="C_IMG52"><img src="./img/canvas/insertImg.png" class="insertImg"></label>
                                     <input id="C_IMG52" class="file" name="file" type="file" multiple="multiple" style="display: none;">
                                  </div>
                                  <input type="hidden" name="list[2].img_spath" class="img_spath1">
@@ -122,7 +108,7 @@
                                  <input type="hidden" name="list[3].text_content" class="text_content1">
                                  <input type="hidden" name="list[3].text_no" value="3">
                                  <div id="IMG53">
-                                    <label for="C_IMG53"><img src="./img/folder.png"></label>
+                                    <label for="C_IMG53"><img src="./img/canvas/insertImg.png" class="insertImg"></label>
                                     <input id="C_IMG53" class="file" name="file" type="file" multiple="multiple" style="display: none;">
                                  </div>
                                  <input type="hidden" name="list[4].img_spath" class="img_spath2">
@@ -136,7 +122,7 @@
                                  <input type="hidden" name="list[5].text_content" class="text_content2">
                                  <input type="hidden" name="list[5].text_no" value="5">
                                  <div id="IMG54">
-                                    <label for="C_IMG54"><img src="./img/folder.png"></label>
+                                    <label for="C_IMG54"><img src="./img/canvas/insertImg.png" class="insertImg"></label>
                                     <input id="C_IMG54" class="file" name="file" type="file" multiple="multiple" style="display: none;">
                                  </div>
                                  <input type="hidden" name="list[6].img_spath" class="img_spath3">
@@ -158,6 +144,7 @@
 				         <img id="insert" alt="등록하기" src="./img/canvas/check.png"
 				         	onmouseover="this.src='./img/canvas/check-over.png';"
 				         	onmouseout="this.src='./img/canvas/check.png';">
+				      </div>
     			  </div>
 
                </div>

@@ -1,8 +1,10 @@
 @charset "UTF-8";
+
 *{
  padding: 0px;
  margin: 0px;
 }
+
 #Left-Side{
 	float: left;
 	width: 450px;
@@ -11,8 +13,8 @@
 
 #Right-Side{
 	float: right;
-	width: 450px;
-	height: 640px;
+	width: 100%;
+	height: 100%;
 }
 
 #IMG1{
@@ -26,16 +28,18 @@
 }
 
 #TXT1{
+	border: 1px solid #ebebeb;
+	border-radius: 5px;
 	margin: auto;
-	height: 200px;
-	width: 450px;
+	height: 190px;
+	width: 447px;
 	position: absolute;
 	padding: 5px;
 }
 
 #RS_Container_1{
 	height: 225px;
-	margin-top: 60px;
+	margin-top: 30px;
 }
 
 #RS_Container_2{
@@ -44,9 +48,11 @@
 }
 
 #TXT2, #TXT3, #TXT4{
+	border: 1px solid #e5e5e5;
+	border-radius: 5px;
 	padding: 5px;
-	height: 237px;
-	width: 145px;
+	height: 235px;
+	width: 132px;
 }
 
 #TXT2{
@@ -72,6 +78,10 @@
  	background-position: center;
 }
 
+#txt1, #txt2, #txt3, #txt4{
+	font-size: medium;
+}
+
 #IMG3{
 	height: 254px;
 	width: 170px;
@@ -91,25 +101,27 @@
 
 #Right-Side2{
 	float: right;
-	width: 460px;
-	height: 640px;
+	width: 100%;
+	height: 100%;
 }
 
 #LS_TContainer2{
-	margin-top : 60px;
+	margin-top : 50px;
 	width: 220px;
 	height: 552px;
 	float: left;
 }
 
 #LS_IContainer2{
-	margin-top : 60px;
+	margin-top : 50px;
 	width: 230px;
 	height: 552px;
  	float: right;
 }
 
 #TXT21{
+	border: 1px solid #ebebeb;
+	border-radius: 5px;
 	padding: 5px;
 	width: 230px;
 	height: 542px;
@@ -117,20 +129,20 @@
 }
 
 #IMG21{
-	margin-left : 10px;
+	margin-left : 15px;
 	float: none;
 	height: 172px;
-	width: 220px;	
+	width: 215px;	
 	background-size: contain;
  	background-repeat: no-repeat;
  	background-position: center;
 }
 
 #IMG22{
-	margin-left : 10px;
+	margin-left : 15px;
 	float: none;
 	height: 172px;
-	width: 220px;	
+	width: 215px;	
 	margin-top: 10px;
 	background-size: contain;
  	background-repeat: no-repeat;
@@ -138,10 +150,10 @@
 }
 
 #IMG23{
-	margin-left : 10px;
+	margin-left : 15px;
 	float: none;
 	height: 172px;
-	width: 220px;	
+	width: 215px;	
 	margin-top: 10px;
 	background-size: contain;
  	background-repeat: no-repeat;
@@ -150,17 +162,19 @@
 
 #IMG24{
 	height: 330px;
-	width: 460px;	
-	margin: 20px 0px 0px 0px;
+	width: 440px;	
+	margin: 10px 0px 0px 0px;
 	background-size: contain;
  	background-repeat: no-repeat;
  	background-position: center;
 }
 
 #TXT22{
+	border: 1px solid #e5e5e5;
+	border-radius: 5px;
 	padding: 5px;
 	height: 260px;
-	width: 460px;
+	width: 440px;
 	margin: 15px 0px 0px 0px;
 }
 
@@ -174,8 +188,8 @@
 
 #Right-Side3{
 	float: right;
-	width: 460px;
-	height: 640px;
+	width: 100%;
+	height: 100%;
 }
 
 #IMG31{
@@ -187,35 +201,39 @@
 }
 
 #RS_TContainer3{
-	margin-top: 50px;
-	width: 230px;
-	height: 640px;
+	margin-top: 40px;
+	width: 210px;
+	height: 600px;
 	float: left;
 }
 
 #RS_IContainer3{
-	margin-top: 50px;
-	width: 230px;
-	height: 640px;
+	margin-top: 40px;
+	width: 210px;
+	height: 600px;
 	float: right;
 }
 
 #TXT31{
+	border: 1px solid #e5e5e5;
+	border-radius: 5px;
 	padding: 5px;
 	height: 174px;
-	width: 230px;
+	width: 220px;
 }
 
 #TXT32{
+	border: 1px solid #e5e5e5;
+	border-radius: 5px;
 	padding: 5px;
 	height : 378px;
-	width: 230px;
+	width: 220px;
 	margin-top: 20px;
 }
 
 #IMG32{
 	height: 174px;
-	width: 220px;
+	width: 210px;
 	margin-left: 10px;
 	background-size: contain;
  	background-repeat: no-repeat;
@@ -224,7 +242,7 @@
 
 #IMG33{
 	height: 160px;
-	width: 200px;
+	width: 190px;
 	margin: 20px 30px 0px 10px;
 	background-size: contain;
  	background-repeat: no-repeat;
@@ -232,9 +250,11 @@
 }
 
 #TXT33{
+	border: 1px solid #e5e5e5;
+	border-radius: 5px;
 	padding: 5px;
 	height: 160px;
-	width: 200px;
+	width: 190px;
 	margin: 10px 30px 0px 10px;
 }
 
@@ -242,37 +262,38 @@
 /* 4번째꺼 */
 #Left-Side4{
 	float: left;
-	width: 460px;
-	height: 640px;
+	width: 100%;
+	height: 100%;
 }
 
 #Right-Side4{
 	float: right;
-	width: 460px;
-	height: 640px;
+	width: 100%;
+	height: 100%;
 }
 
 #IMG41{
-	border: 1px solid #ebebeb;  
 	float: left;
-	width: 460px;
-	height: 632px;	
+	width: 440px;
+	height: 610px;	
 	background-size: contain;
  	background-repeat: no-repeat;
  	background-position: center;
 }
 
 #TXT41{
+	border: 1px solid #e5e5e5;
+	border-radius: 5px;
 	padding: 5px;
-	width: 460px;
-	height: 632px;	
+	width: 440px;
+	height: 610px;	
 }
 
 /* 5번 */
 #Left-Side5{
 	float: left;
 	width: 460px;
-	height: 100%;
+	height: 640px;
 }
 
 #Right-Side5{
@@ -282,6 +303,7 @@
 	float: right;
 	width: 100%;
 	height: 100%;
+	margin-top: 15px;
 }
 
 #LS_IContainer5{
@@ -304,8 +326,11 @@
 }
 
 #TXT51{
+	border: 1px solid #ebebeb;
+	border-radius: 5px;
+	padding: 5px;
 	width: 280px;
-	height: 100%;
+	height: 160px;
 }
 
 #RS_ITContainer51{
@@ -328,6 +353,8 @@
 }
 
 #TXT52 {
+	border: 1px solid #e5e5e5;
+	border-radius: 5px;
 	padding: 5px;
 	width: 220px;
 	height: 174px;
@@ -338,6 +365,8 @@
 }
 
 #TXT53, #TXT54{
+	border: 1px solid #e5e5e5;
+	border-radius: 5px;
 	padding: 5px;
 	width: 100%;
 	height: 174px;

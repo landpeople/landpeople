@@ -150,7 +150,7 @@ public class FreeController {
 				dto.setImg_spath(img_spath);
 
 				// 엔터키 지우기 위한 변수선언
-				String resultText = dto.getText_content();						
+				String resultText = dto.getText_content();					
 				// 입력한 내용 중간에 엔터가 있는지 탐색 후 삭제
 				resultText = resultText.replaceAll(System.getProperty("line.separator")," ");
 				// 엔터키 삭제한 값을 dto에 다시 담음
@@ -270,7 +270,7 @@ public class FreeController {
 					dto.setImg_spath(img_spath);
 					
 					// 엔터키 지우기 위한 변수선언
-					String resultText = dto.getText_content();									
+					String resultText = dto.getText_content();					
 					// 입력한 내용 중간에 엔터가 있는지 탐색 후 삭제
 					resultText = resultText.replaceAll(System.getProperty("line.separator")," ");
 					// 엔터키 삭제한 값을 dto에 다시 담음

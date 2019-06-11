@@ -43,21 +43,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <!-- js -->
 <script src="./js/freeCanvas/freeCanvas.js" defer="defer"></script>
-<script type="text/javascript">
-    //에디터
-    $(document).ready(function() {
-	for (var i = 0; i < ids.length; i++) {
-	    setEditor(ids.eq(i).attr("id"));
-	}
-    });
-
-    function setEditor(id) {
-	CKEDITOR.disableAutoInline = true;
-	CKEDITOR.inline("'" + id + "'");
-    }
-</script>
-
-
 <body id="page-top" class="scroll">
 
    <!-- Page Wrapper -->
@@ -82,7 +67,7 @@
 								onmouseout="this.src='./img/canvas/back.png';">
                          </div>
                          <div class="title">나홀로 떠나는 제주도 여행</div>
-                     </div>
+                   </div>      
 
                   <div class="article-canvasContent">
                      <form method="post" enctype="multipart/form-data" name="frm" id="frm">
@@ -99,19 +84,19 @@
                               </div>
                               <div id="LS_IContainer2">
                                  <div id="IMG21">
-                                    <label for="C_IMG21"><img src="./img/folder.png"></label>
+                                    <label for="C_IMG21"><img src="./img/canvas/insertImg.png" class="insertImg"></label>
                                     <input id="C_IMG21" class="file" name="file" type="file" multiple="multiple" style="display: none;">
                                  </div>
                                  <input type="hidden" name="list[1].img_spath" class="img_spath0">
                                  <input type="hidden" name="list[1].text_no" value="1">
                                  <div id="IMG22">
-                                    <label for="C_IMG22"><img src="./img/folder.png"></label>
+                                    <label for="C_IMG22"><img src="./img/canvas/insertImg.png" class="insertImg"></label>
                                     <input id="C_IMG22" class="file" name="file" type="file" multiple="multiple" style="display: none;">
                                  </div>
                                  <input type="hidden" name="list[2].img_spath" class="img_spath1">
                                  <input type="hidden" name="list[2].text_no" value="2">
                                  <div id="IMG23">
-                                    <label for="C_IMG23"><img src="./img/folder.png"></label>
+                                    <label for="C_IMG23"><img src="./img/canvas/insertImg.png" class="insertImg"></label>
                                     <input id="C_IMG23" class="file" name="file" type="file" multiple="multiple" style="display: none;">
                                  </div>
                                  <input type="hidden" name="list[3].img_spath" class="img_spath2">
@@ -122,7 +107,7 @@
                            <!-- 오른쪽 -->
                            <div id="Right-Side2">
                               <div id="IMG24">
-                                 <label for="C_IMG24"><img src="./img/folder.png"></label>
+                                 <label for="C_IMG24"><img src="./img/canvas/insertImg.png" class="insertImg"></label>
                                  <input id="C_IMG24" class="file" name="file" type="file" multiple="multiple" style="display: none;">
                               </div>
                               <input type="hidden" name="list[4].img_spath" class="img_spath3">
@@ -143,6 +128,7 @@
 				         <img id="insert" alt="등록하기" src="./img/canvas/check.png"
 				         	onmouseover="this.src='./img/canvas/check-over.png';"
 				         	onmouseout="this.src='./img/canvas/check.png';">
+    			 	 </div>
     			  </div>
 
 
@@ -152,8 +138,8 @@
             <!--End of Page LandPeople Content Area -->
             <%@include file="../common/lp-footer.jsp"%>
             <!-- End of Page Wrapper -->
+            </div>
          </div>
       </div>
-   </div>
 </body>
 </html>
