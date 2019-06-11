@@ -38,12 +38,16 @@ $(document).ready(function() {
  
     ws.onmessage = function(event){
 	alert("● groupChat.jsp handler에서 처리 후 도착한 데이터 : " + event.data);
+        
+            alert("크롬이레");
+ 	   $("#file").val("");
+	
   	var msg = event.data; // 이벤트 핸들러에서 처리해서 돌아온 data
  
   	$(".message_area").append(msg);
         viewList(chr_id); // 접속자 목록을 보여줌
-        $(".message_area").scrollTop(
-    	$(".message_area")[0].scrollHeight);
+        $(".message_area").scrollTop($(".message_area")[0].scrollHeight);
+
     }
 
     /* 소켓이 닫혔을 때 퇴장 메시지를 화면에 띄워 줄 수있도록 이벤트를 발생하여 핸들러를 호출 */
@@ -73,7 +77,7 @@ $(document).ready(function() {
                success : function(result) {
             	   ws.send("file : " + nick + " > " + result);
                },
-               error : function(result) {alert(실패);}
+               error : function(result) {alert("파일 전송 실패");}
             });
         } else {
             var canWrite;
@@ -84,7 +88,7 @@ $(document).ready(function() {
                  dataType : "json",
                  async : false,
                  success : function(result) {canWrite = result.result;},
-                 error : function() {alert("실패");}
+                 error : function() {alert("chkChatMember.do 실패");}
             });
         
            if ($(".chat").val().trim() == ''
@@ -108,8 +112,6 @@ $(document).ready(function() {
                $(".chat").val('');
                $(".chat").empty();
                $(".chat").focus();
-               file.value = "";
-
            }
         }
     }); /* 전송 버튼 눌렀을 때 이벤트 */

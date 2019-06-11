@@ -70,7 +70,7 @@ public class LPUserServiceImpl implements ILPUserService {
 						"											<td align=\"center\" style=\"word-break: break-word; font-size: 0px; padding: 0px;\"><table align=\"center\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-collapse: collapse; border-spacing: 0px;\" border=\"0\">\r\n" + 
 						"													<tbody>\r\n" + 
 						"														<tr>\r\n" + 
-						"															<td style=\"width: 138px;\"><a href=\"http://192.168.10.186:8091/LandPeople/\" target=\"_blank\" rel=\"noreferrer noopener\"><img alt=\"\" title=\"\" height=\"38px\" src=\"http://192.168.10.186:8091/LandPeople/img/logo2.JPG\" style=\"border: none; border-radius:; display: block; outline: none; text-decoration: none; width: 300px; height: auto; width=\"138\" ></a></td>\r\n" + 
+						"															<td style=\"width: 138px;\"><a href=\"http://192.168.4.31:8091/LandPeople/\" target=\"_blank\" rel=\"noreferrer noopener\"><img alt=\"\" title=\"\" height=\"38px\" src=\"http://192.168.4.31:8091/LandPeople/img/logo2.JPG\" style=\"border: none; border-radius:; display: block; outline: none; text-decoration: none; width: 300px; height: auto; width=\"138\" ></a></td>\r\n" + 
 						"														</tr>\r\n" + 
 						"													</tbody>\r\n" + 
 						"												</table></td>\r\n" + 
@@ -123,7 +123,7 @@ public class LPUserServiceImpl implements ILPUserService {
 						"														<tbody>\r\n" + 
 						"															<tr>\r\n" + 
 						"																<td align=\"center\" valign=\"middle\" style=\"border: none; border-radius: 3px; color: white; cursor: auto; padding: 15px 19px;\" bgcolor=\"#7289DA\">")
-				.append("<a href='http://192.168.10.186:8091/LandPeople/mailConform.do?user_email=")
+				.append("<a href='http://192.168.4.31:8091/LandPeople/mailConform.do?user_email=")
 				.append(dto.getUser_email())
 				.append("&authkey=").append(dto.getUser_emailkey())
 				.append("'style=\"text-decoration: none; line-: 100%; background: #7289da; color: white; font-family: ubuntu, helvetica, arial, sans-serif; font-size: 15px; font-weight: normal; text-transform: none; margin: 0px;\" target=\"_blank\" rel=\"noreferrer noopener\"> 이메일 인증 </a></td>\r\n" + 
@@ -229,7 +229,7 @@ public class LPUserServiceImpl implements ILPUserService {
 						"										<tbody>\r\n" + 
 						"											<tr>\r\n" + 
 						"												<td align=\"center\" style=\"word-break: break-word; font-size: 0px; padding: 0px;\"><div style=\"cursor: auto; color: #99AAB5; font-family: Whitney, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif; font-size: 12px; line-height: 24px; text-align: center;\">\r\n" + 
-						"														육지사람에서 보냄 • <a href=\"http://192.168.10.186:8091/LandPeople\" style=\"color: #1eb0f4; text-decoration: none;\" rel=\"noreferrer noopener\" target=\"_blank\">육지사람사이트 확인</a>\r\n" + 
+						"														육지사람에서 보냄 • <a href=\"http://192.168.4.31:8091/LandPeople\" style=\"color: #1eb0f4; text-decoration: none;\" rel=\"noreferrer noopener\" target=\"_blank\">육지사람사이트 확인</a>\r\n" + 
 						"													</div></td>\r\n" + 
 						"											</tr>\r\n" + 
 						"											<tr>\r\n" + 
@@ -358,7 +358,7 @@ public class LPUserServiceImpl implements ILPUserService {
 						"											<td align=\"center\" style=\"word-break: break-word; font-size: 0px; padding: 0px;\"><table align=\"center\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-collapse: collapse; border-spacing: 0px;\" border=\"0\">\r\n" + 
 						"													<tbody>\r\n" + 
 						"														<tr>\r\n" + 
-						"															<td style=\"width: 138px;\"><a href=\"http://192.168.10.186:8091/LandPeople/\" target=\"_blank\" rel=\"noreferrer noopener\"><img alt=\"\" title=\"\" height=\"38px\" src=\"http://192.168.10.186:8091/LandPeople/img/logo2.JPG\" style=\"border: none; border-radius:; display: block; outline: none; text-decoration: none; width: 300px; height: auto; width=\"138\" ></a></td>\r\n" + 
+						"															<td style=\"width: 138px;\"><a href=\"http://192.168.4.31:8091/LandPeople/\" target=\"_blank\" rel=\"noreferrer noopener\"><img alt=\"\" title=\"\" height=\"38px\" src=\"http://192.168.4.31:8091/LandPeople/img/logo2.JPG\" style=\"border: none; border-radius:; display: block; outline: none; text-decoration: none; width: 300px; height: auto; width=\"138\" ></a></td>\r\n" + 
 						"														</tr>\r\n" + 
 						"													</tbody>\r\n" + 
 						"												</table></td>\r\n" + 
@@ -411,7 +411,7 @@ public class LPUserServiceImpl implements ILPUserService {
 						"														<tbody>\r\n" + 
 						"															<tr>\r\n" + 
 						"																<td align=\"center\" valign=\"middle\" style=\"border: none; border-radius: 3px; color: white; cursor: auto; padding: 15px 19px;\" bgcolor=\"#7289DA\">")
-				.append("<a href='http://192.168.10.186:8091/LandPeople/pwforget.do?user_email=")
+				.append("<a href='http://192.168.4.31:8091/LandPeople/pwforget.do?user_email=")
 				.append(dto.getUser_email())
 				.append("&authkey=").append(dto.getUser_emailkey())
 				.append("'style=\"text-decoration: none; line-: 100%; background: #7289da; color: white; font-family: ubuntu, helvetica, arial, sans-serif; font-size: 15px; font-weight: normal; text-transform: none; margin: 0px;\" target=\"_blank\" rel=\"noreferrer noopener\">  비밀번호 수정 </a></td>\r\n" + 
@@ -517,7 +517,7 @@ public class LPUserServiceImpl implements ILPUserService {
 						"										<tbody>\r\n" + 
 						"											<tr>\r\n" + 
 						"												<td align=\"center\" style=\"word-break: break-word; font-size: 0px; padding: 0px;\"><div style=\"cursor: auto; color: #99AAB5; font-family: Whitney, Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif; font-size: 12px; line-height: 24px; text-align: center;\">\r\n" + 
-						"														육지사람에서 보냄 • <a href=\"http://192.168.10.186:8091/LandPeople\" style=\"color: #1eb0f4; text-decoration: none;\" rel=\"noreferrer noopener\" target=\"_blank\">육지사람사이트 확인</a>\r\n" + 
+						"														육지사람에서 보냄 • <a href=\"http://192.168.4.31:8091/LandPeople\" style=\"color: #1eb0f4; text-decoration: none;\" rel=\"noreferrer noopener\" target=\"_blank\">육지사람사이트 확인</a>\r\n" + 
 						"													</div></td>\r\n" + 
 						"											</tr>\r\n" + 
 						"											<tr>\r\n" + 

@@ -101,9 +101,7 @@ span {
 					    $("#emailchkVal").val("0");
 					}
 				    },
-				    error : function() {
-					alert("실패");
-					alert(email);
+				    error : function() {					
 				    }
 				});
 			    }
@@ -186,9 +184,7 @@ span {
 				}
 
 			    },
-			    error : function() {
-				alert("실패");
-				alert(nickname);
+			    error : function() {				
 			    }
 			});
 		    } else {
