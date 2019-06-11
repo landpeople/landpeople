@@ -168,7 +168,7 @@ public class DaysController {
 	    	for(int i= 0; i < canvasList.size() ; i++) {
 	    		// 아이디가 같으면 같은 일자이므로
 	    		if(!(canvasList.get(i).getCan_id().equalsIgnoreCase(beforeId))) {    			
-	    			sheet = workbook.createSheet(days+"일차");
+	    			sheet = workbook.createSheet(canvasList.get(i).getDays_title());
 	    			sheet.setColumnWidth(0, 20*256);
 	    			sheet.setColumnWidth(1, 10*256);
 	    			sheet.setColumnWidth(2, 10*256);

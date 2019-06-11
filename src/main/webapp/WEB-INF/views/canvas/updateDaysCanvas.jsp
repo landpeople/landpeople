@@ -183,6 +183,7 @@
       
       daysStart.push(<%=daysList.get(j).getDays_sdate().getHours()%>+":"+<%=daysList.get(j).getDays_sdate().getMinutes()%>);
       daysEnd.push(<%=daysList.get(j).getDays_edate().getHours()%>+":"+<%=daysList.get(j).getDays_edate().getMinutes()%>);
+      daysAddress.push('<%=daysList.get(j).getDays_address()%>');
        // 마커에  이벤트 등록      
        daum.maps.event.addListener(daysMarker[<%=j%>], 'click', makeOverListener(map, daysMarker[<%=j%>], infowindow));
        daum.maps.event.addListener(daysMarker[<%=j%>], 'dragend', initRender);    
@@ -231,7 +232,7 @@
             if(parseInt(endTime[0]) < 10) { endTime[0] = "0"+ parseInt(endTime[0]); }
             if(parseInt(endTime[1]) < 10) { endTime[1] = "0"+ parseInt(endTime[1]); }
                         
-            div.innerHTML += "<div class='daysInfo'>"+(i+1)+"번째 일정:"+daysInfo[i]                      
+            div.innerHTML += "<div class='daysInfo'>"+daysInfo[i]                      
                         + "<div style='float:right;'><img src='./img/canvas/normalClose.png'  class='deleteDays' title='"+i+"' width='38' height='38'></div>"
                         + "<div style='font-size:12px; float:right; margin-right:50px;'>"+startHalf+" "+startTime[0]+":"+startTime[1]+"~"+endHalf+" "+endTime[0]+":"+endTime[1]+"</div></div>"; 
                         
@@ -424,7 +425,7 @@
                         + " onclick='window.open(this.href, \"_경로보기\", \"width=1000px,height=800px;\"); return false;'"
                         + ">최단경로보기</a><br>";
                }
-               div.innerHTML += "<div class='daysInfo'>"+daysMarker.length+"번째 일정:"+title                       
+               div.innerHTML += "<div class='daysInfo'>"+title                       
                           + "<div style='float:right;'><img src='./img/canvas/normalClose.png' class='deleteDays' title='"+(daysMarker.length-1)+"' width='38' height='38'></div>"
                           + "<div style='font-size:12px; float:right; margin-right:50px;'>"+startHalf+" "+startHour+":"+startMin+"~"+endHalf+" "+endHour+":"+endMin+"</div></div>"; 
                daysPage.appendChild(div);
@@ -554,6 +555,7 @@
                            // 마커 위에 인포윈도우를 표시합니다                      
                            foodMarkerInfo.open(map,foodMarker);
                            marker = foodMarker;
+                           detailAddr = "제주특별시";
                      });
                   })(foodMarker, foodMarkerInfo);
                   
@@ -607,6 +609,7 @@
                              // 마커 위에 인포윈도우를 표시합니다                          
                                foodMarkerInfo.open(map, foodMarker);    
                                marker = foodMarker;
+                               detailAddr = "제주특별시";
                            });                         
                          })(foodMarker, foodMarkerInfo);
                         
@@ -661,6 +664,7 @@
                           // 마커 위에 인포윈도우를 표시합니다                    
                             foodMarkerInfo.open(map, foodMarker);    
                               marker = foodMarker;
+                              detailAddr = "제주특별시";
                         });                         
                       })(foodMarker, foodMarkerInfo);
                      

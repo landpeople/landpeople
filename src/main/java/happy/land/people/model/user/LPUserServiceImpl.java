@@ -24,7 +24,6 @@ public class LPUserServiceImpl implements ILPUserService {
 	
 	private Logger logger = LoggerFactory.getLogger(LPUserServiceImpl.class);
 	
-	
 	@Override
 	public boolean user_signUp(LPUserDto dto) {
 		System.out.println("signUp 서비스 임플");
@@ -123,7 +122,7 @@ public class LPUserServiceImpl implements ILPUserService {
 						"														<tbody>\r\n" + 
 						"															<tr>\r\n" + 
 						"																<td align=\"center\" valign=\"middle\" style=\"border: none; border-radius: 3px; color: white; cursor: auto; padding: 15px 19px;\" bgcolor=\"#7289DA\">")
-				.append("<a href='http://192.168.4.31:8091/LandPeople/mailConform.do?user_email=")
+				.append("<a href='http://192.168.10.186:8091/LandPeople/mailConform.do?user_email=")
 				.append(dto.getUser_email())
 				.append("&authkey=").append(dto.getUser_emailkey())
 				.append("'style=\"text-decoration: none; line-: 100%; background: #7289da; color: white; font-family: ubuntu, helvetica, arial, sans-serif; font-size: 15px; font-weight: normal; text-transform: none; margin: 0px;\" target=\"_blank\" rel=\"noreferrer noopener\"> 이메일 인증 </a></td>\r\n" + 
@@ -411,7 +410,7 @@ public class LPUserServiceImpl implements ILPUserService {
 						"														<tbody>\r\n" + 
 						"															<tr>\r\n" + 
 						"																<td align=\"center\" valign=\"middle\" style=\"border: none; border-radius: 3px; color: white; cursor: auto; padding: 15px 19px;\" bgcolor=\"#7289DA\">")
-				.append("<a href='http://192.168.4.31:8091/LandPeople/pwforget.do?user_email=")
+				.append("<a href='http://192.168.10.186:8091/LandPeople/pwforget.do?user_email=")
 				.append(dto.getUser_email())
 				.append("&authkey=").append(dto.getUser_emailkey())
 				.append("'style=\"text-decoration: none; line-: 100%; background: #7289da; color: white; font-family: ubuntu, helvetica, arial, sans-serif; font-size: 15px; font-weight: normal; text-transform: none; margin: 0px;\" target=\"_blank\" rel=\"noreferrer noopener\">  비밀번호 수정 </a></td>\r\n" + 

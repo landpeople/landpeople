@@ -106,7 +106,7 @@ public class MySocketHandler extends TextWebSocketHandler {
 
 							txt = newMsg;
 						} else { // 상대가 메시지 보냈을 때,
-							String newMsg = "<div class='contain_msg>"
+							String newMsg = "<div class='contain_msg'>"
 											+ "<div class='incoming_msg'>"
 										 		+ "<div class='incoming_msg_img'>"
 										 			+ "<img src='https://ptetutorials.com/images/user-profile.png' alt='img'>"

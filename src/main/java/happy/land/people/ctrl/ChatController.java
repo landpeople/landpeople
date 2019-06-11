@@ -75,7 +75,7 @@ public class ChatController implements ServletConfigAware {
 			return null;
 		}
 		
-		return "manager/chatList";
+		return "manager/chatContent";
 	}
 	
 	public String createUUID() {
