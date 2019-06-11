@@ -39,8 +39,14 @@ public class ChatServiceImpl implements IChatService {
 
 	@Override
 	public int chatList_Delete(String user_nickname) {
-		// TODO Auto-generated method stub
-		return 0;
+		logger.info("● Service chatList_Delete 실행");
+		return dao.chatList_Delete(user_nickname);
+	}
+
+	@Override
+	public int chatList_Update(Map<String, String> map) {
+		logger.info("● Service chatList_Update 실행");
+		return dao.chatList_Update(map);
 	}
 
 	@Override

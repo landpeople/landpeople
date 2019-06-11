@@ -48,14 +48,19 @@ public class ChatDaoImpl implements IChatDao {
 
 	@Override
 	public int chatList_Delete(String user_nickname) {
-		// TODO Auto-generated method stub
-		return 0;
+		logger.info("● Repository chatList_Delete 실행");
+		return sqlSession.insert(NS + "chatList_Delete", user_nickname);
 	}
 
+	@Override
+	public int chatList_Update(Map<String, String> map) {
+		logger.info("● Repository chatList_Update 실행");
+		return sqlSession.update(NS + "chatList_Update", map);
+	}
+	
 	/**
 	 * 채팅방이 없을 때는 채팅방을 생성하고 있을 때는 out컬럼을 update 하여 볼 수 있게 해주는 메소드
 	 */
-	@Transactional
 	@Override
 	public List<ChatContentDto> chatRoom_Make(Map<String, String> map) {
 		logger.info("● Service chatRoom_Make 실행");

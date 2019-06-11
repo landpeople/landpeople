@@ -12,6 +12,8 @@ public interface IChatService {
 	public int chatList_Insert(String user_nickname);
 	public int chatList_Delete(String user_nickname);
 	
+	public int chatList_Update(Map<String, String> map);
+	
 	public List<ChatContentDto> chatRoom_Make(Map<String, String> map);
 	
 	public int chatContent_InsertMsg(ChatContentDto dto);

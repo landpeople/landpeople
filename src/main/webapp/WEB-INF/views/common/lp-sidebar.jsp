@@ -77,9 +77,11 @@
 
    <c:if test="${not empty ldto }">
       <div class="lp-nav-btn">
+      	<c:if test="${ldto.user_auth ne 'M'}">  
          <a href="#" onclick="sketchBookMake('${ldto.user_email}')" class="btn btn-lp-primary btn-icon-split lp-write-btn btn-sl btn-ss">
             <span class="text">Create Travel Sketchbook</span>
          </a>
+         </c:if>
       </div>
    </c:if>
 

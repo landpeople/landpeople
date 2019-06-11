@@ -37,7 +37,7 @@
 	var emailchk = document.getElementById("emailchkVal").value;
 
 	if (emailchk == "1") {
-	    alert("이메일로 전송해드렸습니다");
+	    alert("이메일로 전송하였습니다.");
 	    return true;
 	} else {
 	    alert("이메일을 확인해주세요;");

@@ -142,9 +142,7 @@
 				}
 
 			    },
-			    error : function() {
-				alert("실패");
-				alert(nickname);
+			    error : function() {				
 			    }
 			});
 		    } else {
