@@ -56,6 +56,10 @@ public class ManagerServiceImpl implements IManagerService {
 		return iManagerDao.modifyBlock(id);
 	}
 
-
+	@Override
+	public Map<String, String> detailChatroom(String chrId) {
+		logger.info("채팅방 상세 조회 detailChatroom {}", chrId);
+		return iManagerDao.detailChatroom(chrId);
+	}
 
 }

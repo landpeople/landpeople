@@ -41,7 +41,7 @@
 <script type="text/javascript">
    $(document).ready(function() {
 
-      var cnames = [ '이메일', '닉네임', '등급', '탈퇴여부', '메일인증여부', '글쓰기권한*' ];
+      var cnames = [ '이메일', '닉네임', '등급', '탈퇴여부', '메일인증여부', '작성권한*' ];
 
       $("#jqGrid").jqGrid({
 

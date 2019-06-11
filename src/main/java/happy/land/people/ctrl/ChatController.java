@@ -43,12 +43,16 @@ import happy.land.people.dto.ChatImageFileDto;
 import happy.land.people.dto.JsonUtil;
 import happy.land.people.dto.LPUserDto;
 import happy.land.people.model.chat.IChatService;
+import happy.land.people.model.manager.IManagerService;
 
 @Controller
 public class ChatController implements ServletConfigAware {
 
 	@Autowired
 	IChatService chatService;
+	
+	@Autowired
+	IManagerService managerService;
 
 	/**
 	 * 채팅에 관련된 정보를 담기 위해 Application 객체 생성
@@ -401,5 +405,25 @@ public class ChatController implements ServletConfigAware {
 		}
 		
 		return "forward:/myChatroom.do";
+	}
+	
+	@RequestMapping(value="/detailChatroom.do", method=RequestMethod.GET)
+	public String detailChatroom(HttpSession session, String chrId) {
+		logger.info("Controller detailChatroom {}", chrId);
+		String sender = "";
+		String receiver = "";
+		
+		LPUserDto ldto = (LPUserDto) session.getAttribute("ldto");
+		String user = ldto.getUser_nickname();
+		
+		Map<String, String> map = managerService.detailChatroom(chrId);
+		if (map.get("CHR_SENDER").equals(user)) {
+			sender = user;
+			receiver = map.get("CHR_RECEIVER");
+		}else {
+			sender = map.get("CHR_SENDER");
+			receiver = user;
+		}
+		return "forward:/socketOpen.do?sender="+sender+"&receiver="+receiver;
 	}
 }
