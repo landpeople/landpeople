@@ -20,4 +20,5 @@ public interface IManagerDao {
 	
 	public boolean modifyBlock(String id);
 
+	public Map<String, String> detailChatroom(String chrId);
 }

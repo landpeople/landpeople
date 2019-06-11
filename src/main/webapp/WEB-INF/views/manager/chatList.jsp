@@ -58,7 +58,7 @@ $(document).ready(function() {
             colNames: cnames,
             colModel: [
             	{ name: 'CHR_ID', index: 'chr_id', key: true, width: 180, align: 'center', hidden: true },
-                { name: 'CHR_RECEIVER', index: 'chr_receiver', width: 180, align: 'center' },
+                { name: 'CHR_RECEIVER', index: 'chr_receiver', width: 180, align: 'center', formatter: 'showlink', formatoptions: {baseLinkUrl:'detailChatroom.do', idName: 'chrId'} },
                 { name: 'CHC_MESSAGE', index: 'chc_message', width: 455, align: 'center' },
                 { name: 'CHC_REGDATE', index: 'chc_regdate', width: 155, align: 'center' }
                        ],
@@ -93,6 +93,7 @@ $(document).ready(function() {
 	   		var ids = jQuery("#jqGrid").jqGrid('getGridParam', 'selarrrow');
             location.href="./deleteChatroom.do?chksVal="+ids;
    }
+   
 </script>            
 <body id="page-top" class="scroll">
 

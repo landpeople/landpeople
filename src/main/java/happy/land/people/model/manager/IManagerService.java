@@ -19,4 +19,6 @@ public interface IManagerService {
 	public boolean modifyIswrite(String email);
 	
 	public boolean modifyBlock(String id);
+	
+	public Map<String, String> detailChatroom(String chrId);
 }

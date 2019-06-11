@@ -131,4 +131,9 @@
 	    </if>
 		WHERE SKETCH_ID=#{id}
     </update>
+    
+    <select id="detailChatroom" parameterType="java.lang.String" resultType="java.util.Map">
+    	SELECT CHR_SENDER, CHR_RECEIVER FROM LPCHATROOM
+			WHERE CHR_ID=#{chrId}
+    </select>
 </mapper>

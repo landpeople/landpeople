@@ -25,4 +25,5 @@ public interface IChatService {
 	public Map<String, Integer> selectChrListCnt(LPUserDto dto, String id);
 	
 	public boolean deleteChatroom(String chrId, String id);
+	
 }

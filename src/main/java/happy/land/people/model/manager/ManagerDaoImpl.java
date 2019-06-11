@@ -75,6 +75,12 @@ public class ManagerDaoImpl implements IManagerDao {
 		logger.info("스케치북 공개/비공개 수정 완료! modifyIswrite {}", n);
 		return n>0 ? true:false;
 	}
+
+	@Override
+	public Map<String, String> detailChatroom(String chrId) {
+		logger.info("채팅방 상세 조회 detailChatroom {}", chrId);
+		return sqlSession.selectOne(NS+"detailChatroom", chrId);
+	}
 	
 	
 	
