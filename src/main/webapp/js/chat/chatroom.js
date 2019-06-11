@@ -37,10 +37,8 @@ $(document).ready(function() {
     };
  
     ws.onmessage = function(event){
-	alert("● groupChat.jsp handler에서 처리 후 도착한 데이터 : " + event.data);
-        
-            alert("크롬이레");
- 	   $("#file").val("");
+	/*alert("● groupChat.jsp handler에서 처리 후 도착한 데이터 : " + event.data);*/
+         $("#file").val("");
 	
   	var msg = event.data; // 이벤트 핸들러에서 처리해서 돌아온 data
  
@@ -52,7 +50,7 @@ $(document).ready(function() {
 
     /* 소켓이 닫혔을 때 퇴장 메시지를 화면에 띄워 줄 수있도록 이벤트를 발생하여 핸들러를 호출 */
     ws.onclose = function(event) {
-	alert("● groupChat.jsp ws.close / 웹소켓 닫힘");
+	/*alert("● groupChat.jsp ws.close / 웹소켓 닫힘");*/
 	ws.send("#$nick_" + nick);
     }
     
@@ -61,9 +59,9 @@ $(document).ready(function() {
     	var file = document.getElementById('file').files[0];
     
     	/* 파일을 전송할 때 이벤트 */
-    	alert("파일이 존재하는가 ? " + file);
+    	/*alert("파일이 존재하는가 ? " + file);*/
     	if (file != undefined) {
-            alert("파일 전송 : " + file);
+            /*alert("파일 전송 : " + file);*/
             var frmEle = document.forms[0];
             var formData = new FormData(frmEle);
             formData.append("file", $(".file"));
@@ -77,7 +75,7 @@ $(document).ready(function() {
                success : function(result) {
             	   ws.send("file : " + nick + " > " + result);
                },
-               error : function(result) {alert("파일 전송 실패");}
+               error : function(result) {}
             });
         } else {
             var canWrite;
@@ -88,15 +86,15 @@ $(document).ready(function() {
                  dataType : "json",
                  async : false,
                  success : function(result) {canWrite = result.result;},
-                 error : function() {alert("chkChatMember.do 실패");}
+                 error : function() {}
             });
         
            if ($(".chat").val().trim() == ''
            	|| $(".chat").val() == '\n') { /*공백이나 개행문자만 입력 했을 시 전송 안되도록 함*/
-               alert("● groupChat.jsp / 내용을 입력하세요. ");
+               alert("● 내용을 입력하세요.");
                return;
            } else if (canWrite == 'cantChat') {
-               alert("● 대화 상대가 없습니다. *채팅 불가*");
+               alert("● 대화 상대가 없습니다.");
                return;
            } else {
                ws.send(nick + " : "+ $(".chat").val());

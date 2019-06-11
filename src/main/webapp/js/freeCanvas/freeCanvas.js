@@ -55,8 +55,7 @@ function fileUpload(subImgClass) {
 		enctype : 'multipart/form-data',
 		processData : false,
 		contentType : false,
-		success : function(result) {
-			alert(result);
+		success : function(result) {			
 			var imgDiv = subImgClass;
 			for (var i = 0; i < imgs.length; i++) {
 		

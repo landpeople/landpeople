@@ -5,7 +5,7 @@ var refresh = document.getElementById("refresh");
 
 if (refresh != null) {
 	refresh.onclick = function() {
-		alert("● chatList.jsp / 접속자 정보를 새로고침 합니다.");
+		/*alert("● chatList.jsp / 접속자 정보를 새로고침 합니다.");*/
 		window.location.reload();
 	};
 
@@ -33,8 +33,8 @@ if (refresh != null) {
 	    }
 	    
 	    var sender = $("#" + this.innerHTML + "input").val();
-	    alert("● chatList.jsp / 상대 : " + this.innerHTML);
-	    alert("● chatList.jsp / 나 : " + sender);
+	 /*   alert("● chatList.jsp / 상대 : " + this.innerHTML);
+	    alert("● chatList.jsp / 나 : " + sender);*/
 	    var win = window.open("./socketOpen.do?sender=" + sender + "&receiver="
 				+ this.innerHTML, '_blank', 'width=600px,height=700px, scrollbars=no, resizable=no, toolbars=no, menubar=no, left=' + wleft + ',top=' + wtop);
 	    win.focus();

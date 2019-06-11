@@ -454,8 +454,7 @@
                      'endDate' : "2019-05-14 "+daysEnd[i]+":00" , 'x' :  String(daysMarker[i].getPosition().getLat()) , 'y' : String(daysMarker[i].getPosition().getLng()) , 'address' : daysAddress[i]
                };
                jsonObj["days"+i] = testVal;
-            }        
-            alert(jsonObj);
+            }                   
               $.ajax({
                   url: "updateDaysCanvas.do", //요청 url
                   type: "post", // 전송 처리방식
@@ -466,8 +465,7 @@
                   success: function(msg){
                       var sketch_id = msg.result;
                       location.href ="detailCanvas.do?sketch_id="+sketch_id;
-                  }, error: function() {
-                     alert("삶의 지혜가 부족하다.");
+                  }, error: function() {                    
                   }
             }); 
          });
@@ -523,8 +521,7 @@
                    'type' : "음식점"
                }, // 서버 전송 파라메터
                dataType : "json", // 서버에서 받는 데이터 타입
-               success : function(msg) {
-                   alert(msg.result[0].map_id);
+               success : function(msg) {                 
                    for (var i = 0; i < msg.result.length; i++) {
                   var foodMarker = new daum.maps.Marker({
                       position : new daum.maps.LatLng(
@@ -562,8 +559,7 @@
                   
                    }
                },
-               error : function() {
-                   alert("실패");
+               error : function() {                  
                }
             });
          }
@@ -584,7 +580,6 @@
                   data: { 'type' : "관광"}, // 서버 전송 파라메터
                   dataType: "json", // 서버에서 받는 데이터 타입
                   success: function(msg){ 
-                     alert(msg.result[0].map_id);  
                      for(var i = 0; i < msg.result.length ; i++){
                         var foodMarker  =    new daum.maps.Marker({            
                             position: new daum.maps.LatLng(msg.result[i].map_y, msg.result[i].map_x),
@@ -617,7 +612,7 @@
                         
                      }
                   }, error : function() {
-                     alert("실패");
+                     
                   }
                });   
           }
@@ -638,8 +633,7 @@
                asyn: false, // true 비동기 false 동기
                data: { 'type' : "숙박"}, // 서버 전송 파라메터
                dataType: "json", // 서버에서 받는 데이터 타입
-               success: function(msg){ 
-                  alert(msg.result[0].map_id);  
+               success: function(msg){                   
                   for(var i = 0; i < msg.result.length ; i++){
                      var foodMarker  =    new daum.maps.Marker({            
                          position: new daum.maps.LatLng(msg.result[i].map_y, msg.result[i].map_x),
@@ -671,8 +665,7 @@
                       })(foodMarker, foodMarkerInfo);
                      
                   }
-               }, error : function() {
-                  alert("실패");
+               }, error : function() {                 
                }
             });
           }

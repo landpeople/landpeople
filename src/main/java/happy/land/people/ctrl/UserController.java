@@ -301,12 +301,15 @@ public class UserController {
 	// 로그아웃
 	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
 	public String logout(HttpSession session, LPUserDto dto) {
+		LPUserDto mySession = (LPUserDto) session.getAttribute("ldto");
+		
 		logger.info("logout");
 
 		System.out.println("로그아웃.do 현재 세션 : " + session);
+		System.out.println("로그아웃.do 현재 세션 : " + mySession);
 
+		iChatService.chatList_Delete(mySession);/* 로그아웃시 채팅 리스트에서 삭제함 */
 		session.invalidate();
-		iChatService.chatList_Delete(dto.getUser_nickname());/* 로그아웃시 채팅 리스트에서 삭제함 */
 		
 		return "redirect:./index.jsp";
 	}

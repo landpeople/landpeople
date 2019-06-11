@@ -10,7 +10,7 @@ public interface IChatService {
 	public List<String> chatList_SelectAll();
 	public int chatList_SelectOne(String user_nickname);
 	public int chatList_Insert(String user_nickname);
-	public int chatList_Delete(String user_nickname);
+	public int chatList_Delete(LPUserDto dto);
 	
 	public int chatList_Update(Map<String, String> map);
 	

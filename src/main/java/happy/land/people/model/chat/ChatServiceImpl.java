@@ -38,9 +38,9 @@ public class ChatServiceImpl implements IChatService {
 	}
 
 	@Override
-	public int chatList_Delete(String user_nickname) {
+	public int chatList_Delete(LPUserDto dto) {
 		logger.info("● Service chatList_Delete 실행");
-		return dao.chatList_Delete(user_nickname);
+		return dao.chatList_Delete(dto);
 	}
 
 	@Override

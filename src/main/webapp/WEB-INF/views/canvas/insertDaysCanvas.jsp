@@ -86,7 +86,7 @@
                      <input type="text" id="pageTitle" value="1일차">
                   </div>
                   <div>
-                     <!-- <a href="./loadMap.do">지도정보가져오기</a>  -->               
+                    <!--  <a href="./loadMap.do">지도정보가져오기</a>       -->     
                      <input type="button" onclick="showTrip()" style="margin-right: 5px; width:34px; height:34px; border: 1px solid black; background: url('./img/canvas/tour.png')" title="관광지">
                      <input type="button" onclick="showFood()" style="margin-right: 5px; width:34px; height:34px; border: 1px solid black; background: url('./img/canvas/restaurant.png')" title="음식점">
                      <input type="button" onclick="showRest()" style="margin-right: 5px; width:34px; height:34px; border: 1px solid black; background: url('./img/canvas/rest.png')" title="숙소">
@@ -367,8 +367,7 @@
                    'address' : daysAddress[i]
                };
                jsonObj["days" + i] = testVal;
-             }
-             alert(jsonObj);
+             }            
              $.ajax({
                url : "insertDaysCanvas.do", //요청 url
                type : "post", // 전송 처리방식
@@ -410,8 +409,7 @@
                 'type' : "음식점"
             }, // 서버 전송 파라메터
             dataType : "json", // 서버에서 받는 데이터 타입
-            success : function(msg) {
-                alert(msg.result[0].map_id);
+            success : function(msg) {                
                 for (var i = 0; i < msg.result.length; i++) {
                var foodMarker = new daum.maps.Marker({
                    position : new daum.maps.LatLng(
@@ -450,8 +448,7 @@
                
                 }
             },
-            error : function() {
-                alert("실패");
+            error : function() {               
             }
          });
       }
@@ -467,9 +464,8 @@
        daysMarker.splice(number,1);           
        daysInfo.splice(number,1);   
        daysStart.splice(number,1);
-       daysEnd.splice(number,1); 
-       
-       alert(daysMarker);
+       daysEnd.splice(number,1);        
+      
        // 선 다시 그려주기
        initRender();
        var diffDays = document.getElementsByClassName("deleteDays");
@@ -506,8 +502,7 @@
             asyn: false, // true 비동기 false 동기
             data: { 'type' : "관광"}, // 서버 전송 파라메터
             dataType: "json", // 서버에서 받는 데이터 타입
-            success: function(msg){ 
-               alert(msg.result[0].map_id);  
+            success: function(msg){               
                for(var i = 0; i < msg.result.length ; i++){
                   var foodMarker  =    new daum.maps.Marker({            
                       position: new daum.maps.LatLng(msg.result[i].map_y, msg.result[i].map_x),
@@ -539,8 +534,7 @@
                    })(foodMarker, foodMarkerInfo);
                   
                }
-            }, error : function() {
-               alert("실패");
+            }, error : function() {               
             }
          });   
     }
@@ -561,8 +555,7 @@
          asyn: false, // true 비동기 false 동기
          data: { 'type' : "숙박"}, // 서버 전송 파라메터
          dataType: "json", // 서버에서 받는 데이터 타입
-         success: function(msg){ 
-            alert(msg.result[0].map_id);  
+         success: function(msg){             
             for(var i = 0; i < msg.result.length ; i++){
                var foodMarker  =    new daum.maps.Marker({            
                    position: new daum.maps.LatLng(msg.result[i].map_y, msg.result[i].map_x),
@@ -594,8 +587,7 @@
                 })(foodMarker, foodMarkerInfo);
                
             }
-         }, error : function() {
-            alert("실패");
+         }, error : function() {            
          }
       });
     }

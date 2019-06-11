@@ -63,8 +63,18 @@ public class ChatController implements ServletConfigAware {
 	Logger logger = LoggerFactory.getLogger(ChatController.class);
 
 	@RequestMapping(value="/myChatroom.do", method=RequestMethod.GET)
-	public String myChatroom() {
+	public String myChatroom(HttpServletResponse response, String sender, String receiver) throws IOException {
 		logger.info("Controller myChatroom");
+		
+		if (sender != null) {
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("text/html; charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			
+			out.println("<script>window.open('socketOpen.do?sender="+sender+"&receiver="+receiver+"','new','width=600, height=700'); </script>");
+			return null;
+		}
+		
 		return "manager/chatList";
 	}
 	
@@ -408,7 +418,7 @@ public class ChatController implements ServletConfigAware {
 	}
 	
 	@RequestMapping(value="/detailChatroom.do", method=RequestMethod.GET)
-	public String detailChatroom(HttpSession session, String chrId) {
+	public String detailChatroom(HttpSession session, HttpServletResponse response, String chrId) {
 		logger.info("Controller detailChatroom {}", chrId);
 		String sender = "";
 		String receiver = "";
@@ -424,6 +434,7 @@ public class ChatController implements ServletConfigAware {
 			sender = map.get("CHR_SENDER");
 			receiver = user;
 		}
-		return "forward:/socketOpen.do?sender="+sender+"&receiver="+receiver;
+		 
+		return "forward:/myChatroom.do?sender="+sender+"&receiver="+receiver;
 	}
 }

@@ -244,6 +244,7 @@
              },
              menu: '#custom-menu',
              pageSelector: true,
+             pageNumbers: false,
              tabs:  true,
              tabWidth:  180,
              tabHeight:  20
@@ -308,8 +309,7 @@
 	                var sketch_id = msg.result;
 	                location.href ="detailCanvas.do?sketch_id="+sketch_id;
 	            },
-	            error : function() {
-	                alert("삶의 지혜가 부족하다.");
+	            error : function() {	            
 	            }
 	          });     
          }
@@ -318,8 +318,7 @@
       // 등록 버튼 클릭시
       $("#canvasInsertFrom").click(function() {       
          if($('#selectType').val() == "1"){           
-            var daysSize = <%=daysList.size()%>;
-            alert(daysSize);
+            var daysSize = <%=daysList.size()%>;      
             if( parseInt(daysSize) < 10){
                var pageNo = $('#nowPageNo').val();
                document.getElementById("frm").action = "./insertDaysForm.do";
@@ -328,8 +327,7 @@
                alert("일정 캔버스는 최대 10개까지 가능합니다.");
             }
          }else{   
-            var freeSize = <%=textList.size()%>;
-            alert(freeSize);
+            var freeSize = <%=textList.size()%>;       
             if(parseInt(freeSize) < 10){
              var pageNo = $('#nowPageNo').val();
              document.getElementById("frm").action = "./upload.do";
@@ -644,8 +642,7 @@
             else
                $("#likeState").attr("src","./img/LikeAfter.png"); 
          }, error : function() {
-            alert("실패");
-         }        
+            }        
       });
    }
    
@@ -673,7 +670,7 @@
             else
                $("#scrapState").attr("src","./img/scrapeT.png");
          }, error : function() {
-            alert("실패");
+            
          }
       });
          
