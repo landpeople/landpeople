@@ -113,6 +113,8 @@
 						 <input type="button" id="downloadExcel" style="width:32px; height:32px; border: none; background: url('./img/canvas/excelIcon.png');" title="Excel로 다운로드">
 						 							
 					</div>
+					
+										
 				</div>             
 				
 				
@@ -158,9 +160,28 @@
                  
                </c:when>      
                 <c:otherwise>                
-                    <div style="float: right; margin-right: 10px; ">
-                <a href="#" onclick="like('${ldto.user_email}','${sketch_id}')"><img id="likeState" alt="likeEmpty" src="./img/LikeBefore.png" title="좋아요"></a>                  
-               <a href="#" onclick="scrape('${ldto.user_email}','${sketch_id}')"> <img id="scrapState" alt="scrape" src="./img/scrape.png" title="스크랩"> </a>
+                    <div style="float: right; margin-right: 10px; ">   
+                    <a href="#" onclick="like('${ldto.user_email}','${sketch_id}')">  
+                      <c:choose>
+                       <c:when test="${usersketch_like eq 'T'}">      
+                         <img id="likeState" alt="likeEmpty" src="./img/LikeAfter.png" title="좋아요">            
+                       </c:when> 
+                       <c:otherwise>
+                       	<img id="likeState" alt="likeEmpty" src="./img/LikeBefore.png" title="좋아요">
+                       </c:otherwise>
+                       </c:choose>           
+                	  </a>
+                	
+                   <a href="#" onclick="scrape('${ldto.user_email}','${sketch_id}')"> 
+                     <c:choose>
+                       <c:when test="${usersketch_scrap eq 'T'}">  
+                   <img id="scrapState" alt="scrape" src="./img/scrapeT.png" title="스크랩"> 
+                       </c:when> 
+                       <c:otherwise>
+                     <img id="scrapState" alt="scrape" src="./img/scrape.png" title="스크랩"> 
+                       </c:otherwise>
+                       </c:choose>                    
+                   </a>
                 </div>  
              </c:otherwise>       
                </c:choose>

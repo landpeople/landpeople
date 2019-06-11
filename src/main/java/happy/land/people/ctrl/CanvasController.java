@@ -90,7 +90,32 @@ public class CanvasController {
 	    	// 캔버스 타입들
 	    	request.setAttribute("daysType", canvasList);
 	    	// 자유 캔버스 화면으로 보내기
-	    	request.setAttribute("textList", freeMap);  
+	    	request.setAttribute("textList", freeMap);
+	    	
+	    	
+			// 자신의 아이디 이메일 가져오기
+			LPUserDto user = (LPUserDto)session.getAttribute("ldto");
+			if(user != null) {
+				if(user.getUser_email() != null) {
+					// 스케치북 좋아요 상태 가져오기
+					Map<String, String> likeMap = new HashMap<String, String>();					
+					likeMap.put("user_email", user.getUser_email());
+					likeMap.put("sketch_id", sketch_id);
+					String like = iSketchBookService.likeSelect(likeMap);
+					if(like != null) {
+						session.setAttribute("usersketch_like", like);
+					}
+					
+					// 스케치북 스크랩 상태 가져오기
+					Map<String, String> scrapMap = new HashMap<String, String>();
+					scrapMap.put("user_email",user.getUser_email());
+					scrapMap.put("sketch_id", sketch_id);
+					String scrape = iSketchBookService.scrapeSelect(scrapMap);
+					if(scrape != null)	{
+						session.setAttribute("usersketch_scrap", scrape);
+					}
+				}
+			}
 	    	
 	    	return "canvas/detailCanvas";
 	    }
