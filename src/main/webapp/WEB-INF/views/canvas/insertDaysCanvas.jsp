@@ -86,7 +86,7 @@
                      <input type="text" id="pageTitle" value="1일차">
                   </div>
                   <div>
-                    <!--  <a href="./loadMap.do">지도정보가져오기</a>       -->     
+                     <!-- <a href="./loadMap.do">지도정보가져오기</a> -->    
                      <input type="button" onclick="showTrip()" style="margin-right: 5px; width:34px; height:34px; border: 1px solid black; background: url('./img/canvas/tour.png')" title="관광지">
                      <input type="button" onclick="showFood()" style="margin-right: 5px; width:34px; height:34px; border: 1px solid black; background: url('./img/canvas/restaurant.png')" title="음식점">
                      <input type="button" onclick="showRest()" style="margin-right: 5px; width:34px; height:34px; border: 1px solid black; background: url('./img/canvas/rest.png')" title="숙소">
@@ -296,7 +296,7 @@
             var endCoord =  new daum.maps.LatLng(daysMarker[daysMarker.length-1].getPosition().getLat(), daysMarker[daysMarker.length-1].getPosition().getLng());
             div.innerHTML += "<a style='float:right; margin-right:30px;' href='https://map.kakao.com/?sX="+startCoord.toCoords().getX()+"&sY="+startCoord.toCoords().getY()+"&sName=출발점&eX="+endCoord.toCoords().getX()+"&eY="+endCoord.toCoords().getY()+"&eName=도착점' onclick='window.open(this.href, \"_경로보기\", \"width=1280px,height=860px;\"); return false;'>최단경로보기</a><br>";
          }
-         div.innerHTML += "<div class='daysInfo'>"+daysMarker.length+"번째 일정:"+title                       
+         div.innerHTML += "<div class='daysInfo'>"+title                       
                      + "<div style='float:right;'><img src='./img/canvas/normalClose.png' class='deleteDays' title='"+(daysMarker.length-1)+"' width='38' height='38' onclick='deleteDay("+(daysMarker.length-1)+")'></div>"
                     + "<div style='font-size:12px; float:right; margin-right:50px;'>"+startHalf+" "+startHour+":"+startMin+"~"+endHalf+" "+endHour+":"+endMin+"</div></div>"; 
             daysPage.appendChild(div);
@@ -530,6 +530,7 @@
                        // 마커 위에 인포윈도우를 표시합니다                          
                          foodMarkerInfo.open(map, foodMarker);    
                          marker = foodMarker;
+                         detailAddr = "제주특별시";
                      });                         
                    })(foodMarker, foodMarkerInfo);
                   
@@ -583,6 +584,7 @@
                     // 마커 위에 인포윈도우를 표시합니다                    
                       foodMarkerInfo.open(map, foodMarker);    
                         marker = foodMarker;
+                        detailAddr = "제주특별시";
                   });                         
                 })(foodMarker, foodMarkerInfo);
                

@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -48,6 +49,7 @@ public class FreeController {
 		model.addAttribute("id", id);
 		return "/canvas/insertFreeCanvasEditor";
 	}
+	
 	
 	@RequestMapping(value="/upload.do", method=RequestMethod.POST)
 	public String uploadPage(HttpSession session,String nowPageNo,String selectType){
@@ -114,6 +116,7 @@ public class FreeController {
 		
 		return realPath;
 	}
+	
 	
 	@RequestMapping(value="/insertData.do", method=RequestMethod.POST)
 	public String insertData(LPTextDto cdto, HttpSession session, HttpServletRequest request) {
@@ -229,7 +232,7 @@ public class FreeController {
 		return thumbnailRealPath;
 	}
 	
-	//자유 캔버스 수정
+	//자유 캔버스 수정	
     @RequestMapping(value="/updateFreeCanvas.do", method=RequestMethod.POST)
 	public String updateData(LPTextDto tDto, HttpSession session, HttpServletRequest request) {
 		

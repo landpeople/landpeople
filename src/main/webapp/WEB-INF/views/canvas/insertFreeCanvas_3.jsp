@@ -65,7 +65,7 @@
 								onmouseover="this.src='./img/canvas/back-over.png';"
 								onmouseout="this.src='./img/canvas/back.png';">
                          </div>
-                         <div class="title">나홀로 떠나는 제주도 여행</div>
+                         <div class="title">${sketch_title}</div>
                      </div>
 
                   <div class="article-canvasContent">

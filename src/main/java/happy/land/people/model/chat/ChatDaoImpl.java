@@ -170,10 +170,10 @@ public class ChatDaoImpl implements IChatDao {
 			// CHC_CONTENT의 태그들을 지워주고 내용만 잘라 줌 
 			for (int i = 0; i < resultLists.size(); i++) {
 				logger.info("● Repository CHC_CONTENT.substring");
-				if(resultLists.get(i).get(0).get("CHC_MESSAGE") != null && resultLists.get(i).get(0).get("CHC_MESSAGE").contains("sender_msg")) {
+				if(resultLists.get(i).get(0).get("CHC_MESSAGE") != null && resultLists.get(i).get(0).get("CHC_MESSAGE").contains("contain_msg")) {
 					System.out.println("****** "+i+" 메시지 일 때");
-					int start = resultLists.get(i).get(0).get("CHC_MESSAGE").indexOf("]")+1;
-					int last = resultLists.get(i).get(0).get("CHC_MESSAGE").lastIndexOf("</span>");
+					int start = resultLists.get(i).get(0).get("CHC_MESSAGE").indexOf("<p>")+3;
+					int last = resultLists.get(i).get(0).get("CHC_MESSAGE").lastIndexOf("</p>");
 					resultLists.get(i).get(0).replace("CHC_MESSAGE", resultLists.get(i).get(0).get("CHC_MESSAGE").substring(start, last));
 				}else if (resultLists.get(i).get(0).get("CHC_MESSAGE") != null && resultLists.get(i).get(0).get("CHC_MESSAGE").contains("contain_img")) {
 					System.out.println("****** "+i+" 사진 일 때");

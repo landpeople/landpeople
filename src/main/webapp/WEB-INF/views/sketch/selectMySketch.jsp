@@ -275,7 +275,7 @@ function sketchBookModify(sketch) {
              "sketch_id"  :   sketch_id },
       dataType : "json",
       success :function(modiModal){
-//          alert(modiModal.sdto.sketch_theme.replace(' ',''));
+         alert(modiModal.sdto.sketch_theme.replace(' ',''));
          
          var modiFormHTML =   "<input type='hidden' name='user_email' value='"+modiModal.sdto.user_email+"'>"+
                         "<input type='hidden' name='sketch_id' value='"+modiModal.sdto.sketch_id+"'>"+
@@ -291,7 +291,7 @@ function sketchBookModify(sketch) {
                   + "<label>스케치북 테마</label>"
                   + "<div class='themeradio'>"
                   + "<input type='radio' id='solotheme' name='modiSketch_theme' value='Withme'><label for='solotheme'>With me</label>"
-                  + "<input type='radio' id='familytheme' name='modiSketch_theme' value='Withfamliy'><label for='familytheme'>With famliy</label>"
+                  + "<input type='radio' id='familytheme' name='modiSketch_theme' value='Withfamily'><label for='familytheme'>With famliy</label>"
                   + "<input type='radio' id='coupletheme' name='modiSketch_theme' value='Withlove'><label for='coupletheme'>With love</label>"
                   + "<input type='radio' id='friendtheme' name='modiSketch_theme' value='Withfriend'><label for='friendtheme'>With friend</label></div>"
                   + "</div>"
