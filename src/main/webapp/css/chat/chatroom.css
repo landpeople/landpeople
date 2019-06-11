@@ -40,12 +40,12 @@ html, body {
 	height: 500px;
 	overflow-x: hidden;
 	overflow: auto;
-	width: 70%;
+	width: 80%;
 	padding: 0.5rem;
 }
 
 .memListBox {
-	width: 30%;
+	width: 20%;
 	text-align: center;
 	overflow: auto;
 	text-align: center;
@@ -217,7 +217,8 @@ html, body {
 }
 
 .msg_send_btn {
-	background: #05728f;
+	margin-left: 1rem;
+	background: #fb5a59;
 	border: none;
 	border-radius: 50%;
 	color: #fff;
@@ -225,6 +226,11 @@ html, body {
 	font-size: 15px;
 	height: 33px;
 	width: 33px;
+}
+
+
+.msg_send_btn:hover {
+	background: #fb3535;
 }
 
 .btn-box {
@@ -274,7 +280,7 @@ html, body {
 
 .file_btn {
 	margin: 0px;
-	background: #05728f;
+	background: #fb5a59;
 	border-radius: 50%;
 	color: #fff;
 	cursor: pointer;
@@ -283,6 +289,9 @@ html, body {
 	width: 33px;
 }
 
+.file_btn:hover{
+	background: #fb3535;
+}
 .mem_icon {
 	padding: 0px;
 	display: inline-block;

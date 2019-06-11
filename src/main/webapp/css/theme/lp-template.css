@@ -147,6 +147,18 @@ html, body {
 	overflow: auto;
 }
 
+.lp-error-content {
+	/* 	display: flex; */
+	justify-content: center;
+	min-width: 1000px;
+	width: 1000px;
+	height: 840px;
+	box-sizing: border-box;
+	padding: 20px;
+	overflow: auto;
+}
+
+
 /* index 페이지 그리드 레이아웃*/
 .lp-grid-container {
 	width: 100%;

@@ -118,7 +118,7 @@ public class ChatController implements ServletConfigAware {
 
 		String messageList = "";
 
-		for (int i = 2; i < contentList.size(); i++) {
+		for (int i = 0; i < contentList.size(); i++) {
 			messageList += contentList.get(i).getChc_message();
 		}
 
