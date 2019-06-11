@@ -130,23 +130,23 @@ public class MySocketHandler extends TextWebSocketHandler {
 				System.out.println("● MySocketHandler handleTextMessage() > 파일 handle 실행");
 				String msg2 = msg.substring(msg.indexOf(":") + 1, msg.indexOf(">")).trim(); // 파일까지 자르고
 				String location = msg.substring(msg.indexOf("/chatThumbnail") + 1).trim(); // 파일까지 자르고
-				System.out.println("★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ 파일이군.. 파일이다...msg2 : " + msg2);
-				System.out.println("★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ 파일이군.. 파일이다...location : " + location);
+				System.out.println("● MySocketHandler handleTextMessage() : " + msg2);
+				System.out.println("● MySocketHandler handleTextMessage()location : " + location);
 				for (WebSocketSession s : list) {
 					Map<String, Object> sessionMap = s.getHandshakeAttributes();
 					String otherGrSession = (String) sessionMap.get("chr_id");
 					String otherMemSession = (String) sessionMap.get("user");
 					if (myGrSession.equals(otherGrSession)) {
 						if (msg2.equals(myMemSession)) { // 나의 메시지
-							String newMsg = "<div class = 'sendTxt' class ='contain_img'><img class = 'sender_img'"
-									+ " src='./" + location + "'></div></div><br><br>";
+							String newMsg = "<div class='outgoing_msg'><img class = 'sender_img'"
+									+ " src='./" + location + "'></div></div>";
 							System.out.println("● MySocketHandler handleTextMessage() newMsg :" + newMsg);
 							txt = newMsg;
 						} else { // 상대가 메시지 보냈을 때,
 							String part1 = msg.substring(0, msg.trim().indexOf(":")).trim();
 
-							String part2 = "<div class = 'receiveTxt' class ='contain_img'><img class = 'receiver_img'"
-									+ " src='./" + location + "'/></div><br><br>";
+							String part2 = "<div class='incoming_msg'><img class = 'receiver_img'"
+									+ " src='./" + location + "'/></div>";
 							System.out.println("● MySocketHandler handleTextMessage() part2 :" + part2);
 							txt = part2;
 						}

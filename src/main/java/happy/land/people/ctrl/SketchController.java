@@ -551,16 +551,16 @@ public class SketchController {
 		request.setAttribute("type", type);
 
 		switch (type) {
-		case "With me":
+		case "Withme":
 			request.setAttribute("themeTitle", "Theme : With me");
 			break;
-		case "With family":
+		case "Withfamily":
 			request.setAttribute("themeTitle", "Theme : With family");
 			break;
-		case "With love":
+		case "Withlove":
 			request.setAttribute("themeTitle", "Theme : With love");
 			break;
-		case " With friend":
+		case "Withfriend":
 			request.setAttribute("themeTitle", "Theme : With friend");
 			break;
 		}

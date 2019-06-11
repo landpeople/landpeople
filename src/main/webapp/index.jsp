@@ -141,28 +141,28 @@
                   <div class="lp-grid-container">
 
                      <article id="" class="location-listing">
-                        <a class="location-title" href="#" onclick="sketchSelectTheme('With me')">With me</a>
+                        <a class="location-title" href="#" onclick="sketchSelectTheme('Withme')">With me</a>
                         <div class="location-image">
                            <img class="lp-theme" src="./img/theme/alone.jpg" alt="With me">
                         </div>
                      </article>
 
                      <article id="" class="location-listing">
-                        <a class="location-title" href="#" onclick="sketchSelectTheme('With Family')">With Family</a>
+                        <a class="location-title" href="#" onclick="sketchSelectTheme('Withfamily')">With family</a>
                         <div class="location-image">
                            <img class="lp-theme" src="./img/theme/family.jpg" alt="With family">
                         </div>
                      </article>
 
                      <article id="" class="location-listing">
-                        <a class="location-title" href="#" onclick="sketchSelectTheme('With love')">With love</a>
+                        <a class="location-title" href="#" onclick="sketchSelectTheme('Withlove')">With love</a>
                         <div class="location-image">
                            <img class="lp-theme" src="./img/theme/couple.png" alt="With love">
                         </div>
                      </article>
 
                      <article id="" class="location-listing">
-                        <a class="location-title" href="#" onclick="sketchSelectTheme('With friend')">With friend</a>
+                        <a class="location-title" href="#" onclick="sketchSelectTheme('Withfriend')">With friend</a>
                         <div class="location-image">
                            <img class="lp-theme" src="./img/theme/friend.png" alt="With friend">
                         </div>

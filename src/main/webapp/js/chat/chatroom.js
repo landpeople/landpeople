@@ -108,7 +108,7 @@ $(document).ready(function() {
                $(".chat").val('');
                $(".chat").empty();
                $(".chat").focus();
-               file.val('');
+               file.value = "";
 
            }
         }

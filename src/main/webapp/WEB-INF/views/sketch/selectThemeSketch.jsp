@@ -80,7 +80,7 @@
 				               	<div class="hovereffect2">
 				                   	<img class="img-responsive" src="${item.sketch_spath }" alt="">
 				                       <div class="overlay2">
-				                      		<h2>${item.sketch_title} | <i class="fas fa-heart"></i><span> ${sketchLike[item.sketch_id]}명</span></h2>
+				                      		<h2>${item.sketch_title} | <i class="fas fa-heart"></i><span> ${maxLike[item.sketch_id]}명</span></h2>
 				                           <a class="info" href="#" onclick="goCanvas('${item.sketch_id}')">Show detail</a>
 				                      </div>
 				                   </div>

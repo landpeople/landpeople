@@ -305,6 +305,8 @@ public class UserController {
 		System.out.println("로그아웃.do 현재 세션 : " + session);
 
 		session.invalidate();
+		iChatService.chatList_Delete(dto.getUser_nickname());/* 로그아웃시 채팅 리스트에서 삭제함 */
+		
 		return "redirect:./index.jsp";
 	}
 
