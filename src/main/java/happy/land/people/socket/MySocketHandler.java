@@ -93,29 +93,33 @@ public class MySocketHandler extends TextWebSocketHandler {
 					System.out.println("메시지 발송한 사람의 session msg2 : " + msg2);
 					if (myGrSession.equals(otherGrSession)) {
 						if (msg2.equals(otherMemSession)) { // 나의 메시지
-							String newMsg = "<div class='outgoing_msg'>"
-												+ "<div class='sent_msg'>"
-													+ "<p>" + msg.replace(msg.substring(0, msg.trim().indexOf(":") + 1), "") + "</p>"
-													+ "<span class='time_date'>" + time + "</span>"
+							String newMsg = "<div class='contain_msg'>" // 메시지와 파일을 판단하기 위해 감싸줌
+												+ "<div class='outgoing_msg'>"
+													+ "<div class='sent_msg'>"
+														+ "<p>" + msg.replace(msg.substring(0, msg.trim().indexOf(":") + 1), "") + "</p>"
+														+ "<span class='time_date'>" + time + "</span>"
+													+ "</div>"
 												+ "</div>"
-											+ "</div>";
+											+"</div>";
 		
 							System.out.println("● MySocketHandler handleTextMessage() newMsg :" + newMsg);
 
 							txt = newMsg;
 						} else { // 상대가 메시지 보냈을 때,
-							String newMsg = "<div class='incoming_msg'>"
-										 	+ "<div class='incoming_msg_img'>"
-										 		+ "<img src='https://ptetutorials.com/images/user-profile.png' alt='img'>"
-										 	+ "</div>"
-										 	+ "<div class='received_msg'>"
-										 		+ "<div class='received_withd_msg'>"
-										 			+ "<div class='received_user'>" + otherMemSession + "</div>"
-										 			+ "<p>" + msg.substring(msg.trim().indexOf(":") + 1) + "</p>"
-										 			+ "<span class='time_date'>" + time + "</span>"
-										 		+ "</div>"
-										 	+ "</div>"
-										 + "</div>";
+							String newMsg = "<div class='contain_msg>"
+											+ "<div class='incoming_msg'>"
+										 		+ "<div class='incoming_msg_img'>"
+										 			+ "<img src='https://ptetutorials.com/images/user-profile.png' alt='img'>"
+											 	+ "</div>"
+											 	+ "<div class='received_msg'>"
+											 		+ "<div class='received_withd_msg'>"
+											 			+ "<div class='received_user'>" + otherMemSession + "</div>"
+											 			+ "<p>" + msg.substring(msg.trim().indexOf(":") + 1) + "</p>"
+											 			+ "<span class='time_date'>" + time + "</span>"
+											 		+ "</div>"
+											 	+ "</div>"
+											 	+ "</div>"
+											 + "</div>";
 
 							System.out.println("● MySocketHandler handleTextMessage() newMsg :" + newMsg);
 							txt = newMsg;
@@ -138,15 +142,21 @@ public class MySocketHandler extends TextWebSocketHandler {
 					String otherMemSession = (String) sessionMap.get("user");
 					if (myGrSession.equals(otherGrSession)) {
 						if (msg2.equals(myMemSession)) { // 나의 메시지
-							String newMsg = "<div class='outgoing_msg'><img class = 'sender_img'"
-									+ " src='./" + location + "'></div></div>";
+							String newMsg = "<div class='contain_img'>"
+												+ "<div class='outgoing_msg'>"
+													+ "<img class = 'sender_img' src='./" + location + "'>"
+												+ "</div>"
+											+ "</div>";
 							System.out.println("● MySocketHandler handleTextMessage() newMsg :" + newMsg);
 							txt = newMsg;
 						} else { // 상대가 메시지 보냈을 때,
 							String part1 = msg.substring(0, msg.trim().indexOf(":")).trim();
 
-							String part2 = "<div class='incoming_msg'><img class = 'receiver_img'"
-									+ " src='./" + location + "'/></div>";
+							String part2 =  "<div class='contain_img'>"
+												+ "<div class='incoming_msg'>"
+													+ "<img class = 'receiver_img' src='./" + location + "'/>"
+													+ "</div>"
+												+ "</div>";
 							System.out.println("● MySocketHandler handleTextMessage() part2 :" + part2);
 							txt = part2;
 						}
@@ -157,11 +167,42 @@ public class MySocketHandler extends TextWebSocketHandler {
 						s.sendMessage(new TextMessage(txt));
 					}
 				}
-
 			}
 		}
 	}
 
+	@Override
+	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+		logger.info("● MySocketHandler afterConnectionClosed() 실행");
+
+		super.afterConnectionClosed(session, status);
+		Map<String, Object> mySession = session.getHandshakeAttributes();
+		String myGrSession = (String) mySession.get("chr_id");
+		String myMemSession = (String) mySession.get("user");
+		String receiver = (String) mySession.get("receiver");
+		System.out.println("● MySocketHandler afterConnectionClosed() / receiver :" + receiver);
+
+		System.out.println("● MySocketHandler afterConnectionClosed() / myGrSession 채팅 종료 : " + myGrSession);
+		System.out.println("● MySocketHandler afterConnectionClosed() / myMemSession 채팅 종료 : " + myMemSession);
+
+		list.remove(session);
+		for (WebSocketSession a : list) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd at HH:mm", new Locale("en", "US"));
+			String time = sdf.format(new Date());
+			Map<String, Object> sessionMap = a.getHandshakeAttributes();
+			String otherGrSession = (String) sessionMap.get("chr_id");
+
+			if (myGrSession.equals(otherGrSession)) {
+				String txt = "<div class = 'noticeTxt exit'>" + myMemSession + "님이 퇴장했습니다 (" + time + ")</div>";
+				System.out.println("● MySocketHandler handleTextMessage() > service.chatContent_InsertMsg text :" + txt);
+				ChatContentDto dto = new ChatContentDto(otherGrSession, receiver, txt); // 일단 마이 세션에 넣어주는데 상대방 창에 나와야함.
+				int n = service.chatContent_InsertMsg(dto);
+				a.sendMessage(new TextMessage(txt));
+			}
+		}
+	}
+	
+    // 웹소켓 바이너리를 전송하려고 했지만 바이너리로 전송되지만 핸들링 되지 않는 문제로 인해서 파일 업로드로 이미지 전송함
 	//	@Override
 	//	protected void handleBinaryMessage(WebSocketSession session, BinaryMessage message) {
 
@@ -225,35 +266,4 @@ public class MySocketHandler extends TextWebSocketHandler {
 	//			bos.write(byteBuffer.array());
 	//		}
 	//	}
-
-	@Override
-	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		logger.info("● MySocketHandler afterConnectionClosed() 실행");
-
-		super.afterConnectionClosed(session, status);
-		Map<String, Object> mySession = session.getHandshakeAttributes();
-		String myGrSession = (String) mySession.get("chr_id");
-		String myMemSession = (String) mySession.get("user");
-		String receiver = (String) mySession.get("receiver");
-		System.out.println("● MySocketHandler afterConnectionClosed() / receiver :" + receiver);
-
-		System.out.println("● MySocketHandler afterConnectionClosed() / myGrSession 채팅 종료 : " + myGrSession);
-		System.out.println("● MySocketHandler afterConnectionClosed() / myMemSession 채팅 종료 : " + myMemSession);
-
-		list.remove(session);
-		for (WebSocketSession a : list) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd at HH:mm", new Locale("en", "US"));
-			String time = sdf.format(new Date());
-			Map<String, Object> sessionMap = a.getHandshakeAttributes();
-			String otherGrSession = (String) sessionMap.get("chr_id");
-
-			if (myGrSession.equals(otherGrSession)) {
-				String txt = "<div class = 'noticeTxt exit'>" + myMemSession + "님이 퇴장했습니다 (" + time + ")</div>";
-				System.out.println("● MySocketHandler handleTextMessage() > service.chatContent_InsertMsg text :" + txt);
-				ChatContentDto dto = new ChatContentDto(otherGrSession, receiver, txt); // 일단 마이 세션에 넣어주는데 상대방 창에 나와야함.
-				int n = service.chatContent_InsertMsg(dto);
-				a.sendMessage(new TextMessage(txt));
-			}
-		}
-	}
 }
