@@ -32,10 +32,22 @@
 <link href="./css/theme/lp-template.css" rel="stylesheet">
 <link href="./css/sketch/modal.css" rel="stylesheet">
 
-<!-- 자유 캔버스 레이아웃  -->
-<link rel="stylesheet" href="css/freeCanvasLayout.css">
 <!-- font awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
+<style type="text/css">
+.daysInfo{
+   font-size:20px;
+   width:430px; 
+   height:35px; 
+   border:1px solid #e3e6f0;
+   border-radius: 4px;
+   background: linear-gradient(to right ,yellow 1%, white 1%);
+   padding-left: 20px;
+   box-shadow: 0 .15rem 1.75rem 0 rgba(58,59,59,.15)!important;
+   margin-bottom: 0px;
+}
+</style>
 
 </head>
 
@@ -69,22 +81,29 @@
 
             <!-- LandPeople Content Area -->
             <div class="lp-container">
-               <div class="lp-other-content shadow-lg scroll">
+               <div class="lp-other-content shadow-lg scroll" style="overflow:hidden;">
+                <div class="back" onclick="moveDetailCanvas(${sketch_id})">
+                         	<img alt="뒤로가기" src="./img/canvas/back.png"
+								onmouseover="this.src='./img/canvas/back-over.png';"
+								onmouseout="this.src='./img/canvas/back.png';">
+                         </div>
+               
                             <div id="mybook" style="border: 1px solid black;">
                   <div id="page">
                     페이지 제목:
                      <input type="text" id="pageTitle" value="<%=canvasDto.getCan_title()%>">
                   </div>
                   <div>
-                     <button onclick="showFood()">음식점</button>
-                     <button onclick="showTrip()">관광지</button>
-                     <button onclick="showRest()">숙소</button>
-                     <input type="text" id="searchKeyword">
-                     <button onclick="searchKeyword()">검색</button>
-                     <div id='map' style='width: 440px; height: 560px;'></div>
-                     <input id="updateCanvas" type="button" value="수정완료"></input>
+                      <input type="button" onclick="showTrip()" style="margin-right: 5px; width:34px; height:34px; border: 1px solid black; background: url('./img/canvas/tour.png')" title="관광지">
+                     <input type="button" onclick="showFood()" style="margin-right: 5px; width:34px; height:34px; border: 1px solid black; background: url('./img/canvas/restaurant.png')" title="음식점">
+                     <input type="button" onclick="showRest()" style="margin-right: 5px; width:34px; height:34px; border: 1px solid black; background: url('./img/canvas/rest.png')" title="숙소">
+                     <input type="button" onclick="searchKeyword()" style="float:right; width:34px; height:34px; border: 1px solid black; background: url('./img/manager/search.png')" title="검색">
+                     <input type="text" id="searchKeyword" style="float:right; margin-right: 10px;">
+                     <div id='map' style='width: 440px; height: 560px;'></div>                    
                   </div>
                </div>
+               
+                <input id="updateCanvas" type="button" style="width:64px; height:64px; border: none; background: url('./img/canvas/check.png')" title="수정 완료"/>
                
                
                
@@ -141,6 +160,8 @@
       var polyline;
       // 주소
       var detailAddr;
+     // 일정 마커들의 주소
+      var daysAddress = [];
       // 일정 마커들 정보 가져오기
       <%
          for(int j = 0; j < daysList.size(); j++){
@@ -210,7 +231,7 @@
             if(parseInt(endTime[0]) < 10) { endTime[0] = "0"+ parseInt(endTime[0]); }
             if(parseInt(endTime[1]) < 10) { endTime[1] = "0"+ parseInt(endTime[1]); }
                         
-            div.innerHTML += "<div style='font-size:20px; width:450px; height:38px; border:1px solid black;'>"+(i+1)+"번째 일정:"+daysInfo[i]                      
+            div.innerHTML += "<div class='daysInfo'>"+(i+1)+"번째 일정:"+daysInfo[i]                      
                         + "<div style='float:right;'><img src='./img/canvas/normalClose.png'  class='deleteDays' title='"+i+"' width='38' height='38'></div>"
                         + "<div style='font-size:12px; float:right; margin-right:50px;'>"+startHalf+" "+startTime[0]+":"+startTime[1]+"~"+endHalf+" "+endTime[0]+":"+endTime[1]+"</div></div>"; 
                         
@@ -375,7 +396,10 @@
                min = $("#endMM").val();
                if(endHalf == "PM"){ hour = (12+parseInt(hour)); }
                daysEnd.push(hour+":"+min);                     
-                        
+               // 주소 입력
+               daysAddress.push(detailAddr);
+               
+               
                // 클릭 이벤트 설정
                var addwindow = new daum.maps.InfoWindow({
                    content: '<div>'+title+'</div>', // 인포윈도우에 표시할 내용
@@ -400,7 +424,7 @@
                         + " onclick='window.open(this.href, \"_경로보기\", \"width=1000px,height=800px;\"); return false;'"
                         + ">최단경로보기</a><br>";
                }
-               div.innerHTML += "<div style='font-size:20px; width:450px; height:38px; border:1px solid black;'>"+daysMarker.length+"번째 일정:"+title                       
+               div.innerHTML += "<div class='daysInfo'>"+daysMarker.length+"번째 일정:"+title                       
                           + "<div style='float:right;'><img src='./img/canvas/normalClose.png' class='deleteDays' title='"+(daysMarker.length-1)+"' width='38' height='38'></div>"
                           + "<div style='font-size:12px; float:right; margin-right:50px;'>"+startHalf+" "+startHour+":"+startMin+"~"+endHalf+" "+endHour+":"+endMin+"</div></div>"; 
                daysPage.appendChild(div);
@@ -427,7 +451,7 @@
             for(var i = 0 ; i < daysMarker.length ; i++){
                var testVal = {
                      'title' : String(daysInfo[i]) , 'content' : "내용"+i , 'startDate':"2019-05-14 "+daysStart[i]+":00" , 
-                     'endDate' : "2019-05-14 "+daysEnd[i]+":00" , 'x' :  String(daysMarker[i].getPosition().getLat()) , 'y' : String(daysMarker[i].getPosition().getLng()) , 'address' : "제주특별자치도 서귀포시 성산읍 고성리 127-2"
+                     'endDate' : "2019-05-14 "+daysEnd[i]+":00" , 'x' :  String(daysMarker[i].getPosition().getLat()) , 'y' : String(daysMarker[i].getPosition().getLng()) , 'address' : daysAddress[i]
                };
                jsonObj["days"+i] = testVal;
             }        
@@ -710,6 +734,11 @@
                 });
             }
          }
+         
+         // 뒤로 가기 이벤트
+         function moveDetailCanvas(sketch_id) {
+      		location.href="./detailCanvas.do?sketch_id="+sketch_id;
+      	}  
          
    </script>
    

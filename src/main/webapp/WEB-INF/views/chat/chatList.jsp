@@ -4,6 +4,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <html>
 <!-- Custom styles for this template-->
 <link rel="stylesheet"
@@ -32,9 +33,6 @@
 		}
 	%>
 	<div>
-		<!--    <span class="user-list" id="timer"></span> -->
-		<!-- 세션 만료 시간 알려주는 임시 span -->
-		<!--    <a href="javascript:refreshTimer();"></a> -->
 		<div class="chatable-member">
 			<h6 class="chatmember-header">Chatable members</h6>
 			<div class="refresh-block">
@@ -65,7 +63,6 @@
 			</c:otherwise>
 		</c:choose>
 	</div>
-	<!-- <script type="text/javascript" charset="utf-8" src="./js/chat/timeoutchk.js"></script> -->
 	<!-- Bootstrap core JavaScript-->
 	<script src="./js/theme/jquery.min.js"></script>
 	<script src="./js/chat/chatlist.js"></script>

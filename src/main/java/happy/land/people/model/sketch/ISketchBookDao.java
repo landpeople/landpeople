@@ -70,5 +70,5 @@ public interface ISketchBookDao {
 	public String nicknameSelect(String sketch_id);
 	
 	// 스케치북 작성자 email 조회
-	public String sketchemailSelect(String sketch_id);	
+	public LPSketchbookDto sketchinfoSelect(String sketch_id);	
 }

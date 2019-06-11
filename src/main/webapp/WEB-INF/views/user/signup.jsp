@@ -101,9 +101,7 @@ span {
 					    $("#emailchkVal").val("0");
 					}
 				    },
-				    error : function() {
-					alert("실패");
-					alert(email);
+				    error : function() {					
 				    }
 				});
 			    }
@@ -186,9 +184,7 @@ span {
 				}
 
 			    },
-			    error : function() {
-				alert("실패");
-				alert(nickname);
+			    error : function() {				
 			    }
 			});
 		    } else {
@@ -202,16 +198,13 @@ span {
     });//제일큰
 </script>
 
-
-<body class="bg-gradient-primary">
-
+<body>
    <div class="container">
       <div class="row justify-content-center">
          <div class="col-xl-5 col-md-5 col-lg-5">
             <div class="card o-hidden border-0 shadow-lg my-5">
                <div class="card-body p-0">
                   <!-- Nested Row within Card Body -->
-                  <!--                <div class="col-lg-7"> -->
                   <div class="p-5">
                      <div class="text-center">
                         <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
@@ -227,7 +220,7 @@ span {
                         </div>
                         <div class="form-group">
                            <input type="password" name="user_password" class="form-control form-control-user" id="pw" placeholder="Password" required="required" maxlength="10">
-                           &nbsp;<span id="pwresult form-text">4~10자리의 영문+숫자</span>
+                           <span id="pwresult" class="form-text">4~10자리의 영문+숫자</span>
                         </div>
                         <div class="form-group">
                            <input type="password" class="form-control form-control-user" id="passOK" placeholder="Repeat Password" maxlength="10" required="required">
@@ -235,7 +228,7 @@ span {
                         </div>
                         <div class="form-group">
                            <input type="text" name="user_nickname" class="form-control form-control-user" id="nickname" placeholder="Nick Name" maxlength="10" required="required">
-                           &nbsp;<span id="nicknameresult form-text">2~10자리의 닉네임을 입력</span>
+                           <span id="nicknameresult" class="form-text">2~10자리의 닉네임을 입력</span>
                         </div>
                         <div class="form-group">
                            <input type="submit" class="btn btn-primary btn-user btn-block" value="Register Account">

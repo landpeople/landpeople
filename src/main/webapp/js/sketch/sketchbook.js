@@ -34,10 +34,10 @@ function sketchBookMake(user) {
 									"<div class='form-group'>"
 									+ "<label>스케치북 테마</label>"
 									+ "<div class='themeradio'>"
-									+ "<input type='radio' id='familytheme' name='sketch_theme' value='가족여행'><label for='familytheme'>가족여행</label>"
-									+ "<input type='radio' id='solotheme' name='sketch_theme' value='나홀로'><label for='solotheme'>나홀로여행</label>"
-									+ "<input type='radio' id='coupletheme' name='sketch_theme' value='연인과함께'><label for='coupletheme'>연인과함께</label>"
-									+ "<input type='radio' id='friendtheme' name='sketch_theme' value='친구와함께'><label for='friendtheme'>친구와함께</label>"
+									+ "<input type='radio' id='solotheme' name='sketch_theme' value='Withme'><label for='solotheme'>With me</label>"
+									+ "<input type='radio' id='familytheme' name='sketch_theme' value='Withfamily'><label for='familytheme'>With family</label>"
+									+ "<input type='radio' id='coupletheme' name='sketch_theme' value='Withlove'><label for='coupletheme'>With love</label>"
+									+ "<input type='radio' id='friendtheme' name='sketch_theme' value='Withfriend'><label for='friendtheme'>With friend</label>"
 									+ "</div>"
 									+ "</div>"
 									+
@@ -52,11 +52,11 @@ function sketchBookMake(user) {
 									+
 
 									"<div class='form-group'>"+
-									"<label>스케치북 커버이미지</label>&nbsp;<label style='color: red;'>(커버이미지를 설정하지 않으시면 기본이미지가 입력됩니다)</label>"+
+									"<label class='cover-label'>스케치북 커버이미지</label>&nbsp;<label class='cover-label-label' style='color: red;'>(커버이미지를 설정하지 않으시면 기본이미지가 입력됩니다)</label>"+
 										"<div id='moSketchBookCover'>"+
-												"<div id='modalIMG1' style='background-image :url(img/sketch/제주배경.jpg)'>"+
+												"<div id='modalIMG1' style='background-image :url(img/sketch/basic.jpg)'>"+
 												"<input type='hidden' name='sketch_spath' class='img_spath0'>"+
-														"<label for='C_IMG1'><img src='./img/folder.png'></label>"+
+														"<label for='C_IMG1' id='C_IMG1-label'><i class='fas fa-file-image'></i></label>"+
 														"<input id='C_IMG1' class='file'  name='file' type='file' multiple='multiple' style='display: none;'>"+
 	 													
 												"</div>"+
@@ -64,7 +64,7 @@ function sketchBookMake(user) {
 										"</div>"+
 									"</div>";
 
-							var modalfooter = "<button type='button' class='btn btn-secondary' data-dismiss='modal'>닫기</button>"
+							var modalfooter = "<button type='button' class='btn btn-secondary modal-close' data-dismiss='modal'>닫기</button>"
 								+ "<input class='btn btn-lp-success' type='button' value='작성완료 ' onclick='sketchInsert()'>";
 
 							$("#makeSketchBody").html(htmlModal);
@@ -77,9 +77,6 @@ function sketchBookMake(user) {
 									fileUpload(subImgClass);
 								}
 							});
-								
-		
-							
 						}
 					},
 					error : function() {
@@ -131,7 +128,7 @@ function sketchBookMake(user) {
 	
 	
 	function fileUpload(subImgClass) {
-		var frmEle = document.forms[0];
+		var frmEle = document.getElementById("makeSketchBody");
 		var formData = new FormData(frmEle);
 		
 			/* formData.append("text_no",subImgClass); */
@@ -167,7 +164,6 @@ function sketchBookMake(user) {
 			}
 		});
 	}
-	
 	
 	// 테마별, 작성 스케치북 조회 무한스크롤 후 캔버스 조회 페이지로 이동
 	function goCanvas(sketch_id) {

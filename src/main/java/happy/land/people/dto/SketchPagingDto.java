@@ -8,7 +8,7 @@ public class SketchPagingDto {
 		private int pageBoardSize;      // 페이지당 보여줄 게시글 크기 (ex)5로 정하면 1페이지당 게시글 5개를 보여줌)
 		
 		private int firstPageNo; 		// 처음 페이지 번호  (만약 페이지 개수가 총 42개라면 firstPageNo은 1)
-		private int lastPageNo; 		// 마지막 페이지 번호  (만약 페이지 개수가 총 42개라면 lastPageNo은 1)
+		private int lastPageNo; 		// 마지막 페이지 번호  (만약 페이지 개수가 총 42개라면 lastPageNo은 42)
 		
 		private int prevPageNo; 		// 현재 페이지에서 이전 페이지 번호
 		private int nextPageNo; 		// 현재 페이지에서 다음 페이지 번호
@@ -31,8 +31,6 @@ public class SketchPagingDto {
 			
 			setTotalBoardSize(totalBoardSize);
 		}
-		
-		
 
 		public SketchPagingDto(int nowPageNo, int pageBoardSize) {
 			super();
@@ -123,10 +121,10 @@ public class SketchPagingDto {
 				setNowPageNo(1);
 			}
 			if(pageListSize == 0) {
-				setPageListSize(10);
+				setPageListSize(9);
 			}
 			if(pageBoardSize == 0) {
-				setPageBoardSize(10);
+				setPageBoardSize(9);
 			}
 			
 			int finalPage = (totalBoardSize+(pageBoardSize-1))/pageBoardSize; // 마지막 페이지 번호

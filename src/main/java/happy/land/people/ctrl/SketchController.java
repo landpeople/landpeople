@@ -68,7 +68,7 @@ public class SketchController {
 		System.out.println(dto.getSketch_spath());
 		if (dto.getSketch_spath() == null || dto.getSketch_spath() == "") {
 
-			dto.setSketch_spath("./img/sketch/제주배경.jpg");
+			dto.setSketch_spath("./img/sketch/basic.jpg");
 			boolean isc = iSketchBookService.sketchInsert(dto);
 			System.out.println(isc);
 		} else {
@@ -221,8 +221,9 @@ public class SketchController {
 	// 스케치북 스크랩
 	@RequestMapping(value = "Scrape.do", method = RequestMethod.GET)
 	@ResponseBody
-	public Map<String, String> scrapeState(String user_email, String sketch_id, LPCollectDto dto) {
+	public Map<String, String> scrapeState(LPCollectDto dto) {
 		// 스케치북 스크랩 최초 등록
+		
 		boolean isc = iSketchBookService.collectInsert(dto);
 		System.out.println(isc + "스크랩 최초 등록~~~~~ 성공");
 		logger.info("scrapeState 실행 {}", isc);
@@ -258,6 +259,7 @@ public class SketchController {
 		System.out.println("스크랩한 유저 이메일 =" + user_email);
 		// 페이지 처리를 위한 스크랩한 스케치북 카운트 조회
 		int cnt = iSketchBookService.scrapeCnt(user_email);
+		System.out.println(cnt);
 		// 스크랩한 스케치북 페이징 처리
 		SketchPagingDto pagingDto = new SketchPagingDto(9, 1, cnt, 9);
 		Map<String, String> map = new HashMap<String, String>();
@@ -355,7 +357,7 @@ public class SketchController {
 
 		boolean isc = iSketchBookService.scrapeMultiUpdate(map);
 
-		return "redirect:/Scrape.do";
+		return "redirect:/SelectScrapeSketch.do?user_email=" + email;
 	}
 
 	// 작성 스케치북 조회
@@ -456,12 +458,14 @@ public class SketchController {
 
 	// 작성 스케치북 수정
 	@RequestMapping(value = "modifySketch.do", method = RequestMethod.POST)
-	public String modifySketchBook(LPSketchbookDto dto, String user_email) {
+	public String modifySketchBook(LPSketchbookDto dto, String user_email, String modiSketch_theme, String modiSketch_share) {
 		logger.info("JungController modifySketchBook {}", dto);
 		System.out.println("수정할 이미지 경로 = " + dto.getSketch_spath().substring(dto.getSketch_spath().indexOf("/LandPeople")));
 		String s_path = dto.getSketch_spath().substring(dto.getSketch_spath().indexOf("/LandPeople"));
 		dto.setSketch_spath(s_path);
-
+		dto.setSketch_theme(modiSketch_theme);
+		dto.setSketch_share(modiSketch_share);
+		
 		boolean isc = iSketchBookService.sketchUpdate(dto);
 
 		System.out.println(isc);
@@ -534,7 +538,6 @@ public class SketchController {
 			sketchNickname.put(sketch_id, nickname);
 
 		}
-
 		System.out.println("테마별 스케치북 조회 좋아요 카운팅  = " + sketchLike);
 		System.out.println("테마별 스케치북 조회 닉네임 조회 = " + sketchNickname);
 
@@ -548,18 +551,17 @@ public class SketchController {
 		request.setAttribute("type", type);
 
 		switch (type) {
-		case "나홀로":
-			System.out.println("나홀로 테스트트트트트트트");
-			request.setAttribute("themeTitle", "Theme : 나홀로 여행");
+		case "Withme":
+			request.setAttribute("themeTitle", "Theme : With me");
 			break;
-		case "가족여행":
-			request.setAttribute("themeTitle", "Theme : 가족과 함께");
+		case "Withfamily":
+			request.setAttribute("themeTitle", "Theme : With family");
 			break;
-		case "연인과함께":
-			request.setAttribute("themeTitle", "Theme : 연인과 함께");
+		case "Withlove":
+			request.setAttribute("themeTitle", "Theme : With love");
 			break;
-		case "친구와함께":
-			request.setAttribute("themeTitle", "Theme : 친구와 함께");
+		case "Withfriend":
+			request.setAttribute("themeTitle", "Theme : With friend");
 			break;
 		}
 

@@ -48,14 +48,19 @@ public class ChatDaoImpl implements IChatDao {
 
 	@Override
 	public int chatList_Delete(String user_nickname) {
-		// TODO Auto-generated method stub
-		return 0;
+		logger.info("● Repository chatList_Delete 실행");
+		return sqlSession.insert(NS + "chatList_Delete", user_nickname);
 	}
 
+	@Override
+	public int chatList_Update(Map<String, String> map) {
+		logger.info("● Repository chatList_Update 실행");
+		return sqlSession.update(NS + "chatList_Update", map);
+	}
+	
 	/**
 	 * 채팅방이 없을 때는 채팅방을 생성하고 있을 때는 out컬럼을 update 하여 볼 수 있게 해주는 메소드
 	 */
-	@Transactional
 	@Override
 	public List<ChatContentDto> chatRoom_Make(Map<String, String> map) {
 		logger.info("● Service chatRoom_Make 실행");
@@ -161,12 +166,22 @@ public class ChatDaoImpl implements IChatDao {
 					i--;
 				}
 			}
+			
 			// CHC_CONTENT의 태그들을 지워주고 내용만 잘라 줌 
 			for (int i = 0; i < resultLists.size(); i++) {
 				logger.info("● Repository CHC_CONTENT.substring");
-				int start = resultLists.get(i).get(0).get("CHC_MESSAGE").indexOf("]")+1;
-				int last = resultLists.get(i).get(0).get("CHC_MESSAGE").lastIndexOf("</span>");
-				resultLists.get(i).get(0).replace("CHC_MESSAGE", resultLists.get(i).get(0).get("CHC_MESSAGE").substring(start, last)) ;
+				if(resultLists.get(i).get(0).get("CHC_MESSAGE") != null && resultLists.get(i).get(0).get("CHC_MESSAGE").contains("sender_msg")) {
+					System.out.println("****** "+i+" 메시지 일 때");
+					int start = resultLists.get(i).get(0).get("CHC_MESSAGE").indexOf("]")+1;
+					int last = resultLists.get(i).get(0).get("CHC_MESSAGE").lastIndexOf("</span>");
+					resultLists.get(i).get(0).replace("CHC_MESSAGE", resultLists.get(i).get(0).get("CHC_MESSAGE").substring(start, last));
+				}else if (resultLists.get(i).get(0).get("CHC_MESSAGE") != null && resultLists.get(i).get(0).get("CHC_MESSAGE").contains("contain_img")) {
+					System.out.println("****** "+i+" 사진 일 때");
+					resultLists.get(i).get(0).replace("CHC_MESSAGE", "[사진]") ;
+				}else {
+					System.out.println("****** "+i+" NULL 일 때");
+					resultLists.get(i).get(0).put("CHC_MESSAGE", "[메시지가 없습니다.]");
+				}
 			}
 			return resultLists;
 	}

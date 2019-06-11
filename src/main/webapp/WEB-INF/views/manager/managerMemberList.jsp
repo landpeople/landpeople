@@ -41,7 +41,7 @@
 <script type="text/javascript">
    $(document).ready(function() {
 
-      var cnames = [ '이메일', '닉네임', '등급', '탈퇴여부', '메일인증여부', '글쓰기권한*' ];
+      var cnames = [ '이메일', '닉네임', '등급', '탈퇴여부', '메일인증여부', '작성권한*' ];
 
       $("#jqGrid").jqGrid({
 
@@ -136,13 +136,9 @@
             <!-- LandPeople Content Area -->
             <div class="lp-container">
                <div class="lp-other-content shadow-lg">
-               <div id="jqGridDiv">
-                  <h3>육지 관리자</h3>
-                  <hr>
+               <div class="lp-content-header">
+                 <h1 id="title" class="h2 mb-4 text-gray-800 lp-content-title">Members list</h1>
                   <div id="selectDiv">
-                     <button onclick="location.href='./jqgrid.do'" id="memBtn"><i class="fas fa-users fa-2x"></i><br>회원</button>
-                     <button onclick="location.href='./jqgrid2.do'" id="sketBtn" style="background: gray;"><i class="fas fa-book-open fa-2x"></i><br>스케치북</button>
-                        <br>
                      <select id="selectId">
                         <option value="" selected="selected">전체</option>
                         <option value="user_email">이메일</option>
@@ -151,6 +147,8 @@
                      <input id="input" type="text" placeholder="검색어를 입력하세요" value="">
                      <button id="inputBtn" onclick="search()"><i class="fas fa-search"></i></button>
                   </div>
+                  </div>
+               <div id="jqGridDiv">
                   <hr>
                   <table id="jqGrid"></table>
                   <div id="jqGridPager"></div>

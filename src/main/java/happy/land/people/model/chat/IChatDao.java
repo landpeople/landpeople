@@ -13,6 +13,8 @@ public interface IChatDao {
 	public int chatList_Insert(String user_nickname); // 채팅 가능 리스트 생성
 	public int chatList_Delete(String user_nickname); // 채팅 리스트에서 제거
 	
+	public int chatList_Update(Map<String, String> map); //채팅 리스트 업데이트
+	
 	public List<ChatContentDto> chatRoom_Make(Map<String, String> map);
 	
 	public int chatContent_InsertMsg(ChatContentDto dto);

@@ -138,8 +138,10 @@ public class DaysController {
 	    }
 	    
 	    @RequestMapping(value="canvasDownloadExcel.do",method=RequestMethod.GET)
-	    public void canvasDownloadExcel(HttpServletResponse response) throws IOException {
-	    	List<LPDaysDto> canvasList = canvasService.canvasDownloadExcel("1");
+	    public void canvasDownloadExcel(HttpServletResponse response,HttpSession session) throws IOException {
+	    	String sketch_id = (String)session.getAttribute("sketch_id");
+	    	
+	    	List<LPDaysDto> canvasList = canvasService.canvasDownloadExcel(sketch_id);
 	    	
 	    	XSSFWorkbook workbook = new XSSFWorkbook();
 	    	XSSFSheet sheet = null; 

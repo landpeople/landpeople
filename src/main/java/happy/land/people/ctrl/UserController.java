@@ -1,6 +1,7 @@
 package happy.land.people.ctrl;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -305,6 +306,8 @@ public class UserController {
 		System.out.println("로그아웃.do 현재 세션 : " + session);
 
 		session.invalidate();
+		iChatService.chatList_Delete(dto.getUser_nickname());/* 로그아웃시 채팅 리스트에서 삭제함 */
+		
 		return "redirect:./index.jsp";
 	}
 
@@ -462,6 +465,21 @@ public class UserController {
 		iUserService.user_userInfo(dto);
     
 		session.setAttribute("ldto", dto);
+		
+		// 마이페이지 수정 시 chatlist도 update 해줌
+		Map<String, String> map = new HashMap<>();
+		System.out.println(dto.getUser_nickname());
+		System.out.println(userDto.getUser_nickname());
+		
+		
+		map.put("change_nickname", dto.getUser_nickname());
+		map.put("now_nickname", userDto.getUser_nickname());
+		
+		int n = iChatService.chatList_Update(map);
+		
+		System.out.println( n >=1 ? "업데이트 성공" : "업데이트 실패에");
+		
+		
 		return "forward:./index.jsp";
 	}
 

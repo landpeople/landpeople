@@ -44,16 +44,14 @@
 
          <c:if test="${not empty ldto}">
             <div class="lp-nav-btn">
-	           <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-lp-success shadow-sm lp-write-btn" data-toggle="modal" data-target="#logoutModal">
-	              <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>Logout
+	           <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-lp-success shadow-sm lp-write-btn" data-toggle="modal" data-target="#logoutModal"><i class="fas fa-sign-out-alt fa-sm fa-fw mr-2"></i>Logout
 	           </a>
             </div>
          </c:if>
 
          <c:if test="${empty ldto}">
             <div class="lp-nav-btn">
-	           <a href="./loginPage.do" class="d-none d-sm-inline-block btn btn-sm btn-lp-success shadow-sm lp-write-btn">
-	              <i class="fas fa-sign-in-alt fa-sm fa-fw mr-2"></i>Login
+	           <a href="./loginPage.do" class="d-none d-sm-inline-block btn btn-sm btn-lp-success shadow-sm lp-write-btn"><i class="fas fa-sign-in-alt fa-sm fa-fw mr-2"></i>Login
 	           </a>
 			</div>
          </c:if>
@@ -74,9 +72,9 @@
                   <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                      <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Components</h6>
-                        <a class="collapse-item" href="./jqgrid.do">Members list</a>
-                        <a class="collapse-item" href="./jqgrid2.do">Member sketchbook list</a>
-                        <a class="collapse-item" href="./jqgrid3.do">Admin chatroom</a>
+                        <a class="collapse-item" href="./memberList.do">Members list</a>
+                        <a class="collapse-item" href="./memberSketchList.do">Member sketchbook list</a>
+                        <a class="collapse-item" href="./myChatroom.do">Admin chatroom</a>
                      </div>
                   </div></li>
             </c:when>
@@ -92,7 +90,7 @@
                         <a class="collapse-item" href="#" onclick="sketchSelectMine()">My sketchbook</a>
                         <a class="collapse-item" href="#" onclick="goScrapMine()">My scrapbook</a>
                         <input type="hidden" id="user_email" value="${ldto.user_email}">
-                        <a class="collapse-item" href="./jqgrid3.do">My chatroom</a>
+                        <a class="collapse-item" href="./myChatroom.do">My chatroom</a>
                      </div>
                   </div></li>
                <!-- Nav Item - Utilities Collapse Menu -->
@@ -104,9 +102,11 @@
 
          <c:if test="${not empty ldto }">
             <div class="lp-nav-btn">
+               <c:if test="${ldto.user_auth ne 'M'}">               
                <a href="#" onclick="sketchBookMake('${ldto.user_email}')" class="btn btn-lp-primary btn-icon-split lp-write-btn btn-sl btn-ss">
                   <span class="text">Create Travel Sketchbook</span>
-               </a>
+               </a>              
+                </c:if>               
             </div>
          </c:if>
 
@@ -143,28 +143,28 @@
                   <div class="lp-grid-container">
 
                      <article id="" class="location-listing">
-                        <a class="location-title" href="#" onclick="sketchSelectTheme('나홀로')">나홀로 여행</a>
+                        <a class="location-title" href="#" onclick="sketchSelectTheme('Withme')">With me</a>
                         <div class="location-image">
                            <img class="lp-theme" src="./img/theme/alone.jpg" alt="With me">
                         </div>
                      </article>
 
                      <article id="" class="location-listing">
-                        <a class="location-title" href="#" onclick="sketchSelectTheme('가족여행')">가족과 함께</a>
+                        <a class="location-title" href="#" onclick="sketchSelectTheme('Withfamily')">With family</a>
                         <div class="location-image">
                            <img class="lp-theme" src="./img/theme/family.jpg" alt="With family">
                         </div>
                      </article>
 
                      <article id="" class="location-listing">
-                        <a class="location-title" href="#" onclick="sketchSelectTheme('연인과함께')">연인과 함께</a>
+                        <a class="location-title" href="#" onclick="sketchSelectTheme('Withlove')">With love</a>
                         <div class="location-image">
                            <img class="lp-theme" src="./img/theme/couple.png" alt="With love">
                         </div>
                      </article>
 
                      <article id="" class="location-listing">
-                        <a class="location-title" href="#" onclick="sketchSelectTheme('친구와함께')">친구와 함께</a>
+                        <a class="location-title" href="#" onclick="sketchSelectTheme('Withfriend')">With friend</a>
                         <div class="location-image">
                            <img class="lp-theme" src="./img/theme/friend.png" alt="With friend">
                         </div>

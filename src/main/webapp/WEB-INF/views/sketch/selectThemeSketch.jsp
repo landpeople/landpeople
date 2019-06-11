@@ -17,6 +17,7 @@
    String type = (String)request.getAttribute("type");
    Map<String,Integer> sketchLikes = ( Map<String,Integer> )request.getAttribute("sketchLike");
 %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,219 +47,136 @@
 
 <script src="./js/theme/jquery.min.js"></script>
 
-<script type="text/javascript">
-
-console.log('${sketchBook}');
-
-</script>
-
-
 </head>
 <body id="page-top" class="scroll">
 
+<!-- Page Wrapper -->
+<div id="wrapper">
 
-   <!-- Page Wrapper -->
-   <div id="wrapper">
-      <%@include file="../common/lp-sidebar.jsp"%>
+	<%@include file="../common/lp-sidebar.jsp"%>
 
-      <!-- Content Wrapper -->
-      <div id="content-wrapper" class="d-flex flex-column"><!-- flex 레이아웃 content와 푸터 정렬 -->
-         
-         <!-- Main Content -->
-         <div id="content" style="display: flex; flex-direction: column;">
-
-            <!-- LandPeople Content Area -->
-            <div class="lp-container">
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column"><!-- flex 레이아웃 content와 푸터 정렬 -->
+       <!-- Main Content -->
+       <div id="content" style="display: flex; flex-direction: column;">
+           <!-- LandPeople Content Area -->
+           <div class="lp-container">
                <div class="lp-content shadow-lg">
                   <div class="lp-content-sketch"><!-- lp-content-sketch 영역 시작 -->
                      <div class="lp-content-header">
                         <h1 class="h2 mb-4 text-gray-800 lp-content-title">${themeTitle}</h1>
                      </div>
-                     <div class="allThemeContent">
-                        <div class="bestThemeContent"><!-- 좋아요 카운트 top 3 스케치북  -->
-                           <c:choose>
-                              <c:when test="${fn:length(maxLikeSketchBook) eq 0}">
-                                                                              좋아요한 스케치북이 없습니다.
-                              </c:when>
-                              <c:otherwise>
-                                  <c:forEach var="item" items="${maxLikeSketchBook}">
-                                      <div class="single-sketchbook">
-                                        <div class="hovereffect2">
-                                            <img class="img-responsive" src="${item.sketch_spath }" alt="">
-                                            <div class="overlay2">
-                                               <h2>Hover effect 4</h2>
-                                               <a class="info" href="#">link here</a>
-                                            </div>
-                                        </div>
-                                      </div>
-                                   </c:forEach>                                   
-                              </c:otherwise>
-                           </c:choose>
-                        </div>
+                     <div class="allThemeContent scroll">
+                     <c:choose>
+                     	<c:when test="${fn:length(maxLikeSketchBook) eq 0}">
+                        	<div class="bestThemeContent-none"><!-- 좋아요 카운트 top 3 스케치북  -->
+                            	<h2>좋아요한 스케치북이 없습니다.</h2>
+                            </div>
+                        </c:when>
+	                    <c:otherwise>
+	                    	<div class="bestThemeContent"><!-- 좋아요 카운트 top 3 스케치북  -->
+	                       <c:forEach var="item" items="${maxLikeSketchBook}">
+			               	<div class="single-sketchbook">
+				               	<div class="hovereffect2">
+				                   	<img class="img-responsive" src="${item.sketch_spath }" alt="">
+				                       <div class="overlay2">
+				                      		<h2>${item.sketch_title} | <i class="fas fa-heart"></i><span> ${maxLike[item.sketch_id]}명</span></h2>
+				                           <a class="info" href="#" onclick="goCanvas('${item.sketch_id}')">Show detail</a>
+				                      </div>
+				                   </div>
+			              		</div>
+	                      </c:forEach>                                   
+	                      </div>
+	                    </c:otherwise>
+                     </c:choose>
                         <div class="themeContent">
-                           <c:forEach var="item" items="${sketchBook}">
-                             <div class="single-sketchbook">
-                                  <div class="hovereffect2">
-                                      <img class="img-responsive" src="${item.sketch_spath }" alt="">
-                                         <div class="overlay2">
-                                            <h2>Hover effect 4</h2>
-                                               <a class="info" href="#">link here</a>
-                                         </div>
-                                  </div>
-                             </div>
-                          </c:forEach> 
-                        </div>
+                        <c:forEach var="item" items="${sketchBook}">
+                        	<div class="single-sketchbook">
+                            	<div class="hovereffect2">
+                                	<img class="img-responsive" src="${item.sketch_spath }" alt="">
+                                   	<div class="overlay2">
+                                    	<h2>${item.sketch_title} | <i class="fas fa-heart"></i><span> ${sketchLike[item.sketch_id]}명</span></h2>
+                                     	<a class="info" href="#" onclick="goCanvas('${item.sketch_id}')">Show detail</a>
+                                    </div>
+                               </div>
+                          	</div>
+                       </c:forEach> 
+                       </div>
                     </div>   
-      			 	 <c:if test="${fn:length(sketchBook) eq '6'}">
+      			 	<c:if test="${fn:length(sketchBook) eq '6'}">
       				 	<div class="view-more">
       						<button id="infinityScroll" class="btn">View more</button>
       					</div>
       				</c:if>
-      				<!-- 여기까지 스케치북 수정 Modal -->
-            
-            <!-- End of lp-content -->
-               
-                </div>
-               </div>
-           </div>
-            <!--End of Page LandPeople Content Area -->
+               		</div>
+            	</div><!-- End of lp-content -->
+           	</div><!--End of Page LandPeople Content Area -->
             <%@include file="../common/lp-footer.jsp"%>
             <!-- End of Page Wrapper -->
          </div>
       </div>
-        </div>
+   </div>
 </body>
+
 <script type="text/javascript">
-   // 무한 스크롤 적용된 스케치북 조회
-   var pageCnt = <%=pagingDto.getNowPageNo()%>
-   
-   $("document").ready(
-         function() {
-            $("#infinityScroll").click(
-               function() {
-                  $("#infinityScroll").hide();                 
-            if(pageCnt >= <%=pagingDto.getEndPageNo()%>){
-               alert("마지막페이지 입니다.");
-            }else{      
-               pageCnt++;        
-               getSketchBook(pageCnt);
-            }
-         });
-            
-            
-            
-      $(".content").scroll(
-            function(event){
-         
-               var hh = $(".content").height();
-               var ee = $(".content").scrollTop();
-               
-               var scHeight = $(".content").prop('scrollHeight');
-               
-               if (scHeight - hh - ee < 1) {
-                  $("#infinityScroll").trigger("click");
-               }
-         
+// 무한 스크롤 적용된 스케치북 조회
+var pageCnt = <%=pagingDto.getNowPageNo()%>
+
+$("document").ready(
+	function() {
+         $("#infinityScroll").click(
+            function() {
+            	$("#infinityScroll").hide();                 
+         		if(pageCnt >= <%=pagingDto.getLastPageNo()%>){
+//             	alert("마지막페이지 입니다.");
+	        	}else{      
+	           		pageCnt++;        
+	            	getSketchBook(pageCnt);
+	         	}
       });
+         
+   $(".allThemeContent").scroll(
+		function(event){
+			  var scrollT = $(this).scrollTop(); //스크롤바의 상단위치
+		      var scrollH = $(this).height(); //스크롤바를 갖는 div의 높이
+		      var contentH = $('.themeContent').height(); //문서 전체 내용을 갖는 div의 높이
+		    
+		      if(scrollT + scrollH + 1.5 >= contentH) { // 스크롤바가 맨 아래에 위치할 때
+		      	 $("#infinityScroll").trigger("click");
+		      }
+		});
+	});
    
+function getSketchBook(pageNo){     
+   var type = "${type}"
+      $.ajax({
+         url: "sketchBookPaging.do",
+         type: "get",
+         data: {"pageNo": pageNo , "type" : type}, 
+         dataTypes: "json",
+         success: function(msg){
+				     var sketchLikes = msg.likeTheme;
+				     var sketchNicknames = msg.sketchNicknames;
+				     var sketch="";
+				     
+				     for(var i = 0 ; i < parseInt(msg.addSketchBook.length) ; i++){
+				         var sketch_id=   msg.addSketchBook[i].sketch_id;
+				        sketch += "<div class='single-sketchbook'>" + 
+				        				"<div class='hovereffect2'>" +
+				       					"<img class='img-responsive' src=" + msg.addSketchBook[i].sketch_spath + " alt=''>" +
+				        					"<div class='overlay2'>" +
+				        						"<h2>" + msg.addSketchBook[i].sketch_title + " | <i class='fas fa-heart'></i><span>" + sketchLikes[msg.addSketchBook[i].sketch_id] + "명</span></h2>" +
+				        						"<a class='info' href='#' onclick='goCanvas(" + msg.addSketchBook[i].sketch_id + ")'>Show detail</a>" +
+				        					"</div>" +
+				     				"</div>" +
+				    		"</div>";
+				     }
+            $(".themeContent").append(sketch);
+      }, error : function() {
+            alert("실패");
+      }
    });
-   
-
-   
-   function getSketchBook(pageNo){     
-      var type = "${type}"
-            
-         
-         $.ajax({
-            url: "sketchBookPaging.do",
-            type: "get",
-            data: {"pageNo": pageNo , "type" : type }, 
-            dataTypes: "json",
-            success: function(msg){
-               alert(msg.addSketchBook.length);
-               var sketchLikes = msg.likeTheme;
-               var sketchNicknames = msg.sketchNicknames;
-               
-
-               //alert(sketchNicknames);
-               
-               var sketchBookContent= document.getElementsByClassName("sketchBookContent")[0];
-               var content= document.getElementsByClassName("content")[0];
-               /* var sketchBookContent = document.createElement('div');
-               sketchBookContent.className = 'sketchBookContent'; */
-               
-                
-               for(var i = 0 ; i < parseInt(msg.addSketchBook.length/3) ; i++){
-                  
-                  
-                  var sketchBookContainer = document.createElement('div');
-                  sketchBookContainer.className = 'sketchBookContainer';    
-                  
-                  for(var j = 0; j < 3; j++){
-                  
-                   var sketch_id=   msg.addSketchBook[i*3+j].sketch_id;
-                   //alert(sketch_id);
-                     
-                  sketchBookContainer.innerHTML +=
-                                          "<div style='width: 280px; height: 230px; border: 1px solid gray; display: inline-block; margin: 0 0 0 10px; position: relative;'>"+
-                                             "<div class='selectTheme' style='background-image: url("+msg.addSketchBook[i*3+j].sketch_spath+")'>"+
-                                                "<div class='sketchTheme_hover' style=' cursor: pointer;' onclick='goCanvas("+msg.addSketchBook[i*3+j].sketch_id+")'>"+
-                                                   "<div class='hover_inside'>"+
-                                                      "<h5><img alt='likeIcon' src='./img/sketch/likeIcon.png'>"+
-                                                      sketchLikes[(sketch_id)]+""+type+"</h5>"+ 
-                                                   "</div>"+
-                                                "</div>"+
-                                             "</div>"+
-                                             "<div style='width: 100%; height: 60px; border: 1px solid black; position: absolute; bottom: 0px;'>"+
-                                                "<label>"+msg.addSketchBook[i*3+j].sketch_title+"</label>"+"<label style='float: right;'>"+sketchNicknames[(sketch_id)]+"</label><br>"+
-                                             "</div>"+
-                                          "</div>";
-                                          
-                  
-                  
-                  
-                  }
-                  $(".sketchBookContent").append(sketchBookContainer);
-               } 
-               
-               if(msg.addSketchBook.length%3 !=0){ 
-                  var sketchBookContainer = document.createElement('div');
-                  sketchBookContainer.className = 'sketchBookContainer';   
-                  
-                  for(var i = 0; i < msg.addSketchBook.length%3; i++){                    
-                     
-                     var sketch_id= msg.addSketchBook[parseInt(parseInt(msg.addSketchBook.length/3)*3+i)].sketch_id;
-                     sketchBookContainer.innerHTML +=  "<div style='width: 280px; height: 230px; border: 1px solid gray; display: inline-block; margin: 0 0 0 10px; position: relative;'>"+
-                                             "<div class='selectTheme' style='background-image: url("+msg.addSketchBook[parseInt(parseInt(msg.addSketchBook.length/3)*3+i)].sketch_spath+")'>"+
-                                                "<div class='sketchTheme_hover' style=' cursor: pointer;' onclick='goCanvas("+msg.addSketchBook[parseInt(parseInt(msg.addSketchBook.length/3)*3+i)].sketch_id+")'>"+
-                                                   "<div class='hover_inside'>"+
-                                                      "<h5><img alt='likeIcon' src='./img/sketch/likeIcon.png'>"+
-                                                      sketchLikes[(sketch_id)]+""+type+"</h5>"+ 
-                                                   "</div>"+
-                                                "</div>"+
-                                             "</div>"+
-                                             "<div style='width: 100%; height: 60px; border: 1px solid black; position: absolute; bottom: 0px;'>"+
-                                                /* "<input type='checkbox' name='chkVal' value='"+msg.addSketchBook[parseInt(parseInt(msg.addSketchBook.length/3)*3+i)].sketch_id+"'>"+ */
-                                                "<label>"+msg.addSketchBook[parseInt(parseInt(msg.addSketchBook.length/3)*3+i)].sketch_title+"</label>"+"<label style='float: right;'>"+sketchNicknames[(sketch_id)]+"</label><br>"+
-                                                /* "<label><a href='#' onclick='return sketchBookModify("+msg.addSketchBook[parseInt(parseInt(msg.addSketchBook.length/3)*3+i)].sketch_id+")'><img alt='modi' src='img/sketch/modifyIcon.png'>스케치북 수정</a></label>"+ */
-                                             "</div>"+
-                                          "</div>";
-                  
-                  
-                  
-                  }
-                  $(".sketchBookContent").append(sketchBookContainer);
-               }
-                  
-               
-               
-         }, error : function() {
-               alert("실패");
-         }
-      });
-   
-   
-   }
+}
    
    // 테마별, 작성, 스크랩 스케치북 조회 무한스크롤 후 캔버스 조회 페이지로 이동
    function goCanvas(sketch_id) {

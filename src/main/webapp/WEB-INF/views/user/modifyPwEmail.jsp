@@ -43,7 +43,7 @@ function pwcheck() {
    var passOK = document.getElementById("passOK").value;
 
    if(pwchk == "1" && passchk == "1" && pw ==passOK){
-      alert("로그인하고 이용해주세요");
+      alert("로그인 후 이용해주세요");
       return true;
    }else{
       alert("비밀번호를 형식에 맞쳐 일치하게 입력해주세요");
@@ -54,10 +54,6 @@ function pwcheck() {
       return false;
    }
 }
-
-
-
-
 
 //아작스
 $(function() {
@@ -97,10 +93,6 @@ $(function() {
          $("#passchkVal").val("0");
       }
    });
-   
-   
-   
-   
 });//제일큰
 
 
@@ -117,7 +109,7 @@ span{
 </style>
 
 
-<body class="bg-gradient-primary">
+<body>
 
 	<div class="container">
 		<div class="row justify-content-center">

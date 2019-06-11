@@ -35,7 +35,7 @@
 <!-- Custom styles for this template -->
 <link href="./css/theme/sb-admin-booklet.css" rel="stylesheet">
 <link href="./css/theme/lp-template.css" rel="stylesheet">
-<link href="./css/sketch/modal.css" rel="stylesheet">
+<!-- <link href="./css/sketch/modal.css" rel="stylesheet"> -->
 
 <!-- 자유 캔버스 레이아웃  -->
 <link rel="stylesheet" href="./css/canvas/select-freeCanvas-Layout.css">
@@ -81,6 +81,9 @@
    margin-bottom: 0px;
 }
 
+.canvas-btn-box{
+	margin-left:auto;
+}
 
 </style>
 
@@ -99,19 +102,44 @@
 
             <!-- LandPeople Content Area -->
             <div class="lp-container">
-               <div class="lp-other-content shadow-lg scroll">
+               <div class="lp-other-content shadow-lg scroll" style="overflow:hidden;">
                
-                      <input type="button" id="downloadExcel"  class="far fa-edit" style="width:64px; height:64px; border: none; background: url('./img/canvas/excelIcon.png')"  title="Excel로 다운로드">               
-               <div style="margin-bottom: -15px;">이곳은 스케치북 제목을 적어봅시다.</div>
-               <div><hr></div>
+               
+               
+               
+               <div class="lp-content-header" style="display:flex">
+					<h1 class="h2 mb-4 text-gray-800 lp-content-title">${sketch_title}</h1>
+					<div class="canvas-btn-box">
+						 <input type="button" id="downloadExcel" style="width:32px; height:32px; border: none; background: url('./img/canvas/excelIcon.png');" title="Excel로 다운로드">
+						 							
+					</div>
+					
+										
+				</div>             
+				
+				
+				
+				
+				 
+<!--                       <input type="button" id="downloadExcel"  class="far fa-edit" style="width:64px; height:64px; border: none; background: url('./img/canvas/excelIcon.png')"  title="Excel로 다운로드">                -->
+               
+               
+               
+               
+               
+               
+<!--                <div style="margin-bottom: -15px;">이곳은 스케치북 제목을 적어봅시다.</div> -->
+<!--                <div><hr></div> -->
                <div id="custom-menu"></div>              
                <div id="mybook" style="border: 1px solid black;">         
                   <div>마지막페이지 입니다.</div>
                   <div>마지막페이지 입니다.</div>                 
                </div>
-               <c:choose>
+               
+           <%--     <c:choose>
                <c:when test="${ldto.user_email eq sketch_email}">                
-                  <button data-toggle="modal" data-target="#myModal" style="width:64px; height:64px; border: none; background: url('./img/canvas/addPage.png')" title="페이지 추가"></button>
+                  <button data-toggle="modal" data-target="#myModal" style="width:20px; height:20px; border: none; background-img: url('./img/canvas/addPage.png')" title="페이지 추가">
+                  <img src="./img/canvas/addPage.png" width="100%" height="100%"></button>
                   <input type="button" style="width:64px; height:64px; border: none; background: url('./img/canvas/editPage.png')" id="pageUpdate" title="페이지 수정"></input>
                  <input type="button" style="width:64px; height:64px; border: none; background: url('./img/canvas/removePage.png')" id="pageDelete" title="페이지 삭제"></input>
                </c:when>      
@@ -121,8 +149,47 @@
                <a href="#" onclick="scrape('${ldto.user_email}','${sketch_id}')"> <img id="scrapState" alt="scrape" src="./img/scrape.png" title="스크랩"> </a>
                 </div>  
              </c:otherwise>       
+               </c:choose> --%>
+
+         <c:choose>
+               <c:when test="${ldto.user_email eq sketch_email}">                
+                  <input type="button" data-toggle="modal" data-target="#myModal" style="width:32px; height:32px; border: none; background: url('./img/canvas/addPage.png');" title="페이지 추가">
+                  <input type="button" style="width:32px; height:32px; border: none;  background: url('./img/canvas/editPage.png');" id="pageUpdate" title="페이지 수정">
+                  <input type="button" style="width:32px; height:32px; border: none; background: url('./img/canvas/removePage.png');" id="pageDelete" title="페이지 삭제">
                
+                 
+               </c:when>      
+                <c:otherwise>                
+                    <div style="float: right; margin-right: 10px; ">   
+                    <a href="#" onclick="like('${ldto.user_email}','${sketch_id}')">  
+                      <c:choose>
+                       <c:when test="${usersketch_like eq 'T'}">      
+                         <img id="likeState" alt="likeEmpty" src="./img/LikeAfter.png" title="좋아요">            
+                       </c:when> 
+                       <c:otherwise>
+                       	<img id="likeState" alt="likeEmpty" src="./img/LikeBefore.png" title="좋아요">
+                       </c:otherwise>
+                       </c:choose>           
+                	  </a>
+                	
+                   <a href="#" onclick="scrape('${ldto.user_email}','${sketch_id}')"> 
+                     <c:choose>
+                       <c:when test="${usersketch_scrap eq 'T'}">  
+                   <img id="scrapState" alt="scrape" src="./img/scrapeT.png" title="스크랩"> 
+                       </c:when> 
+                       <c:otherwise>
+                     <img id="scrapState" alt="scrape" src="./img/scrape.png" title="스크랩"> 
+                       </c:otherwise>
+                       </c:choose>                    
+                   </a>
+                </div>  
+             </c:otherwise>       
                </c:choose>
+
+
+
+
+
 
                <form action="./insertDaysForm.do" onsubmit="return false" method="post" id="frm">
                   <input type="hidden" value=1  id="nowPageNo" name="nowPageNo">
@@ -177,9 +244,9 @@
              },
              menu: '#custom-menu',
              pageSelector: true,
-            tabs:  true,
-              tabWidth:  180,
-              tabHeight:  20
+             tabs:  true,
+             tabWidth:  180,
+             tabHeight:  20
        });            
       // 캔버스 클릭시
       $(".insertForms").click(function(){
@@ -201,23 +268,28 @@
       });
       // 수정 버튼 클릭시
       $("#pageUpdate").click(function() {
-    	 if(confirm("수정하시겠습니까?")){
-	         //location.href="./updateDaysForm.do?pageNo="+pageNo;       
-	         var updateForm = $('<form></form>');
-	         updateForm.attr('action', './updateCanvas.do');
-	          updateForm.attr('method', 'post');        
-	          updateForm.appendTo('body');     
-	          // 페이지 번호 받아옴
-	          var pageNo = $('<input type="hidden" name="nowPageNo">');
-	          pageNo.val($('#nowPageNo').val());
-	          // 해당 캔버스의 타입을 받아옴
-	          var typeNo = $('<input type="hidden" name="selectType">');
-	          typeNo.val($('#selectType').val());
-	          // 세션에 등록된 스케치북 받아오기       
-	          updateForm.append(pageNo);
-	          updateForm.append(typeNo);
-	          updateForm.submit();   
-    	 }
+    	  var lastPageChk =  parseInt(<%=canvasList.size()%>)+1;    	  
+    	  if($('#nowPageNo').val() == lastPageChk){
+    		  alert("입력된 캔버스가 없습니다.\n캔버스 입력후 수정해주세요.");
+    	  }else{    	  
+	    	 if(confirm("수정하시겠습니까?")){
+		         //location.href="./updateDaysForm.do?pageNo="+pageNo;       
+		         var updateForm = $('<form></form>');
+		         updateForm.attr('action', './updateCanvas.do');
+		          updateForm.attr('method', 'post');        
+		          updateForm.appendTo('body');     
+		          // 페이지 번호 받아옴
+		          var pageNo = $('<input type="hidden" name="nowPageNo">');
+		          pageNo.val($('#nowPageNo').val());
+		          // 해당 캔버스의 타입을 받아옴
+		          var typeNo = $('<input type="hidden" name="selectType">');
+		          typeNo.val($('#selectType').val());
+		          // 세션에 등록된 스케치북 받아오기       
+		          updateForm.append(pageNo);
+		          updateForm.append(typeNo);
+		          updateForm.submit();   
+	    	 }
+    	  }
       });
       
       //삭제 버튼 클릭시

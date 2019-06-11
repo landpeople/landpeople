@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -42,12 +43,16 @@ import happy.land.people.dto.ChatImageFileDto;
 import happy.land.people.dto.JsonUtil;
 import happy.land.people.dto.LPUserDto;
 import happy.land.people.model.chat.IChatService;
+import happy.land.people.model.manager.IManagerService;
 
 @Controller
 public class ChatController implements ServletConfigAware {
 
 	@Autowired
 	IChatService chatService;
+	
+	@Autowired
+	IManagerService managerService;
 
 	/**
 	 * 채팅에 관련된 정보를 담기 위해 Application 객체 생성
@@ -57,9 +62,9 @@ public class ChatController implements ServletConfigAware {
 	// 8. log처리를 위한 logger객체 생성
 	Logger logger = LoggerFactory.getLogger(ChatController.class);
 
-	@RequestMapping(value="/jqgrid3.do", method=RequestMethod.GET)
-	public String jqgrid3() {
-		logger.info("Controller jqgrid3");
+	@RequestMapping(value="/myChatroom.do", method=RequestMethod.GET)
+	public String myChatroom() {
+		logger.info("Controller myChatroom");
 		return "manager/chatList";
 	}
 	
@@ -118,6 +123,7 @@ public class ChatController implements ServletConfigAware {
 		logger.info("● ChatController socketOpen.do / 유저 닉네임 : " + sender);
 		logger.info("● ChatController socketOpen.do / 채팅방 아이디 : " + chr_id);
 		HashMap<String, String> chatList = (HashMap<String, String>) servletContext.getAttribute("chatList");
+		
 		if (chatList == null) {
 			chatList = new HashMap<String, String>();
 			chatList.put(sender, chr_id);
@@ -357,12 +363,16 @@ public class ChatController implements ServletConfigAware {
         List<List<Map<String, String>>> jqGridList = chatService.selectChr(lDto, id);
         Map<String, Integer> jqGridListCnt = chatService.selectChrListCnt(lDto, id);
 	        HashMap<String, Object> resMap = new HashMap<String, Object>();
-	        System.out.println("루피!! = "+jqGridList.get(0));
-	        System.out.println("루피!! = "+jqGridList.get(1));
+	        
+	        // 복잡한 구조의 list안의 list인 jqGridList를 그냥 List로 바꿔줌
+	        List<Map<String, String>> listst = new ArrayList<Map<String, String>>();
+	        for (int i = 0; i < jqGridList.size(); i++) {
+	        	listst.add(jqGridList.get(i).get(0));
+			}
 	        
 	        // 페이징
 	        resMap.put("records", jqGridListCnt.get("TOTALTOTCNT"));
-	        resMap.put("rows", jqGridList);
+	        resMap.put("rows", listst);
 	        resMap.put("page", request.getParameter("page"));
 	        System.out.println("page from request "+request.getParameter("page"));
 	        resMap.put("total", jqGridListCnt.get("TOTALPAGE"));
@@ -389,11 +399,31 @@ public class ChatController implements ServletConfigAware {
 		LPUserDto ldto = (LPUserDto) session.getAttribute("ldto");
 		String id = ldto.getUser_nickname();
 		
-//		for (int i = 0; i < chrIds.length; i++) {
-//			iManagerService.deleteChatroom(chrIds[i], id);
-//			System.out.println(chrIds[i]+"번 채팅방 삭제 쿼리 실행!");
-//		}
+		for (int i = 0; i < chrIds.length; i++) {
+			chatService.deleteChatroom(chrIds[i], id);
+			System.out.println(chrIds[i]+"번 채팅방 삭제 쿼리 실행!");
+		}
 		
-		return "forward:/jqgrid3.do";
+		return "forward:/myChatroom.do";
+	}
+	
+	@RequestMapping(value="/detailChatroom.do", method=RequestMethod.GET)
+	public String detailChatroom(HttpSession session, String chrId) {
+		logger.info("Controller detailChatroom {}", chrId);
+		String sender = "";
+		String receiver = "";
+		
+		LPUserDto ldto = (LPUserDto) session.getAttribute("ldto");
+		String user = ldto.getUser_nickname();
+		
+		Map<String, String> map = managerService.detailChatroom(chrId);
+		if (map.get("CHR_SENDER").equals(user)) {
+			sender = user;
+			receiver = map.get("CHR_RECEIVER");
+		}else {
+			sender = map.get("CHR_SENDER");
+			receiver = user;
+		}
+		return "forward:/socketOpen.do?sender="+sender+"&receiver="+receiver;
 	}
 }
