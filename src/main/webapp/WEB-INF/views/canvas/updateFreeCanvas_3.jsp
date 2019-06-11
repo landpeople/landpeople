@@ -82,7 +82,7 @@
                            <!-- 왼쪽 -->
                            <div id="Left-Side3">
                               <div id="IMG31" style="background-image: url('<%=list.get(0).getImg_spath()%>')">
-                                 <label for="C_IMG31"><img src="./img/folder.png"></label>
+                                 <label for="C_IMG31"><img src="./img/canvas/insertImg.png" class="insertImg"></label>
                                  <input id="C_IMG31" class="file" name="file" type="file" multiple="multiple" style="display: none;">
                               </div>
                               <input type="hidden" name="list[0].img_spath" class="img_spath0" value="<%=list.get(0).getImg_spath()%>">
@@ -107,13 +107,13 @@
                               </div>
                               <div id="RS_IContainer3">
                                  <div id="IMG32" style="background-image: url('<%=list.get(3).getImg_spath()%>')">
-                                    <label for="C_IMG32"><img src="./img/folder.png"></label>
+                                    <label for="C_IMG32"><img src="./img/canvas/insertImg.png" class="insertImg"></label>
                                     <input id="C_IMG32" class="file" name="file" type="file" multiple="multiple" style="display: none;">
                                  </div>
                                  <input type="hidden" name="list[3].img_spath" class="img_spath1" value="<%=list.get(3).getImg_spath()%>">
                                  <input type="hidden" name="list[3].text_no" value="3">
                                  <div id="IMG33" style="background-image: url('<%=list.get(4).getImg_spath()%>')">
-                                    <label for="C_IMG33"><img src="./img/folder.png"></label>
+                                    <label for="C_IMG33"><img src="./img/canvas/insertImg.png" class="insertImg"></label>
                                     <input id="C_IMG33" class="file" name="file" type="file" multiple="multiple" style="display: none;">
                                  </div>
                                  <input type="hidden" name="list[4].img_spath" class="img_spath2" value="<%=list.get(4).getImg_spath()%>">

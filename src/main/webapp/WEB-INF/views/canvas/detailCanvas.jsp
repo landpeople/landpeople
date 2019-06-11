@@ -38,7 +38,7 @@
 <link href="./css/sketch/modal.css" rel="stylesheet">
 
 <!-- 자유 캔버스 레이아웃  -->
-<link rel="stylesheet" href="./css/canvas/insert-freeCanvas-Layout.css">
+<link rel="stylesheet" href="./css/canvas/select-freeCanvas-Layout.css">
 <link rel="stylesheet" href="./css/canvas/freeCanvas-style.css">
 <!-- font awesome -->
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
@@ -149,7 +149,7 @@
         </div>
         <div class="modal-body" style="padding: 30px 30px 30px 30px;">
           <p><img src="./img/days.jpg" class="insertForms" title="1번스타일"></img>
-             <img src="./img/free2.png" class="insertForms" title="2번스타일"></img>
+             <img src="./img/free1.png" class="insertForms" title="2번스타일"></img>
              <img src="./img/free2.png" class="insertForms" title="3번스타일"></img><br>
              <img src="./img/free3.png" class="insertForms" title="4번스타일"></img>
              <img src="./img/free4.png" class="insertForms" title="5번스타일"></img>
@@ -423,7 +423,7 @@
                var div = document.createElement('div');
                div.innerHTML += "<div id='Left-Side'>"
                           +  "<div id='IMG1' style='background-image: url(\"<%=textList.get(i).get(0).getImg_spath()%>\")'>"
-                          +  "</div><div id='LS_Container'><div id='TXT1'>"
+                          +  "</div><div id='LS_Container'><div id='TXT1' style='overflow: auto;'>"
                           +  "<%=textList.get(i).get(1).getText_content()%>"
                           + "</div></div></div>";                                      
                daysPage.appendChild(div); 
@@ -431,9 +431,9 @@
                var mapPage = document.getElementById("map"+<%=i+1%>);
                var div1 = document.createElement('div');
                div1.innerHTML  += "<div id='Right-Side'><div id='RS_Container_1'>"
-                           + "<div id='TXT2'><%=textList.get(i).get(2).getText_content()%></div>"
-                           +  "<div id='TXT3'><%=textList.get(i).get(3).getText_content()%></div>"
-                           + "<div id='TXT4'><%=textList.get(i).get(4).getText_content()%></div>"
+                           + "<div id='TXT2' style='overflow: auto;'><%=textList.get(i).get(2).getText_content()%></div>"
+                           +  "<div id='TXT3' style='overflow: auto;'><%=textList.get(i).get(3).getText_content()%></div>"
+                           + "<div id='TXT4' style='overflow: auto;'><%=textList.get(i).get(4).getText_content()%></div>"
                            + "</div><div id='RS_Container_2'><div>"
                            +  "<div id='IMG2' style='background-image: url(\"<%=textList.get(i).get(5).getImg_spath()%>\")'>"
                            + "</div><div id='IMG3' style='background-image: url(\"<%=textList.get(i).get(6).getImg_spath()%>\")'>"
@@ -447,7 +447,7 @@
                   var div = document.createElement('div');
                   div.innerHTML += "<div id='Left-Side2'>"
                              +  "<div id='LS_TContainer2'>"
-                             + "<div id='TXT21'><%=textList.get(i).get(0).getText_content() %></div></div>"
+                             + "<div id='TXT21' style='overflow: auto;'><%=textList.get(i).get(0).getText_content() %></div></div>"
                              + "<div id='LS_IContainer2'>"
                              + "<div id='IMG21' style='background-image: url(\"<%=textList.get(i).get(1).getImg_spath()%>\")'></div>"
                              + "<div id='IMG22' style='background-image: url(\"<%=textList.get(i).get(2).getImg_spath()%>\")'></div>"  
@@ -459,7 +459,7 @@
                   var div1 = document.createElement('div');
                   div1.innerHTML += "<div id='Right-Side2'>"
                               + "<div id='IMG24' style='background-image: url(\"<%=textList.get(i).get(4).getImg_spath()%>\")'></div>"
-                              + "<div id='TXT22'><%=textList.get(i).get(5).getText_content() %></div></div>";
+                              + "<div id='TXT22' style='overflow: auto;'><%=textList.get(i).get(5).getText_content() %></div></div>";
                 mapPage.appendChild(div1);               
          <%
                }else if(canvasList.get(i).getCan_type().equalsIgnoreCase("4")){        
@@ -475,12 +475,12 @@
                var div1 = document.createElement('div');
                div1.innerHTML  += "<div id='Right-Side3'>"
                            + "<div id='RS_TContainer3'>"
-                           + "<div id='TXT31'><%=textList.get(i).get(1).getText_content() %></div>"
-                           + "<div id='TXT32'><%=textList.get(i).get(2).getText_content() %></div></div>"
+                           + "<div id='TXT31' style='overflow: auto;'><%=textList.get(i).get(1).getText_content() %></div>"
+                           + "<div id='TXT32' style='overflow: auto;'><%=textList.get(i).get(2).getText_content() %></div></div>"
                            + "<div id='RS_IContainer3'>"
                            + "<div id='IMG32' style='background-image: url(\"<%=textList.get(i).get(3).getImg_spath()%>\")'></div>"
                            + "<div id='IMG33' style='background-image: url(\"<%=textList.get(i).get(4).getImg_spath()%>\")'></div>"
-                           + "<div id='TXT33'><%=textList.get(i).get(5).getText_content() %></div></div></div>";
+                           + "<div id='TXT33' style='overflow: auto;'><%=textList.get(i).get(5).getText_content() %></div></div></div>";
                mapPage.appendChild(div1); 
          <%
                }else if(canvasList.get(i).getCan_type().equalsIgnoreCase("5")){        
@@ -494,7 +494,7 @@
                var mapPage = document.getElementById("map"+<%=i+1%>);
                var div1 = document.createElement('div');
                div1.innerHTML += "<div id='Right-Side4'>"
-                           + "<div id='TXT41'><%=textList.get(i).get(1).getText_content() %></div></div>";
+                           + "<div id='TXT41' style='overflow: auto;'><%=textList.get(i).get(1).getText_content() %></div></div>";
                mapPage.appendChild(div1);
          <%
                }else if(canvasList.get(i).getCan_type().equalsIgnoreCase("6")){        
@@ -505,7 +505,7 @@
                               + "<div id='LS_IContainer5'>"
                               + "<div id='IMG51' style='background-image: url(\"<%=textList.get(i).get(0).getImg_spath()%>\")'></div></div>"
                               + "<div id='LS_TContainer5'>"
-                              + "<div id='TXT51'><%=textList.get(i).get(1).getText_content() %></div></div></div>";
+                              + "<div id='TXT51' style='overflow: auto;'><%=textList.get(i).get(1).getText_content() %></div></div></div>";
                   daysPage.appendChild(div);
                   
                   var mapPage = document.getElementById("map"+<%=i+1%>);
@@ -513,12 +513,12 @@
                   div1.innerHTML += "<div id='Right-Side5'>"
                               + "<div id='RS_ITContainer51'>"
                               + "<div id='IMG52' style='background-image: url(\"<%=textList.get(i).get(2).getImg_spath()%>\")'></div>"
-                              + "<div id='TXT52'><%=textList.get(i).get(3).getText_content() %></div>"
+                              + "<div id='TXT52' style='overflow: auto;'><%=textList.get(i).get(3).getText_content() %></div>"
                               + "<div id='IMG53' style='background-image: url(\"<%=textList.get(i).get(4).getImg_spath()%>\")'></div></div>"
                               + "<div id='RS_ITContainer52'>"
-                              + "<div id='TXT53'><%=textList.get(i).get(5).getText_content() %></div>"
+                              + "<div id='TXT53' style='overflow: auto;'><%=textList.get(i).get(5).getText_content() %></div>"
                               + "<div id='IMG54' style='background-image: url(\"<%=textList.get(i).get(6).getImg_spath()%>\")'></div>"
-                              + "<div id='TXT54'><%=textList.get(i).get(7).getText_content() %></div></div></div>";
+                              + "<div id='TXT54' style='overflow: auto;'><%=textList.get(i).get(7).getText_content() %></div></div></div>";
                   mapPage.appendChild(div1);                
          <%
                }              

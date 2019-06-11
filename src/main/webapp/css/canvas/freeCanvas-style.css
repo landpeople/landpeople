@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import url('https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap');
 
 .head-title{
 /* 	display:flex; */
@@ -10,7 +11,8 @@
 .title{
 	float : left;
 	margin-top : 50px;
-	font-size: medium;
+	font-size: large;
+	font-family: 'Do Hyeon', sans-serif;
  }
  
 .back{
@@ -52,5 +54,9 @@
 	width : 64px;
 	float: right;
 	margin-right :20px;
+	cursor: pointer;
+}
+
+.insertImg{
 	cursor: pointer;
 }

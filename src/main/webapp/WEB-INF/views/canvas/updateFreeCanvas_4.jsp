@@ -82,7 +82,7 @@
                            <!-- 왼쪽 -->
                            <div id="Left-Side4">
                               <div id="IMG41" style="background-image: url('<%=list.get(0).getImg_spath()%>')">
-                                 <label for="C_IMG41"><img src="./img/folder.png"></label>
+                                 <label for="C_IMG41"><img src="./img/canvas/insertImg.png" class="insertImg"></label>
                                  <input id="C_IMG41" class="file" name="file" type="file" multiple="multiple" style="display: none;">
                               </div>
                               <input type="hidden" name="list[0].img_spath" class="img_spath0" value="<%=list.get(0).getImg_spath()%>">

@@ -90,19 +90,19 @@
                               </div>
                               <div id="LS_IContainer2">
                                  <div id="IMG21" style="background-image: url('<%=list.get(1).getImg_spath()%>')">
-                                    <label for="C_IMG21"><img src="./img/folder.png"></label>
+                                    <label for="C_IMG21"><img src="./img/canvas/insertImg.png" class="insertImg"></label>
                                     <input id="C_IMG21" class="file" name="file" type="file" multiple="multiple" style="display: none;">
                                  </div>
                                  <input type="hidden" name="list[1].img_spath" class="img_spath0" value="<%=list.get(1).getImg_spath()%>">
                                  <input type="hidden" name="list[1].text_no" value="1">
                                  <div id="IMG22" style="background-image: url('<%=list.get(2).getImg_spath()%>')">
-                                    <label for="C_IMG22"><img src="./img/folder.png"></label>
+                                    <label for="C_IMG22"><img src="./img/canvas/insertImg.png" class="insertImg"></label>
                                     <input id="C_IMG22" class="file" name="file" type="file" multiple="multiple" style="display: none;">
                                  </div>
                                  <input type="hidden" name="list[2].img_spath" class="img_spath1" value="<%=list.get(2).getImg_spath()%>">
                                  <input type="hidden" name="list[2].text_no" value="2">
                                  <div id="IMG23" style="background-image: url('<%=list.get(3).getImg_spath()%>')">
-                                    <label for="C_IMG23"><img src="./img/folder.png"></label>
+                                    <label for="C_IMG23"><img src="./img/canvas/insertImg.png" class="insertImg"></label>
                                     <input id="C_IMG23" class="file" name="file" type="file" multiple="multiple" style="display: none;">
                                  </div>
                                  <input type="hidden" name="list[3].img_spath" class="img_spath2" value="<%=list.get(3).getImg_spath()%>">
@@ -113,7 +113,7 @@
                            <!-- 오른쪽 -->
                            <div id="Right-Side2">
                               <div id="IMG24" style="background-image: url('<%=list.get(4).getImg_spath()%>')">
-                                 <label for="C_IMG24"><img src="./img/folder.png"></label>
+                                 <label for="C_IMG24"><img src="./img/canvas/insertImg.png" class="insertImg"></label>
                                  <input id="C_IMG24" class="file" name="file" type="file" multiple="multiple" style="display: none;">
                               </div>
                               <input type="hidden" name="list[4].img_spath" class="img_spath3" value="<%=list.get(4).getImg_spath()%>">

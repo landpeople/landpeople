@@ -34,6 +34,11 @@ $(document).ready(function() {
 		}
 	});
 	
+	//이미지 삭제
+//	$("img").click(function(){
+//		$(this).parents().css("background-image","url('')");
+//	});
+	
 });
 
 function fileUpload(subImgClass) {
@@ -71,7 +76,7 @@ function editor(id){
 	window.open('./editor.do?id='+id,'글 편집',
 			'width=600, height=500, resizable=no, fullscreen=no, left=20, top=20');
 }
-		
+
 //확장자 확인 (업로드할 수 있는 확장자일시 true)
 function extension(file){
 	var reg = /gif|jpg|png|jpeg/i;

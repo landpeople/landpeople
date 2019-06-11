@@ -78,7 +78,7 @@
          <!-- 왼쪽 -->
          <div id="Left-Side">
             <div id="IMG1">
-               <label for="C_IMG1"><img src="./img/folder.png"></label> 
+               <label for="C_IMG1"><img src="./img/canvas/insertImg.png" class="insertImg"></label> 
                <input id="C_IMG1" class="file" name="file" type="file" multiple="multiple" style="display: none;">
             </div>
                <input type="hidden" name="list[0].img_spath" class="img_spath0">          
@@ -116,13 +116,13 @@
             <div id="RS_Container_2">
                <div>
                   <div id="IMG2">
-                     <label for="C_IMG2"><img src="./img/folder.png"></label> 
+                     <label for="C_IMG2"><img src="./img/canvas/insertImg.png" class="insertImg"></label> 
                      <input id="C_IMG2" class="file" name="file" type="file" multiple="multiple" style="display: none;">
                   </div>
                      <input type="hidden" name="list[5].img_spath" class="img_spath1">
                      <input type="hidden" name="list[5].text_no" value="5"> 
                   <div id="IMG3">
-                     <label for="C_IMG3"><img src="./img/folder.png"></label> 
+                     <label for="C_IMG3"><img src="./img/canvas/insertImg.png" class="insertImg"></label> 
                      <input id="C_IMG3" class="file" name="file" type="file" multiple="multiple" style="display: none;">
                   </div>
                      <input type="hidden" name="list[6].img_spath" class="img_spath2">

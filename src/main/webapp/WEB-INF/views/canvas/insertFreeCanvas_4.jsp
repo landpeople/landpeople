@@ -43,20 +43,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <!-- js -->
 <script src="./js/freeCanvas/freeCanvas.js" defer="defer"></script>
-<script type="text/javascript">
-    //에디터
-    $(document).ready(function() {
-	for (var i = 0; i < ids.length; i++) {
-	    setEditor(ids.eq(i).attr("id"));
-	}
-    });
-
-    function setEditor(id) {
-	CKEDITOR.disableAutoInline = true;
-	CKEDITOR.inline("'" + id + "'");
-    }
-</script>
-
 <body id="page-top" class="scroll">
 
    <!-- Page Wrapper -->
@@ -89,7 +75,7 @@
                            <!-- 왼쪽 -->
                            <div id="Left-Side4">
                               <div id="IMG41">
-                                 <label for="C_IMG41"><img src="./img/folder.png"></label>
+                                 <label for="C_IMG41"><img src="./img/canvas/insertImg.png" class="insertImg"></label>
                                  <input id="C_IMG41" class="file" name="file" type="file" multiple="multiple" style="display: none;">
                               </div>
                               <input type="hidden" name="list[0].img_spath" class="img_spath0">
@@ -100,10 +86,10 @@
                            <div id="Right-Side4">
                               <div id="TXT41" style="overflow: auto;">
                               	<a onclick="editor('txt41')" class="inner"><img alt="글 작성" src="./img/canvas/editor.png"></a>
-								<div id="txt41">
+								<div id="txt41"></div>
+	                            <input type="hidden" name="list[1].text_content" class="text_content0">
+	                            <input type="hidden" name="list[1].text_no" value="1">
                               </div>
-                              <input type="hidden" name="list[1].text_content" class="text_content0">
-                              <input type="hidden" name="list[1].text_no" value="1">
                            </div>
                         </div>
                      </form>
@@ -114,6 +100,7 @@
 				         <img id="insert" alt="등록하기" src="./img/canvas/check.png"
 				         	onmouseover="this.src='./img/canvas/check-over.png';"
 				         	onmouseout="this.src='./img/canvas/check.png';">
+				      </div>
     			  </div>
                   
                </div>

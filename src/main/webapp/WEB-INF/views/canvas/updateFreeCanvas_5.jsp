@@ -81,14 +81,14 @@
                            <div id="Left-Side5">
                               <div id="LS_IContainer5">
                                  <div id="IMG51" style="background-image: url('<%=list.get(0).getImg_spath()%>')">
-                                    <label for="C_IMG51"><img src="./img/folder.png"></label>
+                                    <label for="C_IMG51"><img src="./img/canvas/insertImg.png" class="insertImg"></label>
                                     <input id="C_IMG51" class="file" name="file" type="file" multiple="multiple" style="display: none;">
                                  </div>
                                  <input type="hidden" name="list[0].img_spath" class="img_spath0" value="<%=list.get(0).getImg_spath()%>">
                                  <input type="hidden" name="list[0].text_no" value="0">
                               </div>
                               <div id="LS_TContainer5">
-                                 <div id="TXT51">
+                                 <div id="TXT51" style="overflow: auto;">
 	                                 <a onclick="editor('txt51')" class="inner"><img alt="글 작성" src="./img/canvas/editor.png"></a>
 									 <div id="txt51"><%=list.get(1).getText_content()%></div>
                                  </div>
@@ -101,38 +101,38 @@
                            <div id="Right-Side5">
                               <div id="RS_ITContainer51">
                                  <div id="IMG52" style="background-image: url('<%=list.get(2).getImg_spath()%>')">
-                                    <label for="C_IMG52"><img src="./img/folder.png"></label>
+                                    <label for="C_IMG52"><img src="./img/canvas/insertImg.png" class="insertImg"></label>
                                     <input id="C_IMG52" class="file" name="file" type="file" multiple="multiple" style="display: none;">
                                  </div>
                                  <input type="hidden" name="list[2].img_spath" class="img_spath1" value="<%=list.get(2).getImg_spath()%>">
                                  <input type="hidden" name="list[2].text_no" value="2">
-                                 <div id="TXT52">
+                                 <div id="TXT52" style="overflow: auto;">
 	                                 <a onclick="editor('txt52')" class="inner"><img alt="글 작성" src="./img/canvas/editor.png"></a>
 									 <div id="txt52"><%=list.get(3).getText_content()%></div>
                                  </div>
                                  <input type="hidden" name="list[3].text_content" class="text_content1" value="<%=list.get(3).getText_content()%>">
                                  <input type="hidden" name="list[3].text_no" value="3">
                                  <div id="IMG53" style="background-image: url('<%=list.get(4).getImg_spath()%>')">
-                                    <label for="C_IMG53"><img src="./img/folder.png"></label>
+                                    <label for="C_IMG53"><img src="./img/canvas/insertImg.png" class="insertImg"></label>
                                     <input id="C_IMG53" class="file" name="file" type="file" multiple="multiple" style="display: none;">
                                  </div>
                                  <input type="hidden" name="list[4].img_spath" class="img_spath2" value="<%=list.get(4).getImg_spath()%>">
                                  <input type="hidden" name="list[4].text_no" value="4">
                               </div>
                               <div id="RS_ITContainer52">
-                                 <div id="TXT53">
+                                 <div id="TXT53" style="overflow: auto;">
 	                                 <a onclick="editor('txt53')" class="inner"><img alt="글 작성" src="./img/canvas/editor.png"></a>
 									 <div id="txt53"><%=list.get(5).getText_content()%></div>
                                  </div>
                                  <input type="hidden" name="list[5].text_content" class="text_content2" value="<%=list.get(5).getText_content()%>">
                                  <input type="hidden" name="list[5].text_no" value="5">
                                  <div id="IMG54" style="background-image: url('<%=list.get(6).getImg_spath()%>')">
-                                    <label for="C_IMG54"><img src="./img/folder.png"></label>
+                                    <label for="C_IMG54"><img src="./img/canvas/insertImg.png" class="insertImg"></label>
                                     <input id="C_IMG54" class="file" name="file" type="file" multiple="multiple" style="display: none;">
                                  </div>
                                  <input type="hidden" name="list[6].img_spath" class="img_spath3" value="<%=list.get(6).getImg_spath()%>">
                                  <input type="hidden" name="list[6].text_no" value="6">
-                                 <div id="TXT54">
+                                 <div id="TXT54" style="overflow: auto;">
 	                                 <a onclick="editor('txt54')" class="inner"><img alt="글 작성" src="./img/canvas/editor.png"></a>
 									 <div id="txt54"><%=list.get(7).getText_content()%></div>
                                  </div>
