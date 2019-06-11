@@ -2,7 +2,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="shortcut icon" href="./img/favicon.ico" type="image/x-icon">
+<link rel="icon" href="./css/theme/sb-admin-2.css" type="image/x-icon">
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="LandPeople">
 <title>제주도 여행 일정 공유 커뮤니티 | 육지사람</title>
 
 <%
