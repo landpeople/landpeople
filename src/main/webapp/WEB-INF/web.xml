@@ -64,7 +64,18 @@
 	</filter-mapping>
 	<error-page>
 		<error-code>404</error-code>
-		<location>/WEB-INF/views/err/404Error.jsp</location>
+		<location>/WEB-INF/views/err/Error.jsp</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>500</error-code>
+		<location>/WEB-INF/views/err/Error.jsp</location>
+	</error-page>
+	
+	
+	<error-page>
+		<error-code>405</error-code>
+		<location>/WEB-INF/views/err/Error.jsp</location>
 	</error-page>
 
 	<!-- Session config -->

@@ -247,7 +247,7 @@ function getMySketchBook(pageNo){
       				}
       					$(".sketchBookContent").append(sketch);
       			}, error : function() {
-      				alert("실패");
+//       				alert("실패");
       			}
       	});
 }
@@ -275,7 +275,7 @@ function sketchBookModify(sketch) {
              "sketch_id"  :   sketch_id },
       dataType : "json",
       success :function(modiModal){
-         alert(modiModal.sdto.sketch_theme.replace(' ',''));
+//          alert(modiModal.sdto.sketch_theme.replace(' ',''));
          
          var modiFormHTML =   "<input type='hidden' name='user_email' value='"+modiModal.sdto.user_email+"'>"+
                         "<input type='hidden' name='sketch_id' value='"+modiModal.sdto.sketch_id+"'>"+
@@ -333,7 +333,7 @@ function sketchBookModify(sketch) {
 						}
 					});
 		}, error : function(){
-			alert("실패");
+// 			alert("실패");
 		}
 	});
 	
@@ -362,12 +362,12 @@ function modiFileUpload(subImgClass) {
    		processData : false,
    		contentType : false,
    		success : function(result) {
-   			alert("아작스 결과"+result);
+//    			alert("아작스 결과"+result);
    					$("div[id=modalIMG2]").css("background-image", "url('" + result+ "')");
    					var img_spath = $("input[class=img_spath0]");
    					img_spath.val(result);
    		},error : function(){
-   			alert("실패");
+//    			alert("실패");
    		}
    	});
    }
@@ -379,7 +379,7 @@ function sketchModify(){
    var email = '${ldto.user_email}';
    var img = $("div[id=modalIMG2]").css("background-image")
    img =img.replace('url(','').replace(')','').replace(/\"/gi, "");
-   alert(img);
+//    alert(img);
    
    var sketchModiModal = document.getElementById("modiSketchBook");
    var modiSketch_theme = $("input[name=modiSketch_theme]:checked").val();
@@ -403,13 +403,13 @@ function sketchModify(){
 		//alert("커버이미지를 수정하지 않으시면 기존 이미지가 입력됩니다")
 	
 		var img_spath = $("input[class=img_spath0]").val(img);
-		alert(img_spath);
+// 		alert(img_spath);
 		
 		sketchModiModal.submit();
-		alert("스케치북 수정완료");
+// 		alert("스케치북 수정완료");
 	} else {
 		sketchModiModal.submit();
-		alert("스케치북 수정완료");
+// 		alert("스케치북 수정완료");
 		//chkModify = false;
 	}
 }

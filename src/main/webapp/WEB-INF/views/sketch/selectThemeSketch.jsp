@@ -173,7 +173,7 @@ function getSketchBook(pageNo){
 				     }
             $(".themeContent").append(sketch);
       }, error : function() {
-            alert("실패");
+//             alert("실패");
       }
    });
 }
