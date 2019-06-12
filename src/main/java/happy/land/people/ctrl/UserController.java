@@ -210,6 +210,7 @@ public class UserController {
 		System.out.println(isc);
 		
 		if (isc ==false) {
+			
 			System.out.println("여기는 구글콜백컨트롤러 구글이메일이랑 네이버 이메일이 같을시 일로옴");
 			String apiEmailDup = "apiEmailDup";
 			request.setAttribute("apiEmailDupG", apiEmailDup);

@@ -253,7 +253,7 @@ public class SketchController {
 	}
 
 	// 내 스크랩 목록 보기
-	@RequestMapping(value = "SelectScrapeSketch.do", method = RequestMethod.GET)
+	@RequestMapping(value = "SelectScrapeSketch.do", method = {RequestMethod.GET, RequestMethod.POST})
 	public String scrapeListMine(String user_email, Model model) {
 
 		System.out.println("스크랩한 유저 이메일 =" + user_email);

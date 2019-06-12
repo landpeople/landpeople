@@ -61,7 +61,7 @@
             <div class="lp-container">
                <div class="lp-content shadow-lg">
                 	<div class="lp-content-sketch">
-						<form action="#" method="post" id="scrapeSketch" name="scrapeSketch" onsubmit="ScrapeChk()">
+						<form action="#" method="post" id="scrapeSketch" name="scrapeSketch" onsubmit="return ScrapeChk()">
 	                            <input type="hidden" name="user_email" value="${ldto.user_email}">
 							<div class="lp-content-header">
 								<h1 class="h2 mb-4 text-gray-800 lp-content-title">My scrapbook</h1>

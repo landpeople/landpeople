@@ -44,23 +44,6 @@
 
 <body id="page-top">
 
-<!-- 	<!-- Page Wrapper --> -->
-<!-- 	<div id="wrapper"> -->
-<%-- 		<%@include file="../common/lp-sidebar.jsp"%> --%>
-
-<!-- 		<div class="container-fluid"> -->
-<!-- 			<!-- 404 Error Text --> -->
-<!-- 			<div class="text-center"> -->
-<!-- 				<div class="error mx-auto" data-text="ERROR">ERROR</div> -->
-<!-- 				<p class="lead text-gray-800 mb-5">Page Not Found</p> -->
-<!-- 				<p class="text-gray-500 mb-0">It looks like you found a glitch in the matrix...</p> -->
-<!-- 				<a href="./index.jsp">← Back to All travel schedule</a> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<%-- 		<%@include file="../common/lp-footer.jsp"%> --%>
-<!-- 	</div> -->
-<!-- 	<!-- End of Main Content --> -->
-
    <!-- Page Wrapper -->
    <div id="wrapper">
       <%@include file="../common/lp-sidebar.jsp"%>
@@ -75,7 +58,6 @@
             <!-- LandPeople Content Area -->
             <div class="lp-container">
                <div class="lp-error-content">
-<!-- 404 Error Text -->
 			<div class="text-center">
 				<div class="error mx-auto" data-text="ERROR">ERROR</div>
 				<p class="lead text-gray-800 mb-5">Page Not Found</p>
