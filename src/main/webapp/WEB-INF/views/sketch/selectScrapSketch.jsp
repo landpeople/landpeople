@@ -152,7 +152,7 @@
             data: {"pageNo": pageNo , "user_email" : user_email }, 
             dataTypes: "json",
             success: function(msg){
-               alert(msg.addScrapeSketchBook.length);    
+//                alert(msg.addScrapeSketchBook.length);    
                var sketchLike = msg.likeScrape;
                var sketchNickname = msg.scrapeSketchNickname;
                var sketch = "";
@@ -181,7 +181,7 @@
                   }
                   $(".sketchBookContent").append(sketch);
 	         }, error : function() {
-               alert("실패");
+//                alert("실패");
          }
       });
    }
@@ -213,7 +213,7 @@
             
             return true;
          }else{
-            alert("취소x");
+//             alert("취소x");
             
             return false;
          }
