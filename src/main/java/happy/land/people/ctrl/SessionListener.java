@@ -1,6 +1,7 @@
 package happy.land.people.ctrl;
 
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpSessionEvent;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpSessionListener;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import happy.land.people.dto.LPUserDto;
 import happy.land.people.model.chat.IChatService;
 
 public class SessionListener implements HttpSessionListener {
@@ -22,7 +24,7 @@ public class SessionListener implements HttpSessionListener {
 		// 세션 생성시 호출
 		HttpSession session = arg0.getSession();
 		
-		String str = (String)session.getAttribute("user"); // 만료되지 않은 세션
+		LPUserDto str = (LPUserDto)session.getAttribute("ldto"); // 만료되지 않은 세션
 		
 		System.out.println("기존 세션: " + str);
 		String time = formatter.format(session.getCreationTime());
@@ -35,7 +37,9 @@ public class SessionListener implements HttpSessionListener {
 		// 세션 만료시 호출
 		HttpSession session = arg0.getSession();
 		
-		String str = (String)session.getAttribute("user"); // 만료되지 않은 세션
+		LPUserDto str = (LPUserDto)session.getAttribute("ldto"); // 만료되지 않은 세션
+		
+		service.chatList_Delete(str);
 		
 		System.out.println("만료되지 않은 세션 : " + str);
 		long last_time = session.getLastAccessedTime();

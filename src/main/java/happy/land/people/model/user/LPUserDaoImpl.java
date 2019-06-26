@@ -35,6 +35,8 @@ public class LPUserDaoImpl implements ILPUserDao {
 		LPUserDto edto =session.selectOne(NS+"user_emailAuthChk", dto);
 		System.out.println(edto);
 		
+		
+		
 		if(n > 0 && dto.getUser_auth().equalsIgnoreCase("U")) {
 			return false; // 이미 회원 가입된 사람이라면 바로 화면에서 빠져나오도록 함
 		}else if(n>0 && dto.getUser_auth().equalsIgnoreCase("N")) {
@@ -219,6 +221,7 @@ public class LPUserDaoImpl implements ILPUserDao {
 		System.out.println("이메일:" + dto.getUser_email());
 		System.out.println("어스:" + dto.getUser_auth());
 
+		
 		if (dto.getUser_email() == null) {
 			return 0;
 		} else if (dto.getUser_auth().equals("U")) {

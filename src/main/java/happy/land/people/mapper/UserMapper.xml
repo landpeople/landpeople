@@ -93,7 +93,7 @@ UPDATE LPUSER SET USER_DELFLAG = 'T' WHERE USER_EMAIL = #{user_email}
 
 <!-- /////////////////////////비밀번호 찾기////////////////////////// -->
 <select id="user_emailAuthChk" parameterType="java.lang.String" resultType="UserDto">
-SELECT USER_EMAIL, USER_AUTH 
+SELECT USER_EMAIL, USER_AUTH
 	FROM LPUSER 
 		WHERE USER_EMAIL = #{user_email}
 </select>

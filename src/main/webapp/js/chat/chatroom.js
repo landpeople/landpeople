@@ -27,7 +27,7 @@ $(document).ready(function() {
     $(".chat").focus(); /* 텍스트 박스에 focus를 주어 입력할 수 있는 상태로 만들어 줌 */
     
     /* 웹소켓 생성*/
-    ws = new WebSocket("ws://"+ ip +":8091/LandPeople/wsChat.do");
+    ws = new WebSocket("ws://192.168.4.31:8091/LandPeople/wsChat.do");
  
     /* 소켓이 열렸을 때 사용자가 입장하면 입장 메시지를 화면에 띄워 줄 수있도록 이벤트를 발생하여 핸들러를 호출 */
     ws.onopen = function() {
