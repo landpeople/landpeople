@@ -79,7 +79,7 @@ UPDATE LPUSER SET USER_DELFLAG = 'T' WHERE USER_EMAIL = #{user_email}
 
 <!-- 이메일 인증 상태 변경  ok  -->
 <update id="user_authStatusUpdate" parameterType="java.lang.String">
-	UPDATE LPUSER SET USER_EMAILCHK = 'Y' WHERE  USER_EMAIL = #{user_email}
+	UPDATE LPUSER SET USER_EMAILCHK = 'Y' WHERE  USER_EMAIL = #{user_email} AND USER_EMAILKEY = #{user_emailkey}
 </update>
 
 <!-- 이메일로 온 비밀번호 수정 -->
