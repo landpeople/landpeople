@@ -12,7 +12,7 @@
 	<!-- 문서에서 많이 사용하거나 혹은 라이러리의 버전을 동일화 시키기 위해서 선언 변수 -->
 	<properties>
 		<java-version>1.8</java-version>
-		<org.springframework-version>4.0.1.RELEASE</org.springframework-version>
+		<org.springframework-version>5.3.18</org.springframework-version>
 		<!-- AOP 관점 지향 프로그램을 위해서 필요한 라이브러리 / 개발자가 중요시해야할것과 등한시 해야할 것을 나눠서 개발 / 
 			CC(Core cencern) vs CCC(Cross ) 깃으로는 위밍이라는 기술 사용 -->
 		<org.aspectj-version>1.8.3</org.aspectj-version>
